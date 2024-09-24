@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background-color: #0c131d !important;
+  color: #fafafa !important;
+  scroll-behavior: smooth;
+}
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+}
+
+.hover-underline-animation::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #f5603c;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.active-topnavbar-menu {
+  border-bottom: 3px solid #f5603c;
+  color: #f5603c;
+}
+
+.loginForm {
+  background: linear-gradient(144deg, #2d4764 0%, #0c131d 100%);
+}
+
+.loginButton {
+  background: linear-gradient(95deg, #386b6a 0%, #5eccba 100%);
+  border-radius: 10px 0px 0px 0px;
+}
+
+.registerButton {
+  background: linear-gradient(95deg, #f5603c 0%, #5b2a20 100%);
+  border-radius: 0px 10px 0px 0px;
+}
+
+.registerButton {
+  background: linear-gradient(95deg, #f5603c 0%, #5b2a20 100%);
+  border-radius: 0px 10px 0px 0px;
+}
+
+.stats-percentile-bar::-webkit-progress-value {
+  background-color: #ffffffbb !important;
+}
+
+.gameRowLeftLineMiddle {
+  position: relative;
+}
+
+.gameRowLeftLineMiddle::after {
+  content: "";
+  display: inline;
+  position: absolute;
+  vertical-align: middle;
+  height: 150%;
+  left: -5%;
+  top: -25%;
+  border-left: 3px solid white;
+  padding: 0 0.8em 0 0;
+}
+
+
+.gameRowLeftLineTop {
+  position: relative;
+}
+
+/* .gameRowLeftLineTop::before {
+  content: "";
+  position: absolute;
+  vertical-align: middle;
+  left: -7.25%;
+  top: 25%;
+  padding: 0 0.8em 0 0;
+  height: 50%;
+  width: 5%;
+  border: 3px solid white;
+  border-radius: 50%;
+  display: inline-block;
+} */
+
+.gameRowLeftLineTop::after {
+  content: "";
+  display: inline;
+  position: absolute;
+  vertical-align: middle;
+  height: 50%;
+  left: -5%;
+  top: 50%;
+  border-left: 3px solid white;
+  padding: 0 0.8em 0 0;
+}
+
+
+.gameRowLeftLineBottom {
+  position: relative;
+}
+
+.gameRowLeftLineBottom::after {
+  content: "";
+  display: inline;
+  position: absolute;
+  vertical-align: middle;
+  height: 75%;
+  left: -5%;
+  top: -25%;
+  border-left: 3px solid white;
+  padding: 0 0.8em 0 0;
+}
+
+
+select.bg-transparent > option {
+  background-color: #1c2c3f;
+}
+
+select.transparent > option:checked {
+  background-color: #f5603c !important;
+}
+
+select.transparent > option {
+  background-color: #ffffff00;
+  color: white;
+}
+
+.error-message {
+  color: red;
+  font-weight: 500;
+}
+
+.grid-cols-8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+
+/* ROUNDS MATCH OVERVIEW */
+
+.round-tab {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  height: 100px;
+  width: 75px;
+  background: linear-gradient(55deg, #1E2835 50%, #1d242f 50%);
+  margin: 1% 10px;
+  border-radius: 0.25em;
+  justify-items: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.round-tab:hover {
+  transform: scale(1.05);
+}
+
+.round-tab-active {
+  border-width: 5px !important;
+  background: linear-gradient(55deg, #1c2c3f 50%, #253247 50%);
+}
+
+.minimap-filter {
+  filter: hue-rotate(360deg) saturate(500%) contrast(140%) drop-shadow(10px 10px 9px #000000);
+  margin: auto;
+  width: 95%;
+  justify-self: center;
+  align-self: center;
+}
+
+.stat-header {
+  font-size: .75em;
+  font-weight: bold;
+  color: rgb(183, 183, 183);
+}
+
+.stat-content {
+  font-size: 1.25em;
+  font-weight: bolder;
+  color: white;
+}
+
+.stat-box-border {
+  border-radius: 2rem 2rem / 2rem 0% !important;
+}
