@@ -5,7 +5,7 @@ import Link from "next/link";
 import { userSession } from "@/app/utils/authHelpers";
 import { FaCheck, FaXmark, FaCrown } from "react-icons/fa6";
 import toast from "react-hot-toast";
-import { FaCrow } from "react-icons/fa";
+import subscribe from "@/app/settings/settingsActions/subscribe";
 
 interface SubscriptionsProps {
 
@@ -20,7 +20,19 @@ const Subscriptions = ({ }: SubscriptionsProps) => {
 
     }, [])
 
-    //console.log(info)
+    const HandleSubscriptionClick = async (name: String) => {
+        const res = await subscribe(name);
+        if (res.success) {
+            toast.success(res.message)
+            if (res.link) {
+                //@ts-ignore
+                window.open(res.link, '_blank').focus();
+            }
+        }
+        else {
+            toast.error(res.message);
+        }
+    }
 
 
     return (
@@ -39,19 +51,17 @@ const Subscriptions = ({ }: SubscriptionsProps) => {
                             </ul>
                         </div>
                         <div className="mx-4">
-                        {
-                            //@ts-ignore
-                            info?.isStudent == 1 ?
-                                <button className="btn text-white font-bold text-xl rounded-full bg-[#36ab98] hover:bg-[#5ECCBA] w-full">
-                                    <FaCheck />
-                                </button>
-                                :
-                                <Link href="#">
-                                    <button className="btn text-white font-bold text-xl rounded-full bg-[#F5603C] hover:bg-[#AC442A] w-full hover:scale-105">
+                            {
+                                //@ts-ignore
+                                info?.esc_member == 1 ?
+                                    <button className="btn text-white font-bold text-xl rounded-full bg-[#36ab98] hover:bg-[#5ECCBA] w-full">
+                                        <FaCheck />
+                                    </button>
+                                    :
+                                    <button className="btn text-white font-bold text-xl rounded-full bg-[#F5603C] hover:bg-[#AC442A] w-full hover:scale-105" onClick={() => HandleSubscriptionClick('esc_member')}>
                                         Subscribe
                                     </button>
-                                </Link>
-                        }
+                            }
                         </div>
                     </div>
 

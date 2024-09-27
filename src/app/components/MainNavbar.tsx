@@ -19,6 +19,8 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, children, rank }) => {
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState(false);
 
+  console.log(user)
+
   const handleLoginClick = () => {
     localStorage.setItem("previousPath", pathname);
     window.location.href = "/login?form=Log-In";

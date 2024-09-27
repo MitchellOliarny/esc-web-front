@@ -42,8 +42,8 @@ export default function Sidebar({
         return <ProfileSettingsUI userInfo={userInfo} />;
       case "Connections":
         return <ConnectionsSettings userInfo={userInfo} />;
-      // case "Subscriptions":
-      //   return <Subscriptions />;
+      case "Subscriptions":
+        return <Subscriptions />;
       // case "My Teams":
       //   return <MyTeamsUI userTeams={userTeams} userInfo={userInfo} />;
       // case "Team Invites":
@@ -97,14 +97,14 @@ export default function Sidebar({
           >
             Connections
           </li>
-          {/* <li
+          <li
             onClick={() => handleSideBarClick("Subscriptions")}
             className={`menu-item text-2xl font-bold text-right mr-10 cursor-pointer text-slate-200 ${
               selectedMenu === "Subscriptions" ? "!text-[#f5603c]" : ""
             }`}
           >
             Subscriptions
-          </li> */}
+          </li>
           {/* <li
             onClick={() => handleSideBarClick("My Teams")}
             className={`menu-item text-2xl font-bold text-right mr-10 cursor-pointer text-slate-200 ${
