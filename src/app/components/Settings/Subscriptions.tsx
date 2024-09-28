@@ -55,13 +55,13 @@ const Subscriptions = ({ }: SubscriptionsProps) => {
             <div className="mt-5 rounded-md ml-10 h-full">
                 <div className="grid grid-cols-3 items-center p-4 h-auto">
 
-                    <div className="grid grid-rows-3 mt-5 rounded-md border-3 h-auto m-2">
-                        <div className="grid">
+                    <div className="grid grid-rows-4 mt-5 rounded-md border-3 h-auto m-2 py-4">
+                        <div className="grid row-span-2 m-auto content-center">
                         <p className="m-4 justify-self-center text-3xl font-bold">Member</p>
                         <FaCrown size={'5em'} className="justify-self-center" />
                         <p className="m-4 justify-self-center text-2xl font-bold border-b">$4.99 / Month</p>
                         </div>
-                        <div className="row-span-1 ml-6 justify-self-center text-lg font-bold h-auto">
+                        <div className="row-span-1 ml-6 justify-self-center self-center text-lg font-bold h-auto">
                             <ul className="h-full list-disc m-4">
                                 <li>Access to Premium Medals</li>
                                 <li>FREE entry to all Weekly Events</li>
