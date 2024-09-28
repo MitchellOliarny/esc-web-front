@@ -43,6 +43,8 @@ export default async function Dashboard(queryParams: any) {
   });
   userInfo = await userInfoResp.json();
 
+  console.log(userInfo)
+
   if (userInfo?.message == 'Invalid Session') {
     return redirect("/login");
   }
@@ -63,9 +65,10 @@ export default async function Dashboard(queryParams: any) {
     }
   );
 
+  //console.log(userGameresp)
 
   userGames = await userGameresp.json();
-
+  
 
   // console.log("TEST", query);
   // console.log(userGames.data);
@@ -103,11 +106,11 @@ export default async function Dashboard(queryParams: any) {
   // END OF VALORANT MAPS AND AGENTS
   let valAverages = null;
   if (userGames && userGames?.data?.length > 0) {
-    const valorantAveragesEndpoint = userInfo.info.player_rank
+    const valorantAveragesEndpoint = userInfo.info.val_rank
       ? api +
       `/val/data/averages/` +
       userGames.data[0]?.season +
-      `?rank=${userInfo.info.player_rank}`
+      `?rank=${userInfo.info.val_rank}`
       : api + `/val/data/averages/` + userGames.data[0].season + ``;
     const valAveragesResp = await fetch(valorantAveragesEndpoint, {
       method: "GET",

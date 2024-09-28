@@ -34,7 +34,7 @@ export default async function RootLayout({
         <Providers>
           <MainNavbar
             user={info?.riot_name || info?.email as string}
-            rank={info?.player_rank || 0 as number}
+            rank={info?.val_rank || 0 as number}
           >
             <div className="">{children}</div>
             <Toaster position="bottom-right" reverseOrder={false} />

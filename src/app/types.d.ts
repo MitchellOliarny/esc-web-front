@@ -155,9 +155,9 @@ type UserGames = {
     clutch_score: number;
   },
   behavior: [Object],
-  valorant_banner: string,
-  riot_name: string,
-  riot_tag: string,
+  val_banner: string,
+  username: string,
+  tag: string,
 }
 type ValAverage = [Object];
 type Agents = { agent: string; games: number };

@@ -5,7 +5,7 @@ import Image from "next/image";
 import disconnectDiscord from "@/app/settings/settingsActions/disconnectDiscord";
 import connectDiscord from "@/app/settings/settingsActions/connectDiscord";
 import { toast } from "react-hot-toast";
-import updateProfile from "@/app/settings/settingsActions/updateProfile";
+import updateRiot from "@/app/settings/settingsActions/updateRiot";
 import { Spinner } from "@nextui-org/react";
 
 import {
@@ -81,7 +81,7 @@ export default function ConnectionsSettingsUI({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleRiotAccountUpdate = async (formData: FormData) => {
-    const response = await updateProfile(formData);
+    const response = await updateRiot(formData);
     if (response?.success) {
       setIsLoading(false);
       toast.success("Riot account updated successfully");

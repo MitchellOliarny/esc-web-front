@@ -13,7 +13,7 @@ export default async function doFilterGames(queryParams: any, mode: string) {
     token: `Bearer ${token?.value}`,
   };
 
-  console.log(queryParams)
+  // console.log(queryParams)
 
   const response = await fetch(
     api + `/val/data/user/matches/${mode ? mode : 'Competitive'}?${queryParams}`,
@@ -39,7 +39,9 @@ export default async function doFilterGames(queryParams: any, mode: string) {
   Agents.sort((a, b) => b.games - a.games);
   let valAverages = null;
 
-  if(!mode || mode == 'Competitive') {
+  console.log(newUserGames)
+
+  if((!mode || mode == 'Competitive') && !newUserGames.message) {
   const valorantAveragesEndpoint = newUserGames.data[0].match_rank ?
     api + `/val/data/averages/` + newUserGames.data[0]?.season + `?rank=${newUserGames.data[0].match_rank}`
     :

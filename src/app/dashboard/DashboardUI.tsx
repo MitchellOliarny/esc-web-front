@@ -124,9 +124,9 @@ export default function Header({
             isAdmin={isAdmin}
             gamemode={gamemode}
             onSearch={(newGames: any) => {
-              setValGames(newGames.games ? newGames.games : userGames);
-              setNewTopAgents(newGames.agents ? newGames.agents : topAgents );
-              setValAverages(newGames.averages ? newGames.averages : valAverage)
+              setValGames(newGames.games ? newGames.games : '');
+              setNewTopAgents(newGames.agents ? newGames.agents : '' );
+              setValAverages(newGames.averages ? newGames.averages : '')
               setGamemode(newGames.gamemode || 'Competitive')
             }}
           />
@@ -148,7 +148,7 @@ export default function Header({
           style={{
             backgroundImage:
             valGames
-                ? `url(${valGames[0]?.valorant_banner})`
+                ? `url(${valGames[0]?.val_banner})`
                 : "url(https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png)",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -189,9 +189,9 @@ export default function Header({
               )}
               <h1 className="font-bold text-4xl">
                 {/* @ts-ignore */}
-                {valGames ? valGames[0]?.riot_name : ''}
+                {valGames ? valGames[0]?.username : ''}
                 <span className="text-[#F5603C] text-3xl">
-                  {/* @ts-ignore */}#{valGames ? valGames[0]?.riot_tag : ''}
+                  {/* @ts-ignore */}#{valGames ? valGames[0]?.tag : ''}
                 </span>
               </h1>
             </div>

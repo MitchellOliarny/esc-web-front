@@ -6,6 +6,7 @@ import { userSession } from "@/app/utils/authHelpers";
 import { FaCheck, FaXmark, FaCrown } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import subscribe from "@/app/settings/settingsActions/subscribe";
+import manageSubscriptions from "@/app/settings/settingsActions/manageSubscriptions";
 
 interface SubscriptionsProps {
 
@@ -34,31 +35,52 @@ const Subscriptions = ({ }: SubscriptionsProps) => {
         }
     }
 
+    const HandleSubscriptionManageClick = async () => {
+        const res = await manageSubscriptions();
+        if (res.success) {
+            toast.success(res.message)
+            if (res.link) {
+                //@ts-ignore
+                window.open(res.link, '_blank').focus();
+            }
+        }
+        else {
+            toast.error(res.message);
+        }
+    }
+
 
     return (
         <>
             <div className="mt-5 rounded-md ml-10 h-full">
-                <div className="grid grid-cols-3 items-center p-4 h-full">
+                <div className="grid grid-cols-3 items-center p-4 h-auto">
 
-                    <div className="grid grid-rows-6 mt-5 rounded-md border-3 h-full m-2">
+                    <div className="grid grid-rows-3 mt-5 rounded-md border-3 h-auto m-2">
+                        <div className="grid">
                         <p className="m-4 justify-self-center text-3xl font-bold">Member</p>
                         <FaCrown size={'5em'} className="justify-self-center" />
                         <p className="m-4 justify-self-center text-2xl font-bold border-b">$4.99 / Month</p>
-                        <div className="row-span-2 ml-6 justify-self-center text-lg font-bold">
+                        </div>
+                        <div className="row-span-1 ml-6 justify-self-center text-lg font-bold h-auto">
                             <ul className="h-full list-disc m-4">
                                 <li>Access to Premium Medals</li>
                                 <li>FREE entry to all Weekly Events</li>
                             </ul>
                         </div>
-                        <div className="mx-4">
+                        <div className="mx-4 h-auto">
                             {
                                 //@ts-ignore
                                 info?.esc_member == 1 ?
-                                    <button className="btn text-white font-bold text-xl rounded-full bg-[#36ab98] hover:bg-[#5ECCBA] w-full">
-                                        <FaCheck />
-                                    </button>
+                                    <div className="grid grid-rows-2 mx-4 my-4 h-full">
+                                        <button className="btn border-0 text-white font-bold text-xl rounded-full bg-[#36ab98] hover:bg-[#5ECCBA] w-full">
+                                            <FaCheck />
+                                        </button>
+                                        <button className="btn border-0 text-white font-bold text-xl rounded-full bg-[#27a9cd] hover:bg-[#2093b3] w-full" onClick={() => HandleSubscriptionManageClick()}>
+                                            Manage Subscription
+                                        </button>
+                                    </div>
                                     :
-                                    <button className="btn text-white font-bold text-xl rounded-full bg-[#F5603C] hover:bg-[#AC442A] w-full hover:scale-105" onClick={() => HandleSubscriptionClick('esc_member')}>
+                                    <button className="btn border-0 text-white font-bold text-xl rounded-full bg-[#F5603C] hover:bg-[#AC442A] w-full hover:scale-105" onClick={() => HandleSubscriptionClick('esc_member')}>
                                         Subscribe
                                     </button>
                             }
