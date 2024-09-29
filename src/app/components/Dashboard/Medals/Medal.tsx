@@ -17,6 +17,7 @@ const Medal = ({ medalInfo, progress, statusIncrease, isMaster }: MedalsProps) =
 
     const [currentStatus, setCurrentStatus] = useState(0);
     const [childMedals, setChildMedals] = useState({});
+    const [displayMedals, setDisplayMedals] = useState([]);
 
     const bucket = "https://files.esportsclubs.gg/";
 
@@ -49,6 +50,27 @@ const Medal = ({ medalInfo, progress, statusIncrease, isMaster }: MedalsProps) =
         setCurrentStatus(currentStatus + int);
     }
 
+    const RenderChildMedals = (medalArray: any) => {
+        //@ts-ignore
+        let temp = [];
+        {Object.keys(medalArray.medals).map((value, index) => (
+            // @ts-ignore
+            // <FinalMedal medalInfo={medalInfo.medals[value]} progress={childMedals ? childMedals[value] : 0} 
+            temp.push(<Medal 
+            medalInfo={medalArray.medals[value]} 
+            // @ts-ignore
+            progress={childMedals ? childMedals[value] : 0}
+             key={medalArray.medal_name + '_' + index} 
+            statusIncrease={IncreaseStatus} 
+            // @ts-ignore
+            isMaster={ typeof childMedals[Object.keys(childMedals)[0]] !== 'number' ? true : false}
+            />)
+        ))}
+        //@ts-ignore
+        setDisplayMedals(temp);
+        setShowLightBox('flex')
+    }
+
     //@ts-ignore
     //console.log(isMaster)
 
@@ -63,7 +85,7 @@ const Medal = ({ medalInfo, progress, statusIncrease, isMaster }: MedalsProps) =
                         `${bucket}${medalInfo.medal_tiers[medalInfo.current_tier].medal_id}.png` :
                         `${bucket}${medalInfo.medal_tiers['1'].medal_id}.png`
                         // `https://api.esportsclubs.gg/images/Vandal_Kills_1.png`
-                    } onMouseOver={() => setShowPopUp('grid')} onMouseOut={() => setShowPopUp('hidden')} onClick={() => setShowLightBox('flex')}></img>
+                    } onMouseOver={() => setShowPopUp('grid')} onMouseOut={() => setShowPopUp('hidden')} onClick={() => RenderChildMedals(medalInfo)}></img>
                     <h2 className={'font-bold'} style={{ width: '100%', textAlign: 'center', margin: '-25px auto' }}>
                         {medalInfo.medal_tiers[medalInfo.current_tier ? medalInfo.current_tier : '1'].medal_id}
                     </h2>
@@ -178,19 +200,7 @@ const Medal = ({ medalInfo, progress, statusIncrease, isMaster }: MedalsProps) =
 
 
                             <div style={{ width: '100%', height: '90%', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gridTemplateRows: '1fr 1fr 1fr 1fr' }}>
-                                {Object.keys(medalInfo.medals).map((value, index) => (
-                                    // @ts-ignore
-                                    // <FinalMedal medalInfo={medalInfo.medals[value]} progress={childMedals ? childMedals[value] : 0} 
-                                    <Medal 
-                                    medalInfo={medalInfo.medals[value]} 
-                                    // @ts-ignore
-                                    progress={childMedals ? childMedals[value] : 0}
-                                     key={medalInfo.medal_name + '_' + index} 
-                                    statusIncrease={IncreaseStatus} 
-                                    // @ts-ignore
-                                    isMaster={ typeof childMedals[Object.keys(childMedals)[0]] !== 'number' ? true : false}
-                                    />
-                                ))}
+                               {displayMedals}
                             </div>
                         </div>
                     </div>)

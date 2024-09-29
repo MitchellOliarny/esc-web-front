@@ -30,6 +30,10 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
         temp++;
     }
 
+    const RenderChildMedals = () => {
+        
+    }
+
 
     return (
         <>
