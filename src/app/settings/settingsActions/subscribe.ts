@@ -17,6 +17,8 @@ export default async function subscribe(subscription: String) {
     headers,
   });
 
+  console.log(response)
+
   const result = await response.json();
 
   console.log(result)
