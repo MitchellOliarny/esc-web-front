@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { leapfrog } from "ldrs";
-import { FaBullseye, FaCheck, FaGlobe, FaList, FaMedal, FaRegCalendar, FaRegUser, FaTrophy } from "react-icons/fa";
+import { FaCrosshairs, FaCheck, FaGlobe, FaList, FaMedal, FaRegCalendar, FaRegUser, FaTrophy, FaDice } from "react-icons/fa";
 import doFindEvent from "../doFindEvent"
 import doJoinEvent from "../doJoinEvent";
 import doFetchParticipants from "../doFetchParticipants";
@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export default function EventDetails() {
 
-    const [event, setEvent] = useState({});
+    const [event, setEvent] = useState({medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]"});
     const [isLoading, setIsLoading] = useState(true);
     const [lbLoading, setLBLoading] = useState(true);
     const [lb, setLB] = useState([])
@@ -32,6 +32,7 @@ export default function EventDetails() {
 
     const FetchEvent = async (eventname: any) => {
         const event_details = await doFindEvent(eventname);
+        console.log(event_details)
         if (event_details.success) {
             setEvent(event_details.details.events[0]);
             if(new Date(event_details.details.events[0].end_date) <= new Date(Date.now())) {
@@ -40,7 +41,7 @@ export default function EventDetails() {
             else if (event_details.details.events[0].score >= 0) {
                 setButtonState(3);
             }
-            else if (event_details.user.isStudent == 1) {
+            else if (event_details.user.esc_member == 1) {
                 setButtonState(1)
             }
             console.log(event_details.user)
@@ -166,7 +167,7 @@ export default function EventDetails() {
                                     :
                                     <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-2xl px-6 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
                                         //@ts-ignore
-                                        event.entry_fee == 0 ? 'FREE ENTRY' : '$' + (event.entry_fee - 0.01) + ' or FREE w/ ESC+'
+                                        event.entry_fee == 0 ? 'FREE ENTRY' : 'Requires ESC+'
                                     }</span></button>
                         }
                     </div>
@@ -194,7 +195,7 @@ export default function EventDetails() {
                             </p>
                         </div>
                         <div className="inline-flex mb-4">
-                            <FaBullseye size={'3em'} />
+                            <FaCrosshairs size={'3em'} />
                             <p className="font-bold text-xl my-auto mx-4 text-white">{
                                 //@ts-ignore
                                 "Get as many " + ((event.medal_condition.split(':')[event.medal_condition.split(':').length - 1]).split('_')[0]).toLocaleUpperCase() + "(s) as possible!"
@@ -205,7 +206,7 @@ export default function EventDetails() {
                             <FaList size={'3em'} />
                             <p className="font-bold text-xl my-auto mx-4 text-white">{
                                 //@ts-ignore
-                                "Modes: " + JSON.parse(JSON.parse(event.gamemodes)).join(", ")
+                                "Modes: " + event.gamemodes ? JSON.parse(JSON.parse(event.gamemodes)).join(", ") : ''
                             }
                             </p>
                         </div>
@@ -213,7 +214,7 @@ export default function EventDetails() {
                             <FaGlobe size={'3em'} />
                             <p className="font-bold text-xl my-auto mx-4 text-white">{
                                 //@ts-ignore
-                                "Regions: " + JSON.parse(JSON.parse(event.regions)).join(", ").toLocaleUpperCase()
+                                "Regions: " + event.regions ? JSON.parse(JSON.parse(event.regions)).join(", ").toLocaleUpperCase() : ''
                             }
                             </p>
                         </div>
@@ -222,6 +223,14 @@ export default function EventDetails() {
                             <p className="font-bold text-xl my-auto mx-4 text-white">{
                                 //@ts-ignore
                                 "Ranks: " + (event.min_rank == 0 && event.max_rank == 27 ? 'ANY' : CalcRankName(event.min_rank).toLocaleUpperCase() + " - " + CalcRankName(event.max_rank).toLocaleUpperCase())
+                            }
+                            </p>
+                        </div>
+                        <div className="inline-flex mb-4">
+                            <FaDice size={'3em'} />
+                            <p className="font-bold text-xl my-auto mx-4 text-white">{
+                                //@ts-ignore
+                                "Game Limit: " + (event.game_limit <= 0 ? 'NONE' : event.game_limit)
                             }
                             </p>
                         </div>
@@ -265,7 +274,7 @@ export default function EventDetails() {
                                 lb.map((value, index) => {
                                     return (
                                         //@ts-ignore
-                                        <EventParticipant key={value.riot_name+value.riot_tag} value={value} color={index < event.winners ? borders[index] ? borders[index] : borders[3] : borders[4]} position={index+1} />
+                                        <EventParticipant key={value.username+value.tag} value={value} color={index < event.winners ? borders[index] ? borders[index] : borders[3] : borders[4]} position={index+1} />
                                     )
                                 })
                         }

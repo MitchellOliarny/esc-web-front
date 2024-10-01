@@ -9,17 +9,10 @@ import subscribe from "@/app/settings/settingsActions/subscribe";
 import manageSubscriptions from "@/app/settings/settingsActions/manageSubscriptions";
 
 interface SubscriptionsProps {
-
+    sub_status: boolean;
 }
-const Subscriptions = ({ }: SubscriptionsProps) => {
+const Subscriptions = ({ sub_status }: SubscriptionsProps) => {
 
-    const [info, setInfo] = useState(null);
-
-    useEffect(() => {
-        //@ts-ignore
-        const session = userSession().then((value) => setInfo(value));
-
-    }, [])
 
     const HandleSubscriptionClick = async (name: String) => {
         const res = await subscribe(name);
@@ -49,7 +42,6 @@ const Subscriptions = ({ }: SubscriptionsProps) => {
         }
     }
 
-
     return (
         <>
             <div className="mt-5 rounded-md ml-10 h-full">
@@ -57,9 +49,9 @@ const Subscriptions = ({ }: SubscriptionsProps) => {
 
                     <div className="grid grid-rows-4 mt-5 rounded-md border-3 h-auto m-2 py-4">
                         <div className="grid row-span-2 m-auto content-center">
-                        <p className="m-4 justify-self-center text-3xl font-bold">Member</p>
+                        <p className="m-4 justify-self-center text-3xl font-bold">ESC+ Member</p>
                         <FaCrown size={'5em'} className="justify-self-center" />
-                        <p className="m-4 justify-self-center text-2xl font-bold border-b">$4.99 / Month</p>
+                        <p className="m-4 justify-self-center text-2xl font-bold border-b">$2.99 / Month</p>
                         </div>
                         <div className="row-span-1 ml-6 justify-self-center self-center text-lg font-bold h-auto">
                             <ul className="h-full list-disc m-4">
@@ -70,7 +62,7 @@ const Subscriptions = ({ }: SubscriptionsProps) => {
                         <div className="mx-4 h-auto">
                             {
                                 //@ts-ignore
-                                info?.esc_member == 1 ?
+                                sub_status ?
                                     <div className="grid grid-rows-2 mx-4 my-4 h-full">
                                         <button className="btn border-0 text-white font-bold text-xl rounded-full bg-[#36ab98] hover:bg-[#5ECCBA] w-full">
                                             <FaCheck />

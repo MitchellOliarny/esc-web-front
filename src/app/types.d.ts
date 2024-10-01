@@ -45,6 +45,7 @@ type UserInfo = {
   discord_id: string;
   discord_username: string;
   discord_avatar: string;
+  esc_member: number;
 };
 type UserInvites = {
   id: string;

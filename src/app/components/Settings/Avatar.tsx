@@ -43,7 +43,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
     }
   };
   return (
-    <>
+    <div>
       <div className="mt-6" onClick={onOpen}>
         <Image
           alt="Profile Picture"
@@ -64,7 +64,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
       >
         <ModalContent>
           {(onClose) => (
-            <>
+            <div>
               <ModalHeader className="flex flex-col gap-1">
                 Choose a new profile picture
                 <p className="text-xs">
@@ -134,10 +134,10 @@ export default function Avatar({ profile_picture }: AvatarProps) {
                   </div>
                 </form>
               </ModalBody>
-            </>
+            </div>
           )}
         </ModalContent>
       </Modal>
-    </>
+    </div>
   );
 }

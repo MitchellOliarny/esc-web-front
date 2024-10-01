@@ -43,7 +43,7 @@ export default function Sidebar({
       case "Connections":
         return <ConnectionsSettings userInfo={userInfo} />;
       case "Subscriptions":
-        return <Subscriptions />;
+        return <Subscriptions sub_status={userInfo.esc_member ? true : false} />;
       // case "My Teams":
       //   return <MyTeamsUI userTeams={userTeams} userInfo={userInfo} />;
       // case "Team Invites":

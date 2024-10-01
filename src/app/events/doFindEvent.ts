@@ -27,6 +27,8 @@ export default async function doFindEvent(event: string) {
 
   const event_details = await response.json();
 
+  console.log(event_details)
+
   // If the request was successful
   if (response.ok) {
     // Set the success flag to true

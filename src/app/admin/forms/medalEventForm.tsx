@@ -144,6 +144,7 @@ const MedalEventForm = (valMedals: any) => {
         for (let i = 0; i < e.target.value; i++) {
             result.push(
                 <div key={"split_" + i}>
+                    <label>Winner {i+1} Prize ($ Amount)</label>
                     <input
                         type="number"
                         id={"split_" + (i + 1)}
@@ -195,6 +196,7 @@ const MedalEventForm = (valMedals: any) => {
             <form id="registerForm" className="py-10" onSubmit={handleSubmit}>
                 <div id="eventName" className="px-10 mb-4 gap-2 grid grid-cols-1">
                     <div>
+                    <label>Event Name</label>
                         <input
                             type="text"
                             id="name"
@@ -216,6 +218,7 @@ const MedalEventForm = (valMedals: any) => {
                     className="px-10 mb-4 gap-2 grid grid-cols-1"
                 >
                     <div>
+                    <label>Event Description</label>
                         <input
                             type="textarea"
                             name="description"
@@ -234,6 +237,7 @@ const MedalEventForm = (valMedals: any) => {
 
                 <div id="medal" className="px-10 mb-4 gap-2 grid grid-cols-1">
                     <div>
+                        <label>Event Medal</label>
                         <select
                             id="medal_condition"
                             name="medal_condition"
@@ -254,11 +258,12 @@ const MedalEventForm = (valMedals: any) => {
 
                 <div id="entryFeeLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
                     <div>
+                    <label>Free Entry? (0 if open to public, 1 if subscibers only)</label>
                         <input
                             type="number"
                             id="entry_fee"
                             name="entry_fee"
-                            placeholder="Entry Fee.. (Nearest Dollar)"
+                            placeholder="Entry Fee.. (Nearest Whole Dollar)"
                             className="input w-full bg-transparent border border-white"
                             required
                             autoComplete="off"
@@ -270,6 +275,7 @@ const MedalEventForm = (valMedals: any) => {
                     </div>
 
                     <div>
+                        <label>Prize Pool.. (total to split)</label>
                         <input
                             type="number"
                             id="prize_pool"
@@ -290,6 +296,7 @@ const MedalEventForm = (valMedals: any) => {
 
                 <div id="teamLimitLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
                     <div>
+                        <label>Player Limit (0 if uncapped)</label>
                         <input
                             type="Number"
                             id="team_limit"
@@ -306,11 +313,12 @@ const MedalEventForm = (valMedals: any) => {
                         ></div>
                     </div>
                     <div>
+                    <label>Winners Count</label>
                         <input
                             type="number"
                             id="winners"
                             name="winners"
-                            placeholder="Winner Count.."
+                            placeholder="Winner Count.. (split prize pool)"
                             autoComplete="off"
                             className="input w-full bg-transparent border border-white"
                             required
@@ -325,6 +333,7 @@ const MedalEventForm = (valMedals: any) => {
 
                 <div id="prizeTypeLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
                     <div>
+                    <label>Prizing Split Type</label>
                         <select
                             id="prize_type"
                             name="prize_type"
@@ -334,7 +343,7 @@ const MedalEventForm = (valMedals: any) => {
                             onChange={handleSplitTypeChange}
                             defaultValue={'null'}
                         >
-                            <option value={'null'} disabled>Prize Type</option>
+                            <option value={'null'} disabled>Prize Split Type</option>
                             <option value="even_split">Split Evenly</option>
                             <option value="cascade_split">Cascade Split</option>
                         </select>
@@ -344,6 +353,7 @@ const MedalEventForm = (valMedals: any) => {
                         ></div>
                     </div>
                     <div>
+                    <label>Event Thumbnail</label>
                         <input
                             type="file"
                             id="thumbnail"
@@ -369,8 +379,34 @@ const MedalEventForm = (valMedals: any) => {
 
                 </div>
 
+                <div id="game_limit_line" className="px-10 mb-4 grid grid-cols-2 gap-2">
+                    <div>
+                    <label>Game Limit (0 if uncapped)</label>
+                        <input
+                            id="game_limit"
+                            name="game_limit"
+                            autoComplete="off"
+                            className="input w-full bg-transparent border border-white"
+                            type="Number"
+                            required
+                            placeholder="Game Limit (0 if uncapped)"
+                            
+                        >
+                                        
+                        </input>
+                        <div
+                            id="game_limit-error"
+                            className="italic float-left text-red-500 error-message !-mb-3"
+                        ></div>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+
                 <div id="rankLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
                     <div>
+                    <label>Minimum Rank Requirement (included)</label>
                         <select
                             id="min_rank"
                             name="min_rank"
@@ -398,6 +434,7 @@ const MedalEventForm = (valMedals: any) => {
                         ></div>
                     </div>
                     <div>
+                    <label>Maximum Rank Requirement (included)</label>
                         <select
                             id="max_rank"
                             name="max_rank"
@@ -428,6 +465,7 @@ const MedalEventForm = (valMedals: any) => {
 
                 <div id="regionLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
                     <div className="h-32">
+                     <label>Allowed Regions (ctrl + click to select multiple)</label>
                         <select
                             id="regions"
                             name="regions"
@@ -448,6 +486,7 @@ const MedalEventForm = (valMedals: any) => {
                         ></div>
                     </div>
                     <div className="h-32">
+                    <label>Allowed Gamemodes (ctrl + click to select multiple)</label>
                         <select
                             id="gamemodes"
                             name="gamemodes"
@@ -473,6 +512,7 @@ const MedalEventForm = (valMedals: any) => {
                 </div>
                 <div id="dateLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
                     <div>
+                    <label>Starting Date and Time (use your local time)</label>
                         <input
                             type="datetime-local"
                             id="start_date"
@@ -489,6 +529,7 @@ const MedalEventForm = (valMedals: any) => {
                         ></div>
                     </div>
                     <div>
+                    <label>Ending Date and Time (use your local time)</label>
                         <input
                             type="datetime-local"
                             id="end_date"
@@ -507,6 +548,7 @@ const MedalEventForm = (valMedals: any) => {
                 </div>
                 <div id="advertiseLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
                     <div>
+                    <label>Starting Advertisement Date and Time (use your local time)</label>
                         <input
                             type="datetime-local"
                             id="start_ad_date"
@@ -523,6 +565,7 @@ const MedalEventForm = (valMedals: any) => {
                         ></div>
                     </div>
                     <div>
+                    <label>Ending Advertisement Date and Time (use your local time)</label>
                         <input
                             type="datetime-local"
                             id="end_ad_date"
@@ -540,14 +583,14 @@ const MedalEventForm = (valMedals: any) => {
                     </div>
                 </div>
 
-                <div>
+                <div className="grid">
                     <button
                         id="submitEvent"
                         type="submit"
                         disabled={isLoading}
-                        className="btn text-white w-56 h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
+                        className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
                     >
-                        {isLoading ? "" : "CREATE"}
+                        {isLoading ? "" : "CREATE EVENT"}
                         <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
                     </button>
                 </div>
