@@ -72,8 +72,8 @@ export default function ProfileSettingsUI({
   const [preferredAgent, setPreferredAgent] = useState<string>("");
 
   useEffect(() => {
-    if (userInfo?.display_agent) {
-      setPreferredAgent(userInfo?.display_agent);
+    if (userInfo?.val_display_agent) {
+      setPreferredAgent(userInfo?.val_display_agent);
     }
   }, [userInfo]);
 
@@ -159,8 +159,8 @@ export default function ProfileSettingsUI({
               <label className="form-control w-full">
                 <select
                   defaultValue={
-                    userInfo?.rec_preferred_role
-                      ? userInfo?.rec_preferred_role
+                    userInfo?.val_rec_preferred_role
+                      ? userInfo?.val_rec_preferred_role
                       : roleOptions[0].text
                   }
                   onChange={handleRoleChange}

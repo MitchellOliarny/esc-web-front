@@ -137,7 +137,7 @@ const DashboardFilter = ({
                 if (user.puuid) {
                   return (
                     <option key={user.puuid + index} data-value={user.puuid}>
-                      {user.riot_name + '#' + user.riot_tag}
+                      {user.username + '#' + user.tag}
                     </option>
                   )
                 }

@@ -31,8 +31,8 @@ type ScheduleList = {
   league: string;
 };
 type UserInfo = {
-  rec_preferred_role?: string;
-  display_agent: string;
+  val_rec_preferred_role?: string;
+  val_display_agent: string;
   profile_picture: string;
   id: number;
   riot_name: string;
