@@ -44,8 +44,8 @@ export default function EventDetails() {
             else if (event_details.user.esc_member == 1) {
                 setButtonState(1)
             }
-            console.log(event_details.user)
-            console.log(event_details.details)
+           // console.log(event_details.user)
+          //  console.log(event_details.details)
         }
         setIsLoading(false);
     }

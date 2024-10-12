@@ -39,7 +39,7 @@ export default async function doFilterGames(queryParams: any, mode: string) {
   Agents.sort((a, b) => b.games - a.games);
   let valAverages = null;
 
-  console.log(newUserGames)
+  // console.log(newUserGames)
 
   if((!mode || mode == 'Competitive') && !newUserGames.message) {
   const valorantAveragesEndpoint = newUserGames.data[0].match_rank ?

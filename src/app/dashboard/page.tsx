@@ -43,7 +43,7 @@ export default async function Dashboard(queryParams: any) {
   });
   userInfo = await userInfoResp.json();
 
-  console.log(userInfo)
+  //console.log(userInfo)
 
   if (userInfo?.message == 'Invalid Session') {
     return redirect("/login");

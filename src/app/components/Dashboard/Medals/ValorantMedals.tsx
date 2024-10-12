@@ -26,8 +26,6 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
         setMedalCategory('');
     }
 
-    console.log(medalsProgress)
-
 
     return (
         <>
@@ -45,7 +43,7 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
 
             <div className={`${showMedals} grid-rows-4 gap-4 h-full`}>
                 <FaXmark size={'3em'} onClick={() => ShowCards()} style={{ cursor: 'pointer', justifySelf: 'end', position: 'absolute', margin: '0% -5%' }} />
-                <MedalShowcase medals={medals.data[medalCategory]} medalsProgress={medalsProgress.data.progress[medalCategory]} category={medalCategory}/>
+                <MedalShowcase medals={medals.data[medalCategory]} medalsProgress={medalsProgress.data.progress} category={medalCategory}/>
             </div>
         </>
     );

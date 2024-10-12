@@ -11,7 +11,7 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
 
     //console.log(medals)
     //console.log(medalsProgress)
-   // console.log(category)
+    // console.log(category)
 
     let kills_progress: any[] = [];
     let ability_progress: any[] = [];
@@ -30,6 +30,8 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
         temp++;
     }
 
+    console.log(medals)
+    console.log(medalsProgress)
 
 
     return (
@@ -46,7 +48,7 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
                                 overflowX: 'visible',
                                 minHeight: '150px'
                             }}>
-                                <Medal medalInfo={medals[value]} progress={medalsProgress ? medalsProgress[value] : 0}
+                                <Medal medalInfo={medals[value]} progress={medalsProgress[value] ? medalsProgress[value].progress : 0}
                                     statusIncrease={IncreaseStatus}
                                     isMaster={true}
                                 />
@@ -75,16 +77,18 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
                                         key={value + 'medal'}
                                         statusIncrease={IncreaseStatus} />
                                     <hr className={`h-48 w-0.5 bg-white`} style={{ margin: 'auto 5%' }}></hr>
-                                    {Object.keys(medals[value].medals).map((value2, index) => (
-                                        index < 4 ?
-                                            <Medal medalInfo={medals[value].medals[value2]} progress={medalsProgress ? medalsProgress[value2] : 0}
-                                                key={value2 + '' + index}
-                                                statusIncrease={IncreaseStatus}
-                                                isMaster={true}
-                                            />
-                                            :
-                                            ''
-                                    ))}
+                                    {Object.keys(medals[value].medals).map((value2, index) => {
+                                        return (
+                                            index < 4 ?
+                                                <Medal medalInfo={medals[value].medals[value2]} progress={medalsProgress[value2]}
+                                                    key={value2 + '' + index}
+                                                    statusIncrease={IncreaseStatus}
+                                                    isMaster={true}
+                                                />
+                                                :
+                                                ''
+                                        )
+                                    })}
 
                                 </div>
 
