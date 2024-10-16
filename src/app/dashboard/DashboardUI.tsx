@@ -229,14 +229,14 @@ export default function Header({
                 >
                   Agents
                 </li>
-                <li
+                {/* <li
                   onClick={() => handleSideBarClick("medals")}
                   className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${
                     selectedMenu === "medals" ? "bg-[#F5603C]" : ""
                   }`}
                 >
                   Medals
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
