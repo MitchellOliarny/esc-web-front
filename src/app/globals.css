@@ -282,6 +282,7 @@ select.transparent>option {
 
 .progress-voltage::-webkit-progress-value {
   background-image: linear-gradient(to right, #5ECCBA, #B6FFF3) !important;
+  box-shadow: 0px 0px 20px 2px #5ECCBA9A !important;
   -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
   clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
 }

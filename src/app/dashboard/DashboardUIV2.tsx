@@ -158,7 +158,7 @@ export default function Header({
           }}
         >
           <div className="flex flex-col justify-end pt-40 pb-0 px-6 h-full rounded-lg"
-            style={{ backgroundImage: 'linear-gradient(0deg, #14181E, 20%, #14181ee0, 70%, transparent)' }}
+            style={{ backgroundImage: 'linear-gradient(0deg, #14181E, 80%, transparent)' }}
           >
             <div className="w-full grid grid-cols-2 pb-8">
               <h1 className="grid font-[800] text-5xl text-frost px-4">
