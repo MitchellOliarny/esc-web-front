@@ -51,12 +51,12 @@ export default function Header({
   const [valAverages, setValAverages] = useState<ValAverage[]>(valAverage);
   const [gamemode, setGamemode] = useState('Competitive')
 
-  // useEffect(()=>{
-  //   if(view) {
-  //     setSelectedMenu(view);
-  //   }
-  //   console.log(view);
-  // },[view])
+  useEffect(()=>{
+    if(view) {
+      handleSideBarClick(view);
+    }
+    console.log(view);
+  },[view])
   // console.log(topAgents);
   // console.log(userInfo);
 
@@ -107,7 +107,7 @@ export default function Header({
         );
       case "medals":
         return (
-          <ValorantMedals medalsProgress={medalProgress} medals={medals}/>
+          <ValorantMedals medalsProgress={medalProgress} medals={medals} />
         )
       default:
         return (
@@ -125,7 +125,7 @@ export default function Header({
             gamemode={gamemode}
             onSearch={(newGames: any) => {
               setValGames(newGames.games ? newGames.games : '');
-              setNewTopAgents(newGames.agents ? newGames.agents : '' );
+              setNewTopAgents(newGames.agents ? newGames.agents : '');
               setValAverages(newGames.averages ? newGames.averages : '')
               setGamemode(newGames.gamemode || 'Competitive')
             }}
@@ -135,6 +135,8 @@ export default function Header({
   };
 
   const handleSideBarClick = (menu: string) => {
+    //@ts-ignore
+    document.getElementById(menu).appendChild(document.getElementById('nav-bar'));
     setSelectedMenu(menu);
   };
 
@@ -147,40 +149,52 @@ export default function Header({
           className="w-full rounded-lg h-[25rem]"
           style={{
             backgroundImage:
-            valGames
+              valGames
                 ? `url(${valGames[0]?.val_banner})`
                 : "url(https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <div className="flex justify-between pt-40 pb-6 px-6 h-full rounded-lg"
-          style={{backgroundImage: 'linear-gradient(0deg, #000000, 50%, transparent)'}}
+          <div className="flex flex-col justify-end pt-40 pb-0 px-6 h-full rounded-lg"
+            style={{ backgroundImage: 'linear-gradient(0deg, #14181E, 20%, #14181ee0, 70%, transparent)' }}
           >
-            <div>
+            <div className="w-full grid grid-cols-2 pb-8">
+              <h1 className="grid font-[800] text-5xl text-frost px-4">
+                {/* @ts-ignore */}
+                {valGames ? valGames[0]?.username : ''}
+                <br className="gap-0"></br>
+                <span className="text-ash text-2xl font-bold">
+                  {/* @ts-ignore */}#{valGames ? valGames[0]?.tag : ''}
+                </span>
+              </h1>
               {valGames?.length > 0 && (
-                <div className="flex gap-2">
+                <div className="flex gap-4 w-[60%] justify-self-end self-end text-frost">
                   <Image
-                    src={`https://api.esportsclubs.gg/images/ranks/${
-                      valGames[0]?.mmr_change?.rank
+                    src={`https://api.esportsclubs.gg/images/ranks/${valGames[0]?.mmr_change?.rank
                         ? valGames[0]?.mmr_change?.rank
                         : "0"
-                    }`}
+                      }`}
                     className="w-auto h-14 drop-shadow-lg"
                     alt="user rank"
                     width={100}
                     height={100}
                   />
                   <div className="flex flex-col w-full">
-                    <p className="text-2xl text-center font-bold">
-                      {valGames[0]?.mmr_change?.new_mmr ? valGames[0]?.mmr_change?.new_mmr : 0}
-                      <span className="text-lg">
-                        {valGames[0]?.match_rank >= 24 ? "RR" : "/100"}
-                      </span>
-                    </p>
-                    <div className="w-full">
+                    <div className="grid grid-cols-2 w-full">
+                      <p className="pl-2 text-lg text-left font-[700]">
+                        {valGames[0]?.mmr_change?.new_mmr ? valGames[0]?.mmr_change?.new_mmr : 0}
+                        <span className="text-lg text-ash">
+                          {valGames[0]?.match_rank >= 24 ? "RR" : "/100 RR"}
+                        </span>
+                      </p>
+                      <p className="pl-2 text-sm text-ash text-right font-bold align-center justify-self-end">
+                        {valGames[0]?.mmr_change?.new_mmr && valGames[0]?.match_rank < 24 ? 100 - valGames[0]?.mmr_change?.new_mmr + ' RR to rank up' : 0}
+                      </p>
+                    </div>
+                    <div className="w-full cut-corner-45">
                       <progress
-                        className="progress w-full h-3 bg-[#2E4556]"
+                        className="progress-voltage w-full h-3"
                         color="secondary"
                         value={valGames[0]?.mmr_change?.new_mmr}
                         max={100}
@@ -189,56 +203,51 @@ export default function Header({
                   </div>
                 </div>
               )}
-              <h1 className="font-bold text-4xl">
-                {/* @ts-ignore */}
-                {valGames ? valGames[0]?.username : ''}
-                <span className="text-[#F5603C] text-3xl">
-                  {/* @ts-ignore */}#{valGames ? valGames[0]?.tag : ''}
-                </span>
-              </h1>
             </div>
             <div className="flex items-end">
-              <ul className="flex gap-4 font-bold text-lg">
+              <ul className="flex gap-4 font-bold text-lg w-full">
                 <li
-                  onClick={() => handleSideBarClick("overview")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${
-                    selectedMenu === "overview" ? "bg-[#F5603C]" : ""
-                  }`}
+                id="overview"
+                  onClick={(e) => handleSideBarClick("overview")}
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "text-frost" : ""
+                    }`}
                 >
                   Overview
+                  <hr id='nav-bar' className="back-rust w-[5%] h-[3px] nav-move-bar"></hr>
                 </li>
                 <li
-                  onClick={() => handleSideBarClick("statistics")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${
-                    selectedMenu === "statistics" ? "bg-[#F5603C]" : ""
-                  }`}
+                id="statistics"
+                  onClick={(e) => handleSideBarClick("statistics")}
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "text-frost" : ""
+                    }`}
                 >
                   Statistics
                 </li>
                 <li
-                  onClick={() => handleSideBarClick("match-history")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${
-                    selectedMenu === "match-history" ? "bg-[#F5603C]" : ""
-                  }`}
+                id="match-history"
+                  onClick={(e) => handleSideBarClick("match-history")}
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "text-frost" : ""
+                    }`}
                 >
                   Match History
                 </li>
                 <li
-                  onClick={() => handleSideBarClick("agents")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${
-                    selectedMenu === "agents" ? "bg-[#F5603C]" : ""
-                  }`}
+                id="agents"
+                  onClick={(e) => handleSideBarClick("agents")}
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "text-frost" : ""
+                    }`}
                 >
                   Agents
                 </li>
-                {/* <li
-                  onClick={() => handleSideBarClick("medals")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${
-                    selectedMenu === "medals" ? "bg-[#F5603C]" : ""
+                <li
+                 id="medals"
+                  onClick={(e) => handleSideBarClick("medals")}
+                  className={`grid cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out text-ash ${
+                    selectedMenu === "medals" ? "text-frost" : ""
                   }`}
                 >
                   Medals
-                </li> */}
+                </li>
               </ul>
             </div>
           </div>
@@ -258,7 +267,7 @@ export default function Header({
             setGamemode(newGames.gamemode || 'Competitive')
           }}
         />
-        <h1 className="inline-flex text-4xl py-4 font-bold w-full">{selectedMenu.toLocaleUpperCase().replace('-', ' ')} <p className="inline-flex mx-4 text-sm"> <FaExclamationCircle color="#FF6F4D" className="mx-4"/> Website is still Work-In-Progress - Report any issues in the ESC Discord</p> </h1>
+        <h1 className="inline-flex text-4xl py-4 font-bold w-full">{selectedMenu.toLocaleUpperCase().replace('-', ' ')} <p className="inline-flex mx-4 text-sm"> <FaExclamationCircle color="#FF6F4D" className="mx-4" /> Website is still Work-In-Progress - Report any issues in the ESC Discord</p> </h1>
         {renderContent()}
       </div>
     </>

@@ -1,11 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 html {
   background-color: #0c131d !important;
   color: #fafafa !important;
   scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
 }
 
 .hover-underline-animation {
@@ -124,15 +126,15 @@ html {
 }
 
 
-select.bg-transparent > option {
+select.bg-transparent>option {
   background-color: #1c2c3f;
 }
 
-select.transparent > option:checked {
+select.transparent>option:checked {
   background-color: #f5603c !important;
 }
 
-select.transparent > option {
+select.transparent>option {
   background-color: #ffffff00;
   color: white;
 }
@@ -201,4 +203,100 @@ select.transparent > option {
 
 .stat-box-border {
   border-radius: 2rem 2rem / 2rem 0% !important;
+}
+
+.text-ash {
+  color: #9BA3AE !important;
+}
+
+.text-frost {
+  color: #FFFFFF !important;
+}
+
+.text-rust {
+  color: #F5603C !important;
+}
+
+.text-voltage {
+  color: #5ECCBA !important;
+}
+
+.text-win {
+  color: #4CF8A5 !important;
+}
+
+.text-loss {
+  color: #FA6E6E !important;
+}
+
+.text-caution {
+  color: #FFC56D !important;
+}
+
+.back-slate {
+  background-color: #222830 !important;
+}
+
+.back-darkslate {
+  background-color: #10141A !important;
+}
+
+.back-obsidian {
+  background-color: #0E1115 !important;
+}
+
+.back-graphite {
+  background-color: #14181E !important;
+}
+
+.back-rust {
+  background-color: #F5603C !important;
+}
+
+.back-voltage {
+  color: #5ECCBA !important;
+}
+
+
+.back-3rd {
+  background-image: linear-gradient(to right, #C8965C, #FFCC90, #C8965C);
+}
+
+.back-2nd {
+  background-image: linear-gradient(to right, #A6B7D2, #D6E6FF, #A6B7D2);
+}
+
+.back-mvp {
+  background-image: linear-gradient(to right, #5BA5FD, #D662FC, #FA955D);
+}
+
+.cut-corner-45 {
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 5% 5%);
+  clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 5% 5%);
+}
+
+.cut-corner-45-right {
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
+  clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
+}
+
+.progress-voltage::-webkit-progress-value {
+  background-image: linear-gradient(to right, #5ECCBA, #B6FFF3) !important;
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
+  clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
+}
+
+.progress-voltage::-webkit-progress-bar {
+  background-color: #222830 !important;
+}
+
+
+.nav-move-bar {
+  transform: translateY(8px);
+  position: absolute;
+  align-self: flex-end;
+  justify-self: center;
+  transition: .5s ease-in-out;
+  border: none;
+  border-radius: .5em;
 }
