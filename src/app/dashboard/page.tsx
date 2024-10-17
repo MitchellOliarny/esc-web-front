@@ -1,6 +1,6 @@
 "use server";
 import React from "react";
-import Header from "./DashboardUI";
+import Header from "./DashboardUIV2";
 import DashboardFilter from "../components/Dashboard/DashboardFilter";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
