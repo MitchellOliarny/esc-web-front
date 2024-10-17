@@ -49,7 +49,8 @@ export default function Header({
   const [valGames, setValGames] = useState<UserGames[]>(userGames);
   const [newTopAgents, setNewTopAgents] = useState<Agents[]>(topAgents);
   const [valAverages, setValAverages] = useState<ValAverage[]>(valAverage);
-  const [gamemode, setGamemode] = useState('Competitive')
+  const [gamemode, setGamemode] = useState('Competitive');
+  const [medalNotif, setMedalNotif] = useState(0);
 
   useEffect(()=>{
     if(view) {
@@ -209,7 +210,7 @@ export default function Header({
                 <li
                 id="overview"
                   onClick={(e) => handleSideBarClick("overview")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "text-frost" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "text-frost glow-text-white" : ""
                     }`}
                 >
                   Overview
@@ -218,7 +219,7 @@ export default function Header({
                 <li
                 id="statistics"
                   onClick={(e) => handleSideBarClick("statistics")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "text-frost" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "text-frost glow-text-white" : ""
                     }`}
                 >
                   Statistics
@@ -226,7 +227,7 @@ export default function Header({
                 <li
                 id="match-history"
                   onClick={(e) => handleSideBarClick("match-history")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "text-frost" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "text-frost glow-text-white" : ""
                     }`}
                 >
                   Match History
@@ -234,7 +235,7 @@ export default function Header({
                 <li
                 id="agents"
                   onClick={(e) => handleSideBarClick("agents")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "text-frost" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "text-frost glow-text-white" : ""
                     }`}
                 >
                   Agents
@@ -243,10 +244,15 @@ export default function Header({
                  id="medals"
                   onClick={(e) => handleSideBarClick("medals")}
                   className={`grid cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out text-ash ${
-                    selectedMenu === "medals" ? "text-frost" : ""
+                    selectedMenu === "medals" ? "text-frost glow-text-white" : ""
                   }`}
                 >
                   Medals
+                  {medalNotif > 0 ? 
+                  <div className="medal-notif grid absolute self-start justify-self-end back-rust w-5 h-5 text-frost rounded-md border-[#F5603C40] translate-x-[25px] translate-y-[-10px]">
+                   <p className="absolute text-sm font-extrabold">{medalNotif}</p>
+                  </div> 
+                  : ''}
                 </li>
               </ul>
             </div>
