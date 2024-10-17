@@ -292,7 +292,7 @@ select.transparent>option {
 
 
 .nav-move-bar {
-  transform: translateY(8px);
+  transform: translateY(15px);
   position: absolute;
   align-self: flex-end;
   justify-self: center;

@@ -188,7 +188,7 @@ export default function Header({
                           {valGames[0]?.match_rank >= 24 ? "RR" : "/100 RR"}
                         </span>
                       </p>
-                      <p className="pl-2 text-sm text-ash text-right font-bold align-center justify-self-end">
+                      <p className="pl-2 text-sm text-ash text-right font-bold self-center justify-self-end">
                         {valGames[0]?.mmr_change?.new_mmr && valGames[0]?.match_rank < 24 ? 100 - valGames[0]?.mmr_change?.new_mmr + ' RR to rank up' : 0}
                       </p>
                     </div>
@@ -205,7 +205,7 @@ export default function Header({
               )}
             </div>
             <div className="flex items-end">
-              <ul className="flex gap-4 font-bold text-lg w-full">
+              <ul className="flex gap-4 font-bold text-lg w-full pb-2">
                 <li
                 id="overview"
                   onClick={(e) => handleSideBarClick("overview")}
@@ -213,7 +213,7 @@ export default function Header({
                     }`}
                 >
                   Overview
-                  <hr id='nav-bar' className="back-rust w-[5%] h-[3px] nav-move-bar"></hr>
+                  <hr id='nav-bar' className="back-rust w-[50px] h-[3px] nav-move-bar"></hr>
                 </li>
                 <li
                 id="statistics"
