@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 html {
-  background-color: #0c131d !important;
+  background-color: #0E1115 !important;
   color: #fafafa !important;
   scroll-behavior: smooth;
   font-family: "Inter", sans-serif;
@@ -290,6 +290,21 @@ select.transparent>option {
 .progress-voltage::-webkit-progress-bar {
   background-color: #222830 !important;
 }
+
+.dashfilter > input {
+  background-color: #14181E !important;
+  border: none;
+}
+
+.dashfilter > select {
+  background-color: #14181E !important;
+  border: none;
+  appearance: none;
+  width: 100%;
+  padding: 0.675em 6em 0.675em 1em;
+  cursor: pointer;
+}
+
 
 
 .glow-text-white {

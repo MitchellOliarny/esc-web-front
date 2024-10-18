@@ -107,12 +107,12 @@ const DashboardFilter = ({
 
   return (
     <>
-      <div className="bg-[#102B3D] p-2 rounded-lg">
-        <div className={`grid ${'grid-cols-' + (isAdmin ? '8' : '7')} gap-4`}>
+      <div className="bg-none py-2 rounded-lg">
+        <div className={`dashfilter grid ${'grid-cols-' + (isAdmin ? '8' : '7')} gap-4 font-bold text-frost`}>
 
           {isAdmin ? (
             <input
-              className="select select-bordered bg-transparent w-full max-w-xs"
+              className="select select-bordered w-full max-w-xs"
               value={selectedUser}
               onChange={(e) => { setSelectedUser(e.target.value) }}
               onInput={(e) => {
@@ -148,7 +148,7 @@ const DashboardFilter = ({
           )}
 
           <select
-            className="select select-bordered w-full bg-transparent max-w-xs"
+            className="select select-bordered w-full max-w-xs"
             value={selectedMap}
             onChange={(e) => setSelectedMap(e.target.value)}
           >
@@ -176,7 +176,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered bg-transparent w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs"
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
           >
@@ -188,7 +188,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered bg-transparent w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs"
             value={selectedAgent}
             onChange={(e) => setSelectedAgent(e.target.value)}
           >
@@ -201,7 +201,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered bg-transparent w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs"
             value={selectedMode}
             onChange={(e) => setSelectedMode(e.target.value)}
           >
@@ -213,7 +213,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered bg-transparent w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs"
             value={selectedSeason}
             onChange={(e) => setSelectedSeason(e.target.value)}
           >
@@ -225,7 +225,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered bg-transparent w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs"
             value={selectedSize}
             onChange={(e) => setSelectedSize(e.target.value)}
           >
