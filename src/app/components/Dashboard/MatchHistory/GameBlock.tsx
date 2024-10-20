@@ -2,6 +2,7 @@ import React, { useEffect, useImperativeHandle, useState } from "react";
 import Image from "next/image";
 import LargeMatchHistory from "./LargeMatchHistory";
 import SmallMatchHistory from "./SmallMatchHistory";
+import GameRowV2 from "./GameRowV2";
 
 interface GameBlockUIProps {
   game: any;
@@ -59,6 +60,34 @@ const GameBlock = ({
         style={{cursor: 'pointer'}}
       >
         <div
+          style={{transition: "ease-in-out 2s" }}
+        >
+          <GameRowV2
+            mmr_change={game.mmr_change?.mmr_change}
+            mapId={maps[game.map].id}
+            agentId={agents[game.agent].id}
+            rank={game.match_rank}
+            mapName={game.map}
+            playerTeam={
+              game.team.toLowerCase() === "blue" ? game.blue : game.red
+            }
+            enemyTeam={
+              game.team.toLowerCase() === "blue" ? game.red : game.blue
+            }
+            lbPosition={game.stats.lb_position + nth(game.stats.lb_position)}
+            headshotPercentage={game.stats.hs_percent.toFixed(2)}
+            acs={game.stats.combat_score.toFixed(2)}
+            kills={game.stats.kills}
+            deaths={game.stats.deaths}
+            assists={game.stats.assists}
+            kastPercentage={game.kast.toFixed(2)}
+            esc_score={
+              game.stats.esc_score ? game.stats.esc_score.toFixed(0) : 0
+            }
+            showRank={gamemode == 'Competitive' || gamemode == 'Premier' ? true: false}
+          />
+        </div>
+        {/* <div
           style={{ display: `${smallActive}`, transition: "ease-in-out 2s" }}
         >
           <SmallMatchHistory
@@ -123,7 +152,7 @@ const GameBlock = ({
             credit_score={game.stats?.credit_score?.toFixed(0)}
             showRank={gamemode == 'Competitive' || gamemode == 'Premier' ? true: false}
           />
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -396,3 +396,15 @@ select.transparent>option {
 .game-border-r {
   border-right: var(--graphite) 2px solid;
 }
+
+.game-row-win {
+  background: linear-gradient(90deg, var(--win) 2%, rgba(255,255,255,0) 6%, var(--graphite) 20%, var(--graphite) 100%);
+}
+
+.game-row-loss {
+  background: linear-gradient(90deg, var(--loss) 2%, rgba(255,255,255,0) 6%, var(--graphite) 20%, var(--graphite) 100%)
+}
+
+.game-row-draw {
+  background: linear-gradient(90deg, rgb(230, 230, 230) 2%, rgba(255,255,255,0) 6%, var(--graphite) 20%, var(--graphite) 100%);
+}

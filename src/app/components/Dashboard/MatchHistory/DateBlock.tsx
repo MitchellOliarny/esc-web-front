@@ -74,22 +74,22 @@ const DateBlock = ({ date, wins, losses, roundWin, adr, kast, headshot, acs, kad
             </div> */}
 
             <div>
-              <h3 className="font-[600] text-ash text-md">AVG KA/D</h3>
+              <h3 className="font-[600] text-ash text-sm">AVG KA/D</h3>
               <p className="font-bold text-xl text-frost">{kad}</p>
             </div>
 
             <div>
-              <h3 className="font-[600] text-ash text-md">AVG ACS</h3>
+              <h3 className="font-[600] text-ash text-sm">AVG ACS</h3>
               <p className="font-bold text-xl text-frost">{acs}</p>
             </div>
 
             <div>
-              <h3 className="font-[600] text-ash text-md">AVG HS%</h3>
+              <h3 className="font-[600] text-ash text-sm">AVG HS%</h3>
               <p className="font-bold text-xl text-frost">{headshot}%</p>
             </div>
 
             <div>
-              <h3 className="font-[600] text-ash text-md">AVG KAST%</h3>
+              <h3 className="font-[600] text-ash text-sm">AVG KAST%</h3>
               <p className="font-bold text-xl text-frost">{kast}%</p>
             </div>
 
