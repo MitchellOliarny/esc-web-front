@@ -47,6 +47,56 @@ export const formatDateYearShort = (dateString: string) => {
   }
 };
 
+export const timeSince = (dateString: string) => {
+    const now = new Date();
+    const givenDate = new Date(dateString);
+
+    // Calculate the difference in time (milliseconds)
+    //@ts-ignore
+    const diffInMs = now - givenDate;
+    
+    // Calculate the difference in days
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    
+    // Check if the two dates are on the same day
+    const sameDay = now.toDateString() === givenDate.toDateString();
+
+    if (sameDay) {
+        // Calculate the difference in hours if it's the same day
+        const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+        return `${diffInHours} hours ago`;
+    } else {
+        return `${diffInDays} days ago`;
+    }
+}
+
+export const daysSince = (dateString: string) => {
+  const now = new Date();
+  const givenDate = new Date(dateString);
+
+  // Calculate the difference in time (milliseconds)
+  //@ts-ignore
+  const diffInMs = now - givenDate;
+  
+  // Calculate the difference in days
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  
+  // Check if the two dates are on the same day
+  const sameDay = now.toDateString() === givenDate.toDateString();
+
+  if (sameDay) {
+      // Calculate the difference in hours if it's the same day
+      const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+      return `Today`;
+  } 
+  else if(diffInDays == 1){
+    return 'Yesterday'
+  }
+    else {
+      return `${diffInDays}d ago`;
+  }
+}
+
 export const formatTime = (dateString: string) => {
   if (typeof window !== "undefined" && window.navigator) {
     const date = new Date(dateString);

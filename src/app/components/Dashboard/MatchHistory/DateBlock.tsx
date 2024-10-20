@@ -13,9 +13,10 @@ interface DateBlockHistoryUIProps {
   kad: number;
   mechScore: number;
   medalsProgress: any;
+  days_since: string;
 }
 
-const DateBlock = ({ date, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress}: DateBlockHistoryUIProps) => {
+const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress}: DateBlockHistoryUIProps) => {
 
   const [completedMedals, setCompletedMedals] = useState([]);
 
@@ -43,7 +44,7 @@ const DateBlock = ({ date, wins, losses, roundWin, adr, kast, headshot, acs, kad
       <div className="h-24 mb-4 ">
         <div className="grid grid-cols-12 grid-rows-1 back-slate rounded-lg h-full content-center">
           <div className="col-span-2 flex flex-col w-full h-full game-border-r pl-4 justify-center">
-            <h3 className="text-frost text-lg font-bold text-left"> XXX <span className="text-ash">• {date}</span></h3>
+            <h3 className="text-frost text-lg font-bold text-left"> {days_since} <span className="text-ash">• {date}</span></h3>
             <div className="flex font-bold text-xl text-left">
               <p className="text-frost">{wins} <span className="text-win">Wins</span></p>
               &nbsp;<span className="text-ash">•</span>&nbsp;

@@ -3,6 +3,7 @@ import Image from "next/image";
 import LargeMatchHistory from "./LargeMatchHistory";
 import SmallMatchHistory from "./SmallMatchHistory";
 import GameRowV2 from "./GameRowV2";
+import { timeSince } from "@/app/utils/helpers";
 
 interface GameBlockUIProps {
   game: any;
@@ -77,14 +78,26 @@ const GameBlock = ({
             lbPosition={game.stats.lb_position + nth(game.stats.lb_position)}
             headshotPercentage={game.stats.hs_percent.toFixed(2)}
             acs={game.stats.combat_score.toFixed(2)}
+            adr={game.stats.adr.toFixed(2)}
             kills={game.stats.kills}
             deaths={game.stats.deaths}
             assists={game.stats.assists}
             kastPercentage={game.kast.toFixed(2)}
+            first_kills={game.f_kills_deaths.fKills}
+            first_deaths={game.f_kills_deaths.fDeaths}
+            multi_kills={totalMultiKills}
+            clutches={totalClutches}
+            ability1={game.stats.ability_casts.ability1}
+            ability2={game.stats.ability_casts.ability2}
+            grenade={game.stats.ability_casts.grenade}
+            ultimate={game.stats.ability_casts.ultimate}
             esc_score={
-              game.stats.esc_score ? game.stats.esc_score.toFixed(0) : 0
+              game.stats.esc_score ? game.stats?.esc_score.toFixed(0) : 0
             }
+            credit_score={game.stats?.credit_score?.toFixed(0)}
             showRank={gamemode == 'Competitive' || gamemode == 'Premier' ? true: false}
+            game_type={gamemode}
+            time_since={timeSince(game.date)}
           />
         </div>
         {/* <div

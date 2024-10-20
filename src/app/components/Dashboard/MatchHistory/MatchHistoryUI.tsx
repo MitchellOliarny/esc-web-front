@@ -5,7 +5,7 @@ import GameBlock from "./GameBlock";
 import DateBlock from "./DateBlock";
 import { Button } from "@nextui-org/react";
 import { MeasureMemoryMode } from "vm";
-import { formatDateYear, formatDateYearShort } from "../../../utils/helpers"
+import { daysSince, formatDateYear, formatDateYearShort } from "../../../utils/helpers"
 
 interface MatchHistoryUIProps {
   userGames: UserGames[];
@@ -150,6 +150,8 @@ const MatchHistoryUI = ({
               mechScore={(GamesByDate[index]?.stats.esc_score / GamesByDate[index]?.games.length).toFixed(2)}
               //@ts-ignore
               medalsProgress={(GamesByDate[index]?.medal_progress)}
+              //@ts-ignore
+              days_since={daysSince(index)}
             />
           {GamesByDate[index]?.games.map((game, count) => (
             <div className={`mb-4`} key={index+""+count} >

@@ -15,6 +15,7 @@
   --darkslate: #10141A;
   --obsidian: #0E1115;
   --graphite: #14181E;
+  --graphitergba: rgb(20, 24, 30);
 }
 
 
@@ -362,10 +363,10 @@ select.transparent>option {
 }
 
 .dashnav li:nth-child(2).active ~ hr{
-  left: 160px;
+  left: 157.5px;
 }
 .dashnav li:nth-child(2):hover ~ hr {
-  left: 160px  !important;
+  left: 157.5px  !important;
 }
 
 .dashnav li:nth-child(3).active ~ hr {
@@ -397,14 +398,32 @@ select.transparent>option {
   border-right: var(--graphite) 2px solid;
 }
 
+.game-row-border {
+  border: var(--slate) 1px solid;
+}
+
+.game-row-border-special {
+  border-top: var(--slate) 1px solid;
+  border-right: var(--slate) 1px solid;
+  border-left: var(--slate) 1px solid;
+}
+
+.game-row-border-top {
+  border-top: var(--slate) 1px solid;
+}
+
+.game-row-border-right {
+  border-right: var(--slate) 1px solid;
+}
+
 .game-row-win {
-  background: linear-gradient(90deg, var(--win) 2%, rgba(255,255,255,0) 6%, var(--graphite) 20%, var(--graphite) 100%);
+  background: linear-gradient(90deg, var(--win) 2%, rgba(255, 255, 255, 0) 8%, #14181ebd 11%, var(--graphite) 20%, var(--graphite) 100%);
 }
 
 .game-row-loss {
-  background: linear-gradient(90deg, var(--loss) 2%, rgba(255,255,255,0) 6%, var(--graphite) 20%, var(--graphite) 100%)
+  background: linear-gradient(90deg, var(--loss) 2%, rgba(255, 255, 255, 0) 8%, #14181ebd 11%, var(--graphite) 20%, var(--graphite) 100%);
 }
 
 .game-row-draw {
-  background: linear-gradient(90deg, rgb(230, 230, 230) 2%, rgba(255,255,255,0) 6%, var(--graphite) 20%, var(--graphite) 100%);
+  background: linear-gradient(90deg, rgb(230, 230, 230) 2%, rgba(255, 255, 255, 0) 8%, #14181ebd 11%, var(--graphite) 20%, var(--graphite) 100%);
 }
