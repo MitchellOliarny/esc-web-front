@@ -5,7 +5,7 @@ import GameBlock from "./GameBlock";
 import DateBlock from "./DateBlock";
 import { Button } from "@nextui-org/react";
 import { MeasureMemoryMode } from "vm";
-import { formatDate, formatDateYear } from "../../../utils/helpers"
+import { formatDateYear, formatDateYearShort } from "../../../utils/helpers"
 
 interface MatchHistoryUIProps {
   userGames: UserGames[];
@@ -20,11 +20,12 @@ const MatchHistoryUI = ({
   valAgents,
   gamemode
 }: MatchHistoryUIProps) => {
+  // @ts-nocheck
   const [displayedGames, setDisplayedGames] = useState(10);
 
   let maps: { [key: string]: any } = {};
   let agents: { [key: string]: any } = {};
-  let GamesByDate: {[key: string]: {games: [any], stats: {}}} = {};
+  let GamesByDate: {[key: string]: {games: [any], stats: {}, medal_progress: {}}} = {};
   let gameStats: {[key: string]: {clutches: number, multikills: number}} = {};
 
   const [currentHover, setCurrentHover] = useState(null);
@@ -58,7 +59,7 @@ const MatchHistoryUI = ({
     const gameDate = (dateSeparated[0]) + '-' + (dateSeparated[1]) + '-' + dateSeparated[2];
     GamesByDate[gameDate] ?
       GamesByDate[gameDate].games.push(x) :
-      GamesByDate[gameDate] = {'games': [x], 'stats': {wins: 0, losses: 0, round_wins: 0, round_losses: 0, kast: 0, clutches: 0, multikills: 0}};
+      GamesByDate[gameDate] = {'games': [x], 'stats': {wins: 0, losses: 0, round_wins: 0, round_losses: 0, kast: 0, clutches: 0, multikills: 0}, 'medal_progress': {}};
     //@ts-ignore
     x[x.team] > x[x.team == 'blue' ? 'red' : 'blue'] ? GamesByDate[gameDate].stats.wins += 1 : x['blue'] != x['red'] ? GamesByDate[gameDate].stats.losses += 1 : '';
     //@ts-ignore
@@ -85,6 +86,24 @@ const MatchHistoryUI = ({
         //@ts-ignore
        gameStats[x.match_id].clutches += Number(x.clutches.won[i]);
     }
+
+    for(const i in x?.medal_progress){
+      //@ts-ignore
+      if(GamesByDate[gameDate].medal_progress[i]){
+        //@ts-ignore
+        GamesByDate[gameDate].medal_progress[i].progress += x.medal_progress[i].progress;
+        for(const j in x.medal_progress[i].tiers){
+          if(x.medal_progress[i].tiers[j].isComplete == true) {
+            //@ts-ignore
+            GamesByDate[gameDate].medal_progress[i].tiers[j] = x.medal_progress[i].tiers[j];
+          }
+        }
+      }
+      else {
+        //@ts-ignore
+        GamesByDate[gameDate].medal_progress[i] = x.medal_progress[i];
+      }
+    }
   }
 
   if (userGames) {
@@ -107,10 +126,10 @@ const MatchHistoryUI = ({
       <div>
         <div className="col-span-9">
         {Object.keys(GamesByDate).map(index => (
-          <div className="mb-4" key={index}>
+          <div className="mb-12 gameRowLeftLineMiddle" key={index}>
             <DateBlock 
             //@ts-ignore
-              date={formatDateYear(index)}
+              date={formatDateYearShort(index)}
               //@ts-ignore
               headshot = {(GamesByDate[index]?.stats.hs_percent / GamesByDate[index]?.games.length).toFixed(2)}
               //@ts-ignore
@@ -129,9 +148,11 @@ const MatchHistoryUI = ({
               kad={((GamesByDate[index]?.stats.kills + GamesByDate[index]?.stats.assists)/ GamesByDate[index]?.stats.deaths).toFixed(2)}
               //@ts-ignore
               mechScore={(GamesByDate[index]?.stats.esc_score / GamesByDate[index]?.games.length).toFixed(2)}
+              //@ts-ignore
+              medalsProgress={(GamesByDate[index]?.medal_progress)}
             />
           {GamesByDate[index]?.games.map((game, count) => (
-            <div className={`mb-4 ${count == GamesByDate[index]?.games.length - 1 ? 'gameRowLeftLineBottom': 'gameRowLeftLineMiddle'}`} key={index+""+count} >
+            <div className={`mb-4`} key={index+""+count} >
               <GameBlock 
                 forceLarge = {count === 0 && index === Object.keys(GamesByDate)[0] ? true: false}
                 game = {game}

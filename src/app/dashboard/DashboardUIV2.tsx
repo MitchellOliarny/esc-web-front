@@ -42,6 +42,8 @@ export default function Header({
   students
 }: DashboardUIProps) {
 
+  const bucket = "https://files.esportsclubs.gg/";
+
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
 
@@ -56,7 +58,7 @@ export default function Header({
     if(view) {
       handleSideBarClick(view);
     }
-    console.log(view);
+    console.log(medalProgress);
   },[view])
   // console.log(topAgents);
   // console.log(userInfo);
@@ -137,7 +139,7 @@ export default function Header({
 
   const handleSideBarClick = (menu: string) => {
     //@ts-ignore
-    document.getElementById(menu).appendChild(document.getElementById('nav-bar'));
+   // document.getElementById(menu).appendChild(document.getElementById('nav-bar'));
     setSelectedMenu(menu);
   };
 
@@ -160,6 +162,26 @@ export default function Header({
           <div className="flex flex-col justify-end pt-40 pb-0 px-6 h-full rounded-lg"
             style={{ backgroundImage: 'linear-gradient(0deg, #14181E, 80%, transparent)' }}
           >
+            <div className="w-full h-36 flex">
+              
+              <img src={
+                //@ts-ignore
+                bucket + (medalProgress.data.display_medals["1"]) + '.png'}
+                className="h-full"
+                ></img>
+
+              <img src={
+                //@ts-ignore
+                bucket + (medalProgress.data.display_medals["2"])  + '.png'}
+                className="h-full"
+                ></img>
+
+              <img src={
+                //@ts-ignore
+                bucket + (medalProgress.data.display_medals["3"])  + '.png'}
+                className="h-full"
+                ></img>
+            </div>
             <div className="w-full grid grid-cols-2 pb-8">
               <h1 className="grid font-[800] text-5xl text-frost px-4">
                 {/* @ts-ignore */}
@@ -206,20 +228,19 @@ export default function Header({
               )}
             </div>
             <div className="flex items-end">
-              <ul className="flex gap-4 font-bold text-lg w-full pb-2">
+              <ul className="dashnav flex gap-4 font-bold text-lg w-full pb-2">
                 <li
                 id="overview"
                   onClick={(e) => handleSideBarClick("overview")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "text-frost glow-text-white" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "active" : ""
                     }`}
                 >
                   Overview
-                  <hr id='nav-bar' className="back-rust w-[50px] h-[3px] nav-move-bar"></hr>
                 </li>
                 <li
                 id="statistics"
                   onClick={(e) => handleSideBarClick("statistics")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "text-frost glow-text-white" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "active" : ""
                     }`}
                 >
                   Statistics
@@ -227,7 +248,7 @@ export default function Header({
                 <li
                 id="match-history"
                   onClick={(e) => handleSideBarClick("match-history")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "text-frost glow-text-white" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "active" : ""
                     }`}
                 >
                   Match History
@@ -235,7 +256,7 @@ export default function Header({
                 <li
                 id="agents"
                   onClick={(e) => handleSideBarClick("agents")}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "text-frost glow-text-white" : ""
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "active" : ""
                     }`}
                 >
                   Agents
@@ -244,7 +265,7 @@ export default function Header({
                  id="medals"
                   onClick={(e) => handleSideBarClick("medals")}
                   className={`grid cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out text-ash ${
-                    selectedMenu === "medals" ? "text-frost glow-text-white" : ""
+                    selectedMenu === "medals" ? "active" : ""
                   }`}
                 >
                   Medals
@@ -254,6 +275,7 @@ export default function Header({
                   </div> 
                   : ''}
                 </li>
+                <hr id='nav-bar' className="back-rust w-[50px] h-[3px] nav-move-bar"></hr>
               </ul>
             </div>
           </div>

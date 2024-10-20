@@ -31,6 +31,22 @@ export const formatDateYear = (dateString: string) => {
   }
 };
 
+export const formatDateYearShort = (dateString: string) => {
+  if (typeof window !== "undefined" && window.navigator) {
+    const date = new Date(dateString);
+    const options = { month: "short", day: "2-digit", year: "numeric", timeZone: "UTC" };
+    const utcDate = date.toLocaleString("en-US", options as any);
+    const localDate = new Date(utcDate);
+    // localDate.setUTCHours(0, 0, 0, 0);
+    return localDate.toLocaleString(navigator.language, {
+      month: "short",
+      day: "2-digit",
+      year: 'numeric',
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    });
+  }
+};
+
 export const formatTime = (dateString: string) => {
   if (typeof window !== "undefined" && window.navigator) {
     const date = new Date(dateString);

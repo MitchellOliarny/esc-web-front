@@ -3,6 +3,21 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+:root {
+  --ash: #9BA3AE;
+  --frost: #FFFFFF;
+  --rust: #F5603C;
+  --voltage: #5ECCBA;
+  --win: #4CF8A5;
+  --loss: #FA6E6E;
+  --caution: #FFC56D;
+  --slate: #222830;
+  --darkslate: #10141A;
+  --obsidian: #0E1115;
+  --graphite: #14181E;
+}
+
+
 html {
   background-color: #0E1115 !important;
   color: #fafafa !important;
@@ -70,10 +85,10 @@ html {
   display: inline;
   position: absolute;
   vertical-align: middle;
-  height: 150%;
-  left: -5%;
-  top: -25%;
-  border-left: 3px solid white;
+  height: 100%;
+  left: -2%;
+  top: 0%;
+  border-left: 5px solid var(--slate);
   padding: 0 0.8em 0 0;
 }
 
@@ -206,55 +221,55 @@ select.transparent>option {
 }
 
 .text-ash {
-  color: #9BA3AE !important;
+  color: var(--ash) !important;
 }
 
 .text-frost {
-  color: #FFFFFF !important;
+  color: var(--frost)  !important;
 }
 
 .text-rust {
-  color: #F5603C !important;
+  color: var(--rust)  !important;
 }
 
 .text-voltage {
-  color: #5ECCBA !important;
+  color: var(--voltage)  !important;
 }
 
 .text-win {
-  color: #4CF8A5 !important;
+  color: var(--win)  !important;
 }
 
 .text-loss {
-  color: #FA6E6E !important;
+  color: var(--loss)  !important;
 }
 
 .text-caution {
-  color: #FFC56D !important;
+  color: var(--caution)  !important;
 }
 
 .back-slate {
-  background-color: #222830 !important;
+  background-color: var(--slate)  !important;
 }
 
 .back-darkslate {
-  background-color: #10141A !important;
+  background-color: var(--darkslate)  !important;
 }
 
 .back-obsidian {
-  background-color: #0E1115 !important;
+  background-color: var(--obsidian)  !important;
 }
 
 .back-graphite {
-  background-color: #14181E !important;
+  background-color: var(--graphite)  !important;
 }
 
 .back-rust {
-  background-color: #F5603C !important;
+  background-color: var(--rust)  !important;
 }
 
 .back-voltage {
-  color: #5ECCBA !important;
+  background-color: var(--voltage)  !important;
 }
 
 
@@ -280,24 +295,27 @@ select.transparent>option {
   clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
 }
 
+
+/* NAV */
+
 .progress-voltage::-webkit-progress-value {
-  background-image: linear-gradient(to right, #5ECCBA, #B6FFF3) !important;
-  box-shadow: 0px 0px 20px 2px #5ECCBA9A !important;
+  background-image: linear-gradient(to right, var(--voltage), #B6FFF3) !important;
+  /* box-shadow: 0px 0px 20px 2px #5ECCBA9A !important; */
   -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
   clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
 }
 
 .progress-voltage::-webkit-progress-bar {
-  background-color: #222830 !important;
+  background-color: var(--slate) !important;
 }
 
 .dashfilter > input {
-  background-color: #14181E !important;
+  background-color: var(--graphite) !important;
   border: none;
 }
 
 .dashfilter > select {
-  background-color: #14181E !important;
+  background-color: var(--graphite) !important;
   border: none;
   appearance: none;
   width: 100%;
@@ -316,11 +334,65 @@ select.transparent>option {
 }
 
 .nav-move-bar {
-  transform: translateY(15px);
+  transform: translateY(10px);
   position: absolute;
   align-self: flex-end;
   justify-self: center;
-  transition: .5s ease-in-out;
+  transition: .33s;
   border: none;
   border-radius: .5em;
+  left: 30px;
+}
+
+.dashnav {
+  position: relative;
+  transition: .5s;
+}
+
+.dashnav li.active {
+  color: var(--frost) !important;
+  text-shadow:0px 0px 13px #fff, 0px 0px 0px #ccc !important;
+}
+
+.dashnav li:nth-child(1).active ~ hr {
+  left: 30px;
+}
+.dashnav li:nth-child(1):hover ~ hr {
+  left: 30px !important;
+}
+
+.dashnav li:nth-child(2).active ~ hr{
+  left: 160px;
+}
+.dashnav li:nth-child(2):hover ~ hr {
+  left: 160px  !important;
+}
+
+.dashnav li:nth-child(3).active ~ hr {
+  left: 305px;
+}
+.dashnav li:nth-child(3):hover ~ hr {
+  left: 305px !important;
+}
+
+.dashnav li:nth-child(4).active ~ hr{
+  left: 445px;
+}
+.dashnav li:nth-child(4):hover ~ hr {
+  left: 445px !important;
+}
+
+.dashnav li:nth-child(5).active ~ hr{
+  left: 555px;
+}
+.dashnav li:nth-child(5):hover ~ hr {
+  left: 555px !important;
+}
+
+
+
+/* GAME BLOCKS */
+
+.game-border-r {
+  border-right: var(--graphite) 2px solid;
 }

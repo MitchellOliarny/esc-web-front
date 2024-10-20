@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 interface DateBlockHistoryUIProps {
@@ -12,56 +12,92 @@ interface DateBlockHistoryUIProps {
   acs: number;
   kad: number;
   mechScore: number;
+  medalsProgress: any;
 }
 
-const DateBlock = ({ date, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore }: DateBlockHistoryUIProps) => {
+const DateBlock = ({ date, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress}: DateBlockHistoryUIProps) => {
+
+  const [completedMedals, setCompletedMedals] = useState([]);
+
+  const FindCompletedMedals = () => {
+    let temp = [];
+    for (const x in medalsProgress) {
+      for(const i in medalsProgress[x].tiers) {
+        if(medalsProgress[x].tiers[i].isComplete == true) {
+          temp.push({tier: (Number(i)+1), medal: x+"_"+(Number(i)+1)})
+        }
+      }
+    }
+    //@ts-ignore
+    temp.sort((a, b) => b.tier - a.tier);
+    //@ts-ignore
+    setCompletedMedals(temp);
+  }
+  useEffect(()=>{
+    FindCompletedMedals();
+  },[])
+ 
+
   return (
     <>
-      <div className="gameRowLeftLineTop">
-        <div className="grid grid-cols-12 items-center bg-[#102B3D] p-2 rounded-lg mb-4">
-          <div className="col-span-3 flex flex-col items-center text-center">
-            <h3 className="text-white text-2xl font-bold">{date}</h3>
-            <div className="flex font-bold text-lg">
-              <p className="text-[#5ECCBA]">{wins} W</p>&nbsp;:&nbsp;
-              <p className="text-[#F5603C]">{losses} L</p>
+      <div className="h-24 mb-4 ">
+        <div className="grid grid-cols-12 grid-rows-1 back-slate rounded-lg h-full content-center">
+          <div className="col-span-2 flex flex-col w-full h-full game-border-r pl-4 justify-center">
+            <h3 className="text-frost text-lg font-bold text-left"> XXX <span className="text-ash">• {date}</span></h3>
+            <div className="flex font-bold text-xl text-left">
+              <p className="text-frost">{wins} <span className="text-win">Wins</span></p>
+              &nbsp;<span className="text-ash">•</span>&nbsp;
+              <p className="text-frost">{losses} <span className="text-loss">Losses</span></p>
             </div>
           </div>
 
-          <div className="col-span-9 flex justify-between pr-10">
-            <div>
+          <div className="col-span-6 grid grid-cols-7 content-center flex-wrap px-8 w-full h-full">
+            {
+              completedMedals.slice(0, 7).map((value) => {
+                return (
+                  //@ts-ignore
+                  <img src={value.medal + '.png'} alt={value.medal}></img>
+                )
+              })
+            }
+          </div>
+
+          <div className="col-span-4 flex justify-between content-center flex-wrap w-full h-full px-8">
+            {/* <div>
               <h3 className="font-bold ">Round Win%</h3>
               <p className="font-bold text-2xl text-[#4DFFDD]">{roundWin}%</p>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <h3 className="font-bold">AD/R</h3>
               <p className="font-bold text-2xl text-[#4DFFDD]">{adr}</p>
+            </div> */}
+
+            <div>
+              <h3 className="font-[600] text-ash text-md">AVG KA/D</h3>
+              <p className="font-bold text-xl text-frost">{kad}</p>
             </div>
 
             <div>
-              <h3 className="font-bold">KAST%</h3>
-              <p className="font-bold text-2xl text-[#4DFFDD]">{kast}%</p>
+              <h3 className="font-[600] text-ash text-md">AVG ACS</h3>
+              <p className="font-bold text-xl text-frost">{acs}</p>
             </div>
 
             <div>
-              <h3 className="font-bold">HS%</h3>
-              <p className="font-bold text-2xl text-[#4DFFDD]">{headshot}%</p>
+              <h3 className="font-[600] text-ash text-md">AVG HS%</h3>
+              <p className="font-bold text-xl text-frost">{headshot}%</p>
             </div>
 
             <div>
-              <h3 className="font-bold">ACS</h3>
-              <p className="font-bold text-2xl text-[#4DFFDD]">{acs}</p>
+              <h3 className="font-[600] text-ash text-md">AVG KAST%</h3>
+              <p className="font-bold text-xl text-frost">{kast}%</p>
             </div>
 
-            <div>
-              <h3 className="font-bold">KA/D</h3>
-              <p className="font-bold text-2xl text-[#4DFFDD]">{kad}</p>
-            </div>
 
-            <div>
+            {/* <div>
               <h3 className="font-bold">Mech Score</h3>
               <p className="font-bold text-2xl text-[#4DFFDD]">{mechScore}</p>
-            </div>
+            </div> */}
 
           </div>
         </div>
