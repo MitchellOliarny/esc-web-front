@@ -145,7 +145,10 @@ const GameRowV2 = ({
                         : "back-obsidian"
                   } rounded-md mx-2 px-2 mt-1 font-bold`}
               >
-                <p>{lbPosition} Place</p>
+                {lbPosition !== "1st"?
+                <p className="text-ash">{lbPosition} Place</p>
+                : ''
+                }
               </div>
             </div>
 

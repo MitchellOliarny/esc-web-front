@@ -278,12 +278,59 @@ select.transparent>option {
   background-image: linear-gradient(to right, #C8965C, #FFCC90, #C8965C);
 }
 
+.back-3rd p {
+  color: var(--obsidian) !important;
+}
+
 .back-2nd {
   background-image: linear-gradient(to right, #A6B7D2, #D6E6FF, #A6B7D2);
 }
 
+.back-2nd p {
+  color: var(--obsidian) !important;
+}
+
 .back-mvp {
+  /* background-image: linear-gradient(to right, #5BA5FD, #D662FC, #FA955D); */
+  display: flex;
+  position: relative;
+  justify-content: center;
+  width: 75%;
+  height: 2em;
+  overflow: hidden;
+}
+
+.back-mvp::before {
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-image: conic-gradient(from 0deg at 45% 47%, #FF00D800 22%, #5BA5FD 25%, #D662FC 28%, #FA955D 31%, #073AFF00 35%, #073AFF00 72%, #5BA5FD 76%, #D662FC 79%, #FA955D 82%, #073AFF00 85%);
+  position: absolute;
+  animation: rotate 4s linear infinite;
+}
+
+.back-mvp::after {
+  content: 'MATCH MVP';
+  color: var(--frost);
   background-image: linear-gradient(to right, #5BA5FD, #D662FC, #FA955D);
+  margin: 1%;
+  position: absolute;
+  border-radius: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 95%;
+  border: var(--graphite) 3px solid;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }
 
 .cut-corner-45 {

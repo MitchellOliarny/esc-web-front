@@ -54,12 +54,15 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
 
           <div className="col-span-6 grid grid-cols-7 content-center flex-wrap px-8 w-full h-full">
             {
+              completedMedals.length > 0 ?
               completedMedals.slice(0, 7).map((value) => {
                 return (
                   //@ts-ignore
                   <img src={value.medal + '.png'} alt={value.medal}></img>
                 )
               })
+              :
+              <p className="text-ash font-bold">No Medals Earned</p>
             }
           </div>
 
