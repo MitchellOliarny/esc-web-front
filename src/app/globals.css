@@ -306,7 +306,7 @@ select.transparent>option {
   content: "";
   background-image: conic-gradient(from 0deg at 45% 47%, #FF00D800 22%, #5BA5FD 25%, #D662FC 28%, #FA955D 31%, #073AFF00 35%, #073AFF00 72%, #5BA5FD 76%, #D662FC 79%, #FA955D 82%, #073AFF00 85%);
   position: absolute;
-  animation: rotate 4s linear infinite;
+  animation: rotate 12s linear infinite;
 }
 
 .back-mvp::after {
@@ -319,8 +319,8 @@ select.transparent>option {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 95%;
-  height: 95%;
+  width: 98%;
+  height: 94%;
   border: var(--graphite) 3px solid;
 }
 
