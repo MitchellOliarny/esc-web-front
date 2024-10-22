@@ -57,7 +57,7 @@ export default function Sidebar({
     const response = await doLogOutAction();
 
     if (response.success) {
-      window.location.href = "/login";
+      window.location.href = "/";
     } else {
       console.log("failure");
     }

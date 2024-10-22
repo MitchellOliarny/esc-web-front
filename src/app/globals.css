@@ -87,7 +87,7 @@ html {
   position: absolute;
   vertical-align: middle;
   height: 100%;
-  left: -2%;
+  left: -1%;
   top: 0%;
   border-left: 5px solid var(--slate);
   padding: 0 0.8em 0 0;
@@ -343,8 +343,54 @@ select.transparent>option {
   clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
 }
 
+/* MAIN NAV */ 
 
-/* NAV */
+.nav-grid {
+  height: 100%;
+  grid-template-rows: 8em 2fr 5em;
+}
+
+.coming-soon {
+  opacity: 0.5;
+}
+
+.coming-soon::after {
+  content: 'Coming Soon';
+  font-size: 0.75em;
+    align-self: center;
+    justify-self: end;
+    margin-left: 5em;
+}
+
+.nav-hover:hover {
+  background-color: var(--darkslate);
+}
+
+.nav-active {
+  background-color: var(--slate);
+  border-radius: 0.5em;
+  color: var(--frost)
+}
+
+.nav-active > svg {
+  color: var(--voltage)
+}
+
+.background-nav {
+  background-image: url(../../public/dashboard/d86d23013e855b90786b26acb862731d.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.nav-gradient {
+  background: linear-gradient(0deg, var(--graphite) 35%, #0000005e 80%);;
+}
+
+.nav-border-top {
+  border-top: var(--slate) 2px solid;
+}
+
+/* DASHBOARD NAV */
 
 .progress-voltage::-webkit-progress-value {
   background-image: linear-gradient(to right, var(--voltage), #B6FFF3) !important;

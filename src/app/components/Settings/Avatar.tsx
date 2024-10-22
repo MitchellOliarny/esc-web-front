@@ -54,7 +54,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
               ? `https://api.esportsclubs.gg/images/${profile_picture}`
               : "/avatar.png"
           }
-          className="rounded-full w-48 h-48 overflow-hidden border-2 cursor-pointer"
+          className="rounded-full w-48 h-48 overflow-hidden border-2 cursor-pointer object-cover"
         />
       </div>
       <Modal

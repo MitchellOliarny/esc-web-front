@@ -6,6 +6,8 @@ import SignUpBtn from "./Buttons/SignUpBtn";
 
 interface NavbarUserProps {
   user: string;
+  riot: string;
+  pfp: string;
   rank: string | number;
   toggleDrawer: boolean;
   setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +15,8 @@ interface NavbarUserProps {
 
 export default function NavbarUser({
   user,
+  riot,
+  pfp,
   rank,
   toggleDrawer,
   setToggleDrawer,
@@ -32,7 +36,7 @@ export default function NavbarUser({
   return (
     <>
       {!user && (
-        <div className="space-x-2">
+        <div className="space-x-4 my-4">
           <LogInBtn onClick={handleLoginClick} />
 
           <SignUpBtn onClick={handleSignUpClick} />
@@ -40,23 +44,30 @@ export default function NavbarUser({
       )}
 
       {user && (
-        <div
-          className="flex items-center gap-2"
-          onClick={() => setToggleDrawer(!toggleDrawer)}
-        >
-          <Image
-            height={1000}
-            width={1000}
-            src={`https://api.esportsclubs.gg/images/ranks/${rank}`}
-            className="w-8 h-8 object-cover rounded-full"
-            alt="User Rank"
-          />
-          <Link href="/settings?view=Profile">
-            <h2 className="text-ash font-bold text-lg cursor-pointer">
-              {user}
-            </h2>
-          </Link>
-        </div>
+        <Link href="/settings?view=Profile" className="w-full py-4">
+          <div
+            className="flex items-center justify-between"
+            onClick={() => setToggleDrawer(!toggleDrawer)}
+          >
+            <div className="flex content-center gap-2">
+              <img src={pfp} alt='user pfp' className="w-6 h-6"></img>
+              <h2 className="self-center text-sm">{user}</h2>
+            </div>
+            <div className="flex content-center gap-2">
+              <Image
+                height={1000}
+                width={1000}
+                src={`https://api.esportsclubs.gg/images/ranks/${rank}`}
+                className="w-4 h-4object-cover rounded-full"
+                alt="User Rank"
+              />
+
+              <h2 className="text-ash font-bold text-xs cursor-pointer">
+                {riot}
+              </h2>
+            </div>
+          </div>
+        </Link>
       )}
     </>
   );

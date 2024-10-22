@@ -115,7 +115,7 @@ const OurRoadmap = () => {
             </button>
             </Link>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end h-fit">
             <Image
             style={{width: '100%', height: 'auto', border: '2px white solid'}}
             className="stat-box-border"

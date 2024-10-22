@@ -26,15 +26,17 @@ export default async function RootLayout({
   const data = await userSession();
   const user = await userInfo();
   const info = user.data.info;
-  // console.log(info);
+   //console.log(info);
 
   return (
     <html lang="en">
       <body className="">
         <Providers>
           <MainNavbar
-            user={info?.riot_name || info?.email as string}
+            user={info?.first_name || info?.email as string}
             rank={info?.val_rank || 0 as number}
+            riot={info?.riot_name || ''}
+            pfp={'https://files.esportsclubs.gg/' + info?.profile_picture || info?.discord_avatar}
           >
             <div className="">{children}</div>
             <Toaster position="bottom-right" reverseOrder={false} />

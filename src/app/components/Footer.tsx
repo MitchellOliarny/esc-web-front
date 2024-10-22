@@ -34,7 +34,7 @@ const Footer = () => {
               <div className="grid grid-cols-3 items-center gap-10">
 
                 <Link href="https://www.omnic.ai/" target="_blank">
-                  <Image src="/omnic.png" alt="" width={1000} height={1000} />
+                  <Image src="/omnic.png" alt="" width={1000} height={1000} className="w-24 h-auto"/>
                 </Link>
               </div>
             </div>

@@ -152,7 +152,7 @@ const GameRowV2 = ({
               </div>
             </div>
 
-            <div className="flex col-span-4 justify-start">
+            <div className="flex col-span-3 justify-start">
             <div className="flex gap-2">
               <FaBoltLightning 
                 color="#5ECCBA"
@@ -187,7 +187,7 @@ const GameRowV2 = ({
 
             </div>
 
-            <div className="col-start-10 col-span-3 flex justify-between px-4">
+            <div className="col-start-9 col-span-4 flex justify-between px-4">
               <div>
                 <p className="font-black text-sm text-ash leading-none">
                   K / D / A
