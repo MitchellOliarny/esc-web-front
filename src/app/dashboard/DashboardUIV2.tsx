@@ -147,7 +147,7 @@ export default function Header({
 
   return (
     <>
-      <div className="px-4 2xl:px-40 w-full max-w-[1800px] mx-auto h-auto">
+      <div className="px-4 w-full max-w-[1800px] mx-auto h-auto">
         <div
           className="w-full rounded-lg h-[25rem]"
           style={{
@@ -281,7 +281,7 @@ export default function Header({
           </div>
         </div>
       </div>
-      <div className="px-4 py-4 2xl:px-40 w-full max-w-[1800px] mx-auto min-h-screen">
+      <div className="px-4 py-4 w-full max-w-[1800px] mx-auto min-h-screen">
         <DashboardFilter
           valMaps={valMaps}
           valAgents={valAgents}

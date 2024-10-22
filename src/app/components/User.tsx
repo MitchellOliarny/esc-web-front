@@ -48,11 +48,11 @@ export default function NavbarUser({
             height={1000}
             width={1000}
             src={`https://api.esportsclubs.gg/images/ranks/${rank}`}
-            className="w-14 h-14 object-cover rounded-full"
+            className="w-8 h-8 object-cover rounded-full"
             alt="User Rank"
           />
           <Link href="/settings?view=Profile">
-            <h2 className="text-white font-bold text-xl cursor-pointer">
+            <h2 className="text-ash font-bold text-lg cursor-pointer">
               {user}
             </h2>
           </Link>
