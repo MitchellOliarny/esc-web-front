@@ -12,6 +12,7 @@
   --loss: #FA6E6E;
   --caution: #FFC56D;
   --slate: #222830;
+  --slate50: #22283080;
   --darkslate: #10141A;
   --obsidian: #0E1115;
   --graphite: #14181E;
@@ -363,7 +364,7 @@ select.transparent>option {
 }
 
 .nav-hover:hover {
-  background-color: var(--darkslate);
+  background-color: var(--slate50);
 }
 
 .nav-active {
@@ -372,6 +373,7 @@ select.transparent>option {
   color: var(--frost)
 }
 
+.nav-hover:hover > svg ,
 .nav-active > svg {
   color: var(--voltage)
 }
