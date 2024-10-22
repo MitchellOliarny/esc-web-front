@@ -179,7 +179,7 @@ const GameRowV2 = ({
                   Credit Score
                 </p>
                 <p className="text-xl font-[600] text-voltage leading-none tracking-wider mt-1">
-                  {esc_score}
+                  {credit_score}
                   <span className="text-white text-base">/100</span>
                 </p>
               </div>
