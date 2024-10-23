@@ -247,6 +247,18 @@ const GameRowV2 = ({
                 </div>
                 <div className="col-span-3 w-full flex flex-row items-center justify-between py-1 px-2">
                   <p className="text-ash text-sm font-[550] whitespace-nowrap">Ability Usage</p>
+
+                  <div className="flex items-center gap-1">
+                    <Image
+                      src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
+                      height={1000}
+                      width={1000}
+                      alt=""
+                      className="w-6 h-6 object-cover brightness-75"
+                    />
+                    <p className="font-bold">{grenade}</p>
+                  </div>
+
                   <div className="flex items-center gap-1">
                     <Image
                       src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability1/displayicon.png`}
@@ -267,17 +279,6 @@ const GameRowV2 = ({
                       className="w-6 h-6 object-cover brightness-75"
                     />
                     <p className="font-bold">{ability2}</p>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <Image
-                      src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
-                      height={1000}
-                      width={1000}
-                      alt=""
-                      className="w-6 h-6 object-cover brightness-75"
-                    />
-                    <p className="font-bold">{grenade}</p>
                   </div>
 
                   <div className="flex items-center gap-1">

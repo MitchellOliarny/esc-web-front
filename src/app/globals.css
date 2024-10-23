@@ -392,6 +392,18 @@ select.transparent>option {
   border-top: var(--slate) 2px solid;
 }
 
+.signup-button{
+  background-color: var(--slate);
+}
+
+.signup-button:hover {
+  background-color: var(--darkslate);
+}
+
+.login-button {
+
+}
+
 /* DASHBOARD NAV */
 
 .progress-voltage::-webkit-progress-value {

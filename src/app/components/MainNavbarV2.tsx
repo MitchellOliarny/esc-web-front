@@ -51,7 +51,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
             <div className="w-full h-full max-w-[1800px] mx-auto hidden lg:block bg-none">
               <div className="grid nav-grid items-center h-auto rounded-lg">
                 <div className="relative w-full h-full background-nav rounded-t-lg">
-                  <div className="nav-gradient h-full w-full">
+                  <div className="nav-gradient h-full w-full rounded-t-lg">
                     <Link href="/">
                       <Image
                         src="/esports-clubs-logo-2.png"
@@ -65,7 +65,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                 </div>
                 {user ?
                   <div className="px-4">
-                    <ul className="inline-grid w-full font-medium text-ash gap-1">
+                    <ul className="inline-grid w-full font-medium text-ash gap-1 pb-2">
                       <Link href="/dashboard" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/dashboard' ? 'nav-active' : ''}`}>
                         <FaCircleUser />
                         <li className="">Dashboard</li>
@@ -107,7 +107,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                   </div>
                   :
                   <div className="px-4">
-                    <ul className="inline-grid w-full font-medium text-ash gap-1">
+                    <ul className="inline-grid w-full font-medium text-ash gap-1 pb-2">
                     <Link href="/" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/' ? 'nav-active' : ''}`}>
                         <FaHome />
                         <li className="">Home</li>
