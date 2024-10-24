@@ -31,6 +31,11 @@ export const formatDateYear = (dateString: string) => {
   }
 };
 
+export const shortDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString()
+};
+
 export const formatDateYearShort = (dateString: string) => {
   if (typeof window !== "undefined" && window.navigator) {
     const date = new Date(dateString);
@@ -64,9 +69,9 @@ export const timeSince = (dateString: string) => {
     if (sameDay) {
         // Calculate the difference in hours if it's the same day
         const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-        return `${diffInHours} hours ago`;
+        return `${diffInHours}h ago`;
     } else {
-        return `${diffInDays} days ago`;
+        return `${diffInDays}d ago`;
     }
 }
 
@@ -80,11 +85,13 @@ export const daysSince = (dateString: string) => {
   
   // Calculate the difference in days
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
   
   // Check if the two dates are on the same day
   const sameDay = now.toDateString() === givenDate.toDateString();
 
-  if (sameDay) {
+
+  if (diffInDays < 1) {
       // Calculate the difference in hours if it's the same day
       const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
       return `Today`;

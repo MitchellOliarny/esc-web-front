@@ -5,7 +5,7 @@ import GameBlock from "./GameBlock";
 import DateBlock from "./DateBlock";
 import { Button } from "@nextui-org/react";
 import { MeasureMemoryMode } from "vm";
-import { daysSince, formatDateYear, formatDateYearShort } from "../../../utils/helpers"
+import { daysSince, formatDateYear, formatDateYearShort, shortDate } from "../../../utils/helpers"
 
 interface MatchHistoryUIProps {
   userGames: UserGames[];
@@ -53,10 +53,10 @@ const MatchHistoryUI = ({
   }
 
   const SortGamesByDate = (x: any) => {
-    const formattedDate = formatDateYear(x.date);
-    const dateSeparated = formattedDate?.replace(',', '').split(' ');
+    const formattedDate = shortDate(x.date);
+    //const dateSeparated = formattedDate?.replace(',', '').split(' ');
     //@ts-ignore
-    const gameDate = (dateSeparated[0]) + '-' + (dateSeparated[1]) + '-' + dateSeparated[2];
+    const gameDate = formattedDate //(dateSeparated[0]) + '-' + (dateSeparated[1]) + '-' + dateSeparated[2];
     GamesByDate[gameDate] ?
       GamesByDate[gameDate].games.push(x) :
       GamesByDate[gameDate] = {'games': [x], 'stats': {wins: 0, losses: 0, round_wins: 0, round_losses: 0, kast: 0, clutches: 0, multikills: 0}, 'medal_progress': {}};

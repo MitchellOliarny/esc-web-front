@@ -212,7 +212,7 @@ export default function Header({
                         </span>
                       </p>
                       <p className="pl-2 text-sm text-ash text-right font-bold self-center justify-self-end">
-                        {valGames[0]?.mmr_change?.new_mmr && valGames[0]?.match_rank < 24 ? 100 - valGames[0]?.mmr_change?.new_mmr + ' RR to rank up' : 0}
+                        {valGames[0]?.mmr_change?.new_mmr && valGames[0]?.match_rank < 24 ? 100 - valGames[0]?.mmr_change?.new_mmr + ' RR to rank up' : ''}
                       </p>
                     </div>
                     <div className="w-full cut-corner-45">
