@@ -76,13 +76,13 @@ const GameBlock = ({
               game.team.toLowerCase() === "blue" ? game.red : game.blue
             }
             lbPosition={game.stats.lb_position + nth(game.stats.lb_position)}
-            headshotPercentage={game.stats.hs_percent.toFixed(2)}
-            acs={game.stats.combat_score.toFixed(2)}
-            adr={game.stats.adr.toFixed(2)}
+            headshotPercentage={game.stats.hs_percent.toFixed(1)}
+            acs={game.stats.combat_score.toFixed(1)}
+            adr={game.stats.adr.toFixed(1)}
             kills={game.stats.kills}
             deaths={game.stats.deaths}
             assists={game.stats.assists}
-            kastPercentage={game.kast.toFixed(2)}
+            kastPercentage={game.kast.toFixed(1)}
             first_kills={game.f_kills_deaths.fKills}
             first_deaths={game.f_kills_deaths.fDeaths}
             multi_kills={totalMultiKills}

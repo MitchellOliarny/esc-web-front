@@ -33,6 +33,7 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
     temp.sort((a, b) => b.tier - a.tier);
     //@ts-ignore
     setCompletedMedals(temp);
+    console.log(temp)
   }
   useEffect(()=>{
     FindCompletedMedals();

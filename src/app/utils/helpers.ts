@@ -92,8 +92,6 @@ export const daysSince = (dateString: string) => {
 
 
   if (diffInDays < 1) {
-      // Calculate the difference in hours if it's the same day
-      const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
       return `Today`;
   } 
   else if(diffInDays == 1){
