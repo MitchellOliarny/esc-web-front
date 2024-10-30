@@ -9,11 +9,13 @@ import SignUpBtn from "./Buttons/SignUpBtn";
 
 interface RecNavbarProps {
   user: string;
+  riot: string;
+  pfp: string;
   children: React.ReactNode;
   rank: string | number;
 }
 
-const RecNavbar: React.FC<RecNavbarProps> = ({ user, children, rank }) => {
+const RecNavbar: React.FC<RecNavbarProps> = ({ user, children, rank, riot, pfp }) => {
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState(false);
 
@@ -85,6 +87,8 @@ const RecNavbar: React.FC<RecNavbarProps> = ({ user, children, rank }) => {
             </div>
             <div className="flex justify-end gap-2">
               <NavbarUser
+              riot={riot}
+              pfp={pfp}
                 user={user}
                 rank={rank}
                 toggleDrawer={toggleDrawer}
@@ -141,6 +145,8 @@ const RecNavbar: React.FC<RecNavbarProps> = ({ user, children, rank }) => {
                       className="flex align middle items-center mb-5"
                     >
                       <NavbarUser
+                        riot={riot}
+                        pfp={pfp}
                         user={user}
                         rank={rank}
                         toggleDrawer={toggleDrawer}

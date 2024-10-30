@@ -37,7 +37,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
   return (
     <>
       {pathname.includes("recleague") ? (
-        <RecNavbar user={user} rank={rank}>
+        <RecNavbar user={user} rank={rank} riot={riot} pfp={pfp}>
           {children}
         </RecNavbar>
       ) : pathname.includes("login") ? (

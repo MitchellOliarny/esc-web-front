@@ -11,11 +11,13 @@ import SignUpBtn from "./Buttons/SignUpBtn";
 
 interface MainNavbarProps {
   user: string;
+  riot: string;
+  pfp: string;
   children: React.ReactNode;
   rank: string | number;
 }
 
-const MainNavbar: React.FC<MainNavbarProps> = ({ user, children, rank }) => {
+const MainNavbar: React.FC<MainNavbarProps> = ({ user, children, rank, riot, pfp }) => {
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState(false);
 
@@ -32,7 +34,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, children, rank }) => {
   return (
     <>
       {pathname.includes("recleague") ? (
-        <RecNavbar user={user} rank={rank}>
+        <RecNavbar user={user} rank={rank} riot={riot} pfp={pfp}>
           {children}
         </RecNavbar>
       ) : pathname.includes("login") ? (
@@ -78,6 +80,8 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, children, rank }) => {
                 <div className="flex justify-end gap-2">
                   <NavbarUser
                     user={user}
+                    riot={riot}
+                    pfp={pfp}
                     rank={rank}
                     toggleDrawer={toggleDrawer}
                     setToggleDrawer={setToggleDrawer}
@@ -134,6 +138,8 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, children, rank }) => {
                         {user && (
                           <NavbarUser
                             user={user}
+                            riot={riot}
+                            pfp={pfp}
                             rank={rank}
                             toggleDrawer={toggleDrawer}
                             setToggleDrawer={setToggleDrawer}
