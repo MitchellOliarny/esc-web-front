@@ -360,7 +360,7 @@ select.transparent>option {
   font-size: 0.65em;
     align-self: center;
     justify-self: end;
-    right: 15px;
+    right: 25px;
     position: absolute;
 }
 

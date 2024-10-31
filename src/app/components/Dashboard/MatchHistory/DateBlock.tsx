@@ -36,6 +36,21 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
     setCompletedMedals(temp);
     console.log(temp)
   }
+
+  const CreateMedalToolTip = (medal_name: string) => {
+    const split_name = medal_name.split('_');
+    let new_name = '';
+    for (const x in split_name) {
+      if(Number(x) != (Number(split_name.length) - 1)) {
+        new_name += split_name[x] + " ";
+      }
+      else {
+        new_name += 'Tier ' + split_name[x];
+      }
+    }
+    return new_name
+  }
+
   useEffect(()=>{
     FindCompletedMedals();
   },[])
@@ -60,7 +75,11 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
               completedMedals.slice(0, 7).map((value) => {
                 return (
                   //@ts-ignore
-                  <img key={value.medal} src={bucket + 'Vandal_Kills_5' + '.png'} alt={value.medal}></img>
+                  <div className="tooltip" data-tip={CreateMedalToolTip(value.medal)}>
+                    {//@ts-ignore
+                    <img key={value.medal} src={bucket + value.medal + '.png'} alt={value.medal}></img>
+                    }
+                  </div>
                 )
               })
               :
