@@ -75,9 +75,9 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
               completedMedals.slice(0, 7).map((value) => {
                 return (
                   //@ts-ignore
-                  <div className="tooltip" data-tip={CreateMedalToolTip(value.medal)}>
+                  <div className="tooltip" data-tip={CreateMedalToolTip(value.medal)} key={value.medal} >
                     {//@ts-ignore
-                    <img key={value.medal} src={bucket + value.medal + '.png'} alt={value.medal}></img>
+                    <img src={bucket + value.medal + '.png'} alt={value.medal}></img>
                     }
                   </div>
                 )
