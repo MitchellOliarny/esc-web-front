@@ -53,7 +53,7 @@ const StatsDistribution = ({
   const current_rank = currRank - (currRank % 3);
   return (
     <>
-      <div className="bg-[#102B3D] stat-box-border px-4 py-4 flex flex-col justify-center items-center relative">
+      <div className="back-slate stat-box-border px-4 py-4 flex flex-col justify-center items-center relative">
         <div className="flex justify-center w-full items-center mb-2">
           <h3 className=" font-bold text-2xl text-center flex-grow">
             {statsName}

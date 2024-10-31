@@ -65,9 +65,9 @@ const CareerHealth = ({ userGames }: CareerHealthUIProps) => {
   return (
     <>
       <div>
-        <div className="bg-[#102B3D] stat-box-border p-4 h-full">
+        <div className="back-slate stat-box-border p-4 h-full">
           <div className="flex items-center gap-2 justify-between">
-            <h1 className="font-medium text-2xl">Career Health</h1>
+            <h1 className="font-bold text-2xl">Career Health</h1>
             <div className="tooltip" data-tip="A break down of how many rounds you win or lose by">
               <FaRegQuestionCircle className="text-xl" />
             </div>

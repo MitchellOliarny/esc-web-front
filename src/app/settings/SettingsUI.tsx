@@ -76,7 +76,7 @@ export default function Sidebar({
 
   return (
     <Suspense>
-      <div className="grid md:grid-cols-5 grid-rows-1 px-4 py-4 2xl:px-40 w-full max-w-[1800px] mx-auto list-none">
+      <div className="grid md:grid-cols-5 grid-rows-1 px-4 py-4 w-full max-w-[1800px] mx-auto list-none">
         <div
           id="settingsLeftNav"
           className="md:border-r max-md:border-b border-slate-500 flex md:flex-col flex-row md:gap-10 gap-4 py-8"

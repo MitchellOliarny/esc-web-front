@@ -178,11 +178,11 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId }: AgentBoxProps) => {
         }}
       >
         <div
-          className="h-full relative border-white overflow-hidden row-span-3"
+          className="h-full relative border-white overflow-hidden row-span-3 back-slate"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#11202D] to-[#20577C] opacity-50"></div>
           <div
-            className="relative h-full flex items-center justify-center bg-[#102B3D]"
+            className="relative h-full flex items-center justify-center back-slate"
             style={{
               backgroundImage: `url(https://media.valorant-api.com/agents/${agentId}/background.png)`,
               backgroundSize: "cover",
@@ -222,7 +222,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId }: AgentBoxProps) => {
           </div>
         </div> */}
 
-        <div className="bg-[#102B3D] px-2 py-4 border-white col-span-2">
+        <div className="back-slate px-2 py-4 border-white col-span-2">
         <h2 className="font-bold">
                 Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)}{" "}
                 Rounds)
@@ -288,21 +288,21 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId }: AgentBoxProps) => {
           </div>
         </div>
 
-        <div className="bg-[#102B3D] grid justify-start content-baseline" style={{padding: '0% 4%'}}>
+        <div className="back-slate grid justify-start content-baseline" style={{padding: '0% 4%'}}>
           <p className="font-bold text-m">FK &rarr; Round Win %</p>
           <p className="font-bold text-2xl text-[#4DFFDD]">
             {fk_round_win}%
           </p>
         </div>
 
-        <div className="bg-[#102B3D] grid justify-start content-baseline" style={{padding: '0% 2%'}}>
+        <div className="back-slate grid justify-start content-baseline" style={{padding: '0% 2%'}}>
           <p className="font-bold text-m">FD &rarr; Round Loss %</p>
           <p className="font-bold text-2xl text-[#FF6F4D]">
             {fd_round_loss}%
           </p>
         </div>
 
-        <div className="bg-[#102B3D] grid justify-start content-baseline" style={{padding: '0% 4%'}}>
+        <div className="back-slate grid justify-start content-baseline" style={{padding: '0% 4%'}}>
           <div className="flex flex-row items-center">
             <p className="font-bold text-m">Multikills: </p>
             <p className="font-bold text-lg text-[#4DFFDD] m-auto">
@@ -336,7 +336,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId }: AgentBoxProps) => {
           </div>
         </div>
 
-        <div className="bg-[#102B3D] grid justify-start content-baseline" style={{padding: '0% 2%'}}>
+        <div className="back-slate grid justify-start content-baseline" style={{padding: '0% 2%'}}>
           <div className="flex flex-row items-center">
             <p className="font-bold text-m">Clutches: </p>
             <p className="font-bold text-lg text-[#4DFFDD] m-auto">

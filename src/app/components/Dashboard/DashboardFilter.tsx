@@ -237,7 +237,7 @@ const DashboardFilter = ({
           </select>
 
           <Button
-            className="w-full h-full rounded-lg bg-[#f5603c]"
+            className="w-full h-full font-bold text-xl rounded-lg bg-[#f5603c]"
             color="primary"
             onClick={handleSearch}
           >

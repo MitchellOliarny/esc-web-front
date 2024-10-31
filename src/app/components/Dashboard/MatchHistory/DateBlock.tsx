@@ -19,6 +19,7 @@ interface DateBlockHistoryUIProps {
 const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress}: DateBlockHistoryUIProps) => {
 
   const [completedMedals, setCompletedMedals] = useState([]);
+  const bucket = 'https://files.esportsclubs.gg/'
 
   const FindCompletedMedals = () => {
     let temp = [];
@@ -59,7 +60,7 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
               completedMedals.slice(0, 7).map((value) => {
                 return (
                   //@ts-ignore
-                  <img key={value.medal} src={value.medal + '.png'} alt={value.medal}></img>
+                  <img key={value.medal} src={bucket + 'Vandal_Kills_5' + '.png'} alt={value.medal}></img>
                 )
               })
               :

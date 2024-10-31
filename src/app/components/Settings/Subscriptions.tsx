@@ -59,7 +59,7 @@ const Subscriptions = ({ sub_status }: SubscriptionsProps) => {
                                 <li>FREE entry to all Weekly Events</li>
                             </ul>
                         </div>
-                        <div className="mx-4 h-auto">
+                        <div className="mx-4 h-auto content-center">
                             {
                                 //@ts-ignore
                                 sub_status ?

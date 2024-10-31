@@ -61,7 +61,7 @@ export const timeSince = (dateString: string) => {
     const diffInMs = now - givenDate;
     
     // Calculate the difference in days
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
     
     // Check if the two dates are on the same day
     const sameDay = now.toDateString() === givenDate.toDateString();

@@ -102,7 +102,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
   return (
     <>
       <div className={fontSize}>
-        <div className="bg-[#102B3D] stat-box-border pt-4 px-4 h-full">
+        <div className="back-slate stat-box-border pt-4 px-4 h-full">
           <div className="flex items-center gap-2 justify-between">
             <div className="flex items-center gap-2">
               <h1 className="font-bold text-2xl">EsportsClubs.gg Score</h1>

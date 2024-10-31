@@ -63,85 +63,56 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                     </Link>
                   </div>
                 </div>
-                {user ?
-                  <div className="px-4">
-                    <ul className="inline-grid w-full font-medium text-ash gap-1 pb-2">
+                <div className="px-4">
+                  <ul className="inline-grid w-full font-medium text-ash gap-1 pb-2">
+                    {user ?
                       <Link href="/dashboard" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/dashboard' ? 'nav-active' : ''}`}>
                         <FaCircleUser />
                         <li className="">Dashboard</li>
                       </Link>
-                      <Link href="/clubs" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/clubs' ? 'nav-active' : ''}`}>
-                        <FaUsers />
-                        <li className="">Clubs</li>
+                      :
+                      <Link href="/" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/' ? 'nav-active' : ''}`}>
+                        <FaHome />
+                        <li className="">Home</li>
                       </Link>
-                      {/* <Link href="/recleague" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${url == 'recleague' ? 'nav-active' : ''}`}>
+                    }
+                    <Link href="/clubs" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/clubs' ? 'nav-active' : ''}`}>
+                      <FaUsers />
+                      <li className="">Clubs</li>
+                    </Link>
+                    {/* <Link href="/recleague" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${url == 'recleague' ? 'nav-active' : ''}`}>
                       <li className="">Rec League</li>
                     </Link> */}
-                      <Link href="/events" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/events' ? 'nav-active' : ''}`}>
-                        <FaCalendar />
-                        <li className="">Events</li>
-                      </Link>
-                      <Link href="/tools" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/tools' ? 'nav-active' : ''}`}>
-                        <FaToolbox />
-                        <li className="">Tools</li>
-                      </Link>
-                      <Link href="/about" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/about' ? 'nav-active' : ''}`}>
-                        <FaCircleInfo />
-                        <li className="">About ESC</li>
-                      </Link>
-                      <Link href="/faq" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/faq' ? 'nav-active' : ''}`}>
-                        <FaQuestion />
-                        <li className="">FAQ</li>
-                      </Link>
-                      <Link href="https://discord.gg/6ufMVF8n6u" target="_blank" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold`}>
-                        <FaDiscord />
-                        <li className="">Discord</li>
-                      </Link>
+                    <Link href="/events" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/events' ? 'nav-active' : ''}`}>
+                      <FaCalendar />
+                      <li className="">Events</li>
+                    </Link>
+                    <Link href="/tools" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/tools' ? 'nav-active' : ''}`}>
+                      <FaToolbox />
+                      <li className="">Tools</li>
+                    </Link>
+                    <Link href="/about" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/about' ? 'nav-active' : ''}`}>
+                      <FaCircleInfo />
+                      <li className="">About ESC</li>
+                    </Link>
+                    <Link href="/faq" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/faq' ? 'nav-active' : ''}`}>
+                      <FaQuestion />
+                      <li className="">FAQ</li>
+                    </Link>
+                    <Link href="https://discord.gg/6ufMVF8n6u" target="_blank" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold`}>
+                      <FaDiscord />
+                      <li className="">Discord</li>
+                    </Link>
+                    {user ?
                       <Link href="/settings" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/settings' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
                       >
                         <FaGear />
                         <li className="">Account</li>
                       </Link>
-                    </ul>
-                  </div>
-                  :
-                  <div className="px-4">
-                    <ul className="inline-grid w-full font-medium text-ash gap-1 pb-2">
-                    <Link href="/" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/' ? 'nav-active' : ''}`}>
-                        <FaHome />
-                        <li className="">Home</li>
-                      </Link>
-                      <Link href="/clubs" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/clubs' ? 'nav-active' : ''}`}>
-                        <FaUsers />
-                        <li className="">Clubs</li>
-                      </Link>
-                      {/* <Link href="/recleague" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${url == 'recleague' ? 'nav-active' : ''}`}>
-                      <li className="">Rec League</li>
-                    </Link> */}
-                      <Link href="/events" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/events' ? 'nav-active' : ''}`}>
-                        <FaCalendar />
-                        <li className="">Events</li>
-                      </Link>
-                      <Link href="/tools" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/tools' ? 'nav-active' : ''}`}>
-                        <FaToolbox />
-                        <li className="">Tools</li>
-                      </Link>
-                      <Link href="/about" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/about' ? 'nav-active' : ''}`}>
-                        <FaCircleInfo />
-                        <li className="">About ESC</li>
-                      </Link>
-                      <Link href="/faq" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/faq' ? 'nav-active' : ''}`}>
-                        <FaQuestion />
-                        <li className="">FAQ</li>
-                      </Link>
-                      <Link href="https://discord.gg/6ufMVF8n6u" target="_blank" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold`}>
-                        <FaDiscord />
-                        <li className="">Discord</li>
-                      </Link>
-                    </ul>
-                  </div>
-                }
+                      : ""}
+                  </ul>
+                </div>
                 <div className="flex justify-end w-full gap-2 self-end px-4 nav-border-top">
                   <NavbarUser
                     user={user}
@@ -258,7 +229,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
               </div>
             </div>
           </div>
-          <div>{children}</div>
+          <div className="w-full">{children}</div>
         </nav>
       )}
     </>
