@@ -50,7 +50,11 @@ export default function NavbarUser({
             onClick={() => setToggleDrawer(!toggleDrawer)}
           >
             <div className="flex content-center gap-2">
-              <img src={pfp} alt='user pfp' className="w-6 h-6"></img>
+              {pfp ? 
+              <img src={pfp} alt='user pfp' className="w-6 h-6 rounded-full"></img>
+              :
+              ''
+              }
               <h2 className="self-center text-sm">{user}</h2>
             </div>
             <div className="flex content-center gap-2">

@@ -36,7 +36,8 @@ export default async function RootLayout({
             user={info?.first_name || info?.email as string}
             rank={info?.val_rank || 0 as number}
             riot={info?.riot_name || ''}
-            pfp={'https://files.esportsclubs.gg/' + info?.profile_picture || info?.discord_avatar}
+            pfp={//'https://files.esportsclubs.gg/' + info?.profile_picture || 
+              `https://cdn.discordapp.com/avatars/${info?.discord_id}/${info?.discord_avatar}.png`}
           >
             <div className="">{children}</div>
             <Toaster position="bottom-right" reverseOrder={false} />
