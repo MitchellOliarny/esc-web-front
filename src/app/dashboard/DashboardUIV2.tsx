@@ -138,10 +138,24 @@ export default function Header({
   };
 
   const handleSideBarClick = (menu: string) => {
-    //@ts-ignore
-   // document.getElementById(menu).appendChild(document.getElementById('nav-bar'));
+    moveBarToElement(menu);
     setSelectedMenu(menu);
   };
+
+  const handleSideBarHover = (menu: string) => {
+    moveBarToElement(menu);
+  };
+
+  const handleSideBarBack = () => {
+    moveBarToElement(selectedMenu);
+  }
+
+  const moveBarToElement = (menu: string) => {
+    let nav = document.querySelector('ul.dashnav')
+    let item = document.getElementById(menu);
+    //@ts-ignore
+    if(item){nav?.style.setProperty('--move-bar', (item.offsetLeft+(item.offsetWidth/2))-(document.getElementById('nav-bar')?.offsetWidth/2) + 'px')}
+  }
 
   //console.log(valGames)
 
@@ -232,6 +246,8 @@ export default function Header({
                 <li
                 id="overview"
                   onClick={(e) => handleSideBarClick("overview")}
+                  onMouseOver={() => handleSideBarHover("overview")}
+                  onMouseOut={() => handleSideBarBack()}
                   className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "active" : ""
                     }`}
                 >
@@ -240,6 +256,8 @@ export default function Header({
                 <li
                 id="statistics"
                   onClick={(e) => handleSideBarClick("statistics")}
+                  onMouseOver={() => handleSideBarHover("statistics")}
+                  onMouseOut={() => handleSideBarBack()}
                   className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "active" : ""
                     }`}
                 >
@@ -248,6 +266,8 @@ export default function Header({
                 <li
                 id="match-history"
                   onClick={(e) => handleSideBarClick("match-history")}
+                  onMouseOver={() => handleSideBarHover("match-history")}
+                  onMouseOut={() => handleSideBarBack()}
                   className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "active" : ""
                     }`}
                 >
@@ -256,6 +276,8 @@ export default function Header({
                 <li
                 id="agents"
                   onClick={(e) => handleSideBarClick("agents")}
+                  onMouseOver={() => handleSideBarHover("agents")}
+                  onMouseOut={() => handleSideBarBack()}
                   className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "active" : ""
                     }`}
                 >
@@ -264,6 +286,8 @@ export default function Header({
                 <li
                  id="medals"
                   onClick={(e) => handleSideBarClick("medals")}
+                  onMouseOver={() => handleSideBarHover("medals")}
+                  onMouseOut={() => handleSideBarBack()}
                   className={`grid cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out text-ash ${
                     selectedMenu === "medals" ? "active" : ""
                   }`}
