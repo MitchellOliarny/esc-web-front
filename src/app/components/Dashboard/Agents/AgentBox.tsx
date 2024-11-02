@@ -6,14 +6,14 @@ interface AgentBoxProps {
   agentGames: any;
   agentAverages: any;
   agentId: string;
-
+  maps: any;
 }
 
 const AgentBox = ({
   agentGames,
   agentAverages,
   agentId,
-
+  maps
 }: AgentBoxProps) => {
 
   const isWin = (game: UserGames) => {
@@ -65,6 +65,9 @@ const AgentBox = ({
   let gamesWithEscScore = 0;
 
   let clutchesTotals = {};
+
+  //console.log(maps)
+  let mapId = maps[agentGames[0].map].id;
 
   for (const x in agentGames) {
     const playerTeam = (agentGames[x] as UserGames).team.toLowerCase();
@@ -166,29 +169,30 @@ const AgentBox = ({
   return (
     <>
       <div id="main-container" className="w-full">
-        <div className="h-52 relative border-b-2 border-white overflow-hidden">
+        <div className="h-72 relative border-b-2 border-white">
           <div className="absolute inset-0 bg-gradient-to-r from-[#11202D] to-[#20577C] opacity-50 rounded-t-lg"></div>
           <div
-            className="relative h-full flex items-center justify-center"
+            className="relative h-full items-center justify-center block rounded-t-lg"
             style={{
-              backgroundImage: "url(/dashboard/background.png)",
+              backgroundImage: `url(https://media.valorant-api.com/maps/${mapId}/splash.png)`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
-            <div className="w-full file:max-w-xs">
+            <div className="w-full file:max-w-xs z-1">
               <Image
                 src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
-                className="xl:scale-[1.8] lg:scale-[1.5] scale-[1.25] object-cover object-top translate-y-52"
+                className="xl:scale-[1.15] lg:scale-[1.15] scale-[1.25] object-cover object-top absolute translate-x-[20%] translate-y-[-7.5%]"
                 width={1000}
                 height={1000}
                 alt="Top Agent"
               />
             </div>
+            <h1 className="absolute bottom-3 left-5 font-black text-4xl">{agentGames[0].agent}</h1>
           </div>
         </div>
 
-        <div className="bg-[#102B3D] p-2 border-b-2 border-white">
+        <div className="bg-[#102B3D] p-2 border-b-2 border-white  z-10 relative">
           {/* <div className="flex items-center gap-2 justify-between">
             <div className="flex items-center gap-2">
               <h1 className="text-lg font-medium">Gameplay Score</h1>

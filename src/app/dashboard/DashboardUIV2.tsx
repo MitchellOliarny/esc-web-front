@@ -106,6 +106,7 @@ export default function Header({
             agentGames={agentGames}
             topAgents={newTopAgents}
             valAverage={valAverages}
+            maps={valMaps}
           />
         );
       case "medals":
