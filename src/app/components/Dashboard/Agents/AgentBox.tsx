@@ -169,7 +169,7 @@ const AgentBox = ({
   return (
     <>
       <div id="main-container" className="w-full">
-        <div className="h-72 relative border-b-2 border-white">
+        <div className="h-72 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-[#11202D] to-[#20577C] opacity-50 rounded-t-lg"></div>
           <div
             className="relative h-full items-center justify-center block rounded-t-lg"
@@ -179,7 +179,7 @@ const AgentBox = ({
               backgroundPosition: "center",
             }}
           >
-            <div className="w-full file:max-w-xs z-1">
+            <div className="w-full h-full file:max-w-xs z-1 map-gradient">
               <Image
                 src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
                 className="xl:scale-[1.15] lg:scale-[1.15] scale-[1.25] object-cover object-top absolute translate-x-[20%] translate-y-[-7.5%]"
@@ -192,7 +192,7 @@ const AgentBox = ({
           </div>
         </div>
 
-        <div className="bg-[#102B3D] p-2 border-b-2 border-white  z-10 relative">
+        <div className="back-graphite p-2  z-10 relative">
           {/* <div className="flex items-center gap-2 justify-between">
             <div className="flex items-center gap-2">
               <h1 className="text-lg font-medium">Gameplay Score</h1>

@@ -500,3 +500,9 @@ select.transparent>option {
 .game-row-draw {
   background: linear-gradient(90deg, rgb(230, 230, 230) 2%, rgba(255, 255, 255, 0) 8%, #14181ebd 11%, var(--graphite) 20%, var(--graphite) 100%);
 }
+
+/* AGENT BOXES */
+
+.map-gradient {
+  background: linear-gradient(0deg, var(--graphite) 1%, #0000005e 80%);;
+}
