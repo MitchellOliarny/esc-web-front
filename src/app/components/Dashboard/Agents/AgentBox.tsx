@@ -207,11 +207,11 @@ const AgentBox = ({
               backgroundPosition: "center",
             }}
           >
-            <div className="best-map-box m-4 absolute min-w-32 w-auto h-8 text-nowrap">
+            <div className="best-map-box m-4 px-2 absolute min-w-32 w-auto h-8 text-nowrap">
               <span className="text-ash font-bold text-sm">Best Map:</span>
               <span className="text-frost font-bold text-sm">{bestMap}</span>
             </div>
-            <div className="w-full h-full file:max-w-xs z-1 map-gradient">
+            <div className="w-full h-full file:max-w-xs z-1 map-gradient rounded-lg">
               <Image
                 src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
                 className="xl:scale-[1.15] lg:scale-[1.15] scale-[1.25] object-cover object-top absolute translate-x-[20%] translate-y-[-7.5%]"
