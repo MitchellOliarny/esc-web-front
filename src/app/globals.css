@@ -481,6 +481,12 @@ select.transparent>option {
   border-left: var(--slate) 1px solid;
 }
 
+.game-row-border-special2 {
+  border-bottom: var(--slate) 1px solid;
+  border-right: var(--slate) 1px solid;
+  border-left: var(--slate) 1px solid;
+}
+
 .game-row-border-top {
   border-top: var(--slate) 1px solid;
 }
