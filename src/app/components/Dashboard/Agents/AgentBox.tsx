@@ -67,7 +67,7 @@ const AgentBox = ({
   let clutchesTotals = {};
 
   //console.log(maps)
-  let mapId = maps[agentGames[0].map].id;
+  let mapStats = {}
 
   for (const x in agentGames) {
     const playerTeam = (agentGames[x] as UserGames).team.toLowerCase();
@@ -86,6 +86,21 @@ const AgentBox = ({
 
     fDeathRLosses += (agentGames[x] as UserGames).f_kills_deaths.fDeathRLoss;
     fDeaths += (agentGames[x] as UserGames).f_kills_deaths.fDeaths;
+
+    //@ts-ignore
+    if (!mapStats[agentGames[x].map]) {
+      //@ts-ignore
+      mapStats[agentGames[x].map] = { map: agentGames[x].map, id: maps[agentGames[x].map].id, matchWins: 0, matchLosses: 0, gamesPlayed: 0, kast: 0 }
+    }
+
+    //@ts-ignore
+    isWin(agentGames[x]) ? mapStats[agentGames[x].map].matchWins++ : mapStats[agentGames[x].map].matchLosses++;
+
+    //@ts-ignore
+    mapStats[agentGames[x].map].gamesPlayed++;
+
+    //@ts-ignore
+    mapStats[agentGames[x].map].kast += (agentGames[x] as UserGames).kast;
 
     //@ts-ignore
     totalMultiKills += Number(agentGames[x].multikills["2k"]) + Number(agentGames[x].multikills["3k"]) + Number(agentGames[x].multikills["4k"]) + Number(agentGames[x].multikills["5k"]);
@@ -145,6 +160,19 @@ const AgentBox = ({
     }
   }
 
+  let sortedMapsByWinPercent = [];
+  for (const x in mapStats) {
+    //@ts-ignore
+    sortedMapsByWinPercent.push(mapStats[x])
+  }
+
+  sortedMapsByWinPercent.sort((a, b) => (b.matchWins / b.gamesPlayed) - (a.matchWins / a.gamesPlayed));
+
+  const mapId = sortedMapsByWinPercent[0].id;
+  const bestMap = sortedMapsByWinPercent[0].map;
+
+
+
   const ultimate_points = "0"
   const ability1_points = (ability1 / agentGames?.length).toFixed(2)
   const ability2_points = (ability2 / agentGames?.length).toFixed(2)
@@ -179,6 +207,10 @@ const AgentBox = ({
               backgroundPosition: "center",
             }}
           >
+            <div className="best-map-box m-4 absolute min-w-32 w-auto h-8 text-nowrap">
+              <span className="text-ash font-bold text-sm">Best Map:</span>
+              <span className="text-frost font-bold text-sm">{bestMap}</span>
+            </div>
             <div className="w-full h-full file:max-w-xs z-1 map-gradient">
               <Image
                 src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
@@ -187,8 +219,11 @@ const AgentBox = ({
                 height={1000}
                 alt="Top Agent"
               />
+              <div className="gradient-agent-overlay w-full h-full">
+
+              </div>
             </div>
-            <h1 className="absolute bottom-3 left-5 font-black text-4xl">{agentGames[0].agent}</h1>
+            <h1 className="absolute bottom-3 left-5 font-black text-4xl z-20">{agentGames[0].agent}</h1>
           </div>
         </div>
 
@@ -208,7 +243,7 @@ const AgentBox = ({
 
           <div>
             <div>
-              <StatsScore userGames={agentGames} valAverage={agentAverages} isAgentBox={true}/>
+              <StatsScore userGames={agentGames} valAverage={agentAverages} isAgentBox={true} />
             </div>
           </div>
         </div>

@@ -506,3 +506,27 @@ select.transparent>option {
 .map-gradient {
   background: linear-gradient(0deg, var(--graphite) 1%, #0000005e 80%);;
 }
+
+.gradient-agent-overlay {
+  position: absolute;
+  z-index: 1;
+  background: linear-gradient(0deg, var(--graphite) 1%, #00000000 13%);
+}
+
+.best-map-box {
+  background-color: var(--obsidian);
+  border-radius: 0.5em;
+  align-content: center;
+  justify-content: space-evenly;
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.stat-percent-box {
+  background-color: var(--obsidian);
+  border-radius: 0.5em;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  margin-right: 0.5em;
+}

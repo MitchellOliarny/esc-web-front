@@ -353,7 +353,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
         <div>
           <div className="">
             <div className={`grid`}>
-              <div className="inline-flex pl-2 pr-10 justify-start">
+              <div className="inline-flex w-full pl-2 pr-10 justify-start">
                 <Image
                   width={1000}
                   height={1000}
@@ -362,37 +362,39 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                   className="w-auto h-8"
                 />
 
-                  {/* <div
-                    className="tooltip cursor-default"
+
+                  <div className="font-bold pl-4 self-end">
+                   <span className="text-voltage text-4xl">{(ESCScore * 10).toFixed(0)}</span> 
+                    <span className="text-ash text-2xl">/1000</span>
+                  </div>
+       
+                <h2 className="font-bold text-2xl whitespace-nowrap text-ash pl-2 self-end">
+                      ESC Score
+                  </h2>
+
+                  <div
+                    className="tooltip cursor-default self-center px-2"
                     data-tip="Likeliness to Rank Up"
                   >
-                  </div> */}
-
-                  <p className="text-[#4DFFDD] font-bold text-3xl leading-none">
-                    {(ESCScore * 10).toFixed(0)}
-                    <span className="text-white text-2xl">/1000</span>
-                  </p>
-       
-                <h2 className="font-medium text-2xl leading-none whitespace-nowrap">
-                      ESC Score
-                    </h2>
+                    <FaRegQuestionCircle className="text-ash my-auto"/>
+                  </div>
               </div>
 
 
-              <div className="pl-10">
+              <div className="px-4 py-6">
                 <div className="grid grid-cols-3 gap-8 pb-6">
                   <div>
                     <div
                       className="tooltip cursor-default"
                       data-tip="Overall Percentage of Matches Won"
                     >
-                      <h3 className="font-bold text-sm">Match Win %</h3>
+                      <h3 className="font-bold text-sm text-ash">Match Win %</h3>
                     </div>
-                    <p className="font-bold text-4xl text-[#4DFFDD]">
+                    <p className="font-bold text-4xl text-frost">
                       {((totalWins / (totalWins + totalLosses)) * 100).toFixed(1)}%
                     </p>
-                    <p className="font-bold text-sm">
-                      Top{" "}
+                    <p className="font-bold text-sm stat-percent-box h-6">
+                      <span className="m-auto">Top{" "}
                       {(
                         calculatePercentile(
                           (totalWins / (totalWins + totalLosses) * 100),
@@ -404,7 +406,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                           valAverage?.max?.match_win_percent
                         ).percentile
                       ).toFixed(2)}
-                      %
+                      %</span>
                     </p>
                   </div>
                   <div>
@@ -412,12 +414,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       className="tooltip cursor-default"
                       data-tip="Overall Percentage of Rounds Won"
                     >
-                      <h3 className="font-bold text-sm">Round Win %</h3>
+                      <h3 className="font-bold text-sm text-ash">Round Win %</h3>
                     </div>
-                    <p className="font-bold text-4xl text-[#4DFFDD]">
+                    <p className="font-bold text-4xl text-frost">
                       {((roundsWin / totalRounds) * 100).toFixed(1)}%
                     </p>
-                    <p className="font-bold text-sm">
+                    <p className="font-bold text-sm stat-percent-box h-6">
                       Top{" "}
                       {(
                         calculatePercentile(
@@ -438,12 +440,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       className="tooltip cursor-default"
                       data-tip="Overall Average Damage per Round"
                     >
-                      <h3 className="font-bold text-sm">AD/R</h3>
+                      <h3 className="font-bold text-sm text-ash">AD/R</h3>
                     </div>
-                    <p className="font-bold text-4xl text-[#4DFFDD]">
+                    <p className="font-bold text-4xl text-frost">
                       {(adrPercentage / recentGames?.length).toFixed(0)}
                     </p>
-                    <p className="font-bold text-sm">
+                    <p className="font-bold text-sm stat-percent-box h-6">
                       Top{" "}
                       {(
                         calculatePercentile(
@@ -468,12 +470,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       className="tooltip cursor-default"
                       data-tip="Overall Kills, Assists, Survives, Trades Percentage"
                     >
-                      <h3 className="font-bold text-sm">KAST%</h3>
+                      <h3 className="font-bold text-sm text-ash">KAST%</h3>
                     </div>
-                    <p className="font-bold text-4xl text-[#4DFFDD]">
+                    <p className="font-bold text-4xl text-frost">
                       {(kastPercentage / recentGames?.length).toFixed(1)}%
                     </p>
-                    <p className="font-bold text-sm">
+                    <p className="font-bold text-sm stat-percent-box h-6">
                       Top{" "}
                       {(
                         calculatePercentile(
@@ -494,12 +496,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       className="tooltip cursor-default"
                       data-tip="Overall Kills + Assists / Deaths"
                     >
-                      <h3 className="font-bold text-sm">KA/D</h3>
+                      <h3 className="font-bold text-sm text-ash">KA/D</h3>
                     </div>
-                    <p className="font-bold text-4xl text-[#4DFFDD]">
+                    <p className="font-bold text-4xl text-frost">
                       {(KAD / recentGames?.length).toFixed(2)}
                     </p>
-                    <p className="font-bold text-sm">
+                    <p className="font-bold text-sm stat-percent-box h-6">
                       Top{" "}
                       {(
                         calculatePercentile(
@@ -520,12 +522,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       className="tooltip cursor-default"
                       data-tip="AVG Net Damage / Round"
                     >
-                      <h3 className="font-bold text-sm">DMG Delta</h3>
+                      <h3 className="font-bold text-sm text-ash">DMG Delta</h3>
                     </div>
-                    <p className="font-bold text-4xl text-[#4DFFDD]">
+                    <p className="font-bold text-4xl text-frost">
                       {(ddPercentage / recentGames?.length).toFixed(2)}
                     </p>
-                    <p className="font-bold text-sm">
+                    <p className="font-bold text-sm stat-percent-box h-6">
                       Top{" "}
                       {(
                         calculatePercentile(

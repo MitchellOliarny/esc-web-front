@@ -32,8 +32,8 @@ export const formatDateYear = (dateString: string) => {
 };
 
 export const shortDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString()
+  const date = new Date(dateString);
+  return date.toLocaleDateString()
 };
 
 export const formatDateYearShort = (dateString: string) => {
@@ -53,26 +53,31 @@ export const formatDateYearShort = (dateString: string) => {
 };
 
 export const timeSince = (dateString: string) => {
-    const now = new Date();
-    const givenDate = new Date(dateString);
+  const now = new Date();
+  const givenDate = new Date(dateString);
 
-    // Calculate the difference in time (milliseconds)
-    //@ts-ignore
-    const diffInMs = now - givenDate;
-    
-    // Calculate the difference in days
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-    
-    // Check if the two dates are on the same day
-    const sameDay = now.toDateString() === givenDate.toDateString();
+  // Calculate the difference in time (milliseconds)
+  //@ts-ignore
+  const diffInMs = now - givenDate;
 
-    if (sameDay) {
-        // Calculate the difference in hours if it's the same day
-        const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-        return `${diffInHours}h ago`;
-    } else {
-        return `${(diffInDays % 1 > 0.5 ? Math.floor(diffInDays) : Math.round(diffInDays))}d ago`;
-    }
+  // Calculate the difference in days
+  const diffInWeeks = (diffInMs / (1000 * 60 * 60 * 24 * 7));
+  const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  const diffInMin = Math.floor(diffInMs / (1000 * 60));
+
+  if (diffInHours < 1) {
+    return `${diffInMin}min ago`
+  }
+  else if (diffInDays < 1) {
+    return `${diffInHours}h ago`;
+  }
+  else if (diffInWeeks < 1) {
+    return `${Math.ceil(diffInDays)}d ago`;
+  }
+  else {
+    return `${(diffInWeeks).toFixed(0)}w ago`;
+  }
 }
 
 export const daysSince = (dateString: string) => {
@@ -82,23 +87,26 @@ export const daysSince = (dateString: string) => {
   // Calculate the difference in time (milliseconds)
   //@ts-ignore
   const diffInMs = now - givenDate;
-  
-  // Calculate the difference in days
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
-  
-  // Check if the two dates are on the same day
-  const sameDay = now.toDateString() === givenDate.toDateString();
+  // Calculate the difference in days
+
+  const diffInWeeks = (diffInMs / (1000 * 60 * 60 * 24 * 7));
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  const diffInMin = Math.floor(diffInMs / (1000 * 60));
 
 
   if (diffInDays < 1) {
-      return `Today`;
-  } 
-  else if(diffInDays == 1){
+    return `Today`;
+  }
+  else if (diffInDays == 1) {
     return 'Yesterday'
   }
-    else {
-      return `${diffInDays}d ago`;
+  else if (diffInWeeks < 1) {
+    return `${diffInDays}d ago`;
+  }
+  else {
+    return `${(diffInWeeks).toFixed(0)}w ago`;
   }
 }
 
@@ -131,7 +139,7 @@ export const calculatePercentile = (
   }
 };
 
-export const convertTimeToUTC = (date: String | Date | Number) =>{
+export const convertTimeToUTC = (date: String | Date | Number) => {
   //@ts-ignore
   const d = new Date(date);
   const result = new Date(new Date(d).toUTCString()).toISOString()
