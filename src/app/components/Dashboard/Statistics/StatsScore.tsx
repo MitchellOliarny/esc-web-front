@@ -95,6 +95,66 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
   const esc_adr_points = normalize((adrPercentage / recentGames.length), adrLowerThreshold, adrUpperThreshold);
   const esc_dd_points = normalize((ddPercentage / recentGames.length), ddLowerThreshold, ddUpperThreshold)
 
+  const win_percent = calculatePercentile(
+    (totalWins / (totalWins + totalLosses) * 100),
+    // @ts-ignore
+    valAverage?.median?.match_win_percent,
+    // @ts-ignore
+    valAverage?.min?.match_win_percent,
+    // @ts-ignore
+    valAverage?.max?.match_win_percent
+  );
+
+  const round_percent = calculatePercentile(
+    (roundsWin / totalRounds) * 100,
+    // @ts-ignore
+    valAverage?.median?.round_win_percent,
+    // @ts-ignore
+    valAverage?.min?.round_win_percent,
+    // @ts-ignore
+    valAverage?.max?.round_win_percent
+  );
+
+  const adr_percent = calculatePercentile(
+    adrPercentage / recentGames?.length,
+    // @ts-ignore
+    valAverage?.median?.adr,
+    // @ts-ignore
+    valAverage?.min?.adr,
+    // @ts-ignore
+    valAverage?.max?.adr
+  );
+
+  const kast_percent = calculatePercentile(
+    kastPercentage / recentGames?.length,
+    // @ts-ignore
+    valAverage?.median?.kast,
+    // @ts-ignore
+    valAverage?.min?.kast,
+    // @ts-ignore
+    valAverage?.max?.kast
+  );
+
+  const kad_percent = calculatePercentile(
+    KAD / recentGames?.length,
+    // @ts-ignore
+    valAverage?.median?.kad,
+    // @ts-ignore
+    valAverage?.min?.kad,
+    // @ts-ignore
+    valAverage?.max?.kad
+  );
+
+  const dmg_delta_percent = calculatePercentile(
+    ddPercentage / recentGames?.length,
+    // @ts-ignore
+    valAverage?.median?.dmgdelta,
+    // @ts-ignore
+    valAverage?.min?.dmgdelta,
+    // @ts-ignore
+    valAverage?.max?.dmgdelta
+  );
+
   ESCScore = (esc_match_points * matchWinPoints) + (esc_round_points * roundWinPoints) + (esc_kad_points * KADPoints) + (esc_kast_points * kastPoints) + (esc_adr_points * adrPoints) + (esc_dd_points * ddPoints);
 
   //console.log('adr: ' + esc_adr_points + ' match:' + esc_match_points + ' round:' + esc_round_points + ' kad:' + esc_kad_points + ' kast:' + esc_kast_points)
@@ -184,15 +244,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-sm">
                         Top{" "}
                         {(
-                          calculatePercentile(
-                            (totalWins / (totalWins + totalLosses) * 100),
-                            // @ts-ignore
-                            valAverage?.median?.match_win_percent,
-                            // @ts-ignore
-                            valAverage?.min?.match_win_percent,
-                            // @ts-ignore
-                            valAverage?.max?.match_win_percent
-                          ).percentile
+                          win_percent.percentile
                         ).toFixed(2)}
                         %
                       </p>
@@ -210,15 +262,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-sm">
                         Top{" "}
                         {(
-                          calculatePercentile(
-                            (roundsWin / totalRounds) * 100,
-                            // @ts-ignore
-                            valAverage?.median?.round_win_percent,
-                            // @ts-ignore
-                            valAverage?.min?.round_win_percent,
-                            // @ts-ignore
-                            valAverage?.max?.round_win_percent
-                          ).percentile
+                          round_percent.percentile
                         ).toFixed(2)}
                         %
                       </p>
@@ -236,15 +280,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-sm">
                         Top{" "}
                         {(
-                          calculatePercentile(
-                            adrPercentage / recentGames?.length,
-                            // @ts-ignore
-                            valAverage?.median?.adr,
-                            // @ts-ignore
-                            valAverage?.min?.adr,
-                            // @ts-ignore
-                            valAverage?.max?.adr
-                          ).percentile
+                          adr_percent.percentile
                         ).toFixed(2)}
                         %
                       </p>
@@ -266,15 +302,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-sm">
                         Top{" "}
                         {(
-                          calculatePercentile(
-                            kastPercentage / recentGames?.length,
-                            // @ts-ignore
-                            valAverage?.median?.kast,
-                            // @ts-ignore
-                            valAverage?.min?.kast,
-                            // @ts-ignore
-                            valAverage?.max?.kast
-                          ).percentile
+                          kast_percent.percentile
                         ).toFixed(2)}
                         %
                       </p>
@@ -292,15 +320,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-sm">
                         Top{" "}
                         {(
-                          calculatePercentile(
-                            KAD / recentGames?.length,
-                            // @ts-ignore
-                            valAverage?.median?.kad,
-                            // @ts-ignore
-                            valAverage?.min?.kad,
-                            // @ts-ignore
-                            valAverage?.max?.kad
-                          ).percentile
+                          kad_percent.percentile
                         ).toFixed(2)}
                         %
                       </p>
@@ -318,15 +338,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-sm">
                         Top{" "}
                         {(
-                          calculatePercentile(
-                            ddPercentage / recentGames?.length,
-                            // @ts-ignore
-                            valAverage?.median?.dmgdelta,
-                            // @ts-ignore
-                            valAverage?.min?.dmgdelta,
-                            // @ts-ignore
-                            valAverage?.max?.dmgdelta
-                          ).percentile
+                          dmg_delta_percent.percentile
                         ).toFixed(2)}
                         %
                       </p>
@@ -363,21 +375,21 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                 />
 
 
-                  <div className="font-bold pl-4 self-end">
-                   <span className="text-voltage text-4xl">{(ESCScore * 10).toFixed(0)}</span> 
-                    <span className="text-ash text-2xl">/1000</span>
-                  </div>
-       
-                <h2 className="font-bold text-2xl whitespace-nowrap text-ash pl-2 self-end">
-                      ESC Score
-                  </h2>
+                <div className="font-bold pl-4 self-end">
+                  <span className="text-voltage text-4xl">{(ESCScore * 10).toFixed(0)}</span>
+                  <span className="text-ash text-2xl">/1000</span>
+                </div>
 
-                  <div
-                    className="tooltip cursor-default self-center px-2"
-                    data-tip="Likeliness to Rank Up"
-                  >
-                    <FaRegQuestionCircle className="text-ash my-auto"/>
-                  </div>
+                <h2 className="font-bold text-2xl whitespace-nowrap text-ash pl-2 self-end">
+                  ESC Score
+                </h2>
+
+                <div
+                  className="tooltip cursor-default self-center px-2"
+                  data-tip={`A measure to how likely you are to rank up from your current rank \n (500 is on-par with current rank)`}
+                >
+                  <FaRegQuestionCircle className="text-ash my-auto" />
+                </div>
               </div>
 
 
@@ -394,19 +406,11 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       {((totalWins / (totalWins + totalLosses)) * 100).toFixed(1)}%
                     </p>
                     <p className="font-bold text-sm stat-percent-box h-6">
-                      <span className="m-auto">Top{" "}
-                      {(
-                        calculatePercentile(
-                          (totalWins / (totalWins + totalLosses) * 100),
-                          // @ts-ignore
-                          valAverage?.median?.match_win_percent,
-                          // @ts-ignore
-                          valAverage?.min?.match_win_percent,
-                          // @ts-ignore
-                          valAverage?.max?.match_win_percent
-                        ).percentile
-                      ).toFixed(2)}
-                      %</span>
+                      <span className={`m-auto text-${win_percent.color}`}>Top{" "}
+                        {(
+                          win_percent.percentile
+                        ).toFixed(2)}
+                        %</span>
                     </p>
                   </div>
                   <div>
@@ -420,19 +424,11 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       {((roundsWin / totalRounds) * 100).toFixed(1)}%
                     </p>
                     <p className="font-bold text-sm stat-percent-box h-6">
-                      Top{" "}
-                      {(
-                        calculatePercentile(
-                          (roundsWin / totalRounds) * 100,
-                          // @ts-ignore
-                          valAverage?.median?.round_win_percent,
-                          // @ts-ignore
-                          valAverage?.min?.round_win_percent,
-                          // @ts-ignore
-                          valAverage?.max?.round_win_percent
-                        ).percentile
-                      ).toFixed(2)}
-                      %
+                      <span className={`m-auto text-${round_percent.color}`}>Top{" "}
+                        {(
+                          round_percent.percentile
+                        ).toFixed(2)}
+                        %</span>
                     </p>
                   </div>
                   <div>
@@ -446,19 +442,11 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       {(adrPercentage / recentGames?.length).toFixed(0)}
                     </p>
                     <p className="font-bold text-sm stat-percent-box h-6">
-                      Top{" "}
-                      {(
-                        calculatePercentile(
-                          adrPercentage / recentGames?.length,
-                          // @ts-ignore
-                          valAverage?.median?.adr,
-                          // @ts-ignore
-                          valAverage?.min?.adr,
-                          // @ts-ignore
-                          valAverage?.max?.adr
-                        ).percentile
-                      ).toFixed(2)}
-                      %
+                      <span className={`m-auto text-${adr_percent.color}`}>Top{" "}
+                        {(
+                          adr_percent.percentile
+                        ).toFixed(2)}
+                        %</span>
                     </p>
                   </div>
 
@@ -476,19 +464,11 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       {(kastPercentage / recentGames?.length).toFixed(1)}%
                     </p>
                     <p className="font-bold text-sm stat-percent-box h-6">
-                      Top{" "}
-                      {(
-                        calculatePercentile(
-                          kastPercentage / recentGames?.length,
-                          // @ts-ignore
-                          valAverage?.median?.kast,
-                          // @ts-ignore
-                          valAverage?.min?.kast,
-                          // @ts-ignore
-                          valAverage?.max?.kast
-                        ).percentile
-                      ).toFixed(2)}
-                      %
+                      <span className={`m-auto text-${kast_percent.color}`}>Top{" "}
+                        {(
+                          kast_percent.percentile
+                        ).toFixed(2)}
+                        %</span>
                     </p>
                   </div>
                   <div>
@@ -502,19 +482,11 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       {(KAD / recentGames?.length).toFixed(2)}
                     </p>
                     <p className="font-bold text-sm stat-percent-box h-6">
-                      Top{" "}
-                      {(
-                        calculatePercentile(
-                          KAD / recentGames?.length,
-                          // @ts-ignore
-                          valAverage?.median?.kad,
-                          // @ts-ignore
-                          valAverage?.min?.kad,
-                          // @ts-ignore
-                          valAverage?.max?.kad
-                        ).percentile
-                      ).toFixed(2)}
-                      %
+                      <span className={`m-auto text-${kad_percent.color}`}>Top{" "}
+                        {(
+                          kad_percent.percentile
+                        ).toFixed(2)}
+                        %</span>
                     </p>
                   </div>
                   <div>
@@ -528,19 +500,11 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       {(ddPercentage / recentGames?.length).toFixed(2)}
                     </p>
                     <p className="font-bold text-sm stat-percent-box h-6">
-                      Top{" "}
-                      {(
-                        calculatePercentile(
-                          ddPercentage / recentGames?.length,
-                          // @ts-ignore
-                          valAverage?.median?.dmgdelta,
-                          // @ts-ignore
-                          valAverage?.min?.dmgdelta,
-                          // @ts-ignore
-                          valAverage?.max?.dmgdelta
-                        ).percentile
-                      ).toFixed(2)}
-                      %
+                      <span className={`m-auto text-${dmg_delta_percent.color}`}>Top{" "}
+                        {(
+                          dmg_delta_percent.percentile
+                        ).toFixed(2)}
+                        %</span>
                     </p>
                   </div>
                   {/* { <div className="col-span-2">

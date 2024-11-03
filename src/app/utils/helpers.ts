@@ -128,14 +128,23 @@ export const calculatePercentile = (
   min: number,
   max: number
 ) => {
+
   if (userStat < median) {
     const barPercent = Math.abs((userStat - median) / (median - min) / 2 + 0.5) * 100;
     const percentile = 100 - barPercent;
-    return { barPercent, percentile };
+
+    let color = null;
+    color = percentile >= 80 ? 'loss' : percentile <= 20 ? 'win' : percentile <= 60 && percentile >= 40 ? 'caution' : null;
+
+    return { barPercent, percentile, color};
   } else {
     const barPercent = Math.abs((userStat - median) / (max - median) / 2 + 0.5) * 100;
     const percentile = 100 - barPercent;
-    return { barPercent, percentile };
+
+    let color = null;
+    color = percentile >= 80 ? 'loss' : percentile <= 20 ? 'win' : percentile <= 60 && percentile >= 40 ? 'caution' : null;
+
+    return { barPercent, percentile, color };
   }
 };
 

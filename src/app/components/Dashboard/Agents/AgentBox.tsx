@@ -207,14 +207,15 @@ const AgentBox = ({
               backgroundPosition: "center",
             }}
           >
-            <div className="best-map-box m-4 px-2 absolute min-w-32 w-auto h-8 text-nowrap">
-              <span className="text-ash font-bold text-sm">Best Map:</span>
-              <span className="text-frost font-bold text-sm">{bestMap}</span>
+            <div className="best-map-box m-4 px-2 absolute h-8 text-nowrap">
+              <span className="text-ash font-bold text-sm">Best Map:
+                <span className="text-frost font-bold text-sm"> {bestMap}</span>
+              </span>
             </div>
             <div className="w-full h-full file:max-w-xs z-1 map-gradient rounded-lg">
               <Image
                 src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
-                className="xl:scale-[1.15] lg:scale-[1.15] scale-[1.25] object-cover object-top absolute translate-x-[20%] translate-y-[-7.5%]"
+                className="xl:scale-[1.15] lg:scale-[1.15] scale-[1.1] object-cover object-top absolute translate-x-[20%] translate-y-[-7.5%]"
                 width={1000}
                 height={1000}
                 alt="Top Agent"
@@ -223,7 +224,7 @@ const AgentBox = ({
 
               </div>
             </div>
-            <h1 className="absolute bottom-3 left-5 font-black text-4xl z-20">{agentGames[0].agent}</h1>
+            <h1 className="absolute bottom-3 left-4 font-black text-4xl z-20">{agentGames[0].agent}</h1>
           </div>
         </div>
 
@@ -249,7 +250,7 @@ const AgentBox = ({
         </div>
       </div>
 
-      <div className="bg-[#102B3D] px-2 py-4 border-b-2 border-white">
+      <div className="bg-[#102B3D] px-2 py-4 border-b-2 border-white z-10 relative">
         <div className="flex gap-2 items-center">
           <h2 className="text-2xl font-bold">Utility Report</h2>
           {/* <Image
@@ -321,7 +322,7 @@ const AgentBox = ({
         </div>
       </div>
 
-      <div className="bg-[#102B3D] p-2 rounded-b-lg">
+      <div className="bg-[#102B3D] p-2 rounded-b-lg z-10 relative">
         <div className="flex gap-2 items-center">
           <h2 className="text-2xl font-bold">Impact Report</h2>
           {/* <Image
