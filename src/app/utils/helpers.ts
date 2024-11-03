@@ -62,7 +62,7 @@ export const timeSince = (dateString: string) => {
 
   // Calculate the difference in days
   const diffInWeeks = (diffInMs / (1000 * 60 * 60 * 24 * 7));
-  const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
   const diffInMin = Math.floor(diffInMs / (1000 * 60));
 
@@ -76,7 +76,7 @@ export const timeSince = (dateString: string) => {
     return `${Math.ceil(diffInDays)}d ago`;
   }
   else {
-    return `${(diffInWeeks).toFixed(0)}w ago`;
+    return `${Math.round(diffInWeeks)}w ago`;
   }
 }
 
@@ -91,7 +91,7 @@ export const daysSince = (dateString: string) => {
   // Calculate the difference in days
 
   const diffInWeeks = (diffInMs / (1000 * 60 * 60 * 24 * 7));
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
   const diffInMin = Math.floor(diffInMs / (1000 * 60));
 
@@ -106,7 +106,7 @@ export const daysSince = (dateString: string) => {
     return `${diffInDays}d ago`;
   }
   else {
-    return `${(diffInWeeks).toFixed(0)}w ago`;
+    return `${Math.round(diffInWeeks)}w ago`;
   }
 }
 
