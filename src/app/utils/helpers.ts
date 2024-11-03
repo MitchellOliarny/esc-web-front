@@ -61,22 +61,22 @@ export const timeSince = (dateString: string) => {
   const diffInMs = now - givenDate;
 
   // Calculate the difference in days
-  const diffInWeeks = (diffInMs / (1000 * 60 * 60 * 24 * 7));
-  const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInWeeks = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 7));
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
   const diffInMin = Math.floor(diffInMs / (1000 * 60));
 
-  if (diffInHours < 1) {
+  if (diffInHours <= 1) {
     return `${diffInMin}min ago`
   }
-  else if (diffInDays < 1) {
+  else if (diffInDays <= 1) {
     return `${diffInHours}h ago`;
   }
-  else if (diffInWeeks < 1) {
-    return `${Math.ceil(diffInDays)}d ago`;
+  else if (diffInWeeks <= 1) {
+    return `${diffInDays}d ago`;
   }
   else {
-    return `${Math.round(diffInWeeks)}w ago`;
+    return `${diffInWeeks}w ago`;
   }
 }
 
@@ -90,8 +90,8 @@ export const daysSince = (dateString: string) => {
 
   // Calculate the difference in days
 
-  const diffInWeeks = (diffInMs / (1000 * 60 * 60 * 24 * 7));
-  const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInWeeks = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 7));
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
   const diffInMin = Math.floor(diffInMs / (1000 * 60));
 
@@ -106,7 +106,7 @@ export const daysSince = (dateString: string) => {
     return `${diffInDays}d ago`;
   }
   else {
-    return `${Math.round(diffInWeeks)}w ago`;
+    return `${diffInWeeks}w ago`;
   }
 }
 
