@@ -562,3 +562,9 @@ select.transparent>option {
   background-color: var(--slate);
   color: var(--frost);
 }
+
+.medal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 100%;
+}

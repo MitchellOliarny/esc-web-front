@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Medal from "./Medal";
 
 interface MedalShowcaseProps {
@@ -9,94 +9,57 @@ interface MedalShowcaseProps {
 
 const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps) => {
 
-    //console.log(medals)
-    //console.log(medalsProgress)
+    console.log(medals)
+    console.log(medalsProgress)
     // console.log(category)
+    const [selectedTier, setSelectedTier] = useState('All');
 
-    let kills_progress: any[] = [];
-    let ability_progress: any[] = [];
-    let game_event_progress: any[] = [];
-    let clutch_progress: any[] = [];
+    const tierOptions = [0, 1, 2, 3, 4, 5]
 
     let temp = 0;
 
     if (!medals) {
         return (
-            <div className="grid grid-rows-4 gap-4 h-full"></div>
+            <div className="grid grid-rows-4 gap-4 h-full">No Medals in this Category</div>
         )
     }
 
-    const IncreaseStatus = () => {
-        temp++;
-    }
-
-    console.log(medals)
-    console.log(medalsProgress)
-
-
     return (
         <>
-            <div className={`grid ${category == 'game_event_medals' ? 'grid-cols-4' : ''} gap-4 h-full`}>
-                {Object.keys(medals).map((value, index) => {
-                    if (category == 'game_event_medals') {
-                        return (
-                            <div key={value + '' + index} style={{
-                                // backgroundColor: 'blue',
-                                display: 'flex',
-                                flexWrap: 'nowrap',
-                                margin: '3% auto',
-                                overflowX: 'visible',
-                                minHeight: '150px'
-                            }}>
-                                <Medal medalInfo={medals[value]} progress={medalsProgress[value] ? medalsProgress[value].progress : 0}
-                                    statusIncrease={IncreaseStatus}
-                                    isMaster={true}
-                                />
+        <div className="w-full h-auto">
+            {/* Filters */}
+            <div className="grid grid-cols-3 h-12">
+                <select
+                    className="select select-bordered w-full max-w-xs"
+                    value={selectedTier}
+                    onChange={(e) => setSelectedTier(e.target.value)}
+                >
+                    <option key={'All'} value={'All'}>
+                            {'All Tiers'}
+                        </option>
+                    {tierOptions.map((tier) => (
+                        <option key={tier} value={tier}>
+                            {'Tier ' + tier}
+                        </option>
+                    ))}
+                </select>
 
-                            </div>
-                        )
-                    }
-                    else {
-                        return (
-                            <div
-                                key={value + '' + index}
-                                style={{
-                                    // backgroundColor: 'blue',
-                                    display: 'block'
-                                }}>
-                                <h2 className="text-2xl font-bold">{value} Medals</h2>
-                                <div style={{
-                                    // backgroundColor: 'blue',
-                                    display: 'flex',
-                                    flexWrap: 'nowrap',
-                                    margin: '3% auto',
-                                    overflowX: 'visible',
-                                }}>
+                <div></div>
 
-                                    <Medal medalInfo={medals[value]} progress={medalsProgress} isMaster={true}
-                                        key={value + 'medal'}
-                                        statusIncrease={IncreaseStatus} />
-                                    <hr className={`h-48 w-0.5 bg-white`} style={{ margin: 'auto 5%' }}></hr>
-                                    {Object.keys(medals[value].medals).map((value2, index) => {
-                                        return (
-                                            index < 4 ?
-                                                <Medal medalInfo={medals[value].medals[value2]} progress={medalsProgress[value2]}
-                                                    key={value2 + '' + index}
-                                                    statusIncrease={IncreaseStatus}
-                                                    isMaster={true}
-                                                />
-                                                :
-                                                ''
-                                        )
-                                    })}
-
-                                </div>
-
-                            </div>
-                        )
-                    }
-                })}
+                {/* Total */}
+                <div className="self-end justify-self-end">
+                    <h2 className="text-voltage text-4xl font-bold">
+                        24
+                        <span className="text-ash text-2xl">/128 Total Medals</span>
+                    </h2>
+                </div>
             </div>
+
+            {/* Medal Area */}
+            <div>
+                <Medal medalInfo={medals.weapon_medals.Vandal_Kills} progress={medalsProgress.Vandal_Kills}/>
+            </div>
+        </div>
         </>
     );
 };

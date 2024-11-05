@@ -13,7 +13,7 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
     const [medalList, setMedalList] = useState(medals.data);
 
     const ClickCategoryCard = (category: string) => {
-        if(category == 'all') {
+        if (category == 'all') {
             setMedalList(medals.data);
         }
         else {
@@ -27,26 +27,26 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
 
 
     return (
-        <>
-            <div className={`grid gap-8 h-full w-[20%] mt-10`}>
+        <div className="flex mt-10 gap-x-20">
+            <div className={`grid gap-8 h-full w-[20%]`}>
                 <div onClick={() => ClickCategoryCard('all')} className={`medal-nav-button ${medalCategory == 'all' ? 'medal-nav-active' : ''}`}>
-                   <h2 className="text-left">All Medals</h2> 
+                    <h2 className="text-left">All Medals</h2>
                 </div>
                 <div onClick={() => ClickCategoryCard('agent_medals')} className={`medal-nav-button ${medalCategory == 'agent_medals' ? 'medal-nav-active' : ''}`}>
-                   <h2 className="text-left">Agents</h2> 
+                    <h2 className="text-left">Agents</h2>
                 </div>
                 <div onClick={() => ClickCategoryCard('weapon_medals')} className={`medal-nav-button ${medalCategory == 'weapon_medals' ? 'medal-nav-active' : ''}`}>
-                   <h2 className="text-left">Weapons</h2> 
+                    <h2 className="text-left">Weapons</h2>
                 </div>
                 <div onClick={() => ClickCategoryCard('game_event_medals')} className={`medal-nav-button ${medalCategory == 'game_event_medals' ? 'medal-nav-active' : ''}`}>
-                   <h2 className="text-left">Game Events</h2> 
+                    <h2 className="text-left">Game Events</h2>
                 </div>
             </div>
 
             <div className={`flex gap-4 h-full w-[80%]`}>
-                {/* <MedalShowcase medals={medalList} medalsProgress={medalsProgress.data.progress} category={medalCategory}/> */}
+                <MedalShowcase medals={medalList} medalsProgress={medalsProgress.data.progress} category={medalCategory}/>
             </div>
-        </>
+        </div>
     );
 };
 
