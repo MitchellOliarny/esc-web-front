@@ -43,11 +43,16 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                                 bucket + medalInfo.name + '_' + displayMedal + '.png'
                                 : bucket + medalInfo.name + '_1' + '.png'
                             } alt={medalInfo.name + displayMedal} className={`${displayMedal == 0 ? 'brightness-0' : ''} h-full w-max m-auto`}></img>
-                        <div className="col-span-3 p-8 h-full">
+                        <div className="col-span-4 p-8 h-full">
                             <div className="grid grid-cols-3 grid-rows-1 w-full font-bold">
-                                <h2 className="text-3xl text-frost">{medalInfo.medal_name}</h2>
-                                <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{Object.keys(medalInfo.medal_tiers).length} Tiers</div>
+                                <div className="col-span-2 flex gap-4">
+                                    <h2 className="text-3xl text-frost">{medalInfo.medal_name}</h2>
+                                    <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{Object.keys(medalInfo.medal_tiers).length} Tiers</div>
+                                </div>
+                                {/* Dropdown Here */}
                             </div>
+                            <p className="text-ash text-base py-2 pr-10">{medalInfo.medal_description}</p>
+                            {/* Progress Here */}
                         </div>
                     </div>
                     <div className="h-[20%] back-darkslate rounded-b-lg game-row-border-top">
