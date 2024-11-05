@@ -38,7 +38,7 @@ const StatisticsUI = ({
 
   return (
     <>
-      <div className="grid xl:grid-cols-2 grid-cols-1 pb-4 gap-4">
+      <div className="grid xl:grid-cols-2 grid-cols-1 pb-4 gap-4 mt-4">
         {/* @ts-ignore */}
         <StatsScore userGames={userGames} valAverage={ valAverage && valAverage[ranks[current_rank]] ? valAverage[ranks[current_rank]].all : null} isAgentBox={false}/>
         <CareerHealth userGames={userGames} />

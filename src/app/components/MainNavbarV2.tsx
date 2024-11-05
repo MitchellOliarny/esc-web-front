@@ -52,13 +52,13 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
               <div className="grid nav-grid items-center h-auto rounded-lg">
                 <div className="relative w-full h-full background-nav rounded-t-lg">
                   <div className="nav-gradient h-full w-full rounded-t-lg">
-                    <Link href="/">
+                    <Link href="/" className="grid">
                       <Image
                         src="/esports-clubs-logo-2.png"
                         alt="Esports Clubs Logo"
                         width={1000}
                         height={1000}
-                        className="absolute self-center top-[-15%] scale-[.75]"
+                        className="absolute self-center top-[-15%] h-[70%] w-auto"
                       />
                     </Link>
                   </div>

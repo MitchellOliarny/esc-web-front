@@ -122,7 +122,7 @@ const OverviewUI = ({
   return (
     <>
       {userGames ?
-        <div>
+        <div className="mt-4">
 
           <h2 className="text-4xl font-bold py-4 col-span-4">Stats</h2>
           <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 mb-4">

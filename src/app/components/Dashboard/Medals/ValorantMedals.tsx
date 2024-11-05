@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Medal from "./Medal";
 import MedalShowcase from "./MedalShowcase";
-import { FaXmark } from "react-icons/fa6";
 
 interface ValorantMedalsProps {
     medals: any;
@@ -10,40 +9,42 @@ interface ValorantMedalsProps {
 
 const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
 
-    const [showCards, setShowCards] = useState('grid');
-    const [showMedals, setShowMedals] = useState('hidden');
-    const [medalCategory, setMedalCategory] = useState('');
+    const [medalCategory, setMedalCategory] = useState("all");
+    const [medalList, setMedalList] = useState(medals.data);
 
     const ClickCategoryCard = (category: string) => {
-        setShowCards('hidden');
-        setShowMedals('');
-        setMedalCategory(category);
+        if(category == 'all') {
+            setMedalList(medals.data);
+        }
+        else {
+            setMedalList(medals.data[category]);
+        }
+        setMedalCategory(category)
     }
 
-    const ShowCards = () => {
-        setShowCards('grid');
-        setShowMedals('hidden');
-        setMedalCategory('');
-    }
+
+    console.log(medals)
 
 
     return (
         <>
-            <div className={`${showCards} grid-cols-3 gap-4 h-full`}>
-                <div onClick={() => ClickCategoryCard('agent_medals')} style={{height: '750px', backgroundColor: 'rgba(0, 0, 0, 0.5)', cursor: 'pointer', display: 'flex', borderRadius: '0.5em'}}>
-                   <h2 style={{margin: 'auto', fontSize: '2em', fontWeight: 'bold'}}>Agents</h2> 
+            <div className={`grid gap-8 h-full w-[20%] mt-10`}>
+                <div onClick={() => ClickCategoryCard('all')} className={`medal-nav-button ${medalCategory == 'all' ? 'medal-nav-active' : ''}`}>
+                   <h2 className="text-left">All Medals</h2> 
                 </div>
-                <div onClick={() => ClickCategoryCard('weapon_medals')} style={{height: '750px', backgroundColor: 'rgba(0, 0, 0, 0.5)', cursor: 'pointer', display: 'flex', borderRadius: '0.5em'}}>
-                   <h2 style={{margin: 'auto', fontSize: '2em', fontWeight: 'bold'}}>Weapons</h2> 
+                <div onClick={() => ClickCategoryCard('agent_medals')} className={`medal-nav-button ${medalCategory == 'agent_medals' ? 'medal-nav-active' : ''}`}>
+                   <h2 className="text-left">Agents</h2> 
                 </div>
-                <div onClick={() => ClickCategoryCard('game_event_medals')} style={{height: '750px', backgroundColor: 'rgba(0, 0, 0, 0.5)', cursor: 'pointer', display: 'flex', borderRadius: '0.5em'}}>
-                   <h2 style={{margin: 'auto', fontSize: '2em', fontWeight: 'bold'}}>Game Events</h2> 
+                <div onClick={() => ClickCategoryCard('weapon_medals')} className={`medal-nav-button ${medalCategory == 'weapon_medals' ? 'medal-nav-active' : ''}`}>
+                   <h2 className="text-left">Weapons</h2> 
+                </div>
+                <div onClick={() => ClickCategoryCard('game_event_medals')} className={`medal-nav-button ${medalCategory == 'game_event_medals' ? 'medal-nav-active' : ''}`}>
+                   <h2 className="text-left">Game Events</h2> 
                 </div>
             </div>
 
-            <div className={`${showMedals} grid-rows-4 gap-4 h-full`}>
-                <FaXmark size={'3em'} onClick={() => ShowCards()} style={{ cursor: 'pointer', justifySelf: 'end', position: 'absolute', margin: '0% -5%' }} />
-                <MedalShowcase medals={medals.data[medalCategory]} medalsProgress={medalsProgress.data.progress} category={medalCategory}/>
+            <div className={`flex gap-4 h-full w-[80%]`}>
+                {/* <MedalShowcase medals={medalList} medalsProgress={medalsProgress.data.progress} category={medalCategory}/> */}
             </div>
         </>
     );

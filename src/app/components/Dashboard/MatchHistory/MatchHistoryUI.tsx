@@ -123,7 +123,7 @@ const MatchHistoryUI = ({
 
   return (
     <>
-      <div>
+      <div className="mt-4">
         <div className="col-span-9">
         {Object.keys(GamesByDate).map(index => (
           <div className="mb-12 gameRowLeftLineMiddle" key={index}>

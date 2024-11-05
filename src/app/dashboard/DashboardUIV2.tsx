@@ -307,6 +307,8 @@ export default function Header({
         </div>
       </div>
       <div className="px-4 py-4 w-full max-w-[1800px] mx-auto min-h-screen">
+        {
+          selectedMenu !== 'medals' ?
         <DashboardFilter
           valMaps={valMaps}
           valAgents={valAgents}
@@ -319,8 +321,9 @@ export default function Header({
             setValAverages(newGames.averages);
             setGamemode(newGames.gamemode || 'Competitive')
           }}
-        />
-        <h1 className="inline-flex text-4xl py-4 font-bold w-full">{selectedMenu.toLocaleUpperCase().replace('-', ' ')} <p className="inline-flex mx-4 text-sm"> <FaExclamationCircle color="#FF6F4D" className="mx-4" /> Website is still Work-In-Progress - Report any issues in the ESC Discord</p> </h1>
+        /> : ''
+      }
+        {/* <h1 className="inline-flex text-4xl py-4 font-bold w-full">{selectedMenu.toLocaleUpperCase().replace('-', ' ')} <p className="inline-flex mx-4 text-sm"> <FaExclamationCircle color="#FF6F4D" className="mx-4" /> Website is still Work-In-Progress - Report any issues in the ESC Discord</p> </h1> */}
         {renderContent()}
       </div>
     </>

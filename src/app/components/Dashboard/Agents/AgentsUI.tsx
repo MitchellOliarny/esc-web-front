@@ -19,7 +19,7 @@ const AgentsUI = ({agentGames, topAgents, valAverage, maps}: AgentUIProps) => {
 
   return (
     <>
-      <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-x-4 gap-y-6 mt-8">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-x-4 gap-y-6 mt-12">
         {topAgents.map((value: any, index: number)=>{
           return (
             <div key={value.agent}>
