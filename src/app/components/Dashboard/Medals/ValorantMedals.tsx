@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Medal from "./Medal";
 import MedalShowcase from "./MedalShowcase";
 
@@ -10,11 +10,11 @@ interface ValorantMedalsProps {
 const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
 
     const [medalCategory, setMedalCategory] = useState("all");
-    const [medalList, setMedalList] = useState(medals.data);
+    const [medalList, setMedalList] = useState({});
 
     const ClickCategoryCard = (category: string) => {
         if (category == 'all') {
-            setMedalList(medals.data);
+            ResetToAllMedals();
         }
         else {
             setMedalList(medals.data[category]);
@@ -22,6 +22,21 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
         setMedalCategory(category)
     }
 
+    useEffect(()=>{
+        ResetToAllMedals();
+    },[medals])
+
+
+    const ResetToAllMedals = () => {
+        let temp = {}
+        for (const x in medals.data) {
+            for (const i in medals.data[x]) {
+                //@ts-ignore
+                temp[i] = medals.data[x][i];
+            }
+        }
+        setMedalList(temp);
+    }
 
     //console.log(medals)
 
