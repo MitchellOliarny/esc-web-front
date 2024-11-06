@@ -51,8 +51,11 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                         : bucket + medalInfo.name + '_1' + '.png'
                     }
                         alt={medalInfo.name + '_' + displayMedal}
-
-                        className={`${displayMedal == 0 ? 'blur-sm grayscale' : ''} h-full w-max m-auto`}></img>
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null; // prevents looping
+                            currentTarget.src="/dashboard/transparent-esc-score_square.png";
+                          }}
+                        className={`${displayMedal == 0 ? 'blur-sm grayscale' : ''} h-full w-max m-auto p-4 pl-8`}></img>
                     <div className="col-span-4 p-8 h-full">
                         <div className="grid grid-cols-3 grid-rows-1 w-full font-bold">
                             <div className="col-span-2 flex gap-4">
