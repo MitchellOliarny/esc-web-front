@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Medal from "./Medal";
 
 interface MedalShowcaseProps {
@@ -11,8 +11,9 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
 
     console.log(medals)
     console.log(medalsProgress)
-    // console.log(category)
+     console.log(category)
     const [selectedTier, setSelectedTier] = useState('All');
+    const [medalsList, setMedals] = useState(medals);
 
     const tierOptions = [0, 1, 2, 3, 4, 5]
 
@@ -23,6 +24,22 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
             <div className="grid grid-rows-4 gap-4 h-full">No Medals in this Category</div>
         )
     }
+    useEffect(()=>{
+        if(category === 'all') {
+            let temp = {}
+            for(const x in medals) {
+                for(const i in medals[x]) {
+                    //@ts-ignore
+                    temp[i] = medals[x][i];
+                }
+            }
+            setMedals(temp);
+        }
+        else {
+            setMedals(medals)
+        }
+        
+    },[medals])
 
     return (
         <>
@@ -57,7 +74,17 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
 
             {/* Medal Area */}
             <div>
-                <Medal medalInfo={medals.weapon_medals.Vandal_Kills} progress={medalsProgress.Vandal_Kills}/>
+                {
+                    // @ts-ignore
+                    Object.keys(medalsList).map((medal, value)=> {
+                        return (
+                            // @ts-ignore
+                            <Medal medalInfo={medalsList[medal]} progress={medalsProgress[medal] || null} key={medal}/>
+                        )
+                    })
+                    
+                }
+                
             </div>
         </div>
         </>

@@ -23,7 +23,7 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
     }
 
 
-    console.log(medals)
+    //console.log(medals)
 
 
     return (

@@ -339,6 +339,11 @@ select.transparent>option {
   clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 5% 5%);
 }
 
+.cut-corner-45-special {
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 97% 100%, 100% 0%, 3% 5%);
+  clip-path: polygon(0% 100%, 100% 100%, 97% 100%, 100% 0%, 3% 5%);
+}
+
 .cut-corner-45-right {
   -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
   clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
@@ -410,11 +415,20 @@ select.transparent>option {
 .progress-voltage::-webkit-progress-value {
   background-image: linear-gradient(to right, var(--voltage), #B6FFF3) !important;
   /* box-shadow: 0px 0px 20px 2px #5ECCBA9A !important; */
-  -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
-  clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
+  transform: skew(-45deg);
 }
 
 .progress-voltage::-webkit-progress-bar {
+  background-color: var(--slate) !important;
+}
+
+.progress-rust::-webkit-progress-value {
+  background-image: linear-gradient(to right, #E2941D, #FFC669) !important;
+  /* box-shadow: 0px 0px 20px 2px #5ECCBA9A !important; */
+  transform: skew(-45deg);
+}
+
+.progress-rust::-webkit-progress-bar {
   background-color: var(--slate) !important;
 }
 
@@ -567,4 +581,8 @@ select.transparent>option {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 100%;
+}
+
+.text-gold {
+  color: #FFC669;
 }
