@@ -58,7 +58,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                         alt="Esports Clubs Logo"
                         width={1000}
                         height={1000}
-                        className="absolute self-center top-[-15%] h-[70%] w-auto"
+                        className="absolute self-center justify-self-center top-[-15%] h-[70%] w-auto"
                       />
                     </Link>
                   </div>
