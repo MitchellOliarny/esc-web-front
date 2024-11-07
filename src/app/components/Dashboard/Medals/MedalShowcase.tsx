@@ -18,11 +18,7 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
 
     let temp = 0;
 
-    if (!medals) {
-        return (
-            <div className="grid grid-rows-4 gap-4 h-full">No Medals in this Category</div>
-        )
-    }
+
     useEffect(() => {
         ResetPage();
     }, [medals])
@@ -74,6 +70,12 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
         }
 
 
+    }
+
+    if (!medals) {
+        return (
+            <div className="grid grid-rows-4 gap-4 h-full">No Medals in this Category</div>
+        )
     }
 
     return (
