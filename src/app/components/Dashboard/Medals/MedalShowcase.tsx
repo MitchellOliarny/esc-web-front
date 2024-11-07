@@ -29,7 +29,6 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
     
     const ResetPage = () => {
         let count = 0;
-        console.log(medals)
         setMedals(medals);
         for (const i in medals) {
             if (medalsProgress[i] && medalsProgress[i].tiers[4].isComplete) {

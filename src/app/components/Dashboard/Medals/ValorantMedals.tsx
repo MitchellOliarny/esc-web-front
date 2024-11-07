@@ -36,6 +36,8 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
             }
         }
         setMedalList(temp);
+        console.log(temp)
+        console.log(medalsProgress)
     }
 
     //console.log(medals)

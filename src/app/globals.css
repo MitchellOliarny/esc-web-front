@@ -250,6 +250,10 @@ select.transparent>option {
   color: var(--caution)  !important;
 }
 
+.text-slate {
+  color: var(--slate)  !important;
+}
+
 .back-slate {
   background-color: var(--slate)  !important;
 }
@@ -335,18 +339,15 @@ select.transparent>option {
 }
 
 .cut-corner-45 {
-  -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 5% 5%);
-  clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 5% 5%);
+  transform: skewX(-40deg);
 }
 
 .cut-corner-45-special {
-  -webkit-clip-path: polygon(0% 100%, 100% 100%, 97% 100%, 100% 0%, 3% 5%);
-  clip-path: polygon(0% 100%, 100% 100%, 97% 100%, 100% 0%, 3% 5%);
+  transform: skewX(-40deg);
 }
 
 .cut-corner-45-right {
-  -webkit-clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
-  clip-path: polygon(0% 100%, 100% 100%, 95% 100%, 100% 0%, 0% 5%);
+  transform: skewX(-40deg);
 }
 
 /* MAIN NAV */ 
@@ -415,7 +416,8 @@ select.transparent>option {
 .progress-voltage::-webkit-progress-value {
   background-image: linear-gradient(to right, var(--voltage), #B6FFF3) !important;
   /* box-shadow: 0px 0px 20px 2px #5ECCBA9A !important; */
-  transform: skew(-45deg);
+  /* transform: skew(-45deg); */
+  border-right: var(--frost) 2px solid;
 }
 
 .progress-voltage::-webkit-progress-bar {
@@ -425,7 +427,8 @@ select.transparent>option {
 .progress-rust::-webkit-progress-value {
   background-image: linear-gradient(to right, #E2941D, #FFC669) !important;
   /* box-shadow: 0px 0px 20px 2px #5ECCBA9A !important; */
-  transform: skew(-45deg);
+  /* transform: skew(-45deg); */
+  border-right: var(--frost) 2px solid;
 }
 
 .progress-rust::-webkit-progress-bar {
@@ -583,6 +586,60 @@ select.transparent>option {
   grid-template-rows: 100%;
 }
 
+.medal-row-tier {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 100%;
+}
+
 .text-gold {
   color: #FFC669;
+}
+
+.medal-tier-line-up {
+  margin: 0 .4em;
+  position: absolute;
+  width: 2px;
+  height: 110%;
+  background-color: var(--slate);
+  border: none;
+  top: 0;
+  left: 50%;
+  transform: translateY(-40%);
+}
+.medal-tier-line-side {
+  margin: 0 .4em;
+  position: absolute;
+  width: 40%;
+  height: 2px;
+  background-color: var(--slate);
+  border: none;
+  top: 50%;
+  left: 50%;
+}
+
+.medal-tier-complete {
+  position: absolute;
+  transform: translateY(-.75em);
+  width: 1.5em;
+  height: 1.5em;
+  top: 50%;
+  left: 90%;
+  background-color: var(--voltage);
+  border: var(--slate)3px solid;
+  border-radius: 50%;
+  align-content: center;
+}
+
+.medal-tier-locked {
+  position: absolute;
+  transform: translateY(-.75em);
+  width: 1.5em;
+  height: 1.5em;
+  top: 50%;
+  left: 90%;
+  background-color: var(--slate);
+  border: var(--slate)3px solid;
+  border-radius: 50%;
+  align-content: center;
 }
