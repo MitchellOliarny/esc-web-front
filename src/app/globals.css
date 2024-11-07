@@ -449,6 +449,20 @@ select.transparent>option {
   cursor: pointer;
 }
 
+.filter-item-input {
+  background-color: var(--graphite) !important;
+  border: none;
+}
+
+.filter-item-select {
+  background-color: var(--graphite) !important;
+  border: none;
+  appearance: none;
+  width: 100%;
+  padding: 0.675em 6em 0.675em 1em;
+  cursor: pointer;
+}
+
 
 
 .glow-text-white {

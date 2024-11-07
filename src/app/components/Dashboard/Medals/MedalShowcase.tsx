@@ -29,7 +29,11 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
     
     const ResetPage = () => {
         let count = 0;
-        setMedals(medals);
+        if(selectedTier !== -1) {
+            FilterSelected(selectedTier)
+        }else {
+            setMedals(medals);
+        }
         for (const i in medals) {
             if (medalsProgress[i] && medalsProgress[i].tiers[4].isComplete) {
                 count++;
@@ -78,7 +82,7 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
                 {/* Filters */}
                 <div className="grid grid-cols-3 h-12">
                     <select
-                        className="select select-bordered w-full max-w-xs"
+                        className="select select-bordered filter-item-select w-full max-w-xs"
                         value={selectedTier}
                         onChange={(e) => { setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value)); }}
                     >

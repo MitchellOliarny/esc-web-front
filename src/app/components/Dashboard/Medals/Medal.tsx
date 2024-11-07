@@ -18,6 +18,7 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
     const [childMedals, setChildMedals] = useState({});
     const [displayMedal, setDisplayMedal] = useState(0);
 
+
     const bucket = "https://files.esportsclubs.gg/";
 
     useEffect(() => {
@@ -33,14 +34,15 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                     break;
                 }
 
-                if (progress.tiers[x].tier == 5) {
-                    setDisplayMedal(5);
+                if (progress.tiers.length == x) {
+                    setDisplayMedal(4);
                 }
             }
+
         }
     }, [progress, medalInfo])
 
-    if(!medalInfo?.name) {
+    if (!medalInfo?.name) {
         return (<div></div>)
     }
 
@@ -71,7 +73,7 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                         <div className="py-8">
                             <div className="w-full cut-corner-45-special">
                                 <progress
-                                    className={`${displayMedal == 5 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                    className={`${displayMedal == 4 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
                                     value={displayMedal}
                                     max={Object.keys(medalInfo.medal_tiers).length}
@@ -79,16 +81,16 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                             </div>
                             <div className="w-full inline-flex justify-between px-2">
                                 <h2 className="font-bold text-frost text-lg">{((displayMedal / Object.keys(medalInfo.medal_tiers).length) * 100).toFixed(1)} %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 5 ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className={`${showPopup} h-[45em] game-row-border-top overflow-hidden`}>
+                <div className={`${showPopup} h-auto game-row-border-top overflow-hidden py-4`}>
                     {
                         Object.keys(medalInfo?.medal_tiers).map((value, key) => {
                             return (
-                                <div className="h-[8em] w-full medal-row-tier mb-2">
+                                <div className="h-[8em] w-full medal-row-tier my-2" key={medalInfo?.name + value}>
                                     <div className="relative mr-16">
                                         <hr className="medal-tier-line-up"></hr>
                                         <img src={
@@ -116,13 +118,18 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                                         }
                                     </div>
                                     <div className="col-span-4 p-4 h-full">
-
-                                        <div className="grid grid-cols-3 grid-rows-1 w-full font-bold">
-                                            <div className="col-span-2 flex gap-4">
-                                                <h2 className="text-lg text-frost">{medalInfo?.medal_name + " " + value}</h2>
+                                        <div className="grid grid-cols-4 grid-rows-1">
+                                            <div className="col-span-3 w-full font-bold">
+                                                <div className="flex gap-4">
+                                                    <h2 className="text-lg text-frost">{medalInfo?.medal_name + " " + value}</h2>
+                                                </div>
+                                                <p className="text-ash text-sm py-2 pr-10">{medalInfo?.medal_description.replace('XXX', medalInfo?.medal_tiers[value].condition)}</p>
+                                            </div>
+                                            <div className="px-4 my-auto text-right">
+                                                <p className="text-ash font-bold">Earned</p>
+                                                <p className="text-frost font-bold">{progress.tiers && progress.tiers[key].date_obtained ? formatDateYearShort(progress.tiers[key].date_obtained) : 'N/A'}</p>
                                             </div>
                                         </div>
-                                        <p className="text-ash text-sm py-2 pr-10">{medalInfo?.medal_description.replace('XXX', medalInfo?.medal_tiers[value].condition)}</p>
                                         <div>
                                             <div className="w-full cut-corner-45-special">
                                                 <progress
@@ -149,7 +156,7 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>
-                        <p className="text-frost font-bold">{progress.tiers && progress.tiers[displayMedal == 5 ? 4 : displayMedal].date_obtained ? formatDateYearShort(progress.tiers[displayMedal].date_obtained) : 'N/A'}</p>
+                        <p className="text-frost font-bold">{progress.tiers && progress?.tiers[displayMedal - 1]?.date_obtained ? formatDateYearShort(progress.tiers[displayMedal - 1].date_obtained) : 'N/A'}</p>
                     </div>
                 </div>
             </div>
