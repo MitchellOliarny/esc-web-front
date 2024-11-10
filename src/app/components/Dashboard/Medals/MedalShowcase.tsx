@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Medal from "./Medal";
+import MedalWithChildren from "./MedalWithChildren";
 
 interface MedalShowcaseProps {
     medals: any;
     medalsProgress: any;
     category: String
+    parentList: any;
 }
 
-const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps) => {
+const MedalShowcase = ({ medals, medalsProgress, category, parentList }: MedalShowcaseProps) => {
 
 
     const [selectedTier, setSelectedTier] = useState(-1);
@@ -24,21 +26,12 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
     }, [medals])
     
     const ResetPage = () => {
-        let count = 0;
-        if(selectedTier !== -1) {
-            FilterSelected(selectedTier)
-        }else {
-            setMedals(medals);
-        }
-        for (const i in medals) {
-            if (medalsProgress[i] && medalsProgress[i].tiers[4].isComplete) {
-                count++;
-            }
-        }
-        setTotalEarned(count);
+        setMedals(medals);
+        FindTotalEarned(medals);
     }
 
     const FilterSelected = (tier: number) => {
+        console.log(tier)
         let temp = {};
 
         if (tier == -1) {
@@ -69,7 +62,19 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
             return;
         }
 
+        FindTotalEarned(temp);
 
+
+    }
+
+    const FindTotalEarned = (medalList: any) => {
+        let count = 0;
+        for (const i in medalList) {
+            if (medalsProgress[i] && medalsProgress[i].tiers[4].isComplete) {
+                count++;
+            }
+        }
+        setTotalEarned(count);
     }
 
     if (!medals) {
@@ -86,7 +91,7 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
                     <select
                         className="select select-bordered filter-item-select w-full max-w-xs"
                         value={selectedTier}
-                        onChange={(e) => { setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value)); }}
+                        onChange={(e) => {setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value)); }}
                     >
                         <option key={'All'} value={-1}>
                             {'All Tiers'}
@@ -114,6 +119,13 @@ const MedalShowcase = ({ medals, medalsProgress, category }: MedalShowcaseProps)
                     {
                         // @ts-ignore
                         Object.keys(medalsList).map((medal, value) => {
+                            if(parentList[medal]){
+                                return (
+                                    // @ts-ignore
+                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children={parentList[medal]} child_progress={medalsProgress}/>
+                                )
+                            }
+                        
                             return (
                                 // @ts-ignore
                                 <Medal medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} />
