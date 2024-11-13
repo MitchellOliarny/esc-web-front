@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Medal from "./Medal";
 import MedalShowcase from "./MedalShowcase";
 
 interface ValorantMedalsProps {

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 import Image from "next/image";
 import { formatDateYearShort } from "@/app/utils/helpers";
-import { FaCheck, FaLock } from "react-icons/fa";
+import { FaCaretRight, FaCaretDown, FaEllipsisH, FaCheck, FaLock } from "react-icons/fa";
 
 interface MedalsProps {
     medalInfo: any;
     progress: any;
+    user_earners: any;
 }
 
-const Medal = ({ medalInfo, progress }: MedalsProps) => {
+const Medal = ({ medalInfo, progress, user_earners }: MedalsProps) => {
 
     const [showPopup, setShowPopUp] = useState('hidden');
     const [showLightBox, setShowLightBox] = useState('hidden');
@@ -67,7 +68,14 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                                 <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
                                 <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
                             </div>
-                            {/* Dropdown Here */}
+                            <div className="flex content-center justify-end flex-wrap">
+                                <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover" />
+                                <div className="back-slate w-10 h-10 ml-6 rounded-lg content-center">
+                                    {
+                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto carot-hover" /> : <FaCaretRight className="text-ash m-auto carot-hover" />
+                                    }
+                                </div>
+                            </div>
                         </div>
                         <p className="text-ash text-base py-2 pr-10">{medalInfo?.medal_description}</p>
                         <div className="py-8">
@@ -151,8 +159,13 @@ const Medal = ({ medalInfo, progress }: MedalsProps) => {
                     }
                 </div>
                 <div className="h-14 flex back-darkslate rounded-b-lg game-row-border-top w-full justify-between px-4">
-                    <div>
+                    <div className="px-4 my-auto inline-flex gap-2">
                         {/* Earners */}
+                        {/* <div className="h-[1.5em]">
+                            <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img>
+                        </div>
+                        <hr className="w-[0.05em] h-[1.5em] border-none back-slate "></hr> */}
+                        <p className="text-frost font-bold">50% <span className="text-ash">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>

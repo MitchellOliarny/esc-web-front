@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 import Image from "next/image";
 import { formatDateYearShort } from "@/app/utils/helpers";
-import { FaCaretRight, FaCheck, FaLock } from "react-icons/fa";
-import { FaCaretDown, FaEllipsis } from "react-icons/fa6";
+import { FaCaretRight, FaCaretDown, FaEllipsisH, FaCheck, FaLock } from "react-icons/fa";
 
 interface MedalsProps {
     medalInfo: any;
     progress: any;
     children: any;
     child_progress: any;
+    user_earners: any;
 }
 
-const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: MedalsProps) => {
+const MedalWithChildren = ({ medalInfo, progress, children, child_progress, user_earners }: MedalsProps) => {
 
     const [showPopup, setShowPopUp] = useState('hidden');
     const [showLightBox, setShowLightBox] = useState('hidden');
@@ -79,10 +79,10 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
                                 <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
                             </div>
                             <div className="flex content-center justify-end flex-wrap">
-                                <FaEllipsis className="text-ash h-6 w-auto my-auto" />
+                                <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover" />
                                 <div className="back-slate w-10 h-10 ml-6 rounded-lg content-center">
                                     {
-                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto" /> : <FaCaretRight className="text-ash m-auto" />
+                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto carot-hover" /> : <FaCaretRight className="text-ash m-auto carot-hover" />
                                     }
                                 </div>
                             </div>
@@ -202,8 +202,13 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
                     }
                 </div>
                 <div className="h-14 flex back-darkslate rounded-b-lg game-row-border-top w-full justify-between px-4">
-                    <div>
+                    <div className="px-4 my-auto inline-flex gap-2">
                         {/* Earners */}
+                        {/* <div className="h-[1.5em]">
+                            <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img>
+                        </div>
+                        <hr className="w-[0.05em] h-[1.5em] border-none back-slate "></hr> */}
+                        <p className="text-frost font-bold">50% <span className="text-ash">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>

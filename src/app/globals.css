@@ -657,3 +657,13 @@ select.transparent>option {
   border-radius: 50%;
   align-content: center;
 }
+
+.ellipsis-hover:hover {
+  color: var(--frost) !important;
+  transform: scale(1.05);
+}
+
+.carot-hover:hover {
+  color: var(--frost) !important;
+  transform: scale(1.15);
+}
