@@ -7,12 +7,12 @@ import { FaCaretRight, FaCaretDown, FaEllipsisH, FaCheck, FaLock } from "react-i
 interface MedalsProps {
     medalInfo: any;
     progress: any;
-    children: any;
+    children_medals: any;
     child_progress: any;
     user_earners: any;
 }
 
-const MedalWithChildren = ({ medalInfo, progress, children, child_progress, user_earners }: MedalsProps) => {
+const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progress, user_earners }: MedalsProps) => {
 
     const [showPopup, setShowPopUp] = useState('hidden');
     const [showLightBox, setShowLightBox] = useState('hidden');
@@ -44,10 +44,10 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress, user
                 }
             }
         }
-        if(children) {
+        if(children_medals) {
             let temp = 0
-            for (const x in children) {
-                temp += Object.keys(children[x].medal_tiers).length
+            for (const x in children_medals) {
+                temp += Object.keys(children_medals[x].medal_tiers).length
             }
             setChildTierCount(temp);
         }
@@ -118,7 +118,7 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress, user
                 </div>
                 <div className={`${showPopup} h-auto game-row-border-top overflow-hidden py-4`}>
                     {
-                        children?.map((child: any, key: number) => {
+                        children_medals?.map((child: any, key: number) => {
 
 
                             let c_progress = child_progress[child?.name];

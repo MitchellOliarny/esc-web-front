@@ -122,7 +122,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList }: MedalSh
                             if(parentList[medal]){
                                 return (
                                     // @ts-ignore
-                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children={parentList[medal]} child_progress={medalsProgress}/>
+                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children_medals={parentList[medal]} child_progress={medalsProgress}/>
                                 )
                             }
                         
