@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 import Image from "next/image";
 import { formatDateYearShort } from "@/app/utils/helpers";
-import { FaCheck, FaLock } from "react-icons/fa";
+import { FaCaretRight, FaCheck, FaLock } from "react-icons/fa";
+import { FaCaretDown, FaEllipsis } from "react-icons/fa6";
 
 interface MedalsProps {
     medalInfo: any;
@@ -19,6 +20,8 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
     const [currentStatus, setCurrentStatus] = useState(0);
     const [childMedals, setChildMedals] = useState({});
     const [displayMedal, setDisplayMedal] = useState(0);
+
+    const [childTierCount, setChildTierCount] = useState(0);
 
 
     const bucket = "https://files.esportsclubs.gg/";
@@ -40,7 +43,13 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
                     setDisplayMedal(4);
                 }
             }
-
+        }
+        if(children) {
+            let temp = 0
+            for (const x in children) {
+                temp += Object.keys(children[x].medal_tiers).length
+            }
+            setChildTierCount(temp);
         }
     }, [progress, medalInfo])
 
@@ -69,20 +78,39 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
                                 <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
                                 <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
                             </div>
-                            {/* Dropdown Here */}
+                            <div className="flex content-center justify-end flex-wrap">
+                                <FaEllipsis className="text-ash h-6 w-auto my-auto" />
+                                <div className="back-slate w-10 h-10 ml-6 rounded-lg content-center">
+                                    {
+                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto" /> : <FaCaretRight className="text-ash m-auto" />
+                                    }
+                                </div>
+                            </div>
                         </div>
                         <p className="text-ash text-base py-2 pr-10">{medalInfo?.medal_description}</p>
-                        <div className="py-8">
+                        <p className="text-ash text-base py-2 pr-10">A new tier is unlocked for every 20% complete</p>
+                        <div className="py-4">
                             <div className="w-full cut-corner-45-special">
                                 <progress
                                     className={`${displayMedal == 4 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
-                                    value={displayMedal}
-                                    max={Object.keys(medalInfo.medal_tiers).length}
+                                    value={
+                                        progress.progress 
+                                        //displayMedal
+                                        }
+                                    max={
+                                        childTierCount
+                                       // Object.keys(medalInfo.medal_tiers).length
+                                    }
                                 ></progress>
                             </div>
                             <div className="w-full inline-flex justify-between px-2">
-                                <h2 className="font-bold text-frost text-lg">{((displayMedal / Object.keys(medalInfo.medal_tiers).length) * 100).toFixed(1)} %</h2>
+                                <h2 className="font-bold text-frost text-lg">{
+                                    ((progress.progress / childTierCount) * 100).toFixed(1)
+                                    //((displayMedal / Object.keys(medalInfo.medal_tiers).length) * 100).toFixed(1)
+                                    } 
+                                    
+                                    %</h2>
                                 <h2 className="font-bold text-lg"><span className={`${displayMedal == 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
                             </div>
                         </div>
@@ -110,8 +138,6 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
                                     progress: 0
                                 }
                             }
-
-                            console.log(c_progress)
 
                             return (
                                 <div className="h-[8em] w-full medal-row-tier my-2" key={child?.name + key}>
@@ -144,14 +170,15 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
                                     <div className="col-span-4 p-4 h-full">
                                         <div className="grid grid-cols-4 grid-rows-1">
                                             <div className="col-span-3 w-full font-bold">
-                                                <div className="flex gap-4">
-                                                    <h2 className="text-lg text-frost">{child?.medal_name}</h2>
+                                                <div className="col-span-2 flex gap-4">
+                                                    <h2 className="text-xl text-frost">{child?.medal_name}</h2>
+                                                    <div className="back-slate text-frost self-center justify-self-start h-5 w-auto px-2 rounded-lg content-center justify-center text-sm font-bold">{child?.medal_tiers ? Object.keys(child?.medal_tiers).length : 1} Tiers</div>
                                                 </div>
                                                 <p className="text-ash text-sm py-2 pr-10">{child?.medal_description}</p>
                                             </div>
                                             <div className="px-4 my-auto text-right">
                                                 <p className="text-ash font-bold">Earned</p>
-                                                <p className="text-frost font-bold">{tier !== 0 && c_progress.tiers && c_progress.tiers[tier-1].date_obtained ? formatDateYearShort(c_progress.tiers[tier-1].date_obtained) : 'N/A'}</p>
+                                                <p className="text-frost font-bold">{tier !== 0 && c_progress.tiers && c_progress.tiers[tier - 1].date_obtained ? formatDateYearShort(c_progress.tiers[tier - 1].date_obtained) : 'N/A'}</p>
                                             </div>
                                         </div>
                                         <div>
@@ -164,7 +191,7 @@ const MedalWithChildren = ({ medalInfo, progress, children, child_progress }: Me
                                                 ></progress>
                                             </div>
                                             <div className="w-full inline-flex justify-between px-4">
-                                                <h2 className="font-bold text-frost text-base">{((tier / Object.keys(child?.medal_tiers).length)*100).toFixed(1)} %</h2>
+                                                <h2 className="font-bold text-frost text-base">{((tier / Object.keys(child?.medal_tiers).length) * 100).toFixed(1)} %</h2>
                                                 <h2 className="font-bold text-base"><span className={`${tier >= 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{tier}</span> <span className="text-ash text-base">/ {(Object.keys(child?.medal_tiers).length)}</span></h2>
                                             </div>
                                         </div>
