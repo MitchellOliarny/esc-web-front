@@ -8,9 +8,10 @@ interface MedalsProps {
     medalInfo: any;
     progress: any;
     user_earners: any;
+    change_display_medal: any;
 }
 
-const Medal = ({ medalInfo, progress, user_earners }: MedalsProps) => {
+const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: MedalsProps) => {
 
     const [showPopup, setShowPopUp] = useState('hidden');
     const [showLightBox, setShowLightBox] = useState('hidden');
@@ -47,11 +48,19 @@ const Medal = ({ medalInfo, progress, user_earners }: MedalsProps) => {
         return (<div></div>)
     }
 
+    const ChangeMedal = (name: string, position: number) => {
+        if(displayMedal == 0) {
+            return;
+        }
+        change_display_medal(name, position) 
+        setShowLightBox('hidden')
+    }
+
     return (
         <>
 
             <div className="w-full h-auto mt-8 back-graphite game-row-border rounded-lg">
-                <div className="h-60 medal-row rounded-t-lg cursor-pointer" onClick={() => { setShowPopUp(showPopup == '' ? 'hidden' : '') }}>
+                <div className="h-60 medal-row rounded-t-lg">
                     <img src={displayMedal != 0 ?
                         bucket + medalInfo?.name + '_' + displayMedal + '.png'
                         : bucket + medalInfo?.name + '_1' + '.png'
@@ -68,11 +77,18 @@ const Medal = ({ medalInfo, progress, user_earners }: MedalsProps) => {
                                 <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
                                 <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
                             </div>
-                            <div className="flex content-center justify-end flex-wrap">
-                                <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover" />
-                                <div className="back-slate w-10 h-10 ml-6 rounded-lg content-center">
+                            <div className="flex content-center justify-end flex-wrap relative">
+                                <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover cursor-pointer" onClick={()=>{
+                                    showLightBox == '' ? setShowLightBox('hidden') : setShowLightBox('')
+                                }} />
+                                <div className={`${showLightBox} finline-flex absolute h-auto w-auto back-darkslate rounded-lg p-4 gap-2 -left-8 top-2 z-10`}>
+                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 1)}}>Show in Showcase #1</p>
+                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 1)}}>Show in Showcase #2</p>
+                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 2)}}>Show in Showcase #3</p>
+                                </div>
+                                <div className="back-slate w-10 h-10 ml-6 rounded-lg content-center carot-hover cursor-pointer" onClick={() => { setShowPopUp(showPopup == '' ? 'hidden' : '')}}>
                                     {
-                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto carot-hover" /> : <FaCaretRight className="text-ash m-auto carot-hover" />
+                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto" /> : <FaCaretRight className="text-ash m-auto" />
                                     }
                                 </div>
                             </div>

@@ -663,7 +663,22 @@ select.transparent>option {
   transform: scale(1.05);
 }
 
-.carot-hover:hover {
+.carot-hover:hover > svg {
   color: var(--frost) !important;
   transform: scale(1.15);
+}
+
+.display-button {
+  border-radius: .5em;
+  padding: .5em;
+  cursor: pointer;
+}
+
+.display-button-hover:hover {
+  background-color: var(--slate);
+}
+
+.button-inactive {
+  opacity: .5;
+  cursor: default;
 }

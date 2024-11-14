@@ -7,9 +7,10 @@ interface MedalShowcaseProps {
     medalsProgress: any;
     category: String
     parentList: any;
+    change_display_medal: any;
 }
 
-const MedalShowcase = ({ medals, medalsProgress, category, parentList }: MedalShowcaseProps) => {
+const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_display_medal }: MedalShowcaseProps) => {
 
 
     const [selectedTier, setSelectedTier] = useState(-1);
@@ -122,13 +123,13 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList }: MedalSh
                             if(parentList[medal]){
                                 return (
                                     // @ts-ignore
-                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children_medals={parentList[medal]} child_progress={medalsProgress}/>
+                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children_medals={parentList[medal]} child_progress={medalsProgress} change_display_medal={change_display_medal}/>
                                 )
                             }
                         
                             return (
                                 // @ts-ignore
-                                <Medal medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} />
+                                <Medal medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} change_display_medal={change_display_medal} />
                             )
                         })
 

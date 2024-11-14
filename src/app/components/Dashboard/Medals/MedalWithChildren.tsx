@@ -10,9 +10,10 @@ interface MedalsProps {
     children_medals: any;
     child_progress: any;
     user_earners: any;
+    change_display_medal: any;
 }
 
-const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progress, user_earners }: MedalsProps) => {
+const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progress, user_earners, change_display_medal }: MedalsProps) => {
 
     const [showPopup, setShowPopUp] = useState('hidden');
     const [showLightBox, setShowLightBox] = useState('hidden');

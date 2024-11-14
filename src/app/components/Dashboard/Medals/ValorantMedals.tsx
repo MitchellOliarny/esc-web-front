@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import MedalShowcase from "./MedalShowcase";
+import { Method } from "axios";
 
 interface ValorantMedalsProps {
     medals: any;
     medalsProgress: any;
+    change_display_medal: any;
 }
 
-const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
+const ValorantMedals = ({ medals, medalsProgress, change_display_medal }: ValorantMedalsProps) => {
 
     const [medalCategory, setMedalCategory] = useState("all");
     const [medalList, setMedalList] = useState({});
@@ -70,7 +72,7 @@ const ValorantMedals = ({ medals, medalsProgress }: ValorantMedalsProps) => {
             </div>
 
             <div className={`flex gap-4 h-full w-[80%]`}>
-                <MedalShowcase medals={medalList} medalsProgress={medalsProgress.data.progress} category={medalCategory} parentList={parentList}/>
+                <MedalShowcase medals={medalList} medalsProgress={medalsProgress.data.progress} category={medalCategory} parentList={parentList} change_display_medal={change_display_medal}/>
             </div>
         </div>
     );

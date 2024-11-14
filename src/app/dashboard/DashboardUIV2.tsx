@@ -54,11 +54,23 @@ export default function Header({
   const [gamemode, setGamemode] = useState('Competitive');
   const [medalNotif, setMedalNotif] = useState(0);
 
+  const [displayMedals, setDisplayMedals] = useState([])
+
   useEffect(()=>{
     if(view) {
       handleSideBarClick(view);
     }
-    console.log(medalProgress);
+    // @ts-ignore
+    if(medalProgress.data.display_medals) {
+      let temp = [];
+      // @ts-ignore
+      for(const x in medalProgress.data.display_medals) {
+        // @ts-ignore
+        temp.push(bucket + (medalProgress.data.display_medals[x]) + '.png')
+      }
+      // @ts-ignore
+      setDisplayMedals(temp);
+    }
   },[view])
   // console.log(topAgents);
   // console.log(userInfo);
@@ -111,7 +123,7 @@ export default function Header({
         );
       case "medals":
         return (
-          <ValorantMedals medalsProgress={medalProgress} medals={medals} />
+          <ValorantMedals medalsProgress={medalProgress} medals={medals} change_display_medal={ChangeDisplayMedal}/>
         )
       default:
         return (
@@ -151,6 +163,14 @@ export default function Header({
     moveBarToElement(selectedMenu);
   }
 
+  const ChangeDisplayMedal = (medal_name: string, position: number) => {
+    let temp = [...displayMedals];
+    //@ts-ignore
+    temp[position] = bucket+medal_name+'.png';
+    
+    setDisplayMedals(temp);
+  }
+
   const moveBarToElement = (menu: string) => {
     let nav = document.querySelector('ul.dashnav')
     let item = document.getElementById(menu);
@@ -177,25 +197,22 @@ export default function Header({
           <div className="flex flex-col justify-end pt-40 pb-0 px-6 h-full rounded-lg"
             style={{ backgroundImage: 'linear-gradient(0deg, #14181E, 80%, transparent)' }}
           >
-            <div className="w-full h-36 flex">
-              
-              <img src={
-                //@ts-ignore
-                bucket + (medalProgress.data.display_medals["1"]) + '.png'}
-                className="h-full"
-                ></img>
+            <div className="w-full h-32 flex">
+              {
+                displayMedals.map((medal)=>{
+                  return (
+                    <img src={medal}
+                      className="h-full"
+                      alt={medal}
+                      onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src = "/dashboard/transparent-esc-score_square.png";
+                      }}
+                      ></img>
+                  )
+                })
+              }
 
-              <img src={
-                //@ts-ignore
-                bucket + (medalProgress.data.display_medals["2"])  + '.png'}
-                className="h-full"
-                ></img>
-
-              <img src={
-                //@ts-ignore
-                bucket + (medalProgress.data.display_medals["3"])  + '.png'}
-                className="h-full"
-                ></img>
             </div>
             <div className="w-full grid grid-cols-2 pb-8">
               <h1 className="grid font-[800] text-5xl text-frost px-4">

@@ -66,7 +66,13 @@ export async function userInfo() {
     cache: "no-store",
   });
 
+  if(!userInfoResp.ok) {
+    return {err: 'Too Many Requests'}
+  }
+
   const data = await userInfoResp.json();
+
+
 
   // console.log(data);
 
