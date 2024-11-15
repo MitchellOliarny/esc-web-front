@@ -72,7 +72,9 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                             currentTarget.onerror = null; // prevents looping
                             currentTarget.src = "/dashboard/transparent-esc-score_square.png";
                         }}
-                        className={`${displayMedal == 0 ? 'blur-sm grayscale' : ''} h-full w-max m-auto p-4 pl-8`}></img>
+                        className={`${displayMedal == 0 ? 'blur-sm grayscale' : ''} h-full w-max m-auto p-4 pl-8`}
+                        onClick={() => { setShowPopUp(showPopup == '' ? 'hidden' : '')}}
+                        ></img>
                     <div className="col-span-4 p-8 h-full">
                         <div className="grid grid-cols-3 grid-rows-1 w-full font-bold">
                             <div className="col-span-2 flex gap-4">
