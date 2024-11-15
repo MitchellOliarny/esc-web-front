@@ -19,6 +19,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
     const [currentStatus, setCurrentStatus] = useState(0);
     const [childMedals, setChildMedals] = useState({});
     const [displayMedal, setDisplayMedal] = useState(0);
+    const [firstEarner, setFirstEarner] = useState('N/A');
 
 
     const bucket = "https://files.esportsclubs.gg/";
@@ -42,7 +43,8 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
             }
 
         }
-    }, [progress, medalInfo])
+        setFirstEarner(medalInfo?.medal_tiers[Object.keys(medalInfo?.medal_tiers)[Object.keys(medalInfo?.medal_tiers).length - 1]]?.first_earner?.earner)
+    })
 
     if (!medalInfo?.name) {
         return (<div></div>)
@@ -174,18 +176,20 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                         })
                     }
                 </div>
-                <div className="h-14 flex back-darkslate rounded-b-lg game-row-border-top w-full justify-between px-4">
+                <div className="h-14 flex back-darkslate rounded-b-lg game-row-border-top w-full justify-between px-4 text-sm">
                     <div className="px-4 my-auto inline-flex gap-2">
                         {/* Earners */}
-                        {/* <div className="h-[1.5em]">
-                            <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img>
+                        <div className="my-auto text-left">
+                            <p className="text-ash font-bold">Tier 5 First Earner</p>
+                            <p className="text-frost font-bold text-base">{firstEarner || 'N/A'}</p>
+                            {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         </div>
-                        <hr className="w-[0.05em] h-[1.5em] border-none back-slate "></hr> */}
-                        <p className="text-frost font-bold">50% <span className="text-ash">players own this medal</span></p>
+                        <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr>
+                        <p className="text-frost font-bold my-auto text-base">50% <span className="text-ash text-sm">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>
-                        <p className="text-frost font-bold">{progress.tiers && progress?.tiers[displayMedal - 1]?.date_obtained ? formatDateYearShort(progress.tiers[displayMedal - 1].date_obtained) : 'N/A'}</p>
+                        <p className="text-frost font-bold text-base">{progress.tiers && progress?.tiers[displayMedal - 1]?.date_obtained ? formatDateYearShort(progress.tiers[displayMedal - 1].date_obtained) : 'N/A'}</p>
                     </div>
                 </div>
             </div>

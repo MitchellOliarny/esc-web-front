@@ -21,6 +21,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
     const [currentStatus, setCurrentStatus] = useState(0);
     const [childMedals, setChildMedals] = useState({});
     const [displayMedal, setDisplayMedal] = useState(0);
+    const [firstEarner, setFirstEarner] = useState('N/A');
 
     const [childTierCount, setChildTierCount] = useState(0);
 
@@ -45,6 +46,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                 }
             }
         }
+        setFirstEarner(medalInfo?.medal_tiers[Object.keys(medalInfo?.medal_tiers)[Object.keys(medalInfo?.medal_tiers).length - 1]]?.first_earner?.earner)
         if(children_medals) {
             let temp = 0
             for (const x in children_medals) {
@@ -54,6 +56,15 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
         }
     }, [progress, medalInfo])
 
+    
+    const ChangeMedal = (name: string, position: number) => {
+        if(displayMedal == 0) {
+            return;
+        }
+        change_display_medal(name, position) 
+        setShowLightBox('hidden')
+    }
+
     if (!medalInfo?.name) {
         return (<div></div>)
     }
@@ -62,7 +73,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
         <>
 
             <div className="w-full h-auto mt-8 back-graphite game-row-border rounded-lg">
-                <div className="h-60 medal-row rounded-t-lg cursor-pointer" onClick={() => { setShowPopUp(showPopup == '' ? 'hidden' : '') }}>
+                <div className="h-60 medal-row rounded-t-lg">
                     <img src={displayMedal != 0 ?
                         bucket + medalInfo?.name + '_' + displayMedal + '.png'
                         : bucket + medalInfo?.name + '_1' + '.png'
@@ -72,24 +83,35 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                             currentTarget.onerror = null; // prevents looping
                             currentTarget.src = "/dashboard/transparent-esc-score_square.png";
                         }}
-                        className={`${displayMedal == 0 ? 'blur-sm grayscale' : ''} h-full w-max m-auto p-4 pl-8`}></img>
+                        className={`${displayMedal == 0 ? 'blur-sm grayscale' : ''} h-full w-max m-auto p-4 pl-8 cursor-pointer`}
+                        onClick={() => { setShowPopUp(showPopup == '' ? 'hidden' : '')}}
+                        >
+
+                    </img>
                     <div className="col-span-4 p-8 h-full">
                         <div className="grid grid-cols-3 grid-rows-1 w-full font-bold">
                             <div className="col-span-2 flex gap-4">
                                 <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
-                                <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
+                                <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{children_medals ? children_medals.length : 'N/A'} Medals</div>
                             </div>
-                            <div className="flex content-center justify-end flex-wrap">
-                                <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover" />
-                                <div className="back-slate w-10 h-10 ml-6 rounded-lg content-center">
+                            <div className="flex content-center justify-end flex-wrap relative z-10">
+                                <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover cursor-pointer" onClick={()=>{
+                                    showLightBox == '' ? setShowLightBox('hidden') : setShowLightBox('')
+                                }} />
+                                <div className={`${showLightBox} finline-flex absolute h-auto w-auto back-darkslate rounded-lg p-4 gap-2 -left-8 top-2 z-10`}>
+                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 0)}}>Show in Showcase #1</p>
+                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 1)}}>Show in Showcase #2</p>
+                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 2)}}>Show in Showcase #3</p>
+                                </div>
+                                <div className="back-slate w-10 h-10 ml-6 rounded-lg content-center carot-hover cursor-pointer" onClick={() => { setShowPopUp(showPopup == '' ? 'hidden' : '')}}>
                                     {
-                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto carot-hover" /> : <FaCaretRight className="text-ash m-auto carot-hover" />
+                                        showPopup == '' ? <FaCaretDown className="text-ash m-auto" /> : <FaCaretRight className="text-ash m-auto" />
                                     }
                                 </div>
                             </div>
                         </div>
                         <p className="text-ash text-base py-2 pr-10">{medalInfo?.medal_description}</p>
-                        <p className="text-ash text-base py-2 pr-10">A new tier is unlocked for every 20% complete</p>
+                        <p className="text-ash text-base py-2 pr-10">A new mastery tier medal is unlocked for every 20% complete</p>
                         <div className="py-4">
                             <div className="w-full cut-corner-45-special">
                                 <progress
@@ -112,7 +134,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                                     } 
                                     
                                     %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.progress)}</span> <span className="text-ash text-base">/ {(childTierCount)}</span></h2>
                             </div>
                         </div>
                     </div>
@@ -202,18 +224,20 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                         })
                     }
                 </div>
-                <div className="h-14 flex back-darkslate rounded-b-lg game-row-border-top w-full justify-between px-4">
+                <div className="h-14 flex back-darkslate rounded-b-lg game-row-border-top w-full justify-between px-4 text-sm">
                     <div className="px-4 my-auto inline-flex gap-2">
                         {/* Earners */}
-                        {/* <div className="h-[1.5em]">
-                            <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img>
+                        <div className="my-auto text-left">
+                            <p className="text-ash font-bold">Tier 5 First Earner</p>
+                            <p className="text-frost font-bold text-base">{firstEarner || 'N/A'}</p>
+                            {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         </div>
-                        <hr className="w-[0.05em] h-[1.5em] border-none back-slate "></hr> */}
-                        <p className="text-frost font-bold">50% <span className="text-ash">players own this medal</span></p>
+                        <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr>
+                        <p className="text-frost font-bold my-auto text-base">50% <span className="text-ash text-sm">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>
-                        <p className="text-frost font-bold">{progress.tiers && progress?.tiers[displayMedal - 1]?.date_obtained ? formatDateYearShort(progress.tiers[displayMedal - 1].date_obtained) : 'N/A'}</p>
+                        <p className="text-frost font-bold text-base">{progress.tiers && progress?.tiers[displayMedal - 1]?.date_obtained ? formatDateYearShort(progress.tiers[displayMedal - 1].date_obtained) : 'N/A'}</p>
                     </div>
                 </div>
             </div>
