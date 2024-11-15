@@ -82,7 +82,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                                     showLightBox == '' ? setShowLightBox('hidden') : setShowLightBox('')
                                 }} />
                                 <div className={`${showLightBox} finline-flex absolute h-auto w-auto back-darkslate rounded-lg p-4 gap-2 -left-8 top-2 z-10`}>
-                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 1)}}>Show in Showcase #1</p>
+                                    <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 0)}}>Show in Showcase #1</p>
                                     <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 1)}}>Show in Showcase #2</p>
                                     <p className={`display-button ${!displayMedal ? 'button-inactive' : 'display-button-hover'}`} onClick={()=>{ChangeMedal(medalInfo?.name+'_'+(displayMedal), 2)}}>Show in Showcase #3</p>
                                 </div>

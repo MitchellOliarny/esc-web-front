@@ -25,7 +25,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const data = await userSession();
   const user = await userInfo();
-  const info = user.data.info;
+  const info = user.data?.info;
    //console.log(info);
 
   return (

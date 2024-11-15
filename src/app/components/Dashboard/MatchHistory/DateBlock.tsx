@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { CreateMedalToolTip } from "@/app/utils/helpers";
 
 interface DateBlockHistoryUIProps {
   date: string;
@@ -35,20 +36,6 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
     //@ts-ignore
     setCompletedMedals(temp);
     //console.log(temp)
-  }
-
-  const CreateMedalToolTip = (medal_name: string) => {
-    const split_name = medal_name.split('_');
-    let new_name = '';
-    for (const x in split_name) {
-      if(Number(x) != (Number(split_name.length) - 1)) {
-        new_name += split_name[x] + " ";
-      }
-      else {
-        new_name += 'Tier ' + split_name[x];
-      }
-    }
-    return new_name
   }
 
   useEffect(()=>{

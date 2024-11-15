@@ -172,3 +172,18 @@ export const CalcRankName = (rankInt: number) => {
   //@ts-ignore
   return ranks[current_rank];
 }
+
+export const CreateMedalToolTip = (medal_name: string) => {
+  let sanitizeURL = medal_name.replace('https://files.esportsclubs.gg/', '').replace('.png', '');
+  const split_name = sanitizeURL.split('_');
+  let new_name = '';
+  for (const x in split_name) {
+    if(Number(x) != (Number(split_name.length) - 1)) {
+      new_name += split_name[x] + " ";
+    }
+    else {
+      new_name += 'Tier ' + split_name[x];
+    }
+  }
+  return new_name
+}
