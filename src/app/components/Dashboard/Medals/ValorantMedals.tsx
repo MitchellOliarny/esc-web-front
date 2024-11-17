@@ -25,7 +25,7 @@ const ValorantMedals = ({ medals, medalsProgress, change_display_medal }: Valora
     }
 
     useEffect(()=>{
-        ResetToAllMedals();
+        ClickCategoryCard(medalCategory);
     },[medals])
 
 

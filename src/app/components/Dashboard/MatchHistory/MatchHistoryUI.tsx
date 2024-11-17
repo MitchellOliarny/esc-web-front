@@ -25,7 +25,7 @@ const MatchHistoryUI = ({
 
   let maps: { [key: string]: any } = {};
   let agents: { [key: string]: any } = {};
-  let GamesByDate: {[key: string]: {games: [any], stats: {}, medal_progress: {}}} = {};
+  let GamesByDate: {[key: string]: {games: [any], stats: {}, medal_progress: {}, rr_sum: 0}} = {};
   let gameStats: {[key: string]: {clutches: number, multikills: number}} = {};
 
   const [currentHover, setCurrentHover] = useState(null);
@@ -59,7 +59,7 @@ const MatchHistoryUI = ({
     const gameDate = formattedDate //(dateSeparated[0]) + '-' + (dateSeparated[1]) + '-' + dateSeparated[2];
     GamesByDate[gameDate] ?
       GamesByDate[gameDate].games.push(x) :
-      GamesByDate[gameDate] = {'games': [x], 'stats': {wins: 0, losses: 0, round_wins: 0, round_losses: 0, kast: 0, clutches: 0, multikills: 0}, 'medal_progress': {}};
+      GamesByDate[gameDate] = {'games': [x], 'stats': {wins: 0, losses: 0, round_wins: 0, round_losses: 0, kast: 0, clutches: 0, multikills: 0}, 'medal_progress': {}, rr_sum: 0};
     //@ts-ignore
     x[x.team] > x[x.team == 'blue' ? 'red' : 'blue'] ? GamesByDate[gameDate].stats.wins += 1 : x['blue'] != x['red'] ? GamesByDate[gameDate].stats.losses += 1 : '';
     //@ts-ignore
@@ -69,6 +69,8 @@ const MatchHistoryUI = ({
     DateBlockStatAverages(x.stats, gameDate);
     //@ts-ignore
     GamesByDate[gameDate].stats.kast += x.kast;
+
+    GamesByDate[gameDate].rr_sum += x.mmr_change.mmr_change
 
     gameStats[x.match_id] = {clutches: 0, multikills: 0};
 
@@ -152,6 +154,8 @@ const MatchHistoryUI = ({
               medalsProgress={(GamesByDate[index]?.medal_progress)}
               //@ts-ignore
               days_since={daysSince(index)}
+
+              rr_sum={GamesByDate[index]?.rr_sum}
             />
           {GamesByDate[index]?.games.map((game, count) => (
             <div className={`mb-4`} key={index+""+count} >

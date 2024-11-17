@@ -6,6 +6,7 @@ interface DateBlockHistoryUIProps {
   date: string;
   wins: number;
   losses: number;
+  rr_sum: number;
   roundWin: number;
   adr: number;
   kast: number;
@@ -17,7 +18,7 @@ interface DateBlockHistoryUIProps {
   days_since: string;
 }
 
-const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress}: DateBlockHistoryUIProps) => {
+const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress, rr_sum}: DateBlockHistoryUIProps) => {
 
   const [completedMedals, setCompletedMedals] = useState([]);
   const bucket = 'https://files.esportsclubs.gg/'
@@ -53,6 +54,9 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
               <p className="text-frost">{wins} <span className="text-win">Wins</span></p>
               &nbsp;<span className="text-ash">•</span>&nbsp;
               <p className="text-frost">{losses} <span className="text-loss">Losses</span></p>
+              {
+                rr_sum ? <div className="text-base flex my-auto">&nbsp;<span className="text-ash">•</span>&nbsp;<p className={`${rr_sum >= 0 ? 'text-win' : 'text-loss'} text-sm my-auto`}>{rr_sum >= 0 ? '+'+rr_sum : rr_sum} RR</p></div> : ''
+              }
             </div>
           </div>
 

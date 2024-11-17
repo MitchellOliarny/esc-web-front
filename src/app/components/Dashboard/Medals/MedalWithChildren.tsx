@@ -8,12 +8,13 @@ interface MedalsProps {
     medalInfo: any;
     progress: any;
     children_medals: any;
+    all_children: any;
     child_progress: any;
     user_earners: any;
     change_display_medal: any;
 }
 
-const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progress, user_earners, change_display_medal }: MedalsProps) => {
+const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children, child_progress, user_earners, change_display_medal }: MedalsProps) => {
 
     const [showPopup, setShowPopUp] = useState('hidden');
     const [showLightBox, setShowLightBox] = useState('hidden');
@@ -146,6 +147,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
 
                             let c_progress = child_progress[child?.name];
                             let tier = 0;
+                            let children_tiers = 0;
                             if (c_progress) {
                                 for (const x in c_progress.tiers) {
                                     if (!c_progress.tiers[Number(x)].isComplete) {
@@ -159,6 +161,12 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                             else {
                                 c_progress = {
                                     progress: 0
+                                }
+                            }
+
+                            if(all_children[child?.name]) {
+                                for(const x in all_children[child?.name]) {
+                                    children_tiers += Object.keys(all_children[child?.name][x].medal_tiers).length;
                                 }
                             }
 
@@ -195,7 +203,14 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                                             <div className="col-span-3 w-full font-bold">
                                                 <div className="col-span-2 flex gap-4">
                                                     <h2 className="text-xl text-frost">{child?.medal_name}</h2>
-                                                    <div className="back-slate text-frost self-center justify-self-start h-5 w-auto px-2 rounded-lg content-center justify-center text-sm font-bold">{child?.medal_tiers ? Object.keys(child?.medal_tiers).length : 1} Tiers</div>
+                                                    <div className="back-slate text-frost self-center justify-self-start h-5 w-auto px-2 rounded-lg content-center justify-center text-sm font-bold">{
+                                                    
+                                                    all_children[child?.name] ? 
+                                                    all_children[child?.name].length + ' Medals'
+                                                    :
+                                                    child?.medal_tiers ? Object.keys(child?.medal_tiers).length + ' Tiers' : 'N/A'}
+                                                    
+                                                    </div>
                                                 </div>
                                                 <p className="text-ash text-sm py-2 pr-10">{child?.medal_description}</p>
                                             </div>
@@ -209,13 +224,13 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                                                 <progress
                                                     className={`${tier >= 4 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                                     color="secondary"
-                                                    value={tier}
-                                                    max={Object.keys(child?.medal_tiers).length}
+                                                    value={c_progress.progress || tier}
+                                                    max={children_tiers ? children_tiers : Object.keys(child?.medal_tiers).length}
                                                 ></progress>
                                             </div>
                                             <div className="w-full inline-flex justify-between px-4">
-                                                <h2 className="font-bold text-frost text-base">{((tier / Object.keys(child?.medal_tiers).length) * 100).toFixed(1)} %</h2>
-                                                <h2 className="font-bold text-base"><span className={`${tier >= 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{tier}</span> <span className="text-ash text-base">/ {(Object.keys(child?.medal_tiers).length)}</span></h2>
+                                                <h2 className="font-bold text-frost text-base">{ children_tiers ? ((c_progress.progress / children_tiers)*100).toFixed(1) :  ((tier / Object.keys(child?.medal_tiers).length) * 100).toFixed(1)} %</h2>
+                                                <h2 className="font-bold text-base"><span className={`${tier >= 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{children_tiers ? c_progress.progress : tier}</span> <span className="text-ash text-base">/ {children_tiers ? children_tiers : (Object.keys(child?.medal_tiers).length)}</span></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -229,7 +244,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, child_progres
                         {/* Earners */}
                         <div className="my-auto text-left">
                             <p className="text-ash font-bold">Tier 5 First Earner</p>
-                            <p className="text-frost font-bold text-base">{firstEarner || 'N/A'}</p>
+                            <p className="text-frost font-bold text-base">{firstEarner || 'Not Claimed'}</p>
                             {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         </div>
                         <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr>

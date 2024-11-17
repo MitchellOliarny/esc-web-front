@@ -43,6 +43,8 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
             }
 
         }
+        //Testing on lower tier
+       // setFirstEarner(medalInfo?.medal_tiers['2']?.first_earner?.earner)
         setFirstEarner(medalInfo?.medal_tiers[Object.keys(medalInfo?.medal_tiers)[Object.keys(medalInfo?.medal_tiers).length - 1]]?.first_earner?.earner)
     })
 
@@ -183,7 +185,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                         {/* Earners */}
                         <div className="my-auto text-left">
                             <p className="text-ash font-bold">Tier 5 First Earner</p>
-                            <p className="text-frost font-bold text-base">{firstEarner || 'N/A'}</p>
+                            <p className="text-frost font-bold text-base">{firstEarner || 'Not Claimed'}</p>
                             {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         </div>
                         <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr>

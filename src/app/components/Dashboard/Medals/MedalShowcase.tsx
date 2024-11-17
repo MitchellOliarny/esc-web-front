@@ -17,13 +17,13 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
     const [medalsList, setMedals] = useState({});
     const [totalEarned, setTotalEarned] = useState(0);
 
-    const tierOptions = [0, 1, 2, 3, 4, 5]
+    const tierOptions = [1, 2, 3, 4, 5]
 
     let temp = 0;
 
 
     useEffect(() => {
-        ResetPage();
+        FilterSelected(selectedTier);
     }, [medals])
     
     const ResetPage = () => {
@@ -35,14 +35,9 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         console.log(tier)
         let temp = {};
 
-        if (tier == -1) {
-            ResetPage();
-            return;
-        }
-
         if (tier > 0) {
             for (const x in medalsProgress) {
-                if (medalsProgress[x].tiers[tier - 1] && medalsProgress[x].tiers[tier - 1].isComplete) {
+                if (medals[x] && medalsProgress[x].tiers[tier - 1] && medalsProgress[x].tiers[tier - 1].isComplete && !medalsProgress[x].tiers[tier].isComplete) {
                     //@ts-ignore
                     temp[x] = medals[x];
                 }
@@ -51,7 +46,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         }
         else if (tier == 0) {
             for (const x in medalsProgress) {
-                if (medalsProgress[x].tiers[0] && !medalsProgress[x].tiers[0].isComplete) {
+                if (medals[x] && medalsProgress[x].tiers[0] && !medalsProgress[x].tiers[0].isComplete) {
                     //@ts-ignore
                     temp[x] = medals[x];
                 }
@@ -62,6 +57,8 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
             ResetPage();
             return;
         }
+
+        console.log(temp)
 
         FindTotalEarned(temp);
 
@@ -97,6 +94,9 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                         <option key={'All'} value={-1}>
                             {'All Tiers'}
                         </option>
+                        <option key={0} value={0}>
+                            {'Incomplete'}
+                        </option>
                         {tierOptions.map((tier) => (
                             <option key={tier} value={tier}>
                                 {'Tier ' + tier + ' Complete'}
@@ -123,7 +123,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                             if(parentList[medal]){
                                 return (
                                     // @ts-ignore
-                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children_medals={parentList[medal]} child_progress={medalsProgress} change_display_medal={change_display_medal}/>
+                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children_medals={parentList[medal]} all_children={parentList} child_progress={medalsProgress} change_display_medal={change_display_medal}/>
                                 )
                             }
                         

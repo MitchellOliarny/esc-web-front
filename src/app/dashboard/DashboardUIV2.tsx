@@ -213,20 +213,21 @@ export default function Header({
           <div className="flex flex-col justify-end pt-40 pb-0 px-6 h-full rounded-lg"
             style={{ backgroundImage: 'linear-gradient(0deg, #14181E, 80%, transparent)' }}
           >
-            <div className="w-full h-32 flex">
+            <div className="w-full h-24 flex gap-4 mb-2">
               {
                 displayMedals.map((medal) => {
                   if (medal) {
                     return (
+                      <div className="tooltip" data-tip={CreateMedalToolTip(medal)}>
                       <img src={medal}
-                        className="h-full tooltip"
-                        data-tip={CreateMedalToolTip(medal)}
+                        className="h-full"
                         alt={medal}
                         onError={({ currentTarget }) => {
                           currentTarget.onerror = null; // prevents looping
                           currentTarget.src = "/dashboard/transparent-esc-score_square.png";
                         }}
                       ></img>
+                      </div>
                     )
                   }
                   else {
