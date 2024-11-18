@@ -248,7 +248,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                             {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         </div>
                         <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr>
-                        <p className="text-frost font-bold my-auto text-base">50% <span className="text-ash text-sm">players own this medal</span></p>
+                        <p className="text-frost font-bold my-auto text-base">{medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned}% <span className="text-ash text-sm">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>
