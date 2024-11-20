@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import MedalShowcase from "./MedalShowcase";
-import { Method } from "axios";
 
 interface ValorantMedalsProps {
     medals: any;
