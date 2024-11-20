@@ -79,37 +79,37 @@ export default function Header({
 
   const renderContent = () => {
     switch (selectedMenu) {
-      case "statistics":
-        return (
-          <StatisticsUI
-            userInfo={userInfo}
-            userGames={valGames}
-            valAverage={valAverages}
-            userData={userData}
-          />
-        );
-      case "match-history":
-        return (
-          <MatchHistoryUI
-            userGames={valGames}
-            valMaps={valMaps}
-            valAgents={valAgents}
-            gamemode={gamemode}
-          />
-        );
-      case "agents":
-        return (
-          <AgentsUI
-            agentGames={agentGames}
-            topAgents={newTopAgents}
-            valAverage={valAverages}
-            maps={valMaps}
-          />
-        );
-      case "medals":
-        return (
-          <ValorantMedals medalsProgress={medalProgress} medals={medals}/>
-        )
+      // case "statistics":
+      //   return (
+      //     <StatisticsUI
+      //       userInfo={userInfo}
+      //       userGames={valGames}
+      //       valAverage={valAverages}
+      //       userData={userData}
+      //     />
+      //   );
+      // case "match-history":
+      //   return (
+      //     <MatchHistoryUI
+      //       userGames={valGames}
+      //       valMaps={valMaps}
+      //       valAgents={valAgents}
+      //       gamemode={gamemode}
+      //     />
+      //   );
+      // case "agents":
+      //   return (
+      //     <AgentsUI
+      //       agentGames={agentGames}
+      //       topAgents={newTopAgents}
+      //       valAverage={valAverages}
+      //       maps={valMaps}
+      //     />
+      //   );
+      // case "medals":
+      //   return (
+      //     <ValorantMedals medalsProgress={medalProgress} medals={medals}/>
+      //   )
       default:
         return (
           <OverviewUI

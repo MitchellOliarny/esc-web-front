@@ -215,10 +215,10 @@ export default function Header({
           >
             <div className="w-full h-24 flex gap-4 mb-2">
               {
-                displayMedals.map((medal) => {
+                displayMedals.map((medal, index) => {
                   if (medal) {
                     return (
-                      <div className="tooltip" data-tip={CreateMedalToolTip(medal)}>
+                      <div className="tooltip" data-tip={CreateMedalToolTip(medal)} key={CreateMedalToolTip(medal)}>
                       <img src={medal}
                         className="h-full"
                         alt={medal}
@@ -232,7 +232,7 @@ export default function Header({
                   }
                   else {
                     return (
-                      <FaCirclePlus className="h-full w-12 mx-4 opacity-80 cursor-pointer text-ash tooltip" data-tip="Click to Showcase Medals" onClick={()=>{handleSideBarClick('medals')}}/>
+                      <FaCirclePlus key={index} className="h-full w-12 mx-4 opacity-80 cursor-pointer text-ash tooltip" data-tip="Click to Showcase Medals" onClick={()=>{handleSideBarClick('medals')}}/>
                     )
                   }
                 })
