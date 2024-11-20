@@ -173,6 +173,10 @@ export const CalcRankName = (rankInt: number) => {
   return ranks[current_rank];
 }
 
+export const GetFile = (filename: string) => {
+  return 'https://files.esportsclubs.gg/'+filename;
+}
+
 export const CreateMedalToolTip = (medal_name: string) => {
   let sanitizeURL = medal_name.replace('https://files.esportsclubs.gg/', '').replace('.png', '');
   const split_name = sanitizeURL.split('_');

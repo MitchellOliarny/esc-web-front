@@ -9,6 +9,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "files.esportsclubs.gg",
+        port: "",
+      },
+      {
+        protocol: "https",
         hostname: "images.pexels.com",
         port: "",
       },

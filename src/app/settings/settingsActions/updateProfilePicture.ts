@@ -15,11 +15,12 @@ export default async function updateProfilePicture(formData: FormData) {
     return { success: false, errors: ["No file provided"] };
   }
 
-  const response = await fetch("https://api.esportsclubs.gg/user/update/pfp", {
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL+"/user/update/pfp", {
     method: "PUT",
     headers,
     body: formData,
   });
+
 
   const result = await response.json();
   // console.log(result);

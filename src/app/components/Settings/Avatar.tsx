@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Button } from "@nextui-org/react";
 import { FaEdit } from "react-icons/fa";
 import Image from "next/image";
+import { GetFile } from "@/app/utils/helpers";
 
 import {
   Modal,
@@ -51,7 +52,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
           height={1000}
           src={
             profile_picture
-              ? `https://api.esportsclubs.gg/images/${profile_picture}`
+              ? GetFile(profile_picture)
               : "/avatar.png"
           }
           className="rounded-full w-48 h-48 overflow-hidden border-2 cursor-pointer object-cover"
@@ -104,10 +105,10 @@ export default function Avatar({ profile_picture }: AvatarProps) {
                         src={
                           profilePicture
                             ? URL.createObjectURL(profilePicture)
-                            : `https://api.esportsclubs.gg/images/${profile_picture}` ||
+                            : GetFile(profile_picture) ||
                               "/avatar.png"
                         }
-                        className="rounded-full w-48 h-48 overflow-hidden border-2 cursor-pointer"
+                        className="rounded-full w-48 h-48 overflow-hidden border-2 cursor-pointer object-cover"
                       />
                       <FaEdit
                         className="text-6xl text-gray-200 opacity-50"
