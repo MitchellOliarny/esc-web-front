@@ -224,7 +224,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                                 <progress
                                                     className={`${tier >= 4 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                                     color="secondary"
-                                                    value={c_progress.progress || tier}
+                                                    value={children_tiers ? c_progress.progress : tier}
                                                     max={children_tiers ? children_tiers : Object.keys(child?.medal_tiers).length}
                                                 ></progress>
                                             </div>
@@ -248,7 +248,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                             {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         </div>
                         <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr>
-                        <p className="text-frost font-bold my-auto text-base">{medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned}% <span className="text-ash text-sm">players own this medal</span></p>
+                        <p className="text-frost font-bold my-auto text-base">{Number(medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned).toFixed(1)}% <span className="text-ash text-sm">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>

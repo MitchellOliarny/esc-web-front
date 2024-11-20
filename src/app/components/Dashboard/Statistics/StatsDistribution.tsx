@@ -65,6 +65,27 @@ const StatsDistribution = ({
     27: 'radiant'
   }
   const current_rank = currRank - (currRank % 3);
+
+  const curr_rank_percentile = calculatePercentile(
+    (percentage / (dontAVG ? 1 : gamesLength)),
+    // @ts-ignore
+    valAverage[ranks[current_rank]]?.all.median[stat_code_name],
+    // @ts-ignore
+    valAverage[ranks[current_rank]]?.all.min[stat_code_name],
+    // @ts-ignore
+    valAverage[ranks[current_rank]]?.all.max[stat_code_name]
+  );
+
+  const next_rank_percentile = calculatePercentile(
+    (percentage / (dontAVG ? 1 : gamesLength)),
+    // @ts-ignore
+    valAverage[ranks[nextRank]]?.all.median[stat_code_name],
+    // @ts-ignore
+    valAverage[ranks[nextRank]]?.all.min[stat_code_name],
+    // @ts-ignore
+    valAverage[ranks[nextRank]]?.all.max[stat_code_name]
+  );
+
   return (
     <>
       <div className="stat-box rounded-lg px-4 py-4 flex flex-col justify-center items-center relative">
@@ -145,38 +166,14 @@ const StatsDistribution = ({
                 <div className="cut-corner-45-special">
                   <progress
                     className="progress-rust w-full h-2"
-                    value={calculatePercentile(
-                      (percentage / (dontAVG ? 1 : gamesLength)),
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.median[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.min[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.max[stat_code_name]
-                    ).barPercent}
+                    value={curr_rank_percentile.barPercent}
                     max="100"
                   ></progress>
                 </div>
-                <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
+                <p className={`text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2 text-${curr_rank_percentile.color}`}>
                   Top {
-                    (calculatePercentile(
-                      (percentage / (dontAVG ? 1 : gamesLength)),
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.median[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.min[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.max[stat_code_name]
-                    ).percentile
-                    ) < 100 ? (calculatePercentile(
-                      (percentage / (dontAVG ? 1 : gamesLength)),
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.median[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.min[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[current_rank]]?.all.max[stat_code_name]
-                    ).percentile
+                    (curr_rank_percentile.percentile
+                    ) < 100 ? (curr_rank_percentile.percentile
                     ).toFixed(2) : '100'}%
                 </p>
               </div>
@@ -217,38 +214,14 @@ const StatsDistribution = ({
                 <div className="cut-corner-45-special">
                   <progress
                     className="progress-rust w-full h-2"
-                    value={calculatePercentile(
-                      (percentage / (dontAVG ? 1 : gamesLength)),
-                      // @ts-ignore
-                      valAverage[ranks[nextRank]]?.all.median[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[nextRank]]?.all.min[stat_code_name],
-                      // @ts-ignore
-                      valAverage[ranks[nextRank]]?.all.max[stat_code_name]
-                    ).barPercent}
+                    value={next_rank_percentile.barPercent}
                     color="black"
                     max="100"
                   ></progress>
                 </div>
-                <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
-                  Top {(calculatePercentile(
-                    (percentage / (dontAVG ? 1 : gamesLength)),
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.median[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.min[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.max[stat_code_name]
-                  ).percentile
-                  ) < 100 ? (calculatePercentile(
-                    percentage / (dontAVG ? 1 : gamesLength),
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.median[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.min[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.max[stat_code_name]
-                  ).percentile
+                <p className={`text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2 text-${next_rank_percentile.color}`}>
+                  Top {(next_rank_percentile.percentile
+                  ) < 100 ? (next_rank_percentile.percentile
                   ).toFixed(2) : '100'}%
                 </p>
               </div>

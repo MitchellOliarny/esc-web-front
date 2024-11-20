@@ -70,7 +70,7 @@ const MatchHistoryUI = ({
     //@ts-ignore
     GamesByDate[gameDate].stats.kast += x.kast;
 
-    GamesByDate[gameDate].rr_sum += x.mmr_change.mmr_change
+    GamesByDate[gameDate].rr_sum += x.mmr_change?.mmr_change || 0
 
     gameStats[x.match_id] = {clutches: 0, multikills: 0};
 
