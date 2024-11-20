@@ -136,6 +136,11 @@ const AllStatsPanel = ({
           nextRank={currRank + (3 - (currRank % 3))}
           isStudent={true}
           dontAVG={true}
+          show_head_stat={true}
+          left_head_name="WINS"
+          left_head_stat={totalWins}
+          right_head_name="LOSS"
+          right_head_stat={totalLosses}
         />
 
         <StatsDistribution
@@ -151,6 +156,11 @@ const AllStatsPanel = ({
           nextRank={currRank + (3 - (currRank % 3))}
           isStudent={true}
           dontAVG={true}
+          show_head_stat={true}
+          left_head_name="WINS"
+          left_head_stat={roundsWin}
+          right_head_name="LOSS"
+          right_head_stat={totalRounds - roundsWin}
         />
 
         <StatsDistribution
@@ -166,6 +176,11 @@ const AllStatsPanel = ({
           nextRank={currRank + (3 - (currRank % 3))}
           isStudent={isStudent}
           dontAVG={false}
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
 
         <StatsDistribution
@@ -181,6 +196,11 @@ const AllStatsPanel = ({
           nextRank={currRank + (3 - (currRank % 3))}
           isStudent={isStudent}
           dontAVG={false}
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
 
         <StatsDistribution
@@ -196,6 +216,11 @@ const AllStatsPanel = ({
           nextRank={currRank + (3 - (currRank % 3))}
           isStudent={isStudent}
           dontAVG={false}
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
 
         <StatsDistribution
@@ -215,6 +240,12 @@ const AllStatsPanel = ({
 
           isStudent={isStudent}
           dontAVG={false}
+
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
 
         <StatsDistribution
@@ -232,6 +263,12 @@ const AllStatsPanel = ({
           
           isStudent={isStudent}
           dontAVG={false}
+
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
 
         <StatsDistribution
@@ -249,6 +286,12 @@ const AllStatsPanel = ({
           nextRank={currRank + (3 - (currRank % 3))}
           isStudent={isStudent}
           dontAVG={true}
+
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
 
         <StatsDistribution
@@ -266,6 +309,12 @@ const AllStatsPanel = ({
 
           isStudent={isStudent}
           dontAVG={false}
+
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
 
         {/* <StatsDistribution

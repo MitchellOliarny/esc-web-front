@@ -33,7 +33,7 @@ const ChartComponent: React.FC<ChartProps> = ({
               {
                 label: "Match Data",
                 data: data,
-                borderRadius: 4,
+                borderRadius: 2,
                 backgroundColor: [
                   "#5ECCBA",
                   "#5ECCBA",

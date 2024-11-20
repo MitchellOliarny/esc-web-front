@@ -249,13 +249,18 @@ const StatsPanel = ({
           stat_code_name="match_win_percent"
           valAverage={valAverage}
           gamesLength={recentGames?.length}
-          statsName={`Match Win % (${totalWins}W / ${totalLosses}L)`}
+          statsName={`Match Win %`}
           percentage={(totalWins / (totalWins + totalLosses)) * 100}
           difference={10}
           currRank={recentGames[0]?.match_rank}
           nextRank={recentGames[0]?.match_rank + (3 - (recentGames[0]?.match_rank % 3))}
           isStudent={isStudent}
           dontAVG={true}
+          show_head_stat={true}
+          left_head_name="WINS"
+          left_head_stat={totalWins}
+          right_head_name="LOSS"
+          right_head_stat={totalLosses}
         />
 
         <StatsDistribution
@@ -271,6 +276,11 @@ const StatsPanel = ({
           nextRank={recentGames[0]?.match_rank + (3 - (recentGames[0]?.match_rank % 3))}
           isStudent={isStudent}
           dontAVG={false}
+          show_head_stat={false}
+          left_head_name=""
+          left_head_stat={0}
+          right_head_name=""
+          right_head_stat={0}
         />
       </div>
     </>

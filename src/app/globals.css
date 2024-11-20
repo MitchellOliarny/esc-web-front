@@ -218,9 +218,6 @@ select.transparent>option {
   color: white;
 }
 
-.stat-box-border {
-  border-radius: 2rem 2rem / 2rem 0% !important;
-}
 
 .text-ash {
   color: var(--ash) !important;
@@ -568,6 +565,13 @@ select.transparent>option {
   align-content: center;
   justify-content: center;
   margin-right: 2em;
+}
+
+/* STATS */
+
+.stat-box{
+  background-color: var(--graphite) !important;
+  border: var(--slate) 1px solid;
 }
 
 

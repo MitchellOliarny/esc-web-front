@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaRegQuestionCircle, FaQuestionCircle } from "react-icons/fa";
 import { calculatePercentile } from "@/app/utils/helpers";
 
 interface StatsScoreProps {
@@ -163,27 +163,27 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
     <>
       {!isAgentBox ?
         <div className={fontSize}>
-          <div className="back-slate stat-box-border pt-4 px-4 h-full">
+          <div className="stat-box pt-4 px-4 h-full rounded-lg">
             <div className="flex items-center gap-2 justify-between">
               <div className="flex items-center gap-2">
                 <h1 className="font-bold text-2xl">EsportsClubs.gg Score</h1>
-                <Image
+                {/* <Image
                   width={1000}
                   height={1000}
                   src="/dashboard/esc-score.png"
                   className="w-auto h-8"
                   alt="ESC Score Icon"
-                />
+                /> */}
               </div>
               <div
                 className="tooltip"
                 data-tip="ESC Score indicates how likely we think you will rank up using recent stat trends"
               >
-                <FaRegQuestionCircle className="text-xl" />
+                <FaQuestionCircle className="text-xl text-ash" />
               </div>
             </div>
 
-            <div className="py-10">
+            <div className="pt-6">
               <div className={`${displayType} items-center`}>
                 <div className="flex items-center gap-6 pl-2 pr-10 justify-center">
                   <Image
@@ -198,7 +198,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       className="tooltip cursor-default"
                       data-tip="Likeliness to Rank Up"
                     >
-                      <h2 className="font-medium text-2xl leading-none whitespace-nowrap">
+                      <h2 className="font-bold text-2xl text-ash leading-none whitespace-nowrap">
                         ESC Score
                       </h2>
                     </div>
@@ -227,21 +227,21 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                   </div>
                 </div>
 
-                <div className={`${lineWidth} ${lineHeight} bg-white m-auto`}></div>
+                <div className={`${lineWidth} ${lineHeight} back-slate my-auto`}></div>
 
                 <div className="pl-10">
-                  <div className="grid grid-cols-3 gap-8 pb-6">
+                  <div className="grid grid-cols-3 grid-rows-2 gap-12 my-auto w-full">
                     <div>
                       <div
                         className="tooltip cursor-default"
                         data-tip="Overall Percentage of Matches Won"
                       >
-                        <h3 className="font-bold text-sm">Match Win %</h3>
+                        <h3 className="font-bold text-ash text-sm">Match Win %</h3>
                       </div>
-                      <p className="font-bold text-4xl text-[#4DFFDD]">
+                      <p className="font-bold text-4xl text-frost">
                         {((totalWins / (totalWins + totalLosses)) * 100).toFixed(1)}%
                       </p>
-                      <p className="font-bold text-sm">
+                      <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         Top{" "}
                         {(
                           win_percent.percentile
@@ -254,12 +254,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         className="tooltip cursor-default"
                         data-tip="Overall Percentage of Rounds Won"
                       >
-                        <h3 className="font-bold text-sm">Round Win %</h3>
+                        <h3 className="font-bold text-ash text-sm">Round Win %</h3>
                       </div>
-                      <p className="font-bold text-4xl text-[#4DFFDD]">
+                      <p className="font-bold text-4xl text-frost">
                         {((roundsWin / totalRounds) * 100).toFixed(1)}%
                       </p>
-                      <p className="font-bold text-sm">
+                      <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         Top{" "}
                         {(
                           round_percent.percentile
@@ -272,12 +272,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         className="tooltip cursor-default"
                         data-tip="Overall Average Damage per Round"
                       >
-                        <h3 className="font-bold text-sm">AD/R</h3>
+                        <h3 className="font-bold text-ash text-sm">AD/R</h3>
                       </div>
-                      <p className="font-bold text-4xl text-[#4DFFDD]">
+                      <p className="font-bold text-4xl text-frost">
                         {(adrPercentage / recentGames?.length).toFixed(0)}
                       </p>
-                      <p className="font-bold text-sm">
+                      <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         Top{" "}
                         {(
                           adr_percent.percentile
@@ -286,20 +286,18 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       </p>
                     </div>
 
-                  </div>
 
-                  <div className="grid grid-cols-3 gap-8">
                     <div>
                       <div
                         className="tooltip cursor-default"
                         data-tip="Overall Kills, Assists, Survives, Trades Percentage"
                       >
-                        <h3 className="font-bold text-sm">KAST%</h3>
+                        <h3 className="font-bold text-ash text-sm">KAST%</h3>
                       </div>
-                      <p className="font-bold text-4xl text-[#4DFFDD]">
+                      <p className="font-bold text-4xl text-frost">
                         {(kastPercentage / recentGames?.length).toFixed(1)}%
                       </p>
-                      <p className="font-bold text-sm">
+                      <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         Top{" "}
                         {(
                           kast_percent.percentile
@@ -312,12 +310,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         className="tooltip cursor-default"
                         data-tip="Overall Kills + Assists / Deaths"
                       >
-                        <h3 className="font-bold text-sm">KA/D</h3>
+                        <h3 className="font-bold text-ash text-sm">KA/D</h3>
                       </div>
-                      <p className="font-bold text-4xl text-[#4DFFDD]">
+                      <p className="font-bold text-4xl text-frost">
                         {(KAD / recentGames?.length).toFixed(2)}
                       </p>
-                      <p className="font-bold text-sm">
+                      <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         Top{" "}
                         {(
                           kad_percent.percentile
@@ -330,12 +328,12 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         className="tooltip cursor-default"
                         data-tip="AVG Net Damage / Round"
                       >
-                        <h3 className="font-bold text-sm">DMG Delta</h3>
+                        <h3 className="font-bold text-ash text-sm">DMG Delta</h3>
                       </div>
-                      <p className="font-bold text-4xl text-[#4DFFDD]">
+                      <p className="font-bold text-4xl text-frost"> 
                         {(ddPercentage / recentGames?.length).toFixed(2)}
                       </p>
-                      <p className="font-bold text-sm">
+                      <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         Top{" "}
                         {(
                           dmg_delta_percent.percentile

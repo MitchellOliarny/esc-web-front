@@ -65,23 +65,23 @@ const CareerHealth = ({ userGames }: CareerHealthUIProps) => {
   return (
     <>
       <div>
-        <div className="back-slate stat-box-border p-4 h-full">
+        <div className="stat-box rounded-lg p-4 h-full">
           <div className="flex items-center gap-2 justify-between">
             <h1 className="font-bold text-2xl">Career Health</h1>
             <div className="tooltip" data-tip="A break down of how many rounds you win or lose by">
               <FaRegQuestionCircle className="text-xl" />
             </div>
           </div>
-          <div className="flex flex-col items-center h-52" style={{contain: 'inline-size'}}>
-            <ChartComponent data={scores} labels={labels} chartHeight={chartHeight}/>
-            <div className="flex justify-between w-full px-10">
-              <p className="text-sm font-medium text-[#B0AEAE]">
+          <div className="grid grid-cols-2 w-full pt-4">
+              <p className="text-sm font-bold text-[#B0AEAE]">
                 Match Wins by Round Difference
               </p>
-              <p className="text-sm font-medium text-[#B0AEAE]">
+              <p className="text-sm ml-[4.5em] font-medium text-[#B0AEAE]">
                 Match Losses by Round Difference
               </p>
             </div>
+          <div className="flex flex-col items-center h-64 pt-4" style={{contain: 'inline-size'}}>
+            <ChartComponent data={scores} labels={labels} chartHeight={chartHeight}/>
           </div>
           {/* <p className="text-center font-bold pt-8">
             Player is on an upward trend with a good overall spread of Match

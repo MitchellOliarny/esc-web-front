@@ -4,7 +4,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { CircularProgress } from "@nextui-org/react";
 import { FaLock } from "react-icons/fa";
 import { Button } from "@nextui-org/react";
-import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaRegQuestionCircle, FaQuestionCircle, FaChevronRight } from "react-icons/fa";
 import { calculatePercentile } from "@/app/utils/helpers";
 
 interface StatsDistributionUIProps {
@@ -20,6 +20,15 @@ interface StatsDistributionUIProps {
   stat_code_name: string;
   valAverage: any;
   dontAVG: boolean;
+
+
+  show_head_stat: boolean;
+
+  left_head_stat: number;
+  right_head_stat: number;
+
+  left_head_name: string;
+  right_head_name: string;
 }
 
 const StatsDistribution = ({
@@ -35,6 +44,11 @@ const StatsDistribution = ({
   stat_code_name,
   valAverage,
   dontAVG,
+  show_head_stat,
+  left_head_name,
+  right_head_name,
+  left_head_stat,
+  right_head_stat
 }: StatsDistributionUIProps) => {
   let [showUnlockStats, setShowUnlockStats] = useState(false);
 
@@ -53,22 +67,39 @@ const StatsDistribution = ({
   const current_rank = currRank - (currRank % 3);
   return (
     <>
-      <div className="back-slate stat-box-border px-4 py-4 flex flex-col justify-center items-center relative">
-        <div className="flex justify-center w-full items-center mb-2">
-          <h3 className=" font-bold text-2xl text-center flex-grow">
+      <div className="stat-box rounded-lg px-4 py-4 flex flex-col justify-center items-center relative">
+        <div className="flex w-full items-center mb-2 relative">
+          <h3 className=" font-bold text-2xl text-left flex-grow">
             {statsName}
           </h3>
+          {
+            show_head_stat ?
+          <div className="absolute top-10 flex gap-2 font-bold">
+            <div className="text-center">
+              <p className="text-xl">{left_head_stat}</p>
+              <p className="text-xs text-win">{left_head_name}</p>
+            </div>
+            <hr className="back-slate w-6 my-auto h-0.5 rounded-md border-none"></hr>
+            <div className="text-center">
+              <p className="text-xl">{right_head_stat}</p>
+              <p className="text-xs text-loss">{right_head_name}</p>
+            </div>
+          </div>
+          :
+          ""
+        }
           <div className="tooltip" data-tip={tooltip}>
-            <FaRegQuestionCircle className="text-xl" />
+            <FaQuestionCircle className="text-xl text-ash w-8" />
           </div>
         </div>
         <CircularProgress
           classNames={{
             svg: "w-40 h-40 drop-shadow-md",
-            indicator: "stroke-[#5ECCBA]",
-            track: "stroke-[#F5603C] stroke-1",
+            indicator: "stroke-[#5ECCBA] stroke-2",
+            track: "stroke-[#222830] stroke-1",
             value: "text-4xl font-bold text-white",
           }}
+          className="mt-4"
           aria-label="Waiting..."
           value={dontAVG ? Number((percentage).toFixed(1)) : Number((percentage / gamesLength).toFixed(1))}
           //@ts-ignore
@@ -85,7 +116,7 @@ const StatsDistribution = ({
             <div id="paidContents" className={`flex gap-4 mt-4`}>
               <div>
                 <div>
-                  <h4 className="font-bold text-center text-sm mb-1">
+                  <h4 className="font-bold text-left text-ash text-sm mb-1">
                     Current Rank
                   </h4>
                   <div className="flex">
@@ -96,7 +127,7 @@ const StatsDistribution = ({
                       width={100}
                       height={100}
                     />
-                    <div className="flex flex-col justify-center items-center text-sm font-medium">
+                    <div className="flex flex-col justify-center items-start text-sm font-bold">
                       <p>Rank Avg</p>
                       <p>
                         {(valAverage[
@@ -111,21 +142,22 @@ const StatsDistribution = ({
                     </div>
                   </div>
                 </div>
-                <progress
-                  className="progress w-full bg-white/20 stats-percentile-bar"
-                  value={calculatePercentile(
-                    (percentage / (dontAVG ? 1 : gamesLength)),
-                    // @ts-ignore
-                    valAverage[ranks[current_rank]]?.all.median[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[current_rank]]?.all.min[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[current_rank]]?.all.max[stat_code_name]
-                  ).barPercent}
-                  max="100"
-                ></progress>
-                <p className="text-xs text-center">You are in the</p>
-                <p className="text-sm text-center font-bold text-[#FFD80E]">
+                <div className="cut-corner-45-special">
+                  <progress
+                    className="progress-rust w-full h-2"
+                    value={calculatePercentile(
+                      (percentage / (dontAVG ? 1 : gamesLength)),
+                      // @ts-ignore
+                      valAverage[ranks[current_rank]]?.all.median[stat_code_name],
+                      // @ts-ignore
+                      valAverage[ranks[current_rank]]?.all.min[stat_code_name],
+                      // @ts-ignore
+                      valAverage[ranks[current_rank]]?.all.max[stat_code_name]
+                    ).barPercent}
+                    max="100"
+                  ></progress>
+                </div>
+                <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                   Top {
                     (calculatePercentile(
                       (percentage / (dontAVG ? 1 : gamesLength)),
@@ -149,13 +181,14 @@ const StatsDistribution = ({
                 </p>
               </div>
 
-              <div className="flex justify-center items-center">
-                <FaArrowRight className="text-4xl" />
+              <div className="flex justify-around items-center">
+                <FaChevronRight className="text-4xl" />
+                <FaChevronRight className="text-4xl -ml-4" />
               </div>
 
               <div>
                 <div>
-                  <h4 className="font-bold text-center text-sm mb-1">
+                  <h4 className="font-bold text-left text-sm mb-1 text-ash">
                     Next Rank
                   </h4>
                   <div className="flex">
@@ -166,7 +199,7 @@ const StatsDistribution = ({
                       width={100}
                       height={100}
                     />
-                    <div className="flex flex-col justify-center items-center text-sm font-medium">
+                    <div className="flex flex-col justify-center items-start text-sm font-bold">
                       <p>Rank Avg</p>
                       <p>
                         {valAverage[
@@ -181,22 +214,23 @@ const StatsDistribution = ({
                     </div>
                   </div>
                 </div>
-                <progress
-                  className="progress w-full bg-white/20 stats-percentile-bar"
-                  value={calculatePercentile(
-                    (percentage / (dontAVG ? 1 : gamesLength)),
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.median[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.min[stat_code_name],
-                    // @ts-ignore
-                    valAverage[ranks[nextRank]]?.all.max[stat_code_name]
-                  ).barPercent}
-                  color="black"
-                  max="100"
-                ></progress>
-                <p className="text-xs text-center">You are in the</p>
-                <p className="text-sm text-center font-bold text-[#FF5C16]">
+                <div className="cut-corner-45-special">
+                  <progress
+                    className="progress-rust w-full h-2"
+                    value={calculatePercentile(
+                      (percentage / (dontAVG ? 1 : gamesLength)),
+                      // @ts-ignore
+                      valAverage[ranks[nextRank]]?.all.median[stat_code_name],
+                      // @ts-ignore
+                      valAverage[ranks[nextRank]]?.all.min[stat_code_name],
+                      // @ts-ignore
+                      valAverage[ranks[nextRank]]?.all.max[stat_code_name]
+                    ).barPercent}
+                    color="black"
+                    max="100"
+                  ></progress>
+                </div>
+                <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                   Top {(calculatePercentile(
                     (percentage / (dontAVG ? 1 : gamesLength)),
                     // @ts-ignore
