@@ -75,13 +75,13 @@ const MedalEventForm = (valMedals: any) => {
         formData.set(
             "regions",
             //@ts-ignore
-            JSON.stringify(regions)
+            regions
         )
 
         formData.set(
             "gamemodes",
             //@ts-ignore
-            JSON.stringify(gamemodes)
+            gamemodes
         )
 
         formData.set(
@@ -249,6 +249,27 @@ const MedalEventForm = (valMedals: any) => {
                             <option disabled value="null">Event Medal</option>
                             {medals}
                         </select>
+                        <div
+                            id="name-error"
+                            className="italic float-left text-red-500 error-message"
+                        ></div>
+                    </div>
+                </div>
+
+                
+                <div id="objective_line" className="px-10 mb-4 gap-2 grid grid-cols-1">
+                    <div>
+                        <label>Event Objective</label>
+                        <input
+                            id="objective"
+                            name="objective"
+                            autoComplete="off"
+                            className="input w-full bg-transparent border border-white"
+                            required
+                            placeholder="Event Objective..."
+                            type="text"
+                        >
+                        </input>
                         <div
                             id="name-error"
                             className="italic float-left text-red-500 error-message"

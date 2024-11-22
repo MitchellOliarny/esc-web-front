@@ -36,7 +36,7 @@ export default function NavbarUser({
   return (
     <>
       {!user && (
-        <div className="space-x-4 my-4">
+        <div className="space-x-4 my-4 mx-auto">
           <LogInBtn onClick={handleLoginClick} />
 
           <SignUpBtn onClick={handleSignUpClick} />

@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { formatDateYear, formatTime, formatDate, timeTo, CalcRankName, GetFile } from "../utils/helpers";
 import { FaUser, FaTrophy, FaCalendarCheck, FaBullseye, FaStopwatch, FaUsers, FaHourglass, FaHourglassHalf, FaStar } from "react-icons/fa";
+import { FaCheckToSlot } from "react-icons/fa6";
+import toast from "react-hot-toast";
 
 interface EventTileProps {
     value: any;
@@ -14,6 +16,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
     const live = new Date(value.start_date).getTime() <= Date.now() && Date.now() <= new Date(value.end_date).getTime();
 
     const [timer, setTimer] = useState("");
+    const [buttonState, setButtonState] = useState(0);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -25,6 +28,27 @@ export default function EventTile({ value, ended }: EventTileProps) {
         return () => clearInterval(intervalId);
     }, [value])
 
+    const TryJoinEvent = async () => {
+        //@ts-ignore
+        const result = await doJoinEvent(event.id);
+        console.log(result)
+        if (result.success) {
+            toast.success(result.msg)
+            if (!result.link) {
+                setButtonState(3);
+                //@ts-ignore
+                FetchEventParticipants(event.name);
+            }
+            else {
+                //@ts-ignore
+                window.open(result.link, '_blank').focus();
+            }
+        }
+        else {
+            toast.error(result.msg)
+        }
+    }
+
     return (
         <>
             <div key={value.name} className={`grid font-bold relative items-center text-xl rounded-lg back-graphite h-auto min-h-52 cursor-pointer rounded-lg game-row-border`}
@@ -35,16 +59,16 @@ export default function EventTile({ value, ended }: EventTileProps) {
                     );
                 }}
             >
-                <div className="h-60 rounded-t-lg relative">
+                <div className="h-48 rounded-t-lg relative">
                     <div className="absolute rounded-t-lg map-gradient h-full w-full"></div>
                     <div
                         className="h-full w-full rounded-t-lg"
                         style={{
-                            backgroundImage: `url('${value.thumbnaill ? value.thumbnail : '/homepage-hero.png'}')`,
+                            backgroundImage: `url('${value.thumbnail ? GetFile(value.thumbnail) : '/homepage-hero.png'}')`,
                             backgroundSize: 'cover',
                         }}></div>
                 </div>
-                <div className={`absolute text-sm rounded-lg justify-self-start self-start px-2 -top-3 left-10`}
+                <div className={`absolute font-bold text-base rounded-lg justify-self-start self-start px-2 -top-3 left-10`}
                     style={{
                         backgroundColor: ended ? '#9BA3AE' : live ? '#FA6E6E' : '#41B9FD',
                         border: ended ? '#9BA3AE40 2px solid' : live ? '#FA6E6E40 2px solid' : '#41B9FD40 2px solid'
@@ -61,24 +85,24 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             {"Top " + value.winners + " - $" + (value.prize_type == 'even_split' ? (value.prize_pool / value.winners) : value.prize_pool) + ' each!'}
                         </div> : ""
                 }
-                <div className="relative h-auto px-4">
-                    <h2 className="absolute w-full text-left font-bold text-3xl -top-8">{value.name}</h2>
-                    <p className="my-4 mx-1 font-medium text-base text-ash">{value.description}</p>
+                <div className="relative grid h-52 px-4">
+                    <h2 className="absolute w-full text-left font-bold text-3xl -top-6 px-4">{value.name}</h2>
+                    <p className="my-4 mx-1 font-medium text-sm text-ash">{value.description}</p>
 
-                    <div className="grid my-6 px-4 gap-4">
+                    <div className="grid my-auto py-2 px-2 gap-2 self-end">
                         <div className="inline-flex items-center">
-                            <FaBullseye size={'1.5em'} className="text-voltage" />
+                            <FaBullseye size={'1.25em'} className="text-voltage" />
                             <div className="ml-4">
-                                <p className="text-ash text-base">Objective</p>
-                                <p className="text-xl text-frost">{value.objective}</p>
+                                <p className="text-ash text-sm">Objective</p>
+                                <p className="text-base text-frost">{value.objective}</p>
                             </div>
                         </div>
 
                         <div className="mt-4 inline-flex items-center">
-                            <FaStopwatch size={'1.5em'} className="text-voltage" />
+                            <FaStopwatch size={'1.25em'} className="text-voltage" />
                             <div className="ml-4">
-                                <p className="text-ash text-base">Time Remaining</p>
-                                <p className="text-xl text-frost">{timer}</p>
+                                <p className="text-ash text-sm">Time Remaining</p>
+                                <p className="text-base text-frost">{timer}</p>
                             </div>
                         </div>
                     </div>
@@ -99,50 +123,64 @@ export default function EventTile({ value, ended }: EventTileProps) {
                 <div className="relative h-auto px-4 back-obsidian game-row-border-top">
                     <div className="grid grid-cols-2 px-4 py-8 gap-8">
                         <div className="inline-flex gap-4">
-                            <FaUsers size={'1.5em'} className="text-ash my-auto" />
+                            <FaUsers size={'1em'} className="text-ash my-auto" />
                             <div>
-                                <p className="text-ash text-sm">Participants Allowed</p>
-                                <p className="text-lg text-frost">{value.team_limit || "Unlimited"}</p>
+                                <p className="text-ash text-xs">Participants Allowed</p>
+                                <p className="text-base text-frost">{value.team_limit || "Unlimited"}</p>
                             </div>
                         </div>
 
                         <div className="inline-flex gap-4">
-                            <FaHourglassHalf size={'1.5em'} className="text-ash my-auto" />
+                            <FaHourglassHalf size={'1em'} className="text-ash my-auto" />
                             <div>
-                                <p className="text-ash text-sm">Game Limit</p>
-                                <p className="text-lg text-frost">{value.game_limit || "Unlimited"}</p>
+                                <p className="text-ash text-xs">Game Limit</p>
+                                <p className="text-base text-frost">{value.game_limit || "Unlimited"}</p>
                             </div>
                         </div>
 
                         <div className="inline-flex gap-4">
-                            <FaStar size={'1.5em'} className="text-ash my-auto" />
+                            <FaStar size={'1em'} className="text-ash my-auto" />
                             <div>
-                                <p className="text-ash text-sm">Ranks Allowed</p>
-                                <p className="text-lg text-frost">{(value.min_rank == 0 && value.max_rank == 27 ? 'ANY' : CalcRankName(value.min_rank).toLocaleUpperCase() + " - " + CalcRankName(value.max_rank).toLocaleUpperCase())}</p>
+                                <p className="text-ash text-xs">Ranks Allowed</p>
+                                <p className="text-base text-frost">{(value.min_rank == 0 && value.max_rank == 27 ? 'ANY' : CalcRankName(value.min_rank).toLocaleUpperCase() + " - " + CalcRankName(value.max_rank).toLocaleUpperCase())}</p>
                             </div>
                         </div>
 
                         <div className="inline-flex gap-4">
-                            <FaStar size={'1.5em'} className="text-ash my-auto" />
+                            <FaCheckToSlot size={'1em'} className="text-ash my-auto" />
                             <div>
-                                <p className="text-ash text-sm">Eligibility</p>
-                                <p className="text-lg text-frost">{value.entry_fee ? "Members Only" : "Public"}</p>
+                                <p className="text-ash text-xs">Eligibility</p>
+                                <p className="text-base text-frost">{value.entry_fee ? "Members Only" : "Public"}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div className="relative h-auto px-4 back-obsidian game-row-border-top">
-                    <div className="flex w-full p-4 text-sm gap-4">
-                        <div className="flex my-auto">
-                            <img className="object-cover h-8 w-8 rounded-full" src={GetFile(value.leader.pfp)}></img>
-                            <p className="ml-2 my-auto">{value.leader.username}#{value.leader.tag}</p>
+                {
+                    timer == 'Registration Open' ?
+                        <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                            <div className="flex mx-auto w-full p-4 text-xs gap-4 justify-center">
+                                <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-1 font-bold back-rust rounded-lg hover:scale-105" ><h2>Register</h2></button>
+                                <button type="button" onClick={() => {
+                                    window.open(
+                                        '/events/' + value.name,
+                                        '_blank' // <- This is what makes it open in a new window.
+                                    );
+                                }} className="grid text-xl px-6 py-1 font-bold text-voltage rounded-lg hover:scale-105" ><h2>More Info</h2></button>
+                            </div>
                         </div>
-                        <hr className="border-none back-slate w-0.5 h-8"></hr>
-                        <p className="my-auto text-ash">Current Leader</p>
-                        <p className="my-auto text-ash ml-auto">Score: {value.leader.score}</p>
-                    </div>
-                </div>
+                        :
+                        <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                            <div className="flex w-full p-4 text-xs gap-4">
+                                <div className="flex my-auto">
+                                    <img className="object-cover h-6 w-6 rounded-full" src={GetFile(value.leader.pfp)}></img>
+                                    <p className="ml-2 my-auto">{value.leader.username}#{value.leader.tag}</p>
+                                </div>
+                                <hr className="border-none back-slate w-0.5 h-8"></hr>
+                                <p className="my-auto text-ash">Current Leader</p>
+                                <p className="my-auto text-frost ml-auto">Score: {value.leader.score}</p>
+                            </div>
+                        </div>
+                }
             </div >
         </>
     );
