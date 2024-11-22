@@ -177,6 +177,7 @@ const AgentBox = ({
 
 
   const ultimate_points = "0"
+  const hs_percent = (hsPercentage/ agentGames?.length).toFixed(2);
   const ability1_points = (ability1 / agentGames?.length).toFixed(2)
   const ability2_points = (ability2 / agentGames?.length).toFixed(2)
   const grenade_points = (grenade / agentGames?.length).toFixed(2)
@@ -324,22 +325,22 @@ const AgentBox = ({
           <div className="flex gap-4 mt-2">
             <div>
               <p className="font-bold text-sm text-ash">FK &rarr; Round Win %</p>
-              <p className="font-bold text-xl text-[#4DFFDD]">
+              <p className="font-bold text-xl text-frost]">
                 {fk_round_win}%
               </p>
             </div>
 
             <div>
               <p className="font-bold text-sm text-ash">FD &rarr; Round Loss %</p>
-              <p className="font-bold text-xl  text-[#FF6F4D]">
+              <p className="font-bold text-xl text-frost">
                 {fd_round_loss}%
               </p>
             </div>
 
             <div>  
-              <p className="font-bold text-sm text-ash">Another Stat</p>
-              <p className="font-bold text-xl  text-[#FF6F4D]">
-                {fd_round_loss}%
+              <p className="font-bold text-sm text-ash">HS%</p>
+              <p className="font-bold text-xl  text-frost">
+                {hs_percent}%
               </p>
             </div>
         </div>

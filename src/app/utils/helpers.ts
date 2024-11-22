@@ -80,6 +80,28 @@ export const timeSince = (dateString: string) => {
   }
 }
 
+export const timeTo = (dateString: string) => {
+  const now = new Date();
+  const givenDate = new Date(dateString);
+
+  // Calculate the difference in time (milliseconds)
+  //@ts-ignore
+  let diffInMs = givenDate - now;
+  //@ts-ignore
+  let diff = givenDate - now;
+
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  diffInMs -= (diffInDays * 1000 * 60 * 60 * 24 )
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  diffInMs -= (diffInHours * 1000 * 60 * 60)
+  const diffInMin = Math.floor(diffInMs / (1000 * 60));
+  diffInMs -= (diffInMin * 1000 * 60)
+  const diffInSec = Math.floor(diffInMs / (1000));
+
+
+  return {text: `${diffInDays}d ${diffInHours}h ${diffInMin}m ${diffInSec}s`, amount: diff};
+}
+
 export const daysSince = (dateString: string) => {
   const now = new Date();
   const givenDate = new Date(dateString);
