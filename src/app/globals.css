@@ -686,3 +686,23 @@ select.transparent>option {
   opacity: .5;
   cursor: default;
 }
+
+/* EVENTS PAGE */
+
+.leaderboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr 2fr 3fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.first {
+  color: #FFE57B
+}
+
+.second {
+  color: #C0DFEB
+}
+
+.third {
+  color: #DF7F5C
+}

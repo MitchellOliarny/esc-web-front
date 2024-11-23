@@ -18,9 +18,25 @@ export default function EventTile({ value, ended }: EventTileProps) {
 
     const [timer, setTimer] = useState("");
     const [buttonState, setButtonState] = useState(0);
+    const [players, setPlayers] = useState(0);
 
     useEffect(() => {
 
+        UpdateButton();
+
+        setPlayers(value.players_entered || 0)
+
+        const intervalId = setInterval(() => {
+            const time = timeTo(value.end_date);
+
+            setTimer(new Date(value.start_date).getTime() > Date.now() ? 'Registration Open' : new Date(value.end_date).getTime() < Date.now() ? 'Event Ended' : time.text);
+        }, 1000); // 1000 milliseconds = 1 second
+
+        return () => clearInterval(intervalId);
+
+    }, [value])
+
+    const UpdateButton = () => {
         if (new Date(value.end_date).getTime() < Date.now()) {
             setButtonState(3)
         }
@@ -33,16 +49,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
         else {
             setButtonState(0)
         }
-
-        const intervalId = setInterval(() => {
-            const time = timeTo(value.end_date);
-
-            setTimer(new Date(value.start_date).getTime() > Date.now() ? 'Registration Open' : new Date(value.end_date).getTime() < Date.now() ? 'Event Ended' : time.text);
-        }, 1000); // 1000 milliseconds = 1 second
-
-        return () => clearInterval(intervalId);
-
-    }, [value])
+    }
 
     const TryJoinEvent = async () => {
         //@ts-ignore
@@ -51,9 +58,14 @@ export default function EventTile({ value, ended }: EventTileProps) {
         if (result.success) {
             toast.success(result.msg)
             if (!result.link) {
-                setButtonState(3);
+                if(live) {
+                    setButtonState(2)
+                }
+                else {
+                    setButtonState(1)
+                }
                 //@ts-ignore
-                FetchEventParticipants(value.name);
+                setPlayers(players+1);
             }
             else {
                 //@ts-ignore
@@ -68,14 +80,14 @@ export default function EventTile({ value, ended }: EventTileProps) {
     return (
         <>
             <div key={value.name} className={`grid font-bold relative items-center text-xl rounded-lg back-graphite h-auto min-h-52 cursor-pointer rounded-lg game-row-border`}
+            >
+                <div className="h-48 rounded-t-lg relative"
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
                         //'_blank' // <- This is what makes it open in a new window.
                     );
-                }}
-            >
-                <div className="h-48 rounded-t-lg relative">
+                }}>
                     <div className="absolute rounded-t-lg map-gradient h-full w-full"></div>
                     <div
                         className={`h-full w-full rounded-t-lg ${ended ? 'grayscale-[1]' : ''}`}
@@ -102,7 +114,13 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             {"Top " + value.winners + " - $" + (value.prize_type == 'even_split' ? (value.prize_pool / value.winners) : value.prize_pool) + ' each!'}
                         </div> : ""
                 }
-                <div className="relative grid h-52 px-4">
+                <div className="relative grid h-52 px-4"
+                onClick={() => {
+                    window.open(
+                        '/events/' + value.name,
+                        //'_blank' // <- This is what makes it open in a new window.
+                    );
+                }}>
                     <h2 className="absolute w-full text-left font-bold text-3xl -top-6 px-4">{value.name}</h2>
                     <p className="my-4 mx-1 font-medium text-sm text-ash">{value.description}</p>
 
@@ -137,13 +155,19 @@ export default function EventTile({ value, ended }: EventTileProps) {
                         <p className="ml-2 text-[#F5603C]">${value.prize_pool}</p>
                     </div> */}
                 </div>
-                <div className="relative h-auto px-4 back-obsidian game-row-border-top">
+                <div className="relative h-auto px-4 back-obsidian game-row-border-top"
+                onClick={() => {
+                    window.open(
+                        '/events/' + value.name,
+                        //'_blank' // <- This is what makes it open in a new window.
+                    );
+                }}>
                     <div className="grid grid-cols-2 px-4 py-8 gap-8">
                         <div className="inline-flex gap-4">
                             <FaUsers size={'1em'} className="text-ash my-auto" />
                             <div>
                                 <p className="text-ash text-xs">Participants Allowed</p>
-                                <p className="text-base text-frost">{value.team_limit || (ended ? "" : value.players_entered + '/') + "Unlimited"}</p>
+                                <p className="text-base text-frost">{value.team_limit || (ended ? "" : players+ '/') + "Unlimited"}</p>
                             </div>
                         </div>
 

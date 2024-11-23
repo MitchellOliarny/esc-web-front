@@ -10,12 +10,12 @@ import { formatDateYear, formatTime } from "@/app/utils/helpers";
 import toast from "react-hot-toast";
 import { CalcRankName } from "@/app/utils/helpers";
 import Link from "next/link";
-import { timeTo } from "@/app/utils/helpers";
+import { timeTo, GetFile } from "@/app/utils/helpers";
 import { FaCalendarXmark, FaCheckToSlot } from "react-icons/fa6";
 
 export default function EventDetails() {
 
-    const [event, setEvent] = useState({ medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]", name: '', objective: '', description: '', min_rank: 0, max_rank: 27, entry_fee: 0, game_limit: 0 });
+    const [event, setEvent] = useState({ medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]", name: '', objective: '', description: '', min_rank: 0, max_rank: 27, entry_fee: 0, game_limit: 0 , start_date: '', end_date: ''});
     const [isLoading, setIsLoading] = useState(true);
     const [lbLoading, setLBLoading] = useState(true);
     const [timer, setTimer] = useState("");
@@ -29,7 +29,11 @@ export default function EventDetails() {
         const url_split = (window.location.href).split('/');
         const event_name = url_split[url_split.length - 1];
 
-        const event_details = FetchEvent(event_name);
+        let event_details = {};
+        FetchEvent(event_name).then((event) => {
+            event_details = event;
+        });
+
         FetchEventParticipants(event_name);
 
         const intervalId = setInterval(() => {
@@ -44,7 +48,6 @@ export default function EventDetails() {
 
     const FetchEvent = async (eventname: any) => {
         const event_details = await doFindEvent(eventname);
-        console.log(event_details)
         if (event_details.success) {
             setEvent(event_details.details.events[0]);
             if (new Date(event_details.details.events[0].end_date) <= new Date(Date.now())) {
@@ -146,7 +149,7 @@ export default function EventDetails() {
                     </div>
                     <div className="relative grid h-auto px-4 back-graphite rounded-b-lg">
                         <h2 className="absolute w-full text-left font-bold text-4xl -top-6 px-4">{event.name}</h2>
-                        <div className="my-6 mx-1 font-medium text-base text-ash">
+                        <div className="my-6 mx-1 font-medium text-base text-ash text-wrap">
                             <p>{event.description}</p>
                             <br></br>
                             <p>
@@ -162,7 +165,7 @@ export default function EventDetails() {
                             </p> */}
                         </div>
 
-                        <div className="absolute top-0 right-6 justify-self-end self-baseline py-4">
+                        <div className="absolute top-0 right-6 justify-self-end self-baseline py-4 translate-y-[-3em]">
                             {
                                 //@ts-ignore
                                 buttonState == 3 ?
@@ -272,9 +275,16 @@ export default function EventDetails() {
                     </div>
                 </div>
                 
-                <div className="grid px-4 py-4 w-full max-w-[1800px] mx-auto">
-                    <h1 className="text-4xl py-4 font-bold">LEADERBOARD {'(' + lb.length + ')'}</h1>
-                    <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 self-baseline py-4">
+                <div className="grid px-4 py-4 w-full max-w-[1800px] mx-auto mt-4">
+                    <div className="leaderboard-grid w-full text-ash text-sm text-center">
+                        <p>Rank</p>
+                        <p className="mr-auto ml-20">Player</p>
+                        <p>Score</p>
+                        <p>Games Played</p>
+                        <p>Competitive Rank</p>
+                        <p>Current Prize</p>
+                    </div>
+                    <div className="inline-flex self-baseline py-4">
                         {
                             lb.length < 1 ?
                                 "0 users have joined this event"

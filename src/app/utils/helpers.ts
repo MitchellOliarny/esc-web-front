@@ -199,6 +199,30 @@ export const GetFile = (filename: string) => {
   return 'https://files.esportsclubs.gg/'+filename;
 }
 
+export const GetPlacementName = (number: number) => {
+  if (typeof number !== 'number' || !Number.isInteger(number)) {
+    throw new Error('Input must be an integer.');
+  }
+
+  const lastDigit = number % 10;
+  const lastTwoDigits = number % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return `${number}th`;
+  }
+
+  switch (lastDigit) {
+    case 1:
+      return `${number}st`;
+    case 2:
+      return `${number}nd`;
+    case 3:
+      return `${number}rd`;
+    default:
+      return `${number}th`;
+  }
+}
+
 export const CreateMedalToolTip = (medal_name: string) => {
   let sanitizeURL = medal_name.replace('https://files.esportsclubs.gg/', '').replace('.png', '');
   const split_name = sanitizeURL.split('_');
