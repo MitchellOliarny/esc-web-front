@@ -238,17 +238,20 @@ const MedalEventForm = (valMedals: any) => {
                 <div id="medal" className="px-10 mb-4 gap-2 grid grid-cols-1">
                     <div>
                         <label>Event Medal</label>
-                        <select
+                        <input
                             id="medal_condition"
                             name="medal_condition"
+                            placeholder="Medal"
                             autoComplete="off"
                             className="input w-full bg-transparent border border-white"
                             required
-                            defaultValue={"null"}
+                            list="medals_list"
                         >
+                        </input>
+                        <datalist id="medals_list">
                             <option disabled value="null">Event Medal</option>
                             {medals}
-                        </select>
+                        </datalist>
                         <div
                             id="name-error"
                             className="italic float-left text-red-500 error-message"

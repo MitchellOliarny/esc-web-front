@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { leapfrog } from "ldrs";
-import { FaCrosshairs, FaCheck, FaGlobe, FaList, FaMedal, FaRegCalendar, FaRegUser, FaTrophy, FaDice } from "react-icons/fa";
+import { FaCrosshairs, FaCheck, FaGlobe, FaList, FaMedal, FaRegCalendar, FaRegUser, FaTrophy, FaDice, FaChevronLeft, FaBullseye, FaStopwatch, FaUsers, FaHourglassHalf, FaStar, FaCalendarCheck, FaCoins } from "react-icons/fa";
 import doFindEvent from "../doFindEvent"
 import doJoinEvent from "../doJoinEvent";
 import doFetchParticipants from "../doFetchParticipants";
@@ -10,12 +10,15 @@ import { formatDateYear, formatTime } from "@/app/utils/helpers";
 import toast from "react-hot-toast";
 import { CalcRankName } from "@/app/utils/helpers";
 import Link from "next/link";
+import { timeTo } from "@/app/utils/helpers";
+import { FaCalendarXmark, FaCheckToSlot } from "react-icons/fa6";
 
 export default function EventDetails() {
 
-    const [event, setEvent] = useState({medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]"});
+    const [event, setEvent] = useState({ medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]", name: '', objective: '', description: '', min_rank: 0, max_rank: 27, entry_fee: 0, game_limit: 0 });
     const [isLoading, setIsLoading] = useState(true);
     const [lbLoading, setLBLoading] = useState(true);
+    const [timer, setTimer] = useState("");
     const [lb, setLB] = useState([])
     const [buttonState, setButtonState] = useState(0);
     leapfrog.register();
@@ -26,8 +29,17 @@ export default function EventDetails() {
         const url_split = (window.location.href).split('/');
         const event_name = url_split[url_split.length - 1];
 
-        FetchEvent(event_name);
-        FetchEventParticipants(event_name)
+        const event_details = FetchEvent(event_name);
+        FetchEventParticipants(event_name);
+
+        const intervalId = setInterval(() => {
+            //@ts-ignore
+            const time = timeTo(event_details.end_date);
+            //@ts-ignore            
+            setTimer(new Date(event_details.start_date).getTime() > Date.now() ? 'Registration Open' : new Date(event_details.end_date).getTime() < Date.now() ? 'Event Ended' : time.text);
+        }, 1000); // 1000 milliseconds = 1 second
+
+        return () => clearInterval(intervalId);
     }, [])
 
     const FetchEvent = async (eventname: any) => {
@@ -35,7 +47,7 @@ export default function EventDetails() {
         console.log(event_details)
         if (event_details.success) {
             setEvent(event_details.details.events[0]);
-            if(new Date(event_details.details.events[0].end_date) <= new Date(Date.now())) {
+            if (new Date(event_details.details.events[0].end_date) <= new Date(Date.now())) {
                 setButtonState(2);
             }
             else if (event_details.details.events[0].score >= 0) {
@@ -44,8 +56,10 @@ export default function EventDetails() {
             else if (event_details.user.esc_member == 1) {
                 setButtonState(1)
             }
-           // console.log(event_details.user)
-          //  console.log(event_details.details)
+            // console.log(event_details.user)
+            //  console.log(event_details.details)
+            setIsLoading(false);
+            return event_details.details.events[0]
         }
         setIsLoading(false);
     }
@@ -56,7 +70,7 @@ export default function EventDetails() {
         console.log(result)
         if (result.success) {
             toast.success(result.msg)
-            if(!result.link){
+            if (!result.link) {
                 setButtonState(3);
                 //@ts-ignore
                 FetchEventParticipants(event.name);
@@ -97,175 +111,169 @@ export default function EventDetails() {
     else {
         return (
             <>
-                <div className="px-4 2xl:px-40 w-full max-w-[1800px] mx-auto">
-                    <div
-                        className="w-full rounded-lg"
-                        style={{
-                            backgroundImage:
-                                `url(${
-                                //@ts-ignore
-                                event.thumbnail ? event.thumbnail 
-                                : '/homepage/medals.png'})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                        }}
-                    >
-                        <div className="flex flex-col min-h-56 items-center justify-center py-4 px-6 bg-black/40">
-                            <div className="mb-2">
-                                <h2 className="text-white text-5xl font-black tracking-[.2em]">
-                                    MEDAL MONDAYS
-                                </h2>
-                                <p className="text-white text-lg font-bold text-center tracking-wider">
-                                    {//@ts-ignore
-                                        event.medal_condition}
-                                </p>
-                            </div>
-                            {/* <div className="flex items-center">
-              <ul className="flex gap-4 font-bold text-lg">
-                <li
-                  onClick={() => handleSideBarClick("Overview")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${selectedMenu === "Overview" ? "bg-[#F5603C]" : ""
-                    }`}
+                <div className="back-graphite flex w-fit h-12 mx-4 mb-4 p-2 rounded-lg cursor-pointer"
+                    onClick={() => {
+                        window.location.href = "/events"
+                    }}
                 >
-                  Overview
-                </li>
-                <li
-                  onClick={() => handleSideBarClick("Timeline")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${selectedMenu === "Timeline" ? "bg-[#F5603C]" : ""
-                    }`}
-                >
-                  Timeline
-                </li>
-                <li
-                  onClick={() => handleSideBarClick("Heatmap")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${selectedMenu === "Heatmap" ? "bg-[#F5603C]" : ""
-                    }`}
-                >
-                  Heatmap
-                </li>
-              </ul>
-            </div> */}
-                        </div>
-                    </div>
+                    <FaChevronLeft className="my-auto text-ash" />
+                    <p className="my-auto font-bold text-lg mx-2">All Events</p>
                 </div>
-                <div className="grid lg:grid-cols-2 grid-cols-1 px-4 py-4 2xl:px-40 w-full max-w-[1800px] mx-auto">
-                    <h1 className="text-4xl py-4 font-bold">EVENT DETAILS</h1>
-                    <div className="lg:justify-self-end self-baseline py-4">
+                <div className="px-4 w-full max-w-[1800px] mx-auto">
+                    <div className="h-60 rounded-t-lg relative">
+                        <div className="absolute rounded-t-lg map-gradient h-full w-full"></div>
+                        <div
+                            className={`h-full w-full rounded-t-lg`}
+                            style={{
+                                //@ts-ignore
+                                backgroundImage: `url('${event.thumbnail ? GetFile(event.thumbnail) : '/homepage-hero.png'}')`,
+                                backgroundSize: 'cover',
+                            }}></div>
                         {
                             //@ts-ignore
-                            buttonState == 3 ?
-                                <button type="button" className="inline-flex text-2xl px-6 py-4 font-bold bg-[#5ECCBA] rounded-lg hover:scale-105" >JOINED <FaCheck className="my-auto mx-2" /></button>
-                                :
-                                buttonState == 2 ?
-                                <button type="button" className="inline-flex text-2xl px-6 py-4 font-bold bg-[#bd1616] rounded-lg hover:scale-105" >ENDED</button>
-                                :
-                                buttonState == 1 ?
-                                    <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-2xl px-6 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                            event.prize_pool ?
+                                <div className={`absolute flex text-sm rounded-lg justify-self-end self-start py-2 px-2 m-4 z-10 bottom-6`}
+                                    style={{
+                                        backgroundColor: '#21945A',
+                                        border: '#51D793 2px solid'
+                                    }}>
+                                    <FaCoins className="my-auto mr-2" />
+                                    {
                                         //@ts-ignore
-                                        'Join NOW w/ ESC+'
-                                    }</span></button>
+                                        "Top " + event.winners + " - $" + (event.prize_type == 'even_split' ? (event.prize_pool / event.winners) : event.prize_pool) + ' each!'}
+                                </div> : ""
+                        }
+                    </div>
+                    <div className="relative grid h-auto px-4 back-graphite rounded-b-lg">
+                        <h2 className="absolute w-full text-left font-bold text-4xl -top-6 px-4">{event.name}</h2>
+                        <div className="my-6 mx-1 font-medium text-base text-ash">
+                            <p>{event.description}</p>
+                            <br></br>
+                            <p>
+                                Games must START within the event time. Any games that start before or after will not count. Displayed time is automatically adjusted to local timezone.
+                            </p>
+                            <br></br>
+                            <p>
+                                <Link href="/settings?view=Subscriptions" target="_blank" className="text-[#5ECCBA] font-bold underline">ESC+ Membership</Link> provides Free Entry to all events like this.
+                            </p>
+                            {/* <br></br> */}
+                            {/* <p>
+                                Winners will be contacted via Discord. Discord account must be connected to your ESC account at the time of winning. <Link href="/settings?view=Connections" target="_blank" className="text-[#5ECCBA] font-bold underline">Connect Discord Here</Link>
+                            </p> */}
+                        </div>
+
+                        <div className="absolute top-0 right-6 justify-self-end self-baseline py-4">
+                            {
+                                //@ts-ignore
+                                buttonState == 3 ?
+                                    <button type="button" className="inline-flex text-xl px-6 py-4 font-bold bg-[#5ECCBA] rounded-lg hover:scale-105" >JOINED <FaCheck className="my-auto mx-2" /></button>
                                     :
-                                    <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-2xl px-6 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                                    buttonState == 2 ?
+                                        <button type="button" className="inline-flex text-xl px-6 py-4 font-bold bg-[#bd1616] rounded-lg hover:scale-105" >ENDED</button>
+                                        :
+                                        buttonState == 1 ?
+                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                                                //@ts-ignore
+                                                'Join NOW w/ ESC+'
+                                            }</span></button>
+                                            :
+                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                                                //@ts-ignore
+                                                event.entry_fee == 0 ? 'FREE ENTRY' : 'Requires ESC+'
+                                            }</span></button>
+                            }
+                        </div>
+
+
+                        <div className="flex my-auto py-4 px-2 gap-16 self-end">
+                            <div className="inline-flex items-center">
+                                <FaBullseye size={'1.75em'} className={`text-voltage`} />
+                                <div className="ml-4">
+                                    <p className="text-ash text-base">Objective</p>
+                                    <p className="text-lg text-frost">{event.objective}</p>
+                                </div>
+                            </div>
+
+                            <div className="inline-flex items-center">
+                                <FaStopwatch size={'1.75em'} className={`text-voltage`} />
+                                <div className="ml-4">
+                                    <p className="text-ash text-base">Time Remaining</p>
+                                    <p className="text-lg text-frost">{timer}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-12 px-4 py-8 gap-8">
+                            <div className="inline-flex gap-4">
+                                <FaCalendarCheck size={'1.5em'} className="text-ash my-auto" />
+                                <div>
+                                    <p className="text-ash text-sm">Start Date</p>
+                                    <p className="text-lg text-frost">{
                                         //@ts-ignore
-                                        event.entry_fee == 0 ? 'FREE ENTRY' : 'Requires ESC+'
-                                    }</span></button>
-                        }
+                                        formatDateYear(event.start_date)}</p>
+                                </div>
+                            </div>
+                            <div className="inline-flex gap-4">
+                                <FaCalendarXmark size={'1.5em'} className="text-ash my-auto" />
+                                <div>
+                                    <p className="text-ash text-sm">End Date</p>
+                                    <p className="text-lg text-frost">{
+                                        //@ts-ignore
+                                        formatDateYear(event.end_date)}</p>
+                                </div>
+                            </div>
+                            <div className="inline-flex gap-4">
+                                <FaUsers size={'1.5em'} className="text-ash my-auto" />
+                                <div>
+                                    <p className="text-ash text-sm">Participants Allowed</p>
+                                    <p className="text-lg text-frost">{
+                                        //@ts-ignore
+                                        lb.length + '/'}{event.team_limit || "Unlimited"}</p>
+                                </div>
+                            </div>
+
+                            <div className="inline-flex gap-4">
+                                <FaHourglassHalf size={'1.5em'} className="text-ash my-auto" />
+                                <div>
+                                    <p className="text-ash text-sm">Game Limit</p>
+                                    <p className="text-lg text-frost">{event.game_limit || "Unlimited"}</p>
+                                </div>
+                            </div>
+
+                            <div className="inline-flex gap-4">
+                                <FaStar size={'1.5em'} className="text-ash my-auto" />
+                                <div>
+                                    <p className="text-ash text-sm">Ranks Allowed</p>
+                                    <p className="text-lg text-frost">{(event.min_rank == 0 && event.max_rank == 27 ? 'ANY' : CalcRankName(event.min_rank).toLocaleUpperCase() + " - " + CalcRankName(event.max_rank).toLocaleUpperCase())}</p>
+                                </div>
+                            </div>
+
+                            <div className="inline-flex gap-4">
+                                <FaCheckToSlot size={'1.5em'} className="text-ash my-auto" />
+                                <div>
+                                    <p className="text-ash text-sm">Eligibility</p>
+                                    <p className="text-lg text-frost">{event.entry_fee ? "Members Only" : "Public"}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* <div className="inline-flex items-center">
+                        <FaCalendarCheck size={'1.5em'} />
+                        <p className="ml-2 text-[.85em]">{formatDate(value.start_date)} | {formatTime(value.start_date)} - <br></br>{formatDate(value.end_date)} | {formatTime(value.end_date)}</p>
                     </div>
-                    <div className="content-evenly">
-                        <div className="inline-flex mb-4">
-                            <FaRegCalendar size={'3em'} />
-                            <p className="font-bold text-xl my-auto mx-4 text-[#F5603C]">{
-                                //@ts-ignore
-                                formatDateYear(event.start_date) + ' @ ' + formatTime(event.start_date) + '  '
-                            }
-                                <span className="font-medium text-lg text-white">until</span>
-                                {
-                                    //@ts-ignore
-                                    '  ' + formatDateYear(event.end_date) + ' @ ' + formatTime(event.end_date)
-                                }
-                            </p>
-                        </div>
-                        <br></br>
-                        <div className="inline-flex mb-4">
-                            <FaRegUser size={'3em'} />
-                            <p className="font-bold text-xl my-auto mx-4 text-white">{
-                                //@ts-ignore
-                                "" + (event.team_limit ? "LIMIT: "+ event.team_limit + ' Players' : 'NO LIMIT') + ' (' + lb.length + ' joined)'
-                            }
-                            </p>
-                        </div>
-                        <div className="inline-flex mb-4">
-                            <FaCrosshairs size={'3em'} />
-                            <p className="font-bold text-xl my-auto mx-4 text-white">{
-                                //@ts-ignore
-                                "Get as many " + ((event.medal_condition.split(':')[event.medal_condition.split(':').length - 1]).split('_')[0]).toLocaleUpperCase() + "(s) as possible!"
-                            }
-                            </p>
-                        </div>
-                        <div className="inline-flex mb-4">
-                            <FaList size={'3em'} />
-                            <p className="font-bold text-xl my-auto mx-4 text-white">{
-                                //@ts-ignore
-                                "Modes: " + event.gamemodes ? JSON.parse(JSON.parse(event.gamemodes)).join(", ") : ''
-                            }
-                            </p>
-                        </div>
-                        <div className="inline-flex mb-4">
-                            <FaGlobe size={'3em'} />
-                            <p className="font-bold text-xl my-auto mx-4 text-white">{
-                                //@ts-ignore
-                                "Regions: " + event.regions ? JSON.parse(JSON.parse(event.regions)).join(", ").toLocaleUpperCase() : ''
-                            }
-                            </p>
-                        </div>
-                        <div className="inline-flex mb-4">
-                            <FaMedal size={'3em'} />
-                            <p className="font-bold text-xl my-auto mx-4 text-white">{
-                                //@ts-ignore
-                                "Ranks: " + (event.min_rank == 0 && event.max_rank == 27 ? 'ANY' : CalcRankName(event.min_rank).toLocaleUpperCase() + " - " + CalcRankName(event.max_rank).toLocaleUpperCase())
-                            }
-                            </p>
-                        </div>
-                        <div className="inline-flex mb-4">
-                            <FaDice size={'3em'} />
-                            <p className="font-bold text-xl my-auto mx-4 text-white">{
-                                //@ts-ignore
-                                "Game Limit: " + (event.game_limit <= 0 ? 'NONE' : event.game_limit)
-                            }
-                            </p>
-                        </div>
-                        <br></br>
-                        <div className="inline-flex mb-4">
-                            <FaTrophy size={'3em'} color="#F5603C" />
-                            <p className="font-bold text-xl my-auto mx-4 text-[#F5603C]">{
-                                //@ts-ignore
-                                "Top "+event.winners+" Players - $" + (event.prize_type == 'even_split' ? event.prize_pool / event.winners : event.prize_pool) + ' each!'
-                            }
-                            </p>
-                        </div>
+                    <div className="inline-flex items-center">
+                        <FaUser size={'1.5em'} />
+                        <p className="ml-2">{value.team_limit || 'Unlimited'}</p>
                     </div>
-                    <div className="p-2 text-lg">
-                        {
-                            //@ts-ignore
-                            event.description
-                        }
-                        <br></br>
-                        <br></br>
-                        <p>
-                            Games must START within the event time. Any games that start before or after will not count. Displayed time is automatically adjusted to local timezone.
-                        </p>
-                        <br></br>
-                        <p>
-                            <Link href="/settings?view=Subscriptions" target="_blank" className="text-[#5ECCBA] font-bold underline">ESC+ Membership</Link> provides Free Entry to all events like this.
-                        </p>
-                        <br></br>
-                        <p>
-                            Winners will be contacted via Discord. Discord account must be connected to your ESC account at the time of winning. <Link href="/settings?view=Connections" target="_blank" className="text-[#5ECCBA] font-bold underline">Connect Discord Here</Link>
-                        </p>
+                    <div className="inline-flex items-center">
+                        <FaTrophy color={'#F5603C'} size={'2em'} />
+                        <p className="ml-2 text-[#F5603C]">${value.prize_pool}</p>
+                    </div> */}
                     </div>
                 </div>
-                <div className="grid px-4 py-4 2xl:px-40 w-full max-w-[1800px] mx-auto">
-                    <h1 className="text-4xl py-4 font-bold">LEADERBOARD {'('+lb.length+')'}</h1>
+                
+                <div className="grid px-4 py-4 w-full max-w-[1800px] mx-auto">
+                    <h1 className="text-4xl py-4 font-bold">LEADERBOARD {'(' + lb.length + ')'}</h1>
                     <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 self-baseline py-4">
                         {
                             lb.length < 1 ?
@@ -274,7 +282,7 @@ export default function EventDetails() {
                                 lb.map((value, index) => {
                                     return (
                                         //@ts-ignore
-                                        <EventParticipant key={value.username+value.tag} value={value} color={index < event.winners ? borders[index] ? borders[index] : borders[3] : borders[4]} position={index+1} />
+                                        <EventParticipant key={value.username + value.tag} value={value} color={index < event.winners ? borders[index] ? borders[index] : borders[3] : borders[4]} position={index + 1} />
                                     )
                                 })
                         }

@@ -37,13 +37,13 @@ export default function EventsPage(eventsDetails: any, isLoading: boolean) {
               >
                 Available Events
               </h2>
-              {medal_events.length < 1 ?
+              {!medal_events || medal_events.length < 1 ?
               <p className="text-white mt-4">
                 There are currently no scheduled events in this category. There
                 are plans for the future, so check back soon!
               </p>
               :
-              <div className="grid h-auto pt-6 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-4 mt-4">
+              <div className="grid h-auto pt-6 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-6 mt-4">
                 {medal_events.map((value: any, index: number)=>{
                     return (
                         <EventTile key={value.name} value={value} ended={false}/>
@@ -59,12 +59,12 @@ export default function EventsPage(eventsDetails: any, isLoading: boolean) {
               >
                 PAST EVENTS
               </h2>
-              {past_medal_events.length < 1 ?
+              {!past_medal_events || past_medal_events.length < 1 ?
               <p className="text-white mt-4">
                 There are currently no past events.
               </p>
               :
-              <div className="grid h-auto pt-6 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-4">
+              <div className="grid h-auto pt-6 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-6">
                 {past_medal_events.map((value: any)=>{
                     return (
                         <EventTile key={value.name} value={value} ended={true}/>

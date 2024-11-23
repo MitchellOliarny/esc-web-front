@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { formatDateYear, formatTime, formatDate, timeTo, CalcRankName, GetFile } from "../utils/helpers";
-import { FaUser, FaTrophy, FaCalendarCheck, FaBullseye, FaStopwatch, FaUsers, FaHourglass, FaHourglassHalf, FaStar } from "react-icons/fa";
+import { FaUser, FaTrophy, FaCalendarCheck, FaBullseye, FaStopwatch, FaUsers, FaHourglass, FaHourglassHalf, FaStar, FaCheck, FaCoins } from "react-icons/fa";
 import { FaCheckToSlot } from "react-icons/fa6";
 import toast from "react-hot-toast";
+import doJoinEvent from "./doJoinEvent";
 
 interface EventTileProps {
     value: any;
@@ -19,25 +20,40 @@ export default function EventTile({ value, ended }: EventTileProps) {
     const [buttonState, setButtonState] = useState(0);
 
     useEffect(() => {
+
+        if (new Date(value.end_date).getTime() < Date.now()) {
+            setButtonState(3)
+        }
+        else if (typeof value.score == "number" && new Date(value.start_date).getTime() < Date.now()) {
+            setButtonState(2)
+        }
+        else if (typeof value.score == "number") {
+            setButtonState(1)
+        }
+        else {
+            setButtonState(0)
+        }
+
         const intervalId = setInterval(() => {
             const time = timeTo(value.end_date);
 
-            setTimer(new Date(value.start_date).getTime() > Date.now() ? 'Registration Open' : time.text);
+            setTimer(new Date(value.start_date).getTime() > Date.now() ? 'Registration Open' : new Date(value.end_date).getTime() < Date.now() ? 'Event Ended' : time.text);
         }, 1000); // 1000 milliseconds = 1 second
 
         return () => clearInterval(intervalId);
+
     }, [value])
 
     const TryJoinEvent = async () => {
         //@ts-ignore
-        const result = await doJoinEvent(event.id);
+        const result = await doJoinEvent(value.id);
         console.log(result)
         if (result.success) {
             toast.success(result.msg)
             if (!result.link) {
                 setButtonState(3);
                 //@ts-ignore
-                FetchEventParticipants(event.name);
+                FetchEventParticipants(value.name);
             }
             else {
                 //@ts-ignore
@@ -55,14 +71,14 @@ export default function EventTile({ value, ended }: EventTileProps) {
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
-                        '_blank' // <- This is what makes it open in a new window.
+                        //'_blank' // <- This is what makes it open in a new window.
                     );
                 }}
             >
                 <div className="h-48 rounded-t-lg relative">
                     <div className="absolute rounded-t-lg map-gradient h-full w-full"></div>
                     <div
-                        className="h-full w-full rounded-t-lg"
+                        className={`h-full w-full rounded-t-lg ${ended ? 'grayscale-[1]' : ''}`}
                         style={{
                             backgroundImage: `url('${value.thumbnail ? GetFile(value.thumbnail) : '/homepage-hero.png'}')`,
                             backgroundSize: 'cover',
@@ -77,11 +93,12 @@ export default function EventTile({ value, ended }: EventTileProps) {
                 </div>
                 {
                     value.prize_pool ?
-                        <div className={`absolute text-sm rounded-lg justify-self-end self-start py-2 px-4 m-4`}
+                        <div className={`absolute flex text-sm rounded-lg justify-self-end self-start py-2 px-2 m-4 ${ended ? 'grayscale-[1]' : ''}`}
                             style={{
                                 backgroundColor: '#21945A',
                                 border: '#51D793 2px solid'
                             }}>
+                                <FaCoins className="my-auto mr-2" />
                             {"Top " + value.winners + " - $" + (value.prize_type == 'even_split' ? (value.prize_pool / value.winners) : value.prize_pool) + ' each!'}
                         </div> : ""
                 }
@@ -91,7 +108,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
 
                     <div className="grid my-auto py-2 px-2 gap-2 self-end">
                         <div className="inline-flex items-center">
-                            <FaBullseye size={'1.25em'} className="text-voltage" />
+                            <FaBullseye size={'1.25em'} className={`${ended ? 'text-ash' : 'text-voltage'}`} />
                             <div className="ml-4">
                                 <p className="text-ash text-sm">Objective</p>
                                 <p className="text-base text-frost">{value.objective}</p>
@@ -99,7 +116,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                         </div>
 
                         <div className="mt-4 inline-flex items-center">
-                            <FaStopwatch size={'1.25em'} className="text-voltage" />
+                            <FaStopwatch size={'1.25em'} className={`${ended ? 'text-ash' : 'text-voltage'}`} />
                             <div className="ml-4">
                                 <p className="text-ash text-sm">Time Remaining</p>
                                 <p className="text-base text-frost">{timer}</p>
@@ -126,7 +143,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             <FaUsers size={'1em'} className="text-ash my-auto" />
                             <div>
                                 <p className="text-ash text-xs">Participants Allowed</p>
-                                <p className="text-base text-frost">{value.team_limit || "Unlimited"}</p>
+                                <p className="text-base text-frost">{value.team_limit || (ended ? "" : value.players_entered + '/') + "Unlimited"}</p>
                             </div>
                         </div>
 
@@ -156,28 +173,57 @@ export default function EventTile({ value, ended }: EventTileProps) {
                     </div>
                 </div>
                 {
-                    timer == 'Registration Open' ?
+                    buttonState !== 0 ?
+
+                        buttonState == 1 ?
+
+                            <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                                <div className="flex mx-auto w-full p-4 text-xs gap-4 justify-center">
+                                    <button type="button" className="grid text-xl px-6 py-1 font-bold back-voltage rounded-lg hover:scale-105" ><h2 className="flex">Joined <FaCheck className="my-auto ml-2"/></h2></button>
+                                    <button type="button" onClick={() => {
+                                        window.open(
+                                            '/events/' + value.name,
+                                            '_blank' // <- This is what makes it open in a new window.
+                                        );
+                                    }} className="grid text-xl px-6 py-1 font-bold text-voltage rounded-lg hover:scale-105" ><h2>More Info</h2></button>
+                                </div>
+                            </div>
+                            :
+                            buttonState == 3 ? 
+                            <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                                <div className="flex w-full p-4 text-xs gap-4">
+                                    <div className="flex my-auto">
+                                        <img className="object-cover h-6 w-6 rounded-full" src={value.leader.pfp ? GetFile(value.leader.pfp) : "/dashboard/transparent-esc-score_square.png"}></img>
+                                        <p className="ml-2 my-auto">{value.leader.username}#{value.leader.tag}</p>
+                                    </div>
+                                    <hr className="border-none back-slate w-0.5 h-8"></hr>
+                                    <p className="my-auto text-ash">Winner</p>
+                                    <p className="my-auto text-frost ml-auto">Score: {value.leader.score}</p>
+                                </div>
+                            </div>
+                            :
+                            <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                                <div className="flex w-full p-4 text-xs gap-4">
+                                    <div className="flex my-auto">
+                                        <img className="object-cover h-6 w-6 rounded-full" src={GetFile(value.leader.pfp)}></img>
+                                        <p className="ml-2 my-auto">{value.leader.username}#{value.leader.tag}</p>
+                                    </div>
+                                    <hr className="border-none back-slate w-0.5 h-8"></hr>
+                                    <p className="my-auto text-ash">Current Leader</p>
+                                    <p className="my-auto text-frost ml-auto">Score: {value.leader.score}</p>
+                                </div>
+                            </div>
+
+                        :
                         <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
                             <div className="flex mx-auto w-full p-4 text-xs gap-4 justify-center">
-                                <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-1 font-bold back-rust rounded-lg hover:scale-105" ><h2>Register</h2></button>
+                                <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-1 font-bold back-rust rounded-lg hover:scale-105" ><h2>Join Now</h2></button>
                                 <button type="button" onClick={() => {
                                     window.open(
                                         '/events/' + value.name,
-                                        '_blank' // <- This is what makes it open in a new window.
+                                        //'_blank' // <- This is what makes it open in a new window.
                                     );
                                 }} className="grid text-xl px-6 py-1 font-bold text-voltage rounded-lg hover:scale-105" ><h2>More Info</h2></button>
-                            </div>
-                        </div>
-                        :
-                        <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
-                            <div className="flex w-full p-4 text-xs gap-4">
-                                <div className="flex my-auto">
-                                    <img className="object-cover h-6 w-6 rounded-full" src={GetFile(value.leader.pfp)}></img>
-                                    <p className="ml-2 my-auto">{value.leader.username}#{value.leader.tag}</p>
-                                </div>
-                                <hr className="border-none back-slate w-0.5 h-8"></hr>
-                                <p className="my-auto text-ash">Current Leader</p>
-                                <p className="my-auto text-frost ml-auto">Score: {value.leader.score}</p>
                             </div>
                         </div>
                 }

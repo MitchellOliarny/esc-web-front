@@ -22,7 +22,7 @@ export default async function events() {
 
   const cookieStore = cookies();
   const token = cookieStore.get("esc-auth");
-  let events = null;
+  let events = [];
 
   const headers = {
     token: `Bearer ${token?.value}`,
