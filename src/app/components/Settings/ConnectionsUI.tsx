@@ -20,6 +20,7 @@ import {
 import { set } from "zod";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
+import { FaDiscord } from "react-icons/fa";
 
 // import { Orbitron } from "next/font/google";
 // const orbitron = Orbitron({
@@ -95,18 +96,16 @@ export default function ConnectionsSettingsUI({
 
   return (
     <>
-      <div className="grid lg:grid-cols-2 grid-cols-1 justify-center items-center mt-5 px-10 gap-5 max-w-[1000px]">
+      <div className="grid p-8 mt-5 gap-5 w-full back-graphite rounded-lg">
         <div
           id="discordConnection"
-          className="bg-slate-800 flex items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer"
+          className="grid grid-cols-2 p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-24"
         >
-          <Image
-            alt="discord logo"
-            width={1000}
-            height={1000}
-            src="/logos/discord.png"
-            className="w-auto h-16 cursor-pointer"
-          />
+          <div className="w-full h-full">
+            <h2 className="font-bold text-frost text-lg">Discord</h2>
+            <p className="text-ash">Connect your Discord with Esports Clubs.</p>
+          </div>
+          <div className="h-full">
           {userInfo?.discord_id ? (
             <div
               onClick={() =>
@@ -117,8 +116,9 @@ export default function ConnectionsSettingsUI({
                 ).showModal()
               }
               id="discord-profile"
-              className="bg-[#738ADB] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-center items-center rounded-lg cursor-pointer"
+              className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer"
             >
+              <div className="col-span-2">
               <Image
                 alt="discord user avatar"
                 width={1000}
@@ -127,7 +127,6 @@ export default function ConnectionsSettingsUI({
                 className="h-14 w-14 mr-4 rounded-full"
                 src={`https://cdn.discordapp.com/avatars/${userInfo.discord_id}/${userInfo.discord_avatar}.png`}
               />
-              <div className="col-span-2">
                 <h2
                   id="discord-username"
                   className="font-bold text-white text-left"
@@ -136,19 +135,31 @@ export default function ConnectionsSettingsUI({
                   {userInfo?.discord_username}
                 </h2>
                 <p className="text-white text-left text-xs">Disconnect</p>
+              
               </div>
+              <Image
+                  alt="discord logo"
+                  width={1000}
+                  height={1000}
+                  src="/logos/discord.png"
+                  className="w-auto h-16 cursor-pointer"
+                />
             </div>
           ) : (
-            <div className="w-full h-full">
+            <div className="h-full w-full">
               <Link href="https://api.esportsclubs.gg/settings/connections/discord">
-                <div className="bg-[#738ADB] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-center items-center rounded-lg cursor-pointer">
+                <div className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer">
                   <h2 id="discordConnect" className="font-bold text-white">
                     Connect your Discord
                   </h2>
+                  <FaDiscord
+                    className="w-auto h-12 cursor-pointer"
+                  />
                 </div>
               </Link>
             </div>
           )}
+          </div>
         </div>
 
         <div
@@ -244,9 +255,8 @@ export default function ConnectionsSettingsUI({
                         ""
                       )}
                       <Button
-                        className={`bg-[#F5603C] ${
-                          isLoading ? "btn-disabled !bg-[#ac442a]/50" : ""
-                        } text-white rounded-md`}
+                        className={`bg-[#F5603C] ${isLoading ? "btn-disabled !bg-[#ac442a]/50" : ""
+                          } text-white rounded-md`}
                         type="submit"
                         onClick={(e) => {
                           setIsLoading(true);

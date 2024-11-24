@@ -19,13 +19,13 @@ export default function EventParticipant({ value, color, position, game_limit, p
 
     return (
         <>
-            <div className={`w-full mx-auto my-2 font-bold items-center text-xl rounded-lg back-graphite min-h-16 leaderboard-grid game-row-border overflow-hidden`}>
+            <div className={`w-full mx-auto my-2 font-bold items-center text-xl rounded-lg back-graphite min-h-20 leaderboard-grid game-row-border overflow-hidden`}>
                 <div className={`${position == 1 ? 'first' : position == 2 ? 'second' : position == 3 ? 'third' : 'text-frost'} h-full w-full flex`}>
                 <p className={`m-auto`}>{GetPlacementName(position)}</p>
                 </div>
                 <div className="flex border-right pr-4 my-auto h-full">
                     <div className="flex ml-10 my-auto">
-                        <img src={GetFile(value.profile_picture)} className="w-8 h-8 rounded-full object-cover my-auto"></img>
+                        <img src={GetFile(value.profile_picture)} className="w-10 h-10 rounded-full object-cover my-auto"></img>
                         <div className="block ml-2 my-auto">
                             <p>{value.username}</p>
                             <p className="text-ash text-sm">#{value.tag}</p>

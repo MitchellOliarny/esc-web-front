@@ -140,7 +140,7 @@ export default function ProfileSettingsUI({
   return (
     <div className="back-graphite rounded-lg w-full h-full grid gap-8 p-8">
 
-      <div className="flex h-auto gap-8 w-full">
+      <div className="flex h-auto gap-8 min-h-16 w-full">
         <div className="w-[50%] h-full">
           <h2 className="font-bold text-frost text-lg">Avatar</h2>
           <p className="text-ash">How you'll be seen on Esports Clubs. File must be .png, .jpg, or .jpeg</p>
@@ -158,7 +158,7 @@ export default function ProfileSettingsUI({
         action={handleUpdateProfile}
         className="w-full h-full grid gap-8 py-8"
       >
-        <div className="flex h-auto gap-8 w-full">
+        <div className="flex h-auto gap-8 min-h-16 w-full">
           <div className="w-[50%] h-full">
             <h2 className="font-bold text-frost text-lg">Email</h2>
             <p className="text-ash">You can use your email address to log in. Esports Clubs will also send you important information like password reset links to this email.</p>

@@ -81,22 +81,22 @@ export default function EventTile({ value, ended }: EventTileProps) {
         <>
             <div key={value.name} className={`grid font-bold relative items-center text-xl back-graphite h-auto min-h-52 cursor-pointer rounded-lg game-row-border`}
             >
-                <div className=" h-[-webkit-fill-available] min-h-48 rounded-t-lg relative"
+                <div className="h-[-webkit-fill-available] min-h-60 rounded-t-lg relative"
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
                         //'_blank' // <- This is what makes it open in a new window.
                     );
                 }}>
-                    <div className="absolute rounded-t-lg map-gradient h-full w-full"></div>
+                    <div className={`absolute rounded-t-lg event-gradient h-full w-full z-10`}></div>
                     <div
-                        className={`h-full w-full rounded-t-lg ${ended ? 'grayscale-[1]' : ''}`}
+                        className={`h-full w-full rounded-t-lg z-1 ${ended ? 'grayscale-[1]' : ''}`}
                         style={{
                             backgroundImage: `url('${value.thumbnail ? GetFile(value.thumbnail) : '/homepage-hero.png'}')`,
                             backgroundSize: 'cover',
                         }}></div>
                 </div>
-                <div className={`absolute font-bold text-base rounded-lg justify-self-start self-start px-2 -top-3 left-10`}
+                <div className={`z-20 absolute font-bold text-base rounded-lg justify-self-start self-start px-2 -top-3 left-10`}
                     style={{
                         backgroundColor: ended ? '#9BA3AE' : live ? '#FA6E6E' : '#41B9FD',
                         border: ended ? '#9BA3AE40 2px solid' : live ? '#FA6E6E40 2px solid' : '#41B9FD40 2px solid'
@@ -105,7 +105,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                 </div>
                 {
                     value.prize_pool ?
-                        <div className={`absolute flex text-sm rounded-lg justify-self-end self-start py-2 px-2 m-4 ${ended ? 'grayscale-[1]' : ''}`}
+                        <div className={`absolute z-20 prize-glow flex text-sm rounded-lg justify-self-end self-start py-3 px-4 m-4 ${ended ? 'grayscale-[1]' : ''}`}
                             style={{
                                 backgroundColor: '#21945A',
                                 border: '#51D793 2px solid'
@@ -118,30 +118,30 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             }
                         </div> : ""
                 }
-                <div className="relative grid h-52 px-4"
+                <div className="relative grid h-60 px-6"
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
                         //'_blank' // <- This is what makes it open in a new window.
                     );
                 }}>
-                    <h2 className="absolute w-full text-left font-bold text-3xl -top-6 px-4">{value.name}</h2>
-                    <p className="my-4 mx-1 font-medium text-sm text-ash">{value.description}</p>
+                    <h2 className="z-20 absolute w-full text-left font-bolder text-4xl -top-6 px-6">{value.name}</h2>
+                    <p className="mt-8 mx-1 font-medium text-base text-ash">{value.description}</p>
 
-                    <div className="grid my-auto py-2 px-2 gap-2 self-end">
+                    <div className="grid my-auto py-2 mt-2 px-2 gap-2 self-end">
                         <div className="inline-flex items-center">
                             <FaBullseye size={'1.25em'} className={`${ended ? 'text-ash' : 'text-voltage'}`} />
                             <div className="ml-4">
-                                <p className="text-ash text-sm">Objective</p>
-                                <p className="text-base text-frost">{value.objective}</p>
+                                <p className="text-ash text-lg">Objective</p>
+                                <p className="text-xl text-frost">{value.objective}</p>
                             </div>
                         </div>
 
                         <div className="mt-4 inline-flex items-center">
                             <FaStopwatch size={'1.25em'} className={`${ended ? 'text-ash' : 'text-voltage'}`} />
                             <div className="ml-4">
-                                <p className="text-ash text-sm">Time Remaining</p>
-                                <p className="text-base text-frost">{timer}</p>
+                                <p className="text-ash text-lg">Time Remaining</p>
+                                <p className="text-xl text-frost">{timer}</p>
                             </div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                         <p className="ml-2 text-[#F5603C]">${value.prize_pool}</p>
                     </div> */}
                 </div>
-                <div className="relative h-[-webkit-fill-available] px-4 back-obsidian game-row-border-top"
+                <div className="relative h-[-webkit-fill-available] px-4 back-darkslate game-row-border-top"
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
@@ -200,61 +200,59 @@ export default function EventTile({ value, ended }: EventTileProps) {
                         </div>
                     </div>
                 </div>
+                <div className="relative h-full min-h-20 px-4 back-darkslate game-row-border-top rounded-b-lg">
                 {
                     buttonState !== 0 ?
 
                         buttonState == 1 ?
 
-                            <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
-                                <div className="flex mx-auto w-full p-4 text-xs gap-4 justify-center">
-                                    <button type="button" className="grid text-xl px-6 py-1 font-bold back-voltage rounded-lg hover:scale-105" ><h2 className="flex">Joined <FaCheck className="my-auto ml-2"/></h2></button>
+                                <div className="flex mx-auto h-full my-auto w-full p-4 text-xs gap-4 justify-center">
+                                    <button type="button" className="grid text-lg px-8 py-2 font-bold back-voltage rounded-lg hover:scale-105" ><h2 className="flex">Joined <FaCheck className="my-auto ml-2"/></h2></button>
                                     <button type="button" onClick={() => {
                                         window.open(
                                             '/events/' + value.name,
                                             '_blank' // <- This is what makes it open in a new window.
                                         );
-                                    }} className="grid text-xl px-6 py-1 font-bold text-voltage rounded-lg hover:scale-105" ><h2>More Info</h2></button>
+                                    }} className="grid text-lg px-6 py-1 my-auto font-bold text-voltage rounded-lg hover:scale-105" ><h2>More Info</h2></button>
                                 </div>
-                            </div>
+            
                             :
                             buttonState == 3 ? 
-                            <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
-                                <div className="flex w-full p-4 text-xs gap-4">
+                                <div className="flex w-full h-full p-4 text-sm gap-4 my-auto">
                                     <div className="flex my-auto">
-                                        <img className="object-cover h-6 w-6 rounded-full" src={value.leader.pfp ? GetFile(value.leader.pfp) : "/dashboard/transparent-esc-score_square.png"}></img>
+                                        <img className="object-cover h-8 w-8 rounded-full" src={value.leader.pfp ? GetFile(value.leader.pfp) : "/dashboard/transparent-esc-score_square.png"}></img>
                                         <p className="ml-2 my-auto">{value.leader.username}#{value.leader.tag}</p>
                                     </div>
-                                    <hr className="border-none back-slate w-0.5 h-8"></hr>
+                                    <hr className="border-none back-slate w-0.5 h-8 my-auto"></hr>
                                     <p className="my-auto text-ash">Winner</p>
                                     <p className="my-auto text-frost ml-auto">Score: {value.leader.score}</p>
                                 </div>
-                            </div>
+    
                             :
-                            <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
-                                <div className="flex w-full p-4 text-xs gap-4">
+        
+                                <div className="flex w-full h-full p-4 text-sm gap-4 my-auto">
                                     <div className="flex my-auto">
-                                        <img className="object-cover h-6 w-6 rounded-full" src={GetFile(value.leader.pfp)}></img>
+                                        <img className="object-cover h-8 w-8 rounded-full" src={GetFile(value.leader.pfp)}></img>
                                         <p className="ml-2 my-auto">{value.leader.username}#{value.leader.tag}</p>
                                     </div>
-                                    <hr className="border-none back-slate w-0.5 h-8"></hr>
+                                    <hr className="border-none back-slate w-0.5 h-8 my-auto"></hr>
                                     <p className="my-auto text-ash">Current Leader</p>
                                     <p className="my-auto text-frost ml-auto">Score: {value.leader.score}</p>
                                 </div>
-                            </div>
+
 
                         :
-                        <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
-                            <div className="flex mx-auto w-full p-4 text-xs gap-4 justify-center">
-                                <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-1 font-bold back-rust rounded-lg hover:scale-105" ><h2>Join Now</h2></button>
+                            <div className="flex mx-auto w-full h-full p-4 text-xs gap-4 justify-center my-auto">
+                                <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-lg px-8 py-2 font-bold back-rust rounded-lg hover:scale-105" ><h2>Join Now</h2></button>
                                 <button type="button" onClick={() => {
                                     window.open(
                                         '/events/' + value.name,
                                         //'_blank' // <- This is what makes it open in a new window.
                                     );
-                                }} className="grid text-xl px-6 py-1 font-bold text-voltage rounded-lg hover:scale-105" ><h2>More Info</h2></button>
+                                }} className="grid text-lg px-6 py-1 my-auto font-bold text-voltage rounded-lg hover:scale-105" ><h2>More Info</h2></button>
                             </div>
-                        </div>
                 }
+                </div>
             </div >
         </>
     );
