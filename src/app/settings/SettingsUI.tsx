@@ -76,31 +76,33 @@ export default function Sidebar({
 
   return (
     <Suspense>
-      <div className="grid md:grid-cols-5 grid-rows-1 px-4 py-4 w-full max-w-[1800px] mx-auto list-none">
+      <div className="ml-4 px-4 py-4 w-full max-w-[1800px]">
+      <h1 className="font-bold text-frost text-4xl">Settings</h1>
+      <div className="grid md:grid-cols-6 grid-rows-1 mx-auto list-none py-8">
         <div
           id="settingsLeftNav"
-          className="md:border-r max-md:border-b border-slate-500 flex md:flex-col flex-row md:gap-10 gap-4 py-8"
+          className="inline-flex flex-col gap-10"
         >
           <li
             onClick={() => handleSideBarClick("Profile")}
-            className={`menu-item md:text-2xl font-bold text-right mr-10 cursor-pointer text-slate-200 ${
-              selectedMenu === "Profile" ? "!text-[#f5603c]" : ""
+            className={`menu-item md:text-2xl font-bold text-left mr-10 cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${
+              selectedMenu === "Profile" ? "text-frost back-graphite" : ""
             }`}
           >
             Profile
           </li>
           <li
             onClick={() => handleSideBarClick("Connections")}
-            className={`menu-item md:text-2xl font-bold text-right mr-10 cursor-pointer text-slate-200 ${
-              selectedMenu === "Connections" ? "!text-[#f5603c]" : ""
+            className={`menu-item md:text-2xl font-bold text-left mr-10 cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${
+              selectedMenu === "Connections" ? "text-frost back-graphite" : ""
             }`}
           >
             Connections
           </li>
           <li
             onClick={() => handleSideBarClick("Subscriptions")}
-            className={`menu-item text-2xl font-bold text-right mr-10 cursor-pointer text-slate-200 ${
-              selectedMenu === "Subscriptions" ? "!text-[#f5603c]" : ""
+            className={`menu-item text-2xl font-bold text-left mr-10 cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${
+              selectedMenu === "Subscriptions" ? "text-frost back-graphite" : ""
             }`}
           >
             Subscriptions
@@ -140,19 +142,19 @@ export default function Sidebar({
           <li
             onClick={handleLogout}
             id="logout"
-            className="md:text-2xl font-bold text-right mr-10 cursor-pointer text-[#d32d2d]"
+            className="md:text-2xl font-bold text-left mr-10 cursor-pointer text-[#d32d2d] py-2 px-4 rounded-lg"
           >
             Logout
           </li>
         </div>
-        <div className="col-span-4">
-          <h1
-            className={`font-orbitron font-bold uppercase text-white text-4xl md:ml-10`}
-          >
-            {selectedMenu}
-          </h1>
-          {renderContent()}
+        <div className="col-span-5 mr-4">
+          <div>
+          <ProfileSettingsUI userInfo={userInfo} />
+          <ConnectionsSettings userInfo={userInfo} />;
+          <Subscriptions sub_status={userInfo.esc_member ? true : false} />;
+          </div>
         </div>
+      </div>
       </div>
     </Suspense>
   );

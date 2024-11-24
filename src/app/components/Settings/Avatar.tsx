@@ -45,7 +45,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
   };
   return (
     <div>
-      <div className="mt-6" onClick={onOpen}>
+      <div className="flex gap-12">
         <Image
           alt="Profile Picture"
           width={1000}
@@ -55,8 +55,10 @@ export default function Avatar({ profile_picture }: AvatarProps) {
               ? GetFile(profile_picture)
               : "/avatar.png"
           }
-          className="rounded-full w-48 h-48 overflow-hidden border-2 cursor-pointer object-cover"
+          className="rounded-full w-16 h-16 overflow-hidden border-2 cursor-pointer object-cover"
         />
+        <button onClick={onOpen} className="action-button">Change Avatar</button>
+        <button className="action-button-nobg">Remove Avatar</button>
       </div>
       <Modal
         isOpen={isOpen}
@@ -65,7 +67,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
       >
         <ModalContent>
           {(onClose) => (
-            <div>
+            <div className="back-graphite">
               <ModalHeader className="flex flex-col gap-1">
                 Choose a new profile picture
                 <p className="text-xs">

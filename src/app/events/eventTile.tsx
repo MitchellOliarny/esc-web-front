@@ -79,7 +79,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
 
     return (
         <>
-            <div key={value.name} className={`grid font-bold relative items-center text-xl rounded-lg back-graphite h-auto min-h-52 cursor-pointer rounded-lg game-row-border`}
+            <div key={value.name} className={`grid font-bold relative items-center text-xl back-graphite h-auto min-h-52 cursor-pointer rounded-lg game-row-border`}
             >
                 <div className=" h-[-webkit-fill-available] min-h-48 rounded-t-lg relative"
                 onClick={() => {
@@ -187,7 +187,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             <FaStar size={'1em'} className="text-ash my-auto" />
                             <div>
                                 <p className="text-ash text-xs">Ranks Allowed</p>
-                                <p className="text-base text-frost">{(value.min_rank == 0 && value.max_rank == 27 ? 'ANY' : CalcRankName(value.min_rank).toLocaleUpperCase() + " - " + CalcRankName(value.max_rank).toLocaleUpperCase())}</p>
+                                <p className="text-base text-frost whitespace-nowrap">{(value.min_rank == 0 && value.max_rank == 27 ? 'All Ranks' : CalcRankName(value.min_rank).charAt(0).toLocaleUpperCase() + CalcRankName(value.min_rank).slice(1) + " - " + CalcRankName(value.max_rank).charAt(0).toLocaleUpperCase() + CalcRankName(value.max_rank).slice(1))}</p>
                             </div>
                         </div>
 

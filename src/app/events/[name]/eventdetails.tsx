@@ -191,7 +191,7 @@ export default function EventDetails() {
                         </div>
 
 
-                        <div className="flex my-auto py-4 px-2 gap-16 self-end">
+                        <div className="flex my-auto py-4 px-2 gap-16 self-end font-bold">
                             <div className="inline-flex items-center">
                                 <FaBullseye size={'1.75em'} className={`text-voltage`} />
                                 <div className="ml-4">
@@ -209,7 +209,7 @@ export default function EventDetails() {
                             </div>
                         </div>
 
-                        <div className="flex gap-12 px-4 py-8 gap-8">
+                        <div className="flex px-4 py-8 gap-8 font-bold">
                             <div className="inline-flex gap-4">
                                 <FaCalendarCheck size={'1.5em'} className="text-ash my-auto" />
                                 <div>

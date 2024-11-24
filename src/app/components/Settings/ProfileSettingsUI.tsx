@@ -91,7 +91,7 @@ export default function ProfileSettingsUI({
 
     const error_fields = document.getElementsByClassName('error-message');
     for (const x in error_fields) {
-      if (typeof error_fields[x] == 'object'){
+      if (typeof error_fields[x] == 'object') {
         error_fields[x].innerHTML = '';
       }
     }
@@ -138,10 +138,53 @@ export default function ProfileSettingsUI({
   };
 
   return (
-    <>
-      <div className="flex items-center justify-center">
-        <Avatar profile_picture={userInfo?.profile_picture} />
+    <div className="back-graphite rounded-lg w-full h-full grid gap-8 p-8">
+
+      <div className="flex h-auto gap-8 w-full">
+        <div className="w-[50%] h-full">
+          <h2 className="font-bold text-frost text-lg">Avatar</h2>
+          <p className="text-ash">How you'll be seen on Esports Clubs. File must be .png, .jpg, or .jpeg</p>
+        </div>
+        <div className="h-full w-[50%]">
+          {/* FIELD */}
+          <div className="flex items-center justify-center h-full">
+            <Avatar profile_picture={userInfo?.profile_picture} />
+          </div>
+        </div>
       </div>
+
+      <form
+        id="user-profile-edit"
+        action={handleUpdateProfile}
+        className="w-full h-full grid gap-8 py-8"
+      >
+        <div className="flex h-auto gap-8 w-full">
+          <div className="w-[50%] h-full">
+            <h2 className="font-bold text-frost text-lg">Email</h2>
+            <p className="text-ash">You can use your email address to log in. Esports Clubs will also send you important information like password reset links to this email.</p>
+          </div>
+          <div className="h-full w-[50%] my-auto flex">
+            {/* FIELD */}
+            <div className="flex items-center justify-center h-full w-full my-auto relative">
+              <input
+                defaultValue={userInfo?.email}
+                id="email"
+                name="email"
+                type="text"
+                placeholder="someone@email.com..."
+                className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
+                autoComplete="on"
+              />
+              <div className="label">
+                <div id="email-error" className="absolute bottom-4 error-message"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      {/* 
 
       <div className="flex flex-col justify-center items-center mt-5">
         <form
@@ -334,7 +377,7 @@ export default function ProfileSettingsUI({
             </div>
           </div>
         </form>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 }

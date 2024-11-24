@@ -43,7 +43,7 @@ export default function EventsPage(eventsDetails: any, isLoading: boolean) {
                 are plans for the future, so check back soon!
               </p>
               :
-              <div className="grid h-auto pt-6 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-6 mt-4">
+              <div className="grid h-auto pt-6 2xl:grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-6 mt-4">
                 {medal_events.map((value: any, index: number)=>{
                     return (
                         <EventTile key={value.name} value={value} ended={false}/>
@@ -64,7 +64,7 @@ export default function EventsPage(eventsDetails: any, isLoading: boolean) {
                 There are currently no past events.
               </p>
               :
-              <div className="grid h-auto pt-6 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-6">
+              <div className="grid h-auto pt-6 2xl:grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-6">
                 {past_medal_events.map((value: any)=>{
                     return (
                         <EventTile key={value.name} value={value} ended={true}/>
