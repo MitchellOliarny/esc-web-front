@@ -34,5 +34,5 @@ export default async function doSubmitMedalEvent(data: FormData) {
   }
 
   //@ts-ignore
-  return {success: false, errors: event_details.errors};
+  return {success: false, errors: event_details.errors, message: event_details.message};
 }

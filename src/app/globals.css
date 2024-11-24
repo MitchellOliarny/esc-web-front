@@ -691,18 +691,25 @@ select.transparent>option {
 
 .leaderboard-grid {
   display: grid;
-  grid-template-columns: 1fr 4fr 2fr 2fr 3fr 1fr;
+  grid-template-columns: .5fr 2.5fr 1fr 1fr 1fr 2fr;
   grid-template-rows: 1fr;
 }
 
 .first {
-  color: #FFE57B
+  color: #FFE57B;
+  background-image: linear-gradient(132deg, #FFE57B -70%, rgba(0,212,255,0) 60%);
 }
 
 .second {
-  color: #C0DFEB
+  color: #C0DFEB;
+  background-image: linear-gradient(132deg, #C0DFEB -70%, rgba(0,212,255,0) 60%);
 }
 
 .third {
-  color: #DF7F5C
+  color: #DF7F5C;
+  background-image: linear-gradient(132deg, #DF7F5C -70%, rgba(0,212,255,0) 60%);
+}
+
+.border-right {
+  border-right: var(--slate) 2px solid;
 }

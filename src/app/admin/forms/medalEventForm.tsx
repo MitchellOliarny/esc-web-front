@@ -65,6 +65,24 @@ const MedalEventForm = (valMedals: any) => {
                     {gamemodes.push(document.getElementById('gamemodes').selectedOptions[x].value)}
             }
 
+        let prize_values = [];
+        for(const x in document.getElementsByClassName('split_element')) {
+            //@ts-ignore
+            if(document.getElementsByClassName('split_element')[x].value) {
+                //@ts-ignore
+                prize_values.push(document.getElementsByClassName('split_element')[x].value)
+            }
+            else {
+                prize_values.push(0);
+            }
+        }
+
+        formData.set(
+            'prize_pool_split',
+            //@ts-ignore
+            JSON.stringify(prize_values.slice(0, document.getElementById('winners').value))
+        )
+
 
         formData.set(
             'thumbnail',
@@ -75,13 +93,13 @@ const MedalEventForm = (valMedals: any) => {
         formData.set(
             "regions",
             //@ts-ignore
-            regions
+            JSON.stringify(regions)
         )
 
         formData.set(
             "gamemodes",
             //@ts-ignore
-            gamemodes
+            JSON.stringify(gamemodes)
         )
 
         formData.set(
@@ -115,7 +133,8 @@ const MedalEventForm = (valMedals: any) => {
             console.log("success");
             toast.success('Event Created!')
         } else {
-            toast('Something went wrong. Check your form and try again.')
+            //@ts-ignore
+            toast(response.message)
             const errorFields = document.getElementsByClassName('error-message');
             for (let x = 0; x < errorFields.length; x++) {
                 errorFields[x].innerHTML = "";

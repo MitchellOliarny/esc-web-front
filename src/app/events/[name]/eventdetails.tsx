@@ -15,7 +15,7 @@ import { FaCalendarXmark, FaCheckToSlot } from "react-icons/fa6";
 
 export default function EventDetails() {
 
-    const [event, setEvent] = useState({ medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]", name: '', objective: '', description: '', min_rank: 0, max_rank: 27, entry_fee: 0, game_limit: 0 , start_date: '', end_date: ''});
+    const [event, setEvent] = useState({ medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]", name: '', objective: '', description: '', min_rank: 0, max_rank: 27, entry_fee: 0, game_limit: 0 , start_date: '', end_date: '', winners: 0, prize_pool: 0, prize_type: ''});
     const [isLoading, setIsLoading] = useState(true);
     const [lbLoading, setLBLoading] = useState(true);
     const [timer, setTimer] = useState("");
@@ -123,7 +123,7 @@ export default function EventDetails() {
                     <p className="my-auto font-bold text-lg mx-2">All Events</p>
                 </div>
                 <div className="px-4 w-full max-w-[1800px] mx-auto">
-                    <div className="h-60 rounded-t-lg relative">
+                    <div className="h-72 rounded-t-lg relative">
                         <div className="absolute rounded-t-lg map-gradient h-full w-full"></div>
                         <div
                             className={`h-full w-full rounded-t-lg`}
@@ -131,6 +131,7 @@ export default function EventDetails() {
                                 //@ts-ignore
                                 backgroundImage: `url('${event.thumbnail ? GetFile(event.thumbnail) : '/homepage-hero.png'}')`,
                                 backgroundSize: 'cover',
+                                backgroundPosition: 'center'
                             }}></div>
                         {
                             //@ts-ignore
@@ -142,8 +143,10 @@ export default function EventDetails() {
                                     }}>
                                     <FaCoins className="my-auto mr-2" />
                                     {
-                                        //@ts-ignore
-                                        "Top " + event.winners + " - $" + (event.prize_type == 'even_split' ? (event.prize_pool / event.winners) : event.prize_pool) + ' each!'}
+                            event.prize_type == 'even_split' ? 
+                            "Top " + event.winners + " - $" + (event.prize_pool / event.winners) + ' each!'
+                             : event.winners + " Winners - $" + (event.prize_pool) + ' pool!'
+                            }
                                 </div> : ""
                         }
                     </div>
@@ -169,18 +172,18 @@ export default function EventDetails() {
                             {
                                 //@ts-ignore
                                 buttonState == 3 ?
-                                    <button type="button" className="inline-flex text-xl px-6 py-4 font-bold bg-[#5ECCBA] rounded-lg hover:scale-105" >JOINED <FaCheck className="my-auto mx-2" /></button>
+                                    <button type="button" className="inline-flex text-xl px-12 py-4 font-bold game-row-border back-obsidian rounded-lg hover:scale-105" ><FaCheck className="my-auto mx-2 text-voltage" /> JOINED</button>
                                     :
                                     buttonState == 2 ?
-                                        <button type="button" className="inline-flex text-xl px-6 py-4 font-bold bg-[#bd1616] rounded-lg hover:scale-105" >ENDED</button>
+                                        <button type="button" className="inline-flex text-xl px-12 py-4 font-bold bg-[#bd1616] rounded-lg hover:scale-105" >ENDED</button>
                                         :
                                         buttonState == 1 ?
-                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-12 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
                                                 //@ts-ignore
                                                 'Join NOW w/ ESC+'
                                             }</span></button>
                                             :
-                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-12 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
                                                 //@ts-ignore
                                                 event.entry_fee == 0 ? 'FREE ENTRY' : 'Requires ESC+'
                                             }</span></button>
@@ -216,6 +219,7 @@ export default function EventDetails() {
                                         formatDateYear(event.start_date)}</p>
                                 </div>
                             </div>
+                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
                             <div className="inline-flex gap-4">
                                 <FaCalendarXmark size={'1.5em'} className="text-ash my-auto" />
                                 <div>
@@ -225,6 +229,7 @@ export default function EventDetails() {
                                         formatDateYear(event.end_date)}</p>
                                 </div>
                             </div>
+                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
                             <div className="inline-flex gap-4">
                                 <FaUsers size={'1.5em'} className="text-ash my-auto" />
                                 <div>
@@ -234,7 +239,7 @@ export default function EventDetails() {
                                         lb.length + '/'}{event.team_limit || "Unlimited"}</p>
                                 </div>
                             </div>
-
+                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
                             <div className="inline-flex gap-4">
                                 <FaHourglassHalf size={'1.5em'} className="text-ash my-auto" />
                                 <div>
@@ -242,7 +247,7 @@ export default function EventDetails() {
                                     <p className="text-lg text-frost">{event.game_limit || "Unlimited"}</p>
                                 </div>
                             </div>
-
+                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
                             <div className="inline-flex gap-4">
                                 <FaStar size={'1.5em'} className="text-ash my-auto" />
                                 <div>
@@ -250,7 +255,7 @@ export default function EventDetails() {
                                     <p className="text-lg text-frost">{(event.min_rank == 0 && event.max_rank == 27 ? 'ANY' : CalcRankName(event.min_rank).toLocaleUpperCase() + " - " + CalcRankName(event.max_rank).toLocaleUpperCase())}</p>
                                 </div>
                             </div>
-
+                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
                             <div className="inline-flex gap-4">
                                 <FaCheckToSlot size={'1.5em'} className="text-ash my-auto" />
                                 <div>
@@ -282,17 +287,17 @@ export default function EventDetails() {
                         <p>Score</p>
                         <p>Games Played</p>
                         <p>Competitive Rank</p>
-                        <p>Current Prize</p>
+                        <p className="ml-auto mr-10">Current Prize</p>
                     </div>
                     <div className="inline-flex self-baseline py-4">
                         {
                             lb.length < 1 ?
-                                "0 users have joined this event"
+                                <p className="mx-4 py-4 font-bold">0 users have joined this event</p>
                                 :
                                 lb.map((value, index) => {
                                     return (
                                         //@ts-ignore
-                                        <EventParticipant key={value.username + value.tag} value={value} color={index < event.winners ? borders[index] ? borders[index] : borders[3] : borders[4]} position={index + 1} />
+                                        <EventParticipant key={value.username + value.tag} value={value} color={borders[4]} position={index + 1} game_limit={event.game_limit} prize={event.prize_type == 'cascade_split' ? '$'+event.prize_split_values[index] : event.prize_pool ? index < event.winners ? '$'+(event.prize_pool/event.winners) : '--': '--'}/>
                                     )
                                 })
                         }

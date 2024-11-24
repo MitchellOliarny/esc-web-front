@@ -81,7 +81,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
         <>
             <div key={value.name} className={`grid font-bold relative items-center text-xl rounded-lg back-graphite h-auto min-h-52 cursor-pointer rounded-lg game-row-border`}
             >
-                <div className="h-48 rounded-t-lg relative"
+                <div className=" h-[-webkit-fill-available] min-h-48 rounded-t-lg relative"
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
@@ -111,7 +111,11 @@ export default function EventTile({ value, ended }: EventTileProps) {
                                 border: '#51D793 2px solid'
                             }}>
                                 <FaCoins className="my-auto mr-2" />
-                            {"Top " + value.winners + " - $" + (value.prize_type == 'even_split' ? (value.prize_pool / value.winners) : value.prize_pool) + ' each!'}
+                            {
+                            value.prize_type == 'even_split' ? 
+                            "Top " + value.winners + " - $" + (value.prize_pool / value.winners) + ' each!'
+                             : value.winners + " Winners - $" + (value.prize_pool) + ' pool!'
+                            }
                         </div> : ""
                 }
                 <div className="relative grid h-52 px-4"
@@ -155,7 +159,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                         <p className="ml-2 text-[#F5603C]">${value.prize_pool}</p>
                     </div> */}
                 </div>
-                <div className="relative h-auto px-4 back-obsidian game-row-border-top"
+                <div className="relative h-[-webkit-fill-available] px-4 back-obsidian game-row-border-top"
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
@@ -201,7 +205,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
 
                         buttonState == 1 ?
 
-                            <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                            <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
                                 <div className="flex mx-auto w-full p-4 text-xs gap-4 justify-center">
                                     <button type="button" className="grid text-xl px-6 py-1 font-bold back-voltage rounded-lg hover:scale-105" ><h2 className="flex">Joined <FaCheck className="my-auto ml-2"/></h2></button>
                                     <button type="button" onClick={() => {
@@ -214,7 +218,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             </div>
                             :
                             buttonState == 3 ? 
-                            <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                            <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
                                 <div className="flex w-full p-4 text-xs gap-4">
                                     <div className="flex my-auto">
                                         <img className="object-cover h-6 w-6 rounded-full" src={value.leader.pfp ? GetFile(value.leader.pfp) : "/dashboard/transparent-esc-score_square.png"}></img>
@@ -226,7 +230,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                                 </div>
                             </div>
                             :
-                            <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                            <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
                                 <div className="flex w-full p-4 text-xs gap-4">
                                     <div className="flex my-auto">
                                         <img className="object-cover h-6 w-6 rounded-full" src={GetFile(value.leader.pfp)}></img>
@@ -239,7 +243,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             </div>
 
                         :
-                        <div className="relative h-auto px-4 back-obsidian game-row-border-top rounded-b-lg">
+                        <div className="relative h-full px-4 back-obsidian game-row-border-top rounded-b-lg">
                             <div className="flex mx-auto w-full p-4 text-xs gap-4 justify-center">
                                 <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-6 py-1 font-bold back-rust rounded-lg hover:scale-105" ><h2>Join Now</h2></button>
                                 <button type="button" onClick={() => {
