@@ -32,6 +32,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
       toast.success("Profile updated successfully");
       setIsLoading(false);
     } else {
+      console.log(response)
       toast.error("Something went wrong.");
       setIsLoading(false);
     }

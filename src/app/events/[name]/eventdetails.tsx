@@ -289,7 +289,7 @@ export default function EventDetails() {
                         <p>Competitive Rank</p>
                         <p className="ml-auto mr-10">Current Prize</p>
                     </div>
-                    <div className="inline-flex self-baseline py-4">
+                    <div className="block self-baseline py-4">
                         {
                             lb.length < 1 ?
                                 <p className="mx-4 py-4 font-bold">0 users have joined this event</p>
