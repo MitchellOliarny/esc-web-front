@@ -103,7 +103,7 @@ export default function ConnectionsSettingsUI({
         >
           <div className="w-full h-full">
             <h2 className="font-bold text-frost text-lg">Discord</h2>
-            <p className="text-ash">Connect your Discord with Esports Clubs.</p>
+            <p className="text-ash">{userInfo?.discord_id ? 'Connected! Click the tile to Disconnect.' : 'Connect your Discord with Esports Clubs. '}</p>
           </div>
           <div className="h-full">
             {userInfo?.discord_id ? (
@@ -118,32 +118,27 @@ export default function ConnectionsSettingsUI({
                 id="discord-profile"
                 className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer"
               >
-                <div className="col-span-2">
+                <div className="flex col-span-2">
                   <Image
                     alt="discord user avatar"
                     width={1000}
                     height={1000}
                     id="discord-avatar"
-                    className="h-14 w-14 mr-4 rounded-full"
+                    className="h-12 w-12 mr-4 rounded-full"
                     src={`https://cdn.discordapp.com/avatars/${userInfo.discord_id}/${userInfo.discord_avatar}.png`}
                   />
                   <h2
                     id="discord-username"
-                    className="font-bold text-white text-left"
+                    className="font-bold text-white text-lg my-auto text-left"
                   >
                     {/* @ts-ignore */}
                     {userInfo?.discord_username}
                   </h2>
-                  <p className="text-white text-left text-xs">Disconnect</p>
 
                 </div>
-                <Image
-                  alt="discord logo"
-                  width={1000}
-                  height={1000}
-                  src="/logos/discord.png"
-                  className="w-auto h-16 cursor-pointer"
-                />
+                <FaDiscord
+                      className="w-auto h-12 mr-4 cursor-pointer"
+                    />
               </div>
             ) : (
               <div className="h-full w-full">
@@ -169,7 +164,7 @@ export default function ConnectionsSettingsUI({
         >
           <div className="w-full h-full">
             <h2 className="font-bold text-frost text-lg">Riot Games</h2>
-            <p className="text-ash">Connect your Riot Games with Esports Clubs. This is necessary to recieve game data.</p>
+            <p className="text-ash">Connect your Riot Games with Esports Clubs. This is necessary to recieve game data. Click the tile to Update.</p>
           </div>
           <div
             className="transition-all h-full w-full flex text-center justify-center items-center rounded-lg cursor-pointer"
@@ -180,7 +175,9 @@ export default function ConnectionsSettingsUI({
               id="updateRiotAccount"
             >
               <h2 className="font-bold text-white text-red-">
-                Update Riot Account
+                {
+                //@ts-ignore
+                userInfo?.riot_name + '#' + userInfo?.riot_tag}
               </h2>
               <Image
                 alt="riot games logo"
