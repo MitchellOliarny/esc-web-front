@@ -22,6 +22,13 @@ export default function ProfileSettingsUI({
     { value: "Sentinel", text: "Sentinel" },
   ];
 
+  const countryOptions = [
+    { value: "", text: "Select your Country" },
+    { value: "US", text: "United States" },
+    { value: "CA", text: "Canada" },
+    { value: "MX", text: "Mexico" },
+  ];
+
   const [preferredRole, setPreferredRole] = useState<string>(
     roleOptions[0].value
   );
@@ -121,7 +128,7 @@ export default function ProfileSettingsUI({
       setIsLoading(false);
       toast.error("Something went wrong. Check form and try again.");
       for (const field in response.errors) {
-        const errorElement = document.getElementById(response.errors[field].param ? response.errors[field].param : response.errors[field].path + "-error");
+        const errorElement = document.getElementById(response.errors[field].param || response.errors[field].path + "-error");
         if (errorElement) {
           // @ts-ignore
           errorElement.innerHTML = response.errors[field].msg;
@@ -158,6 +165,17 @@ export default function ProfileSettingsUI({
         action={handleUpdateProfile}
         className="w-full h-full grid gap-8 py-8"
       >
+
+        <button
+          onClick={() => setIsLoading(true)}
+          type="submit"
+          id="applyChanges"
+          className={`absolute self-start justify-self-end submit btn ${isLoading ? "btn-disabled !bg-[#ac442a]/50" : "btn-ghost"
+            } submit bg-[#f5603c] hover:bg-[#ac442a] text-white w-64 right-8 top-12`}
+        >
+          {isLoading ? <Spinner color="default" /> : "Save Changes"}
+        </button>
+
         <div className="flex h-auto gap-8 min-h-16 w-full">
           <div className="w-[50%] h-full">
             <h2 className="font-bold text-frost text-lg">Email</h2>
@@ -176,11 +194,181 @@ export default function ProfileSettingsUI({
                 autoComplete="on"
               />
               <div className="label">
-                <div id="email-error" className="absolute bottom-4 error-message"></div>
+                <div id="email-error" className="absolute -bottom-3 text-lg font-bold left-4 error-message"></div>
               </div>
             </div>
           </div>
         </div>
+
+        <div className="flex h-auto gap-8 min-h-16 w-full">
+          <div className="w-[50%] h-full">
+            <h2 className="font-bold text-frost text-lg">First & Last Name</h2>
+            <p className="text-ash">Your name is not shown anywhere publicly. We require your name for payment processing purposes.</p>
+          </div>
+          <div className="h-full w-[50%] my-auto flex">
+            {/* FIELD */}
+            <div className="flex items-center justify-center h-full w-full my-auto relative">
+              <input
+                defaultValue={userInfo?.first_name}
+                type="text"
+                className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
+                id="firstName"
+                name="firstName"
+                placeholder="First Name..."
+                autoComplete="off"
+              />
+              <div className="label">
+                <div
+                  id="firstName-error"
+                  className="absolute -bottom-3 text-lg font-bold left-4 error-message"
+                ></div>
+              </div>
+            </div>
+            <div className="flex items-center justify-center h-full w-full my-auto relative">
+              <input
+                defaultValue={userInfo.last_name}
+                type="text"
+                className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
+                id="lastName"
+                name="lastName"
+                placeholder="Last Name..."
+                autoComplete="off"
+              />
+              <div className="label">
+                <div id="lastName-error" className="absolute -bottom-3 text-lg font-bold left-4 error-message"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex h-auto gap-8 min-h-16 w-full">
+          <div className="w-[50%] h-full">
+            <h2 className="font-bold text-frost text-lg">Zipcode</h2>
+            <p className="text-ash">Your zip code is not shown anywhere publicly. We use your location to enhance your Esports Clubs experience and for event registration.</p>
+          </div>
+          <div className="h-full w-[50%] my-auto flex">
+            {/* FIELD */}
+            <div className="flex items-center justify-center h-full w-full my-auto relative">
+              <input
+                defaultValue={userInfo.zipcode}
+                type="text"
+                className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
+                id="zipcode"
+                name="zipcode"
+                placeholder="Zipcode..."
+                autoComplete="off"
+              />
+              <div className="label">
+                <div id="zipcode-error" className="absolute -bottom-3 text-lg font-bold left-4 error-message"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex h-auto gap-8 min-h-16 w-full">
+          <div className="w-[50%] h-full">
+            <h2 className="font-bold text-frost text-lg">Country</h2>
+            <p className="text-ash">Select a Country for which you want to represent in social areas like Clubs and Events.</p>
+          </div>
+          <div className="h-full w-[50%] my-auto flex">
+            {/* FIELD */}
+            <div className="flex items-center justify-center h-full w-full my-auto relative">
+              <select
+                defaultValue={
+                  //@ts-ignore
+                  userInfo?.country || ""
+                }
+                onChange={handleRoleChange}
+                id="country"
+                name="country"
+                className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
+              >
+                {countryOptions.map((country) => (
+                  <option key={country.value} value={country.value} disabled={country.value === ""}>
+                    {country.text}
+                  </option>
+                ))}
+              </select>
+              <div className="label">
+                <div
+                  id="country-error"
+                  className="absolute -bottom-3 text-lg font-bold left-4 error-message"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex h-auto gap-8 min-h-16 w-full">
+          <div className="w-[50%] h-full">
+            <h2 className="font-bold text-frost text-lg">Preferred Role</h2>
+            <p className="text-ash">Select which Role you like to play most. This will display in certain areas of your Profile and to Clubs.</p>
+          </div>
+          <div className="h-full w-[50%] my-auto flex">
+            {/* FIELD */}
+            <div className="flex items-center justify-center h-full w-full my-auto relative">
+              <select
+                defaultValue={
+                  userInfo?.val_rec_preferred_role
+                    ? userInfo?.val_rec_preferred_role
+                    : roleOptions[0].text
+                }
+                onChange={handleRoleChange}
+                id="preferred_role"
+                name="preferred_role"
+                className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
+              >
+                {roleOptions.map((role) => (
+                  <option key={role.value} disabled={role.value === ""}>
+                    {role.text}
+                  </option>
+                ))}
+              </select>
+              <div className="label">
+                <div
+                  id="preferred_role-error"
+                  className="absolute -bottom-3 text-lg font-bold left-4 error-message"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex h-auto gap-8 min-h-16 w-full">
+          <div className="w-[50%] h-full">
+            <h2 className="font-bold text-frost text-lg">Preferred Agent</h2>
+            <p className="text-ash">Select which Agent you like to play most. This will display in certain areas of your Profile and to Clubs.</p>
+          </div>
+          <div className="h-full w-[50%] my-auto flex">
+            {/* FIELD */}
+            <div className="flex items-center justify-center h-full w-full my-auto relative">
+              <select
+                value={preferredAgent}
+                onChange={handleAgentChange}
+                name="display_agent"
+                id="display_agent"
+                className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
+              >
+                {agentOptions.map((agent, index) => (
+                  <option
+                    key={index}
+                    value={agent.id}
+                    disabled={agent.id === ""}
+                  >
+                    {agent.name}
+                  </option>
+                ))}
+              </select>
+              <div className="label">
+                <div
+                  id="display_agent-error"
+                  className="absolute -bottom-3 text-lg font-bold left-4 error-message"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       </form>
 

@@ -106,85 +106,89 @@ export default function ConnectionsSettingsUI({
             <p className="text-ash">Connect your Discord with Esports Clubs.</p>
           </div>
           <div className="h-full">
-          {userInfo?.discord_id ? (
-            <div
-              onClick={() =>
-                (
-                  document.getElementById(
-                    "discord_disconnect"
-                  ) as HTMLDialogElement
-                ).showModal()
-              }
-              id="discord-profile"
-              className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer"
-            >
-              <div className="col-span-2">
-              <Image
-                alt="discord user avatar"
-                width={1000}
-                height={1000}
-                id="discord-avatar"
-                className="h-14 w-14 mr-4 rounded-full"
-                src={`https://cdn.discordapp.com/avatars/${userInfo.discord_id}/${userInfo.discord_avatar}.png`}
-              />
-                <h2
-                  id="discord-username"
-                  className="font-bold text-white text-left"
-                >
-                  {/* @ts-ignore */}
-                  {userInfo?.discord_username}
-                </h2>
-                <p className="text-white text-left text-xs">Disconnect</p>
-              
-              </div>
-              <Image
+            {userInfo?.discord_id ? (
+              <div
+                onClick={() =>
+                  (
+                    document.getElementById(
+                      "discord_disconnect"
+                    ) as HTMLDialogElement
+                  ).showModal()
+                }
+                id="discord-profile"
+                className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer"
+              >
+                <div className="col-span-2">
+                  <Image
+                    alt="discord user avatar"
+                    width={1000}
+                    height={1000}
+                    id="discord-avatar"
+                    className="h-14 w-14 mr-4 rounded-full"
+                    src={`https://cdn.discordapp.com/avatars/${userInfo.discord_id}/${userInfo.discord_avatar}.png`}
+                  />
+                  <h2
+                    id="discord-username"
+                    className="font-bold text-white text-left"
+                  >
+                    {/* @ts-ignore */}
+                    {userInfo?.discord_username}
+                  </h2>
+                  <p className="text-white text-left text-xs">Disconnect</p>
+
+                </div>
+                <Image
                   alt="discord logo"
                   width={1000}
                   height={1000}
                   src="/logos/discord.png"
                   className="w-auto h-16 cursor-pointer"
                 />
-            </div>
-          ) : (
-            <div className="h-full w-full">
-              <Link href="https://api.esportsclubs.gg/settings/connections/discord">
-                <div className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer">
-                  <h2 id="discordConnect" className="font-bold text-white">
-                    Connect your Discord
-                  </h2>
-                  <FaDiscord
-                    className="w-auto h-12 cursor-pointer"
-                  />
-                </div>
-              </Link>
-            </div>
-          )}
+              </div>
+            ) : (
+              <div className="h-full w-full">
+                <Link href="https://api.esportsclubs.gg/settings/connections/discord">
+                  <div className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer">
+                    <h2 id="discordConnect" className="font-bold text-white">
+                      Connect your Discord
+                    </h2>
+                    <FaDiscord
+                      className="w-auto h-12 mr-4 cursor-pointer"
+                    />
+                  </div>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
         <div
           id="riotConnection"
-          className="bg-slate-800 flex items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer"
+          className="flex items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer"
           onClick={onOpen}
         >
-          <Image
-            alt="riot games logo"
-            width={1000}
-            height={1000}
-            src="/logos/riot-games.png"
-            className="w-auto h-16 cursor-pointer"
-          />
+          <div className="w-full h-full">
+            <h2 className="font-bold text-frost text-lg">Riot Games</h2>
+            <p className="text-ash">Connect your Riot Games with Esports Clubs. This is necessary to recieve game data.</p>
+          </div>
           <div
             className="transition-all h-full w-full flex text-center justify-center items-center rounded-lg cursor-pointer"
             id="riotConnect"
           >
             <div
-              className="bg-[#D42B2B] hover:!bg-[#9e2020] transition-all h-full w-full flex text-center justify-center items-center rounded-lg cursor-pointer"
+              className="bg-[#D42B2B] hover:!bg-[#9e2020] transition-all h-full w-full flex text-center justify-between px-6 items-center rounded-lg cursor-pointer"
               id="updateRiotAccount"
             >
               <h2 className="font-bold text-white text-red-">
                 Update Riot Account
               </h2>
+              <Image
+                alt="riot games logo"
+                width={1000}
+                height={1000}
+                src="/logos/riot-games.png"
+                className="w-auto h-16 cursor-pointer"
+              />
             </div>
           </div>
         </div>
@@ -192,7 +196,7 @@ export default function ConnectionsSettingsUI({
         <Modal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
-          className="bg-[#1D2F44] max-w-xl"
+          className="back-graphite max-w-xl"
         >
           <ModalContent>
             {(onClose) => (
