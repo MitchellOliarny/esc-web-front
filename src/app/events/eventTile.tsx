@@ -118,7 +118,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             }
                         </div> : ""
                 }
-                <div className="relative grid h-60 px-6"
+                <div className="relative grid h-64 px-6"
                 onClick={() => {
                     window.open(
                         '/events/' + value.name,
@@ -126,7 +126,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                     );
                 }}>
                     <h2 className="z-20 absolute w-full text-left font-bolder text-4xl -top-6 px-6">{value.name}</h2>
-                    <p className="mt-8 mx-1 font-medium text-base text-ash">{value.description}</p>
+                    <p className="mt-8 mx-1 font-medium text-base text-ash text-ellipsis h-12 w-full overflow-hidden display-[-webkit-box]" style={{WebkitBoxOrient: "vertical", WebkitLineClamp: 2}}>{value.description}</p>
 
                     <div className="grid my-auto py-2 mt-2 px-2 gap-2 self-end">
                         <div className="inline-flex items-center">

@@ -55,10 +55,10 @@ export default function Avatar({ profile_picture }: AvatarProps) {
               ? GetFile(profile_picture)
               : "/avatar.png"
           }
-          onError={({ currentTarget }) => {
-            currentTarget.onerror = null; // prevents looping
-            currentTarget.src = "/avatar.png";
-        }}
+        //   onError={({ currentTarget }) => {
+        //     currentTarget.onerror = null; // prevents looping
+        //     currentTarget.src = "/avatar.png";
+        // }}
           className="rounded-full w-16 h-16 border-2 cursor-pointer object-cover"
         />
         <button onClick={onOpen} className="action-button">Change Avatar</button>
@@ -114,10 +114,10 @@ export default function Avatar({ profile_picture }: AvatarProps) {
                             : GetFile(profile_picture) ||
                               "/avatar.png"
                         }
-                        onError={({ currentTarget }) => {
-                          currentTarget.onerror = null; // prevents looping
-                          currentTarget.src = "/avatar.png";
-                      }}
+                      //   onError={({ currentTarget }) => {
+                      //     currentTarget.onerror = null; // prevents looping
+                      //     currentTarget.src = "/avatar.png";
+                      // }}
                         className="rounded-full w-48 h-48 overflow-hidden border-2 cursor-pointer object-cover"
                       />
                       <FaEdit
