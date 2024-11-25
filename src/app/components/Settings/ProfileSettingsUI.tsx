@@ -150,7 +150,7 @@ export default function ProfileSettingsUI({
       <div className="flex h-auto gap-8 min-h-16 w-full">
         <div className="w-[50%] h-full">
           <h2 className="font-bold text-frost text-lg">Avatar</h2>
-          <p className="text-ash">How you'll be seen on Esports Clubs. File must be .png, .jpg, or .jpeg</p>
+          <p className="text-ash">How you&apos;ll be seen on Esports Clubs. File must be .png, .jpg, or .jpeg</p>
         </div>
         <div className="h-full w-[50%]">
           {/* FIELD */}
