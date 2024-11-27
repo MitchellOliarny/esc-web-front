@@ -39,7 +39,7 @@ export default async function RootLayout({
             pfp={//'https://files.esportsclubs.gg/' + info?.profile_picture || 
               `https://cdn.discordapp.com/avatars/${info?.discord_id}/${info?.discord_avatar}.png`}
           >
-            <div className="">{children}</div>
+            <div className="mt-24 lg:mt-0">{children}</div>
             <Toaster position="bottom-right" reverseOrder={false} />
           </MainNavbar>
           <Footer />

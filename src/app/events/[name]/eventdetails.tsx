@@ -6,16 +6,15 @@ import doFindEvent from "../doFindEvent"
 import doJoinEvent from "../doJoinEvent";
 import doFetchParticipants from "../doFetchParticipants";
 import EventParticipant from "./eventParticipantBox";
-import { formatDateYear, formatTime } from "@/app/utils/helpers";
+import { formatDateYear, formatTime, timeTo, GetFile, } from "@/app/utils/helpers";
 import toast from "react-hot-toast";
 import { CalcRankName } from "@/app/utils/helpers";
 import Link from "next/link";
-import { timeTo, GetFile } from "@/app/utils/helpers";
 import { FaCalendarXmark, FaCheckToSlot } from "react-icons/fa6";
 
 export default function EventDetails() {
 
-    const [event, setEvent] = useState({ medal_condition: 'placeholder:placeholder', gamemodes: "[\"Placeholder\"]", regions: "[\"Placeholder\]", name: '', objective: '', description: '', min_rank: 0, max_rank: 27, entry_fee: 0, game_limit: 0 , start_date: '', end_date: '', winners: 0, prize_pool: 0, prize_type: ''});
+    const [event, setEvent] = useState({ medal_condition: 'placeholder:placeholder', gamemodes: [], regions: [], name: '', objective: '', description: '', min_rank: 0, max_rank: 27, entry_fee: 0, game_limit: 0, start_date: '', end_date: '', winners: 0, prize_pool: 0, prize_type: '' });
     const [isLoading, setIsLoading] = useState(true);
     const [lbLoading, setLBLoading] = useState(true);
     const [timer, setTimer] = useState("");
@@ -143,16 +142,16 @@ export default function EventDetails() {
                                     }}>
                                     <FaCoins className="my-auto mr-2" />
                                     {
-                            event.prize_type == 'even_split' ? 
-                            "Top " + event.winners + " - $" + (event.prize_pool / event.winners) + ' each!'
-                             : event.winners + " Winners - $" + (event.prize_pool) + ' pool!'
-                            }
+                                        event.prize_type == 'even_split' ?
+                                            "Top " + event.winners + " - $" + (event.prize_pool / event.winners) + ' each!'
+                                            : event.winners + " Winners - $" + (event.prize_pool) + ' pool!'
+                                    }
                                 </div> : ""
                         }
                     </div>
                     <div className="relative grid h-auto px-8 back-graphite rounded-b-lg">
-                        <h2 className="absolute w-full text-left font-[700] text-5xl -top-6 px-8">{event.name}</h2>
-                        <div className="my-8 mx-1 font-bold text-lg text-ash text-wrap">
+                        <h2 className="absolute w-full text-left font-[800] lg:text-5xl  md:text-3xl -top-6 px-8">{event.name}</h2>
+                        <div className="my-8 mx-1 font-bold xl:text-lg md:text-base text-ash text-wrap leading-[normal]">
                             <p>{event.description}</p>
                             <br></br>
                             <p>
@@ -190,77 +189,92 @@ export default function EventDetails() {
                             }
                         </div>
 
+                        <div>
 
-                        <div className="flex my-auto py-4 px-2 gap-16 self-end font-bold">
-                            <div className="inline-flex items-center">
-                                <FaBullseye size={'1.75em'} className={`text-voltage`} />
-                                <div className="ml-4">
-                                    <p className="text-ash text-lg">Objective</p>
-                                    <p className="text-xl text-frost">{event.objective}</p>
+                            <div className="flex flex-wrap my-auto py-4 px-2 gap-16 self-end font-bold">
+                                <div className="inline-flex items-center">
+                                    <FaBullseye size={'1.75em'} className={`text-voltage`} />
+                                    <div className="ml-4">
+                                        <p className="text-ash text-lg">Objective</p>
+                                        <p className="text-xl text-frost">{event.objective}</p>
+                                    </div>
+                                </div>
+
+                                <div className="inline-flex items-center">
+                                    <FaStopwatch size={'1.75em'} className={`text-voltage`} />
+                                    <div className="ml-4">
+                                        <p className="text-ash text-lg">Time Remaining</p>
+                                        <p className="text-xl text-frost">{timer}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="inline-flex items-center">
-                                <FaStopwatch size={'1.75em'} className={`text-voltage`} />
-                                <div className="ml-4">
-                                    <p className="text-ash text-lg">Time Remaining</p>
-                                    <p className="text-xl text-frost">{timer}</p>
+                            <div className="flex flex-wrap px-4 py-8 gap-8 font-bold">
+                                <div className="inline-flex gap-4">
+                                    <FaCalendarCheck size={'1.5em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">Start Date</p>
+                                        <p className="text-lg text-frost">{formatDateYear(event.start_date)} @ {formatTime(event.start_date)}</p>
+                                    </div>
+                                </div>
+                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                <div className="inline-flex gap-4">
+                                    <FaCalendarXmark size={'1.5em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">End Date</p>
+                                        <p className="text-lg text-frost">{formatDateYear(event.end_date)} @ {formatTime(event.end_date)}</p>
+                                    </div>
+                                </div>
+                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                <div className="inline-flex gap-4">
+                                    <FaUsers size={'1.5em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">Participants Allowed</p>
+                                        <p className="text-lg text-frost">{
+                                            //@ts-ignore
+                                            lb.length + ' / '}{event.team_limit || "Unlimited"}</p>
+                                    </div>
+                                </div>
+                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                <div className="inline-flex gap-4">
+                                    <FaHourglassHalf size={'1.5em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">Game Limit</p>
+                                        <p className="text-lg text-frost">{event.game_limit || "Unlimited"}</p>
+                                    </div>
+                                </div>
+                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                <div className="inline-flex gap-4">
+                                    <FaStar size={'1.5em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">Ranks Allowed</p>
+                                        <p className="text-lg text-frost">{(event.min_rank == 0 && event.max_rank == 27 ? 'All Ranks' : CalcRankName(event.min_rank).charAt(0).toLocaleUpperCase() + CalcRankName(event.min_rank).slice(1) + " - " + CalcRankName(event.max_rank).charAt(0).toLocaleUpperCase() + CalcRankName(event.max_rank).slice(1))}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="flex px-4 py-8 gap-8 font-bold">
-                            <div className="inline-flex gap-4">
-                                <FaCalendarCheck size={'1.5em'} className="text-ash my-auto" />
-                                <div>
-                                    <p className="text-ash text-base">Start Date</p>
-                                    <p className="text-lg text-frost">{
-                                        //@ts-ignore
-                                        formatDateYear(event.start_date)}</p>
+                            <div className="flex px-4 mt-2 pb-8 gap-8 font-bold">
+                                <div className="inline-flex gap-4">
+                                    <FaDice size={'1.75em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">Gamemodes</p>
+                                        <p className="text-lg text-frost">{event.gamemodes.length > 0 ? event.gamemodes.join(', ') : "None"}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
-                            <div className="inline-flex gap-4">
-                                <FaCalendarXmark size={'1.5em'} className="text-ash my-auto" />
-                                <div>
-                                    <p className="text-ash text-base">End Date</p>
-                                    <p className="text-lg text-frost">{
-                                        //@ts-ignore
-                                        formatDateYear(event.end_date)}</p>
+                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                <div className="inline-flex gap-4">
+                                    <FaGlobe size={'1.5em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">Regions</p>
+                                        <p className="text-lg text-frost">{event.regions.length > 0 ? event.regions.join(', ').toLocaleUpperCase() : "None"}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
-                            <div className="inline-flex gap-4">
-                                <FaUsers size={'1.5em'} className="text-ash my-auto" />
-                                <div>
-                                    <p className="text-ash text-base">Participants Allowed</p>
-                                    <p className="text-lg text-frost">{
-                                        //@ts-ignore
-                                        lb.length + '/'}{event.team_limit || "Unlimited"}</p>
-                                </div>
-                            </div>
-                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
-                            <div className="inline-flex gap-4">
-                                <FaHourglassHalf size={'1.5em'} className="text-ash my-auto" />
-                                <div>
-                                    <p className="text-ash text-base">Game Limit</p>
-                                    <p className="text-lg text-frost">{event.game_limit || "Unlimited"}</p>
-                                </div>
-                            </div>
-                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
-                            <div className="inline-flex gap-4">
-                                <FaStar size={'1.5em'} className="text-ash my-auto" />
-                                <div>
-                                    <p className="text-ash text-base">Ranks Allowed</p>
-                                    <p className="text-lg text-frost">{(event.min_rank == 0 && event.max_rank == 27 ? 'All Ranks' : CalcRankName(event.min_rank).charAt(0).toLocaleUpperCase() + CalcRankName(event.min_rank).slice(1) + " - " + CalcRankName(event.max_rank).charAt(0).toLocaleUpperCase() + CalcRankName(event.max_rank).slice(1))}</p>
-                                </div>
-                            </div>
-                            <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
-                            <div className="inline-flex gap-4">
-                                <FaCheckToSlot size={'1.5em'} className="text-ash my-auto" />
-                                <div>
-                                    <p className="text-ash text-base">Eligibility</p>
-                                    <p className="text-lg text-frost">{event.entry_fee ? "Members Only" : "Public"}</p>
+                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                <div className="inline-flex gap-4">
+                                    <FaCheckToSlot size={'1.5em'} className="text-ash my-auto" />
+                                    <div>
+                                        <p className="text-ash text-base">Eligibility</p>
+                                        <p className="text-lg text-frost">{event.entry_fee ? "Members Only" : "Public"}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -279,14 +293,14 @@ export default function EventDetails() {
                     </div> */}
                     </div>
                 </div>
-                
+
                 <div className="grid px-4 py-4 w-full max-w-[1800px] mx-auto mt-4">
                     <div className="leaderboard-grid w-full text-ash text-sm text-center">
                         <p>Rank</p>
                         <p className="mr-auto ml-20">Player</p>
                         <p>Score</p>
                         <p>Games Played</p>
-                        <p>Competitive Rank</p>
+                        <p className="mr-auto ml-10">Competitive Rank</p>
                         <p className="ml-auto mr-10">Current Prize</p>
                     </div>
                     <div className="block self-baseline py-4">
@@ -297,7 +311,7 @@ export default function EventDetails() {
                                 lb.map((value, index) => {
                                     return (
                                         //@ts-ignore
-                                        <EventParticipant key={value.username + value.tag} value={value} color={borders[4]} position={index + 1} game_limit={event.game_limit} prize={event.prize_type == 'cascade_split' ? '$'+event.prize_split_values[index] : event.prize_pool ? index < event.winners ? '$'+(event.prize_pool/event.winners) : '--': '--'}/>
+                                        <EventParticipant key={value.username + value.tag} value={value} color={borders[4]} position={index + 1} game_limit={event.game_limit} prize={event.prize_type == 'cascade_split' ? '$' + event.prize_split_values[index] : event.prize_pool ? index < event.winners ? '$' + (event.prize_pool / event.winners) : '--' : '--'} />
                                     )
                                 })
                         }

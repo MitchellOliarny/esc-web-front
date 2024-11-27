@@ -23,6 +23,8 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState(false);
 
+  console.log(pathname.split('/'))
+
 
   const handleLoginClick = () => {
     localStorage.setItem("previousPath", pathname);
@@ -46,9 +48,12 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
       ) : pathname.includes("forgot-password" && "reset-password") ? (
         <>{children}</>
       ) : (
-        <nav className="flex my-8 ml-[17.5%] overflow-x-hidden">
-          <div className="back-graphite w-[15vw] h-auto left-5 mr-16 rounded-lg fixed z-10">
-            <div className="w-full h-full max-w-[1800px] mx-auto hidden lg:block bg-none">
+        <nav className="flex my-8 lg:ml-[17.5%] overflow-x-hidden">
+          <div className="w-full lg:w-[15vw] h-auto left-5 mr-16 rounded-lg fixed z-10">
+
+        {/* full nav */}
+            <div className="back-graphite w-full h-full max-w-[1800px] mx-auto hidden 2xl:block bg-none">
+              
               <div className="grid nav-grid items-center h-auto rounded-lg">
                 <div className="relative w-full h-full background-nav rounded-t-lg">
                   <div className="nav-gradient h-full w-full rounded-t-lg">
@@ -83,7 +88,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                     {/* <Link href="/recleague" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${url == 'recleague' ? 'nav-active' : ''}`}>
                       <li className="">Rec League</li>
                     </Link> */}
-                    <Link href="/events" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/events' ? 'nav-active' : ''}`}>
+                    <Link href="/events" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'events' ? 'nav-active' : ''}`}>
                       <FaCalendar />
                       <li className="">Events</li>
                     </Link>
@@ -126,8 +131,80 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
               </div>
             </div>
 
+            {/* Condensed Nav */}
+
+            <div className="back-graphite w-full h-full max-w-[1800px] mx-auto hidden lg:block 2xl:hidden bg-none">
+              
+              <div className="grid nav-grid items-center h-auto rounded-lg">
+                <div className="relative w-full h-full background-nav rounded-t-lg">
+                  <div className="nav-gradient h-full w-full rounded-t-lg">
+                    <Link href="/" className="grid">
+                      <Image
+                        src="/esports-clubs-logo-2.png"
+                        alt="Esports Clubs Logo"
+                        width={1000}
+                        height={1000}
+                        className="absolute self-center justify-self-center top-[-15%] h-[fit-content] w-auto"
+                      />
+                    </Link>
+                  </div>
+                </div>
+                <div className="px-4">
+                  <ul className="inline-grid w-full font-medium text-ash gap-1 pb-2">
+                    {user ?
+                      <Link href="/dashboard" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/dashboard' ? 'nav-active' : ''}`}>
+                        <FaCircleUser />
+                      </Link>
+                      :
+                      <Link href="/" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/' ? 'nav-active' : ''}`}>
+                        <FaHome />
+                      </Link>
+                    }
+                    <Link href="/clubs" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/clubs' ? 'nav-active' : ''}`}>
+                      <FaUsers />
+                    </Link>
+                    {/* <Link href="/recleague" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${url == 'recleague' ? 'nav-active' : ''}`}>
+                      <li className="">Rec League</li>
+                    </Link> */}
+                    <Link href="/events" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1]  == 'events' ? 'nav-active' : ''}`}>
+                      <FaCalendar />
+                    </Link>
+                    <Link href="/tools" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/tools' ? 'nav-active' : ''}`}>
+                      <FaToolbox />
+                    </Link>
+                    <Link href="/about" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/about' ? 'nav-active' : ''}`}>
+                      <FaCircleInfo />
+                    </Link>
+                    <Link href="/faq" className={`coming-soon nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/faq' ? 'nav-active' : ''}`}>
+                      <FaQuestion />
+                    </Link>
+                    <Link href="https://discord.gg/6ufMVF8n6u" target="_blank" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold`}>
+                      <FaDiscord />
+                    </Link>
+                    {user ?
+                      <Link href="/settings" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/settings' ? 'nav-active' : ''}`}
+                      // ?view=My Teams"
+                      >
+                        <FaGear />
+                      </Link>
+                      : ""}
+                  </ul>
+                </div>
+                <div className="flex justify-end w-full gap-2 self-end px-4 nav-border-top">
+                  <NavbarUser
+                    user={user}
+                    riot={riot}
+                    pfp={pfp}
+                    rank={rank}
+                    toggleDrawer={toggleDrawer}
+                    setToggleDrawer={setToggleDrawer}
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* Mobile Navigation */}
-            <div className="lg:hidden bg-[#0C131D]">
+            <div className="back-graphite ml-6 mr-8 z-100 lg:hidden bg-none rounded-lg">
               <div className="flex items-center w-full mx-auto my-0 py-4 px-6">
                 <Link href="/">
                   <Image

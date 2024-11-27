@@ -46,7 +46,7 @@ export default function NavbarUser({
       {user && (
         <Link href="/settings?view=Profile" className="w-full py-4">
           <div
-            className="flex items-center justify-between"
+            className="2xl:flex lg:block items-center justify-between"
             onClick={() => setToggleDrawer(!toggleDrawer)}
           >
             <div className="flex content-center gap-2">
