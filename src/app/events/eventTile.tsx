@@ -100,20 +100,24 @@ export default function EventTile({ value, ended }: EventTileProps) {
                     <div className="rounded-lg px-2"
                         style={{
                             backgroundColor: ended ? '#9BA3AE' : live ? '#FA6E6E' : '#41B9FD',
-                            border: ended ? '#9BA3AE40 2px solid' : live ? '#FA6E6E40 2px solid' : '#41B9FD40 2px solid'
+                            boxShadow: ended ? '0px 0px 0px 3px #9BA3AE40' : live ? '0px 0px 0px 3px #e31d1d40' : '0px 0px 0px 3px #41B9FD40'
                         }}>
-                        {ended ? 'COMPLETED' : live ? 'LIVE' : 'UPCOMING'}
+                        <p>
+                            {ended ? 'COMPLETED' : live ? 'LIVE' : 'UPCOMING'}
+                        </p>
                     </div>
                     {
                         value.user ?
-                        <div className="rounded-lg px-2"
-                        style={{
-                            backgroundColor: '#41B9FD',
-                            border: '#41B9FD40 2px solid'
-                        }}>
-                        JOINED
-                    </div>
-                        : ''
+                            <div className="rounded-lg px-2"
+                                style={{
+                                    backgroundColor: '#41B9FD',
+                                    boxShadow: '0px 0px 0px 3px #41B9FD40'
+                                }}>
+                                <p>
+                                    JOINED
+                                </p>
+                            </div>
+                            : ''
                     }
                 </div>
                 {
