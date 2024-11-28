@@ -50,12 +50,12 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
         <div className="grid grid-cols-12 grid-rows-1 back-slate rounded-lg h-full content-center">
           <div className="col-span-2 flex flex-col w-full h-full game-border-r pl-4 justify-center">
             <h3 className="text-frost text-lg font-bold text-left"> {days_since} <span className="text-ash">• {date}</span></h3>
-            <div className="flex font-bold text-xl text-left">
+            <div className="flex font-bold 2xl:text-lg xl:text-base text-sm text-left">
               <p className="text-frost">{wins} <span className="text-win">Wins</span></p>
               &nbsp;<span className="text-ash">•</span>&nbsp;
               <p className="text-frost">{losses} <span className="text-loss">Losses</span></p>
               {
-                rr_sum ? <div className="text-base flex my-auto">&nbsp;<span className="text-ash">•</span>&nbsp;<p className={`${rr_sum >= 0 ? 'text-win' : 'text-loss'} text-sm my-auto`}>{rr_sum >= 0 ? '+'+rr_sum : rr_sum} RR</p></div> : ''
+                rr_sum ? <div className="flex"> <span className="text-ash">&nbsp;•&nbsp;</span> <p className={`${rr_sum >= 0 ? 'text-win' : 'text-loss'}`}>{rr_sum >= 0 ? '+'+rr_sum : rr_sum} RR</p></div>: ''
               }
             </div>
           </div>

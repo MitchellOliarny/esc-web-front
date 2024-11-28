@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { CalcRankName } from "@/app/utils/helpers";
 import Link from "next/link";
 import { FaCalendarXmark, FaCheckToSlot } from "react-icons/fa6";
+import { useMediaQuery } from 'react-responsive';
 
 export default function EventDetails() {
 
@@ -21,6 +22,8 @@ export default function EventDetails() {
     const [lb, setLB] = useState([])
     const [buttonState, setButtonState] = useState(0);
     leapfrog.register();
+
+    const isBelowLg = useMediaQuery({ maxWidth: 1350 });
 
     const borders = ['#ffca00', '#dbcece', '#ff9f57', '#e9451d', '']
 
@@ -112,7 +115,7 @@ export default function EventDetails() {
     }
     else {
         return (
-            <div className="ml-8">
+            <div className="lg:ml-8 ml-0">
                 <div className="back-graphite flex w-fit h-12 mx-4 mb-4 p-2 rounded-lg cursor-pointer"
                     onClick={() => {
                         window.location.href = "/events"
@@ -151,7 +154,7 @@ export default function EventDetails() {
                     </div>
                     <div className="relative grid h-auto px-8 back-graphite rounded-b-lg">
                         <h2 className="absolute w-full text-left font-[800] lg:text-5xl  text-2xl -top-6 px-8">{event.name}</h2>
-                        <div className="my-8 mx-1 font-bold xl:text-lg md:text-base text-ash text-wrap leading-[normal]">
+                        <div className="md:my-8 mt-12 mb-2 mx-1 font-bold xl:text-lg md:text-base text-ash text-wrap leading-[normal]">
                             <p>{event.description}</p>
                             <br></br>
                             <p>
@@ -193,7 +196,7 @@ export default function EventDetails() {
 
                             <div className="flex flex-wrap my-auto py-4 px-2 gap-16 self-end font-bold">
                                 <div className="inline-flex items-center">
-                                    <FaBullseye size={'1.75em'} className={`text-voltage`} />
+                                    <FaBullseye size={'1.75em'} className={`text-voltage doNotShrink`} />
                                     <div className="ml-4">
                                         <p className="text-ash text-lg">Objective</p>
                                         <p className="text-xl text-frost">{event.objective}</p>
@@ -201,7 +204,7 @@ export default function EventDetails() {
                                 </div>
 
                                 <div className="inline-flex items-center">
-                                    <FaStopwatch size={'1.75em'} className={`text-voltage`} />
+                                    <FaStopwatch size={'1.75em'} className={`text-voltage doNotShrink`} />
                                     <div className="ml-4">
                                         <p className="text-ash text-lg">Time Remaining</p>
                                         <p className="text-xl text-frost">{timer}</p>
@@ -211,23 +214,31 @@ export default function EventDetails() {
 
                             <div className="flex flex-wrap px-4 py-8 gap-8 font-bold">
                                 <div className="inline-flex gap-4">
-                                    <FaCalendarCheck size={'1.5em'} className="text-ash my-auto" />
+                                    <FaCalendarCheck size={'1.5em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">Start Date</p>
                                         <p className="text-lg text-frost">{formatDateYear(event.start_date)} @ {formatTime(event.start_date)}</p>
                                     </div>
                                 </div>
-                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+
+                                {!isBelowLg ?
+                                    <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                    : ''
+                                }
+
                                 <div className="inline-flex gap-4">
-                                    <FaCalendarXmark size={'1.5em'} className="text-ash my-auto" />
+                                    <FaCalendarXmark size={'1.5em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">End Date</p>
                                         <p className="text-lg text-frost">{formatDateYear(event.end_date)} @ {formatTime(event.end_date)}</p>
                                     </div>
                                 </div>
-                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                {!isBelowLg ?
+                                    <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                    : ''
+                                }
                                 <div className="inline-flex gap-4">
-                                    <FaUsers size={'1.5em'} className="text-ash my-auto" />
+                                    <FaUsers size={'1.5em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">Participants Allowed</p>
                                         <p className="text-lg text-frost">{
@@ -235,17 +246,23 @@ export default function EventDetails() {
                                             lb.length + ' / '}{event.team_limit || "Unlimited"}</p>
                                     </div>
                                 </div>
-                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                {!isBelowLg ?
+                                    <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                    : ''
+                                }
                                 <div className="inline-flex gap-4">
-                                    <FaHourglassHalf size={'1.5em'} className="text-ash my-auto" />
+                                    <FaHourglassHalf size={'1.5em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">Game Limit</p>
                                         <p className="text-lg text-frost">{event.game_limit || "Unlimited"}</p>
                                     </div>
                                 </div>
-                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                {!isBelowLg ?
+                                    <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                    : ''
+                                }
                                 <div className="inline-flex gap-4">
-                                    <FaStar size={'1.5em'} className="text-ash my-auto" />
+                                    <FaStar size={'1.5em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">Ranks Allowed</p>
                                         <p className="text-lg text-frost">{(event.min_rank == 0 && event.max_rank == 27 ? 'All Ranks' : CalcRankName(event.min_rank).charAt(0).toLocaleUpperCase() + CalcRankName(event.min_rank).slice(1) + " - " + CalcRankName(event.max_rank).charAt(0).toLocaleUpperCase() + CalcRankName(event.max_rank).slice(1))}</p>
@@ -254,23 +271,29 @@ export default function EventDetails() {
                             </div>
                             <div className="flex flex-wrap px-4 mt-2 pb-8 gap-8 font-bold">
                                 <div className="inline-flex gap-4">
-                                    <FaDice size={'1.75em'} className="text-ash my-auto" />
+                                    <FaDice size={'1.75em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">Gamemodes</p>
                                         <p className="text-lg text-frost">{event.gamemodes.length > 0 ? event.gamemodes.join(', ') : "None"}</p>
                                     </div>
                                 </div>
-                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                {!isBelowLg ?
+                                    <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                    : ''
+                                }
                                 <div className="inline-flex gap-4">
-                                    <FaGlobe size={'1.5em'} className="text-ash my-auto" />
+                                    <FaGlobe size={'1.5em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">Regions</p>
                                         <p className="text-lg text-frost">{event.regions.length > 0 ? event.regions.join(', ').toLocaleUpperCase() : "None"}</p>
                                     </div>
                                 </div>
-                                <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                {!isBelowLg ?
+                                    <hr className="back-slate w-0.5 h-12 border-none my-auto"></hr>
+                                    : ''
+                                }
                                 <div className="inline-flex gap-4">
-                                    <FaCheckToSlot size={'1.5em'} className="text-ash my-auto" />
+                                    <FaCheckToSlot size={'1.5em'} className="text-ash my-auto doNotShrink" />
                                     <div>
                                         <p className="text-ash text-base">Eligibility</p>
                                         <p className="text-lg text-frost">{event.entry_fee ? "Members Only" : "Public"}</p>
@@ -297,11 +320,11 @@ export default function EventDetails() {
                 <div className="grid px-4 py-4 w-full max-w-[1800px] mx-auto mt-4">
                     <div className="leaderboard-grid w-full text-ash text-sm text-center">
                         <p>Rank</p>
-                        <p className="mr-auto lg:ml-20 ml-14">Player</p>
-                        <p>Score</p>
-                        <p>Games Played</p>
-                        <p className="mr-auto lg:ml-10 ml-6">Competitive Rank</p>
-                        <p className="ml-auto lg:mr-10 mr-4">Current Prize</p>
+                        <p className="mr-auto lg:ml-20 ml-6">Player</p>
+                        <p className="tooltip lg:ml-0 ml-[-1em]" data-tip={'Total Objective Completions'}>Score</p>
+                        <p className="tooltip" data-tip={'Games Counted toward Score'}>{isBelowLg ? 'Games' : 'Games Played'}</p>
+                        <p className="mr-auto lg:ml-10 ml-4 tooltip" data-tip={"Competitive Valorant Rank"}>{isBelowLg ? 'CR' : 'Competitive Rank'}</p>
+                        <p className="ml-auto lg:mr-10 mr-2">{isBelowLg ? 'Prize' : 'Current Prize'}</p>
                     </div>
                     <div className="block self-baseline py-4">
                         {
