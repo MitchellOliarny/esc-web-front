@@ -21,7 +21,7 @@ export default function EventsPage(eventsDetails: any, isLoading: boolean) {
 
   return (
     <>
-      <div className="min-h-screen h-auto px-4 pl-16 w-full max-w-[1800px] mx-auto">
+      <div className="min-h-screen h-auto px-4 lg:pl-16 w-full max-w-[1800px] mx-auto">
       <div style={{ display: loading ? 'flex' : 'none', fontSize: '2em', alignContent: 'flex-end', flexWrap: 'wrap-reverse' }} className="mt-4">Loading
           <l-leapfrog
             size="45"

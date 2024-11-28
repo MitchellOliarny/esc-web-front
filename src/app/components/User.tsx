@@ -36,7 +36,7 @@ export default function NavbarUser({
   return (
     <>
       {!user && (
-        <div className="space-x-4 my-4 mx-auto">
+        <div className="2xl:flex grid gap-2 justify-between my-4 mx-auto">
           <LogInBtn onClick={handleLoginClick} />
 
           <SignUpBtn onClick={handleSignUpClick} />
@@ -55,9 +55,9 @@ export default function NavbarUser({
               :
               ''
               }
-              <h2 className="self-center text-sm">{user}</h2>
+              <h2 className="self-center text-sm text-frost">{user}</h2>
             </div>
-            <div className="flex content-center gap-2">
+            <div className="flex content-center gap-2 lg:mt-0 mt-2">
               <Image
                 height={1000}
                 width={1000}

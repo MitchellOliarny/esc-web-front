@@ -135,7 +135,7 @@ export default function EventDetails() {
                         {
                             //@ts-ignore
                             event.prize_pool ?
-                                <div className={`absolute prize-glow flex text-sm rounded-lg justify-self-end self-start py-2 px-4 mx-8 my-4 z-10 bottom-6`}
+                                <div className={`absolute prize-glow flex text-sm rounded-lg justify-self-end top-0 lg:top-auto self-start py-2 px-4 mx-8 my-4 z-10 bottom-6`}
                                     style={{
                                         backgroundColor: '#21945A',
                                         border: '#51D793 2px solid'
@@ -150,7 +150,7 @@ export default function EventDetails() {
                         }
                     </div>
                     <div className="relative grid h-auto px-8 back-graphite rounded-b-lg">
-                        <h2 className="absolute w-full text-left font-[800] lg:text-5xl  md:text-3xl -top-6 px-8">{event.name}</h2>
+                        <h2 className="absolute w-full text-left font-[800] lg:text-5xl  text-2xl -top-6 px-8">{event.name}</h2>
                         <div className="my-8 mx-1 font-bold xl:text-lg md:text-base text-ash text-wrap leading-[normal]">
                             <p>{event.description}</p>
                             <br></br>
@@ -167,29 +167,29 @@ export default function EventDetails() {
                             </p> */}
                         </div>
 
-                        <div className="absolute top-0 right-6 justify-self-end self-baseline py-4 translate-y-[-3em]">
+                        <div className="absolute top-0 lg:right-6 left-6 justify-self-end self-baseline py-4 lg:translate-y-[-3em] translate-y-[-9em] lg:text-xl text-xs">
                             {
                                 //@ts-ignore
                                 buttonState == 3 ?
-                                    <button type="button" className="inline-flex text-xl px-12 py-4 font-bold game-row-border back-obsidian rounded-lg hover:scale-105" ><FaCheck className="my-auto mx-2 text-voltage" /> JOINED</button>
+                                    <button type="button" className="inline-flex px-12 py-4 font-bold game-row-border back-obsidian rounded-lg hover:scale-105" ><FaCheck className="my-auto mx-2 text-voltage" /> JOINED</button>
                                     :
                                     buttonState == 2 ?
-                                        <button type="button" className="inline-flex text-xl px-12 py-4 font-bold bg-[#bd1616] rounded-lg hover:scale-105" >ENDED</button>
+                                        <button type="button" className="inline-flex px-12 py-4 font-bold bg-[#bd1616] rounded-lg hover:scale-105" >ENDED</button>
                                         :
                                         buttonState == 1 ?
-                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-12 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid px-12 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
                                                 //@ts-ignore
                                                 'Join NOW w/ ESC+'
                                             }</span></button>
                                             :
-                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid text-xl px-12 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
+                                            <button type="button" onClick={() => { TryJoinEvent() }} className="grid px-12 py-2 font-bold bg-[#F5603C] rounded-lg hover:scale-105" ><h2>JOIN EVENT</h2><span className="text-sm m-[0] text-[#dedede]">{
                                                 //@ts-ignore
                                                 event.entry_fee == 0 ? 'FREE ENTRY' : 'Requires ESC+'
                                             }</span></button>
                             }
                         </div>
 
-                        <div>
+                        <div className="lg:text-[1em] text-[0.5em]">
 
                             <div className="flex flex-wrap my-auto py-4 px-2 gap-16 self-end font-bold">
                                 <div className="inline-flex items-center">
@@ -252,7 +252,7 @@ export default function EventDetails() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex px-4 mt-2 pb-8 gap-8 font-bold">
+                            <div className="flex flex-wrap px-4 mt-2 pb-8 gap-8 font-bold">
                                 <div className="inline-flex gap-4">
                                     <FaDice size={'1.75em'} className="text-ash my-auto" />
                                     <div>
@@ -297,11 +297,11 @@ export default function EventDetails() {
                 <div className="grid px-4 py-4 w-full max-w-[1800px] mx-auto mt-4">
                     <div className="leaderboard-grid w-full text-ash text-sm text-center">
                         <p>Rank</p>
-                        <p className="mr-auto ml-20">Player</p>
+                        <p className="mr-auto lg:ml-20 ml-14">Player</p>
                         <p>Score</p>
                         <p>Games Played</p>
-                        <p className="mr-auto ml-10">Competitive Rank</p>
-                        <p className="ml-auto mr-10">Current Prize</p>
+                        <p className="mr-auto lg:ml-10 ml-6">Competitive Rank</p>
+                        <p className="ml-auto lg:mr-10 mr-4">Current Prize</p>
                     </div>
                     <div className="block self-baseline py-4">
                         {

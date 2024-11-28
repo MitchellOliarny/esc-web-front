@@ -122,7 +122,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                 </div>
                 {
                     value.prize_pool ?
-                        <div className={`absolute z-20 prize-glow flex text-sm rounded-lg justify-self-end self-start py-3 px-4 m-4 ${ended ? 'grayscale-[1]' : ''}`}
+                        <div className={`absolute z-20 prize-glow flex lg:text-sm text-xs rounded-lg justify-self-end self-start py-3 px-4 m-4 ${ended ? 'grayscale-[1]' : ''}`}
                             style={{
                                 backgroundColor: '#21945A',
                                 border: '#51D793 2px solid'
@@ -142,10 +142,10 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             //'_blank' // <- This is what makes it open in a new window.
                         );
                     }}>
-                    <h2 className="z-20 absolute w-full text-left font-bolder text-4xl -top-6 px-6">{value.name}</h2>
-                    <p className="mt-8 mx-1 font-medium text-base text-ash text-ellipsis h-12 w-full overflow-hidden display-[-webkit-box]" style={{ WebkitBoxOrient: "vertical", WebkitLineClamp: 2 }}>{value.description}</p>
+                    <h2 className="z-20 absolute w-full text-left font-[800] lg:text-4xl text-2xl -top-6 px-6">{value.name}</h2>
+                    <p className="lg:mt-8 mt-2 mx-1 font-medium text-base text-ash text-ellipsis h-12 w-full overflow-hidden display-[-webkit-box]" style={{ WebkitBoxOrient: "vertical", WebkitLineClamp: 2 }}>{value.description}</p>
 
-                    <div className="grid my-auto py-2 mt-2 px-2 gap-2 self-end">
+                    <div className="grid my-auto h-auto py-2 mt-2 px-2 gap-2 self-end">
                         <div className="inline-flex items-center">
                             <FaBullseye size={'1.25em'} className={`${ended ? 'text-ash' : 'text-voltage'}`} />
                             <div className="ml-4">
@@ -183,7 +183,7 @@ export default function EventTile({ value, ended }: EventTileProps) {
                             //'_blank' // <- This is what makes it open in a new window.
                         );
                     }}>
-                    <div className="grid grid-cols-2 px-4 py-8 gap-8">
+                    <div className="lg:grid lg:grid-cols-2 flex flex-wrap px-4 py-8 gap-8">
                         <div className="inline-flex gap-4">
                             <FaUsers size={'1em'} className="text-ash my-auto" />
                             <div>

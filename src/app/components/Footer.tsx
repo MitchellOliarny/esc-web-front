@@ -29,14 +29,17 @@ const Footer = () => {
           <div className="grid xl:grid-cols-12 grid-cols-12 py-20 gap-2 w-full max-w-[1800px] mx-auto h-fit">
             <div className="2xl:col-start-2 col-span-6">
               <h2 className={`mb-4 text-3xl font-black  `}>
-                Our Partners
+                {/* Our Partners */}
               </h2>
               <div className="grid grid-cols-3 items-center gap-10">
 
-                <Link href="https://www.omnic.ai/" target="_blank">
+                {/* <Link href="https://www.omnic.ai/" target="_blank">
                   <Image src="/omnic.png" alt="" width={1000} height={1000} className="w-24 h-auto"/>
-                </Link>
+                </Link> */}
               </div>
+              <span className="text-sm text-ash">
+               * Esports Clubs is not endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+              </span>
             </div>
             <div className="col-start-10 col-span-3">
               <h2 className={`mb-4 text-3xl font-black `}>
@@ -75,7 +78,7 @@ const Footer = () => {
               <h2
                 className={`mb-4 text-2xl font-black text-center `}
               >
-                Our Partners
+                {/* Our Partners */}
               </h2>
               <div className="grid grid-cols-3 items-center gap-4">
                 {/* <Link href="https://www.alliedesports.gg/">
@@ -91,10 +94,13 @@ const Footer = () => {
                   <Image src="/hyperx.png" alt="" width={1000} height={1000} />
                 </Link> */}
 
-                <Link href="https://www.omnic.ai/">
+                {/* <Link href="https://www.omnic.ai/">
                   <Image src="/omnic.png" alt="" width={1000} height={1000} />
-                </Link>
+                </Link> */}
               </div>
+              <span className="text-sm text-ash">
+               * Esports Clubs is not endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+              </span>
             </div>
             <div className="flex flex-col items-center">
               <h2 className={`mb-4 text-2xl font-black `}>
