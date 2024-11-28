@@ -38,7 +38,7 @@ const Footer = () => {
                 </Link> */}
               </div>
               <span className="text-sm text-ash">
-               * Esports Clubs is not endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+               * {"Esports Clubs is not endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc."}
               </span>
             </div>
             <div className="col-start-10 col-span-3">
@@ -99,7 +99,7 @@ const Footer = () => {
                 </Link> */}
               </div>
               <span className="text-sm text-ash">
-               * Esports Clubs is not endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+               * {"Esports Clubs is not endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc."}
               </span>
             </div>
             <div className="flex flex-col items-center">
