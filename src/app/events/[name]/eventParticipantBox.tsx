@@ -17,7 +17,8 @@ interface EventTileProps {
 export default function EventParticipant({ value, color, position, game_limit, prize }: EventTileProps) {
 
     const background = value?.val_banner;
-    const isBelowLg = useMediaQuery({ maxWidth: 1023 });
+    const isBelowLg = useMediaQuery({ maxWidth: 1350 });
+    
 
     return (
         <>
@@ -56,7 +57,7 @@ export default function EventParticipant({ value, color, position, game_limit, p
                         <p className="m-auto">{value.score}</p>
                 </div>
                 <div className="flex my-auto border-right h-full">
-                        <p className="m-auto">{value.game_count} <span className="text-ash">/ {game_limit || isBelowLg ? "∞" : 'Unlimited'}</span> </p>
+                        <p className="m-auto">{value.game_count} <span className="text-ash">/ {game_limit || (isBelowLg ? "∞" : 'Unlimited')}</span> </p>
                 </div>
                 <div className="flex my-auto h-full">
                         <img className="my-auto lg:mx-8 mx-4 w-8 h-8" src={`https://api.esportsclubs.gg/images/ranks/${value.val_rank}`}></img>
