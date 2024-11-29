@@ -568,6 +568,10 @@ select.transparent > option {
   background: linear-gradient(0deg, var(--graphite) 1%, #0000005e 80%);
 }
 
+.agent-box-gradient {
+  background: linear-gradient(270deg, var(--graphite) 1%, #0000005e 80%);
+}
+
 .gradient-agent-overlay {
   position: absolute;
   z-index: 1;

@@ -127,6 +127,7 @@ export default function Header({
             agentGames={agentGames}
             topAgents={newTopAgents}
             valAverage={valAverages}
+            valAgents={valAgents}
             maps={valMaps}
           />
         );

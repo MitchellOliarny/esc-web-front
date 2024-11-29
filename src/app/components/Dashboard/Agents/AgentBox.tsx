@@ -7,14 +7,18 @@ interface AgentBoxProps {
   agentAverages: any;
   agentId: string;
   maps: any;
+  agentInfo: any;
 }
 
 const AgentBox = ({
   agentGames,
   agentAverages,
   agentId,
-  maps
+  maps,
+  agentInfo
 }: AgentBoxProps) => {
+
+  console.log(agentInfo)
 
   const isWin = (game: UserGames) => {
     const playerTeam = game.team.toLowerCase();
@@ -41,6 +45,11 @@ const AgentBox = ({
   let ability1 = 0;
   let ability2 = 0;
   let grenade = 0;
+
+  let plants = 0;
+  let defuses = 0;
+  let kills = 0;
+  let deaths = 0;
 
   let totalCluthes = 0;
   let totalOneOnOne = 0;
@@ -81,6 +90,11 @@ const AgentBox = ({
     hsPercentage += (agentGames[x] as UserGames).stats.hs_percent;
     adrPercentage += (agentGames[x] as UserGames).stats.adr;
     kastPercentage += (agentGames[x] as UserGames).kast;
+
+    plants += (agentGames[x] as UserGames).stats.plants;
+    defuses += (agentGames[x] as UserGames).stats.defuses;
+    kills += (agentGames[x] as UserGames).stats.kills;
+    deaths += (agentGames[x] as UserGames).stats.deaths
 
     fKillRWins += (agentGames[x] as UserGames).f_kills_deaths.fKillRWin;
     fKills += (agentGames[x] as UserGames).f_kills_deaths.fKills;
@@ -176,7 +190,7 @@ const AgentBox = ({
 
 
 
-  const ultimate_points = "0"
+  const ultimate_points = "~"+Math.round(((ultimates * agentInfo.ult_points)/(kills + deaths + plants + defuses))*100);
   const hs_percent = (hsPercentage/ agentGames?.length).toFixed(2);
   const ability1_points = (ability1 / agentGames?.length).toFixed(2)
   const ability2_points = (ability2 / agentGames?.length).toFixed(2)
@@ -262,7 +276,7 @@ const AgentBox = ({
 
           <div className="grid grid-cols-10 items-center m-2 w-full">
             <div className="inline col-span-3 h-16">
-              <h2 className="font-bold text-ash text-sm">
+              <h2 className="font-bold text-ash text-sm mb-2">
                 Points Utilized
               </h2>
               <div className="inline-flex">
@@ -274,15 +288,15 @@ const AgentBox = ({
                   className="w-auto h-12 m-auto"
                 />
 
-                <p className="text-frost text-center justify-self-start font-bold text-4xl leading-none my-auto ml-4">
+                <p className="text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-4">
                   {ultimate_points}%
                 </p>
 
               </div>
             </div>
 
-            <div className="inline col-span-7 px-2 h-16">
-              <h2 className="font-bold text-ash text-sm">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
+            <div className="inline col-span-7 px-2 mr-2 h-16">
+              <h2 className="font-bold text-ash text-sm mb-2">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
               <div className="flex justify-between h-12">
                 <div className="flex items-center gap-2">
                   <Image
@@ -290,7 +304,7 @@ const AgentBox = ({
                     height={1000}
                     alt="Ability Icon 1"
                     src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability1/displayicon.png`}
-                    className="w-auto h-8 text-ash"
+                    className="w-auto h-8 text-ash brightness-[.55]"
                   />
                   <p className="text-xl font-bold">{ability1_points}</p>
                 </div>
@@ -301,7 +315,7 @@ const AgentBox = ({
                     height={1000}
                     alt="Ability Icon 2"
                     src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability2/displayicon.png`}
-                    className="w-auto h-8 text-ash"
+                    className="w-auto h-8 text-ash brightness-[.55]"
                   />
                   <p className="text-xl font-bold">{ability2_points}</p>
                 </div>
@@ -312,7 +326,7 @@ const AgentBox = ({
                     height={1000}
                     alt="Grenade Icon"
                     src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
-                    className="w-auto h-8 text-ash"
+                    className="w-auto h-8 text-ash brightness-[.55]"
                   />
                   <p className="text-xl font-bold">{grenade_points}</p>
                 </div>

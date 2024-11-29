@@ -108,7 +108,7 @@ const DashboardFilter = ({
   return (
     <>
       <div className="bg-none py-2 rounded-lg">
-        <div className={`dashfilter grid ${'grid-cols-' + (isAdmin ? '8' : '7')} gap-4 font-bold text-frost`}>
+        <div className={`h-full dashfilter flex gap-4 font-bold text-frost`}>
 
           {isAdmin ? (
             <input
@@ -224,7 +224,7 @@ const DashboardFilter = ({
             ))}
           </select>
 
-          <select
+          {/* <select
             className="select select-bordered w-full max-w-xs"
             value={selectedSize}
             onChange={(e) => setSelectedSize(e.target.value)}
@@ -234,10 +234,10 @@ const DashboardFilter = ({
                 {size.text}
               </option>
             ))}
-          </select>
+          </select> */}
 
           <Button
-            className="w-full h-full font-bold text-xl rounded-lg bg-[#f5603c]"
+            className="w-full h-auto font-bold text-xl rounded-lg bg-[#f5603c]"
             color="primary"
             onClick={handleSearch}
           >

@@ -77,6 +77,15 @@ const OverviewUI = ({
     }
   };
 
+  let agent_array: { [key: string]: any } = {};
+  for (const x in valAgents) {
+    agent_array[valAgents[x].name] = valAgents[x];
+  }
+  let maps_array: { [key: string]: any } = {};
+  for (const x in valMaps) {
+    maps_array[valMaps[x].name] = valMaps[x];
+  }
+
 
   const recentGames = userGames?.slice(0, 10);
 
@@ -131,7 +140,7 @@ const OverviewUI = ({
             <div>
               {recentGames?.length > 0 && (
                 // @ts-ignore
-                <AgentBoxV2 agentGames={topAgentGames} agentAverages={valAverage && valAverage[ranks[current_rank]] ? valAverage[ranks[current_rank]][topAgentName] : {}} agentId={topAgentId} />
+                <AgentBoxV2 agentGames={topAgentGames} agentAverages={valAverage && valAverage[ranks[current_rank]] ? valAverage[ranks[current_rank]][topAgentName] : {}} agentId={topAgentId} agentInfo={agent_array[topAgentName]} maps={maps_array}/>
               )}
             </div>
           </div>

@@ -40,10 +40,10 @@ const CareerHealth = ({ userGames }: CareerHealthUIProps) => {
         scores[4]++;
         break;
       case -5 >= difference && difference >= -8:
-        scores[4]++;
+        scores[5]++;
         break;
       case -9 >= difference && difference >= -13:
-        scores[4]++;
+        scores[6]++;
         break;
     }
   };
