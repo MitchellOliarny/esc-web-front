@@ -26,7 +26,7 @@ export default async function RootLayout({
   const data = await userSession();
   const user = await userInfo();
   const info = user.data?.info;
-   //console.log(info);
+   //console.log(data);
 
   return (
     <html lang="en">
@@ -38,6 +38,7 @@ export default async function RootLayout({
             riot={info?.riot_name || ''}
             pfp={//'https://files.esportsclubs.gg/' + info?.profile_picture || 
               `https://cdn.discordapp.com/avatars/${info?.discord_id}/${info?.discord_avatar}.png`}
+            isAdmin={data?.isAdmin || 0}
           >
             <div className="mt-24 lg:mt-0">{children}</div>
             <Toaster position="bottom-right" reverseOrder={false} />

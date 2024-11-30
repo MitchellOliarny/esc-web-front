@@ -8,7 +8,7 @@ import NavbarUser from "./User";
 import FormMenu from "../login/page";
 import LogInBtn from "./Buttons/LogInBtn";
 import SignUpBtn from "./Buttons/SignUpBtn";
-import { FaCalendar, FaDiscord, FaHome, FaQuestion, FaToolbox, FaUser, FaUsers } from "react-icons/fa";
+import { FaCalendar, FaCode, FaDiscord, FaHome, FaQuestion, FaToolbox, FaUser, FaUsers } from "react-icons/fa";
 import { FaCircleInfo, FaCircleUser, FaGear } from "react-icons/fa6";
 
 interface MainNavbarProps {
@@ -17,14 +17,15 @@ interface MainNavbarProps {
   pfp: string;
   children: React.ReactNode;
   rank: string | number;
+  isAdmin: number;
 }
 
-const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank }) => {
+const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank, isAdmin }) => {
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState(false);
 
   //console.log(pathname.split('/'))
-
+  //console.log(isAdmin)
 
   const handleLoginClick = () => {
     localStorage.setItem("previousPath", pathname);
@@ -52,7 +53,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
           <div className="w-full lg:w-[15vw] h-auto left-5 mr-16 rounded-lg fixed" style={{zIndex: 100}}>
 
             {/* full nav */}
-            <div className="back-graphite w-full h-full max-w-[1800px] mx-auto hidden 2xl:block bg-none">
+            <div className="back-graphite w-full h-full max-w-[1800px] mx-auto hidden 2xl:block bg-none rounded-lg">
 
               <div className="grid nav-grid items-center h-auto rounded-lg">
                 <div className="relative w-full h-full background-nav rounded-t-lg">
@@ -68,7 +69,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                     </Link>
                   </div>
                 </div>
-                <div className="px-4">
+                <div className="px-4 ">
                   <ul className="inline-grid w-full font-medium text-ash gap-1 pb-2">
                     {user ?
                       <Link href="/dashboard" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/dashboard' ? 'nav-active' : ''}`}>
@@ -108,6 +109,14 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                       <FaDiscord />
                       <li className="">Discord</li>
                     </Link>
+                    {isAdmin == 1 ?
+                      <Link href="/admin/form" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
+                      // ?view=My Teams"
+                      >
+                        <FaCode />
+                        <li className="">Admin Panel</li>
+                      </Link>
+                      : ""}
                     {user ?
                       <Link href="/settings" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/settings' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
@@ -118,7 +127,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                       : ""}
                   </ul>
                 </div>
-                <div className="flex justify-end w-full gap-2 self-end px-4 nav-border-top">
+                <div className="flex justify-end w-full gap-2 self-end px-4 nav-border-top rounded-b-lg">
                   <NavbarUser
                     user={user}
                     riot={riot}
@@ -133,7 +142,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
 
             {/* Condensed Nav */}
 
-            <div className="back-graphite w-full h-full max-w-[1800px] mx-auto hidden lg:block 2xl:hidden bg-none">
+            <div className="back-graphite w-full h-full max-w-[1800px] mx-auto hidden lg:block 2xl:hidden bg-none rounded-lg">
 
               <div className="grid nav-grid items-baseline h-auto rounded-lg">
                 <div className="relative w-full h-full background-nav rounded-t-lg">
@@ -181,6 +190,14 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                     <Link href="https://discord.gg/6ufMVF8n6u" target="_blank" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold`}>
                       <FaDiscord />
                     </Link>
+                    {isAdmin == 1 ?
+                      <Link href="/admin/form" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
+                      // ?view=My Teams"
+                      >
+                        <FaCode />
+                        <li className=""></li>
+                      </Link>
+                      : ""}
                     {user ?
                       <Link href="/settings" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/settings' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
@@ -297,6 +314,14 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                         <FaDiscord />
                         <li className="">Discord</li>
                       </Link>
+                      {isAdmin == 1 ?
+                      <Link href="/admin/form" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
+                      // ?view=My Teams"
+                      >
+                        <FaCode />
+                        <li className="">Admin Panel</li>
+                      </Link>
+                      : ""}
                       {user ?
                         <Link href="/settings" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname == '/settings' ? 'nav-active' : ''}`}
                         // ?view=My Teams"

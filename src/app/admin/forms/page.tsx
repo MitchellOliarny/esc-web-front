@@ -2,9 +2,10 @@
 import { api } from "@/app/utils/helpers";
 import { cookies } from "next/headers";
 import { userInfo, userSession } from "@/app/utils/authHelpers";
-import MedalEventForm from "./medalEventForm";
+import Forms from "./forms";
 
 import type { Metadata } from 'next'
+import { useState } from "react";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -24,6 +25,7 @@ export default async function AdminForm() {
       </>
     )
   }
+
 
   const cookieStore = cookies();
   const token = cookieStore.get("esc-auth");
@@ -56,7 +58,7 @@ export default async function AdminForm() {
 
   return (
     <>
-      <MedalEventForm valMedals={medals.data} />
+      <Forms medals={medals}/>
     </>
   );
 }

@@ -13,7 +13,7 @@ import { convertTimeToUTC } from "@/app/utils/helpers";
 //   adjustFontFallback: false,
 // });
 
-const MedalEventForm = (valMedals: any) => {
+const MedalEventForm = (valMedals: any, goBack: VoidFunction) => {
     const [isLoading, setIsLoading] = useState(false);
     const [medals, setMedals] = useState(null);
 
@@ -211,6 +211,7 @@ const MedalEventForm = (valMedals: any) => {
 
     return (
         <>
+            <button onClick={()=>goBack} className="w-40 h-16 back-graphite rounded-lg mx-8">Back</button>
             <h1 className="p-8 font-bold text-3xl">Create Medal Event</h1>
             <form id="registerForm" className="py-10" onSubmit={handleSubmit}>
                 <div id="eventName" className="px-10 mb-4 gap-2 grid grid-cols-1">
