@@ -53,6 +53,7 @@ export default function Header({
   const [valGames, setValGames] = useState<UserGames[]>(userGames);
   const [newTopAgents, setNewTopAgents] = useState<Agents[]>(topAgents);
   const [valAverages, setValAverages] = useState<ValAverage[]>(valAverage);
+  const [userMedals, setUserMedals] = useState(medalProgress);
   const [gamemode, setGamemode] = useState('Competitive');
   const [medalNotif, setMedalNotif] = useState(0);
 
@@ -62,15 +63,16 @@ export default function Header({
     if (view) {
       handleSideBarClick(view);
     }
+    console.log(userMedals)
     // @ts-ignore
-    if (medalProgress.data.display_medals) {
+    if (typeof userMedals.data.display_medals == 'object') {
       let temp = [];
       // @ts-ignore
       for (let x = 0; x < 3; x++) {
         // @ts-ignore
-        if(medalProgress.data.display_medals[x]) {
+        if(userMedals.data.display_medals[x]) {
         // @ts-ignore
-          temp.push(bucket + (medalProgress.data.display_medals[x]) + '.png')
+          temp.push(bucket + (userMedals.data.display_medals[x]) + '.png')
         }
         else {
           temp.push('');
@@ -80,7 +82,7 @@ export default function Header({
       setDisplayMedals(temp);
       console.log(temp)
     }
-  }, [view])
+  }, [view, userMedals])
   // console.log(topAgents);
   // console.log(userInfo);
 
@@ -133,7 +135,7 @@ export default function Header({
         );
       case "medals":
         return (
-          <ValorantMedals medalsProgress={medalProgress} medals={medals} change_display_medal={ChangeDisplayMedal} />
+          <ValorantMedals medalsProgress={userMedals} medals={medals} change_display_medal={ChangeDisplayMedal} />
         )
       default:
         return (
@@ -152,8 +154,9 @@ export default function Header({
             onSearch={(newGames: any) => {
               setValGames(newGames.games ? newGames.games : '');
               setNewTopAgents(newGames.agents ? newGames.agents : '');
-              setValAverages(newGames.averages ? newGames.averages : '')
-              setGamemode(newGames.gamemode || 'Competitive')
+              setValAverages(newGames.averages ? newGames.averages : '');
+              setGamemode(newGames.gamemode || 'Competitive');
+              setUserMedals(newGames.medals);
             }}
           />
         );
@@ -362,6 +365,7 @@ export default function Header({
                 setNewTopAgents(newGames.agents);
                 setValAverages(newGames.averages);
                 setGamemode(newGames.gamemode || 'Competitive')
+                setUserMedals(newGames.medals);
               }}
             /> : ''
         }

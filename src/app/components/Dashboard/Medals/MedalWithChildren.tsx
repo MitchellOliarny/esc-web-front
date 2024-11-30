@@ -43,7 +43,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                 }
 
                 if (progress.tiers.length == x) {
-                    setDisplayMedal(4);
+                    setDisplayMedal(5);
                 }
             }
         }
@@ -116,7 +116,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                         <div className="py-4">
                             <div className="w-full cut-corner-45-special">
                                 <progress
-                                    className={`${displayMedal == 4 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                    className={`${displayMedal == 5 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
                                     value={
                                         progress.progress 
@@ -135,7 +135,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                     } 
                                     
                                     %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.progress)}</span> <span className="text-ash text-base">/ {(childTierCount)}</span></h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 5 ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.progress)}</span> <span className="text-ash text-base">/ {(childTierCount)}</span></h2>
                             </div>
                         </div>
                     </div>

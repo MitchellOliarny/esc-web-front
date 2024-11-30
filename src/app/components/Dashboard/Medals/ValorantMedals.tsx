@@ -45,9 +45,9 @@ const ValorantMedals = ({ medals, medalsProgress, change_display_medal }: Valora
         }
         setMedalList(temp);
         setParentList(temp_parent);
-        console.log(temp)
+        //console.log(temp)
         console.log(medalsProgress)
-        console.log(temp_parent)
+        //console.log(temp_parent)
     }
 
     //console.log(medals)

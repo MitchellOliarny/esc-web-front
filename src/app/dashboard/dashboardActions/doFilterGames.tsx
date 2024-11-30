@@ -15,6 +15,8 @@ export default async function doFilterGames(queryParams: any, mode: string) {
 
   // console.log(queryParams)
 
+  let valMedalsProgress = null;
+
   const response = await fetch(
     api + `/val/data/user/matches/${mode ? mode : 'Competitive'}?${queryParams}`,
     {
@@ -24,6 +26,15 @@ export default async function doFilterGames(queryParams: any, mode: string) {
     }
   );
   newUserGames = await response.json();
+
+  const userMedalsProgress = await fetch(api + `/val/data/medals/progress?${queryParams}`, {
+    method: "GET",
+    headers,
+    cache: "no-store",
+  });
+ // console.log(userMedals)
+  valMedalsProgress = await userMedalsProgress.json();
+  //console.log(valMedalsProgress)
 
   let Agents: { agent: string; games: number }[] = [];
 
@@ -64,5 +75,5 @@ export default async function doFilterGames(queryParams: any, mode: string) {
     success = false;
     // console.log("ERROR: Please try again later");
   }
-  return { games: newUserGames.data, agents: Agents, averages: valAverages?.data, gamemode: mode, success: success };
+  return { games: newUserGames.data, agents: Agents, averages: valAverages?.data, gamemode: mode, medals: valMedalsProgress, success: success };
 }

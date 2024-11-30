@@ -38,7 +38,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                 }
 
                 if (progress.tiers.length == x) {
-                    setDisplayMedal(4);
+                    setDisplayMedal(5);
                 }
             }
 
@@ -103,7 +103,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                         <div className="py-8">
                             <div className="w-full cut-corner-45-special">
                                 <progress
-                                    className={`${displayMedal == 4 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                    className={`${displayMedal == 5 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
                                     value={displayMedal}
                                     max={Object.keys(medalInfo.medal_tiers).length}
@@ -111,7 +111,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                             </div>
                             <div className="w-full inline-flex justify-between px-2">
                                 <h2 className="font-bold text-frost text-lg">{((displayMedal / Object.keys(medalInfo.medal_tiers).length) * 100).toFixed(1)} %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 5 ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
                             </div>
                         </div>
                     </div>

@@ -30,6 +30,7 @@ const DashboardFilter = ({
   const [selectedMap, setSelectedMap] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
+  const [studentPUUID, setStudentPUUID] = useState("");
   const [selectedAgent, setSelectedAgent] = useState("");
   const [selectedMode, setSelectedMode] = useState("Competitive");
   const [selectedSeason, setSelectedSeason] = useState("");
@@ -87,8 +88,18 @@ const DashboardFilter = ({
     if (selectedRole) queryParams.append("role", selectedRole);
     if (selectedAgent) queryParams.append("agent", selectedAgent);
     if (selectedSeason) queryParams.append("season", selectedSeason);
-    if (selectedSize) queryParams.append("size", selectedSize);
-    if (selectedUser) queryParams.append("studentPUUID", selectedUser);
+    // if (selectedSize) queryParams.append("size", selectedSize);
+    if (selectedUser) {
+      for (const x in users) {
+        //@ts-ignore
+        if(users[x].username == selectedUser.split('#')[0] && users[x].tag == selectedUser.split('#')[1]) {
+          //@ts-ignore
+          queryParams.append("student", users[x].puuid);
+        }
+      }
+    }
+
+    //console.log(queryParams)
 
     // return router.push(`/dashboard?${queryParams}`);
     // Dashboard(`${queryParams}`);
@@ -114,7 +125,10 @@ const DashboardFilter = ({
             <input
               className="select select-bordered w-full max-w-xs"
               value={selectedUser}
-              onChange={(e) => { setSelectedUser(e.target.value) }}
+              onChange={(e) => { 
+                //@ts-ignore
+                setSelectedUser(e.target.value);
+              }}
               onInput={(e) => {
                 //@ts-ingore
                 hideList((e.target as HTMLInputElement).value)
