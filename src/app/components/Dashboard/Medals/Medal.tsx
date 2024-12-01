@@ -99,7 +99,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                                 </div>
                             </div>
                         </div>
-                        <p className="text-ash text-base py-2 pr-10">{medalInfo?.medal_description}</p>
+                        <p className="text-ash text-base py-2 pr-10">{medalInfo?.medal_description.replace('XXX', '').replace(' times', '')}</p>
                         <div className="py-8">
                             <div className="w-full cut-corner-45-special">
                                 <progress

@@ -111,7 +111,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                 </div>
                             </div>
                         </div>
-                        <p className="text-ash text-base py-2 pr-10">{medalInfo?.medal_description}</p>
+                        <p className="text-ash text-base py-2 pr-10">{medalInfo?.medal_description.replace('XXX', '').replace(' times', '')}</p>
                         <p className="text-ash text-base py-2 pr-10">A new mastery tier medal is unlocked for every 20% complete</p>
                         <div className="py-4">
                             <div className="w-full cut-corner-45-special">
