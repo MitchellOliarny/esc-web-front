@@ -134,7 +134,7 @@ const OverviewUI = ({
         <div className="mt-4">
 
           <h2 className="text-4xl font-bold py-4 col-span-4">Stats</h2>
-          <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 mb-4">
+          <div className="grid 2xl:grid-cols-2 grid-cols-1 gap-4 mb-4">
             {/* @ts-ignore */}
             <StatsScore userGames={userGames} valAverage={valAverage ? valAverage[ranks[current_rank]]?.all : null} />
             <div>
@@ -145,7 +145,7 @@ const OverviewUI = ({
             </div>
           </div>
 
-          <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 mb-4">
+          <div className="grid 2xl:grid-cols-2 grid-cols-1 gap-4 mb-4">
             <div className="grid cols-span-12">
               <StatsPanel
                 userInfo={userInfo}

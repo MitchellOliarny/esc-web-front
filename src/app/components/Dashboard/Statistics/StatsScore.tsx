@@ -229,7 +229,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
 
                 <div className={`${lineWidth} ${lineHeight} back-slate my-auto`}></div>
 
-                <div className="pl-10">
+                <div className="pl-10 pb-4">
                   <div className="grid grid-cols-3 grid-rows-2 gap-12 my-auto w-full">
                     <div>
                       <div

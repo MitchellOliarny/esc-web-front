@@ -157,7 +157,7 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
                             Object.keys(medals).map((medal: any, index: number) => {
                                 return (
                                     //@ts-ignore
-                                    <option value={medals[medal].id}>{medals[medal].id}</option>
+                                    <option value={medals[medal].id} key={medals[medal].id}>{medals[medal].id}</option>
                                 )
                             })
                         }
@@ -433,7 +433,7 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
                                 Object.keys(medals).map((medal: any, index: number) => {
                                     return (
                                         //@ts-ignore
-                                        <option value={medals[medal].id}>{medals[medal].id}</option>
+                                        <option value={medals[medal].id} key={medals[medal].id}>{medals[medal].id}</option>
                                     )
                                 })
                             }

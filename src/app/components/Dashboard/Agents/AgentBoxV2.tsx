@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import StatsScore from "../Statistics/StatsScore";
+import { calculatePercentile } from "@/app/utils/helpers";
 
 interface AgentBoxProps {
   agentGames: any;
@@ -21,6 +21,8 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
       return false;
     }
   };
+
+  console.log(agentAverages)
 
   const totalGames = agentGames.length;
   let totalWins = 0;
@@ -182,7 +184,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
   const mapId = sortedMapsByWinPercent[0].id;
   const bestMap = sortedMapsByWinPercent[0].map;
 
-  const hs_percent = (hsPercentage / agentGames?.length).toFixed(2);
+  const hs_percent = (hsPercentage / agentGames?.length);
   const ultimate_points = "~" + (((ultimates * agentInfo.ult_points) / (kills + deaths + plants + defuses)) * 100).toFixed(1);
   const ability1_points = (ability1 / agentGames?.length).toFixed(2);
   const ability2_points = (ability2 / agentGames?.length).toFixed(2);
@@ -206,6 +208,56 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
   const one_on_four = clutchesTotals["1v4"] ? clutchesTotals["1v4"] : 0;
   //@ts-ignore
   const one_on_five = clutchesTotals["1v5"] ? clutchesTotals["1v5"] : 0;
+
+  const hs_percentile = calculatePercentile(
+    (hs_percent / agentGames?.length),
+    // @ts-ignore
+    agentAverages?.median?.hs_percent,
+    // @ts-ignore
+    agentAverages?.min?.hs_percent,
+    // @ts-ignore
+    agentAverages?.max?.hs_percent
+  );
+
+  const ult_percentile = calculatePercentile(
+    (ultimates / agentGames?.length),
+    // @ts-ignore
+    agentAverages?.median?.ultimate,
+    // @ts-ignore
+    agentAverages?.min?.ultimate,
+    // @ts-ignore
+    agentAverages?.max?.ultimate
+  );
+
+  const ability_1_percentile = calculatePercentile(
+    (ability1 / agentGames?.length),
+    // @ts-ignore
+    agentAverages?.median?.ability1,
+    // @ts-ignore
+    agentAverages?.min?.ability1,
+    // @ts-ignore
+    agentAverages?.max?.ability1
+  );
+
+  const ability_2_percentile = calculatePercentile(
+    (ability2 / agentGames?.length),
+    // @ts-ignore
+    agentAverages?.median?.ability2,
+    // @ts-ignore
+    agentAverages?.min?.ability2,
+    // @ts-ignore
+    agentAverages?.max?.ability2
+  );
+
+  const grenade_percentile = calculatePercentile(
+    (grenade / agentGames?.length),
+    // @ts-ignore
+    agentAverages?.median?.grenade,
+    // @ts-ignore
+    agentAverages?.min?.grenade,
+    // @ts-ignore
+    agentAverages?.max?.grenade
+  );
 
   return (
     <>
@@ -267,7 +319,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
                     className="w-auto h-12 m-auto"
                   />
 
-                  <p className="text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-4">
+                  <p className={`text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-4 ${'text-'+ult_percentile.color}`}>
                     {ultimate_points}%
                   </p>
 
@@ -276,7 +328,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
 
               <div className="inline col-span-7 px-2 mr-4 h-16">
                 <h2 className="font-bold text-ash text-sm mb-2">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
-                <div className="flex justify-between h-12">
+                <div className="flex justify-between h-12 text-frost">
                   <div className="flex items-center gap-2">
                     <Image
                       width={1000}
@@ -285,7 +337,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
                       src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability1/displayicon.png`}
                       className="w-auto h-8 text-ash brightness-[.55]"
                     />
-                    <p className="text-xl font-bold">{ability1_points}</p>
+                    <p className={`text-xl font-bold ${'text-'+ability_1_percentile.color}`}>{ability1_points}</p>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -296,7 +348,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
                       src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability2/displayicon.png`}
                       className="w-auto h-8 text-ash brightness-[.55]"
                     />
-                    <p className="text-xl font-bold">{ability2_points}</p>
+                    <p className={`text-xl font-bold ${'text-'+ability_2_percentile.color}`}>{ability2_points}</p>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -307,7 +359,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
                       src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
                       className="w-auto h-8 text-ash brightness-[.55]"
                     />
-                    <p className="text-xl font-bold">{grenade_points}</p>
+                    <p className={`text-xl font-bold ${'text-'+grenade_percentile.color}`}>{grenade_points}</p>
                   </div>
                 </div>
               </div>
@@ -315,25 +367,25 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
           </div>
 
           <div className="px-4 rounded-b-lg w-full">
-            <div className="flex mt-2 gap-16">
+            <div className="flex mt-2 gap-16 text-frost">
               <div>
                 <p className="font-bold text-sm text-ash">FK &rarr; Round Win %</p>
-                <p className="font-bold text-xl text-frost]">
+                <p className="font-bold text-xl text-voltage">
                   {fk_round_win}%
                 </p>
               </div>
 
               <div>
                 <p className="font-bold text-sm text-ash">FD &rarr; Round Loss %</p>
-                <p className="font-bold text-xl text-frost">
+                <p className="font-bold text-xl text-rust">
                   {fd_round_loss}%
                 </p>
               </div>
 
               <div>
                 <p className="font-bold text-sm text-ash">HS%</p>
-                <p className="font-bold text-xl  text-frost">
-                  {hs_percent}%
+                <p className={`font-bold text-xl ${'text-'+hs_percentile.color}`}>
+                  {hs_percent.toFixed(2)}%
                 </p>
               </div>
             </div>
