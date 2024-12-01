@@ -7,16 +7,28 @@ import { Spinner } from "@nextui-org/react";
 import { toast } from "react-hot-toast";
 import doSubmitMedalEvent from "./actions/doSubmitMedalEvent";
 import { convertTimeToUTC } from "@/app/utils/helpers";
-// const orbitron = Orbitron({
-//   subsets: ["latin"],
-//   display: "swap",
-//   adjustFontFallback: false,
-// });
 
-const MedalForm = (valMedals: any, goBack: VoidFunction) => {
+const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [medals, setMedals] = useState({})
+    const [medalTiers, setMedalTiers] = useState({})
 
     useEffect(() => {
+        console.log(valMedals)
+        //@ts-ignore
+        let temp = {};
+        let temp2 = {};
+        Object.keys(valMedals.details).map((cat: any, index: number) => {
+                Object.keys(valMedals.details[cat]).map((medal: any, index: number) => {
+                    //@ts-ignore
+                    temp[valMedals.details[cat][medal].id] = valMedals.details[cat][medal]
+                    //@ts-ignore
+                    temp2[valMedals.valMedals[cat][medal].name] = valMedals.valMedals[cat][medal]
+                })
+        })
+        //@ts-ignore
+        setMedals(temp)
+        setMedalTiers(temp2)
     }, [valMedals])
 
     const handleSubmit = async (event: any) => {
@@ -57,17 +69,103 @@ const MedalForm = (valMedals: any, goBack: VoidFunction) => {
     const [category, setCategory] = useState('');
     const [statName, setStatName] = useState('');
     const [statCondition, setStatCondition] = useState('');
-    const [premium, setPremium] = useState('');
+    const [premium, setPremium] = useState(false);
     const [date, setDate] = useState('');
     const [queues, setQueues] = useState('')
     const [parent, setParent] = useState('');
     const [statAdd, setStatAdd] = useState(1)
     const [tierCount, setTierCount] = useState(1);
 
+    const [medalConditions, setMedalConditions] = useState([]);
+
+    const [edit, setEdit] = useState(false);
+    const [editMedal, setEditMedal] = useState('');
+
+    const ChangeEditMedal = (value: string) => {
+        setEditMedal(value);
+        //@ts-ignore
+        setName(medals[value].name);
+        //@ts-ignore
+        setDesc(medals[value].description)
+        //@ts-ignore
+        setCategory(medals[value].category);
+        //@ts-ignore
+        setStatName(medals[value].stat_name)
+        //@ts-ignore
+        setStatCondition(medals[value].stat_condition)
+        //@ts-ignore
+        setStatAdd(medals[value].stat_addition)
+        //@ts-ignore
+        setPremium(medals[value].isPremium ? true : false)
+        //@ts-ignore
+        setDate(new Date(medals[value].creation_date).toISOString().slice(0, 16))
+        //@ts-ignore
+        setQueues(medals[value].gamemodes)
+        //@ts-ignore
+        setParent(medals[value].parent_medal)
+        //@ts-ignore
+        setMedalConditions(medals[value].medal_conditions)
+        //@ts-ignore
+        setTierCount(medals[value].medal_conditions.length)
+    }
+
+    const CreateMedal = () => {
+        setEdit(false)
+        setEditMedal('');
+        //@ts-ignore
+        setName('');
+        //@ts-ignore
+        setDesc('')
+        //@ts-ignore
+        setCategory('');
+        //@ts-ignore
+        setStatName('')
+        //@ts-ignore
+        setStatCondition('')
+        //@ts-ignore
+        setStatAdd('')
+        //@ts-ignore
+        setPremium(false)
+        //@ts-ignore
+        setDate('')
+        //@ts-ignore
+        setQueues('')
+        //@ts-ignore
+        setParent('')
+        //@ts-ignore
+        setMedalConditions('')
+        //@ts-ignore
+        setTierCount(1)
+    }
+
     return (
         <>
             <button onClick={() => goBack} className="w-40 h-16 back-graphite rounded-lg mx-8">Back</button>
             <h1 className="p-8 font-bold text-3xl">Medal Form</h1>
+
+            <div className="m-8 flex gap-8">
+                <button className={`btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border ${!edit ? 'border-white' : 'border-0'} hover:border-white`} onClick={() => CreateMedal()}>Create Medal</button>
+                <div className="inline-flex">
+                    <button className={`btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border ${edit ? 'border-white' : 'border-0'} hover:border-white`} onClick={() => setEdit(true)}>Edit Medal</button>
+                    <select
+                        value={editMedal}
+                        onChange={(e) => ChangeEditMedal(e.target.value)}
+                        className={`${edit ? '' : 'hidden'} input w-full bg-transparent border border-white`}
+                    >
+                        <option>Select a Medal</option>
+                        {
+                            Object.keys(medals).map((medal: any, index: number) => {
+                                return (
+                                    //@ts-ignore
+                                    <option value={medals[medal].id}>{medals[medal].id}</option>
+                                )
+                            })
+                        }
+                    </select>
+                </div>
+            </div>
+
+
             <form id="registerForm" className="py-10" onSubmit={handleSubmit}>
                 <div id="eventName" className="px-10 mb-4 gap-2 grid grid-cols-1">
                     <div>
@@ -129,9 +227,9 @@ const MedalForm = (valMedals: any, goBack: VoidFunction) => {
                         >
 
                             <option disabled value="">Select a Category</option>
-                            <option value="agent">Agent</option>
-                            <option value="weapon">Weapon</option>
-                            <option value="game_event">Game Event</option>
+                            <option value="agent_medals">Agent</option>
+                            <option value="weapon_medals">Weapon</option>
+                            <option value="game_event_medals">Game Event</option>
                         </select>
                         <div
                             id="category-error"
@@ -235,6 +333,50 @@ const MedalForm = (valMedals: any, goBack: VoidFunction) => {
                     className="px-10 mb-4 gap-2 grid grid-cols-5">
 
                     {
+
+                        editMedal ?
+                        //@ts-ignore
+                        Object.keys(medalTiers[editMedal].medal_tiers).map((index, key) => {
+                            return (
+                                <div key={key}>
+                                    <label className="font-bold text-lg">Tier {key + 1}</label>
+                                    <br></br>
+                                    <label>Condition</label>
+                                    <input
+                                    //@ts-ignore
+                                        value={medalTiers[editMedal].medal_tiers[index].condition}
+                                        type="number"
+                                        name={"tier" + (key + 1) + '_condition'}
+                                        id={"tier" + (key + 1) + '_condition'}
+                                        placeholder="Amount needed.."
+                                        className="input w-full bg-transparent border border-white tier-condition"
+                                        required
+
+                                    />
+                                    <div
+                                        id="queues-error"
+                                        className="italic float-left text-red-500 error-message !-mb-3"
+                                    ></div>
+                                    <label>Image</label>
+                                    <input
+                                        type='file'
+                                        name={"tier" + (key + 1) + '_image'}
+                                        id={"tier" + (key + 1) + '_image'}
+                                        placeholder="Tier Image"
+                                        className="input w-full bg-transparent border border-white tier-file"
+                                        required
+
+                                    />
+                                    <label>Existing Image</label>
+                                    <img id={"tier" + (key + 1) + '_curr_image'} alt='none' src={
+                                        //@ts-ignore
+                                        "https://files.esportsclubs.gg/"+medalTiers[editMedal].medal_tiers[index].medal_id} className="h-12 w-auto"></img>
+                                </div>
+                            )
+                        })
+
+                        :
+
                         Array.from({ length: tierCount }).map((index, key) => {
                             return (
                                 <div key={key}>
@@ -288,13 +430,11 @@ const MedalForm = (valMedals: any, goBack: VoidFunction) => {
                         >
                             <option disabled value="">Select a Parent (Leave if none)</option>
                             {
-                                Object.keys(valMedals.valMedals).map((cat: any, index: number) => {
-                                    return(
-                                    Object.keys(valMedals.valMedals[cat]).map((medal: any, index: number) => {
-                                        return (
-                                            <option value={valMedals.valMedals[cat][medal].name}>{valMedals.valMedals[cat][medal].name}</option>
-                                        )
-                                    }))
+                                Object.keys(medals).map((medal: any, index: number) => {
+                                    return (
+                                        //@ts-ignore
+                                        <option value={medals[medal].id}>{medals[medal].id}</option>
+                                    )
                                 })
                             }
                         </select>
@@ -355,8 +495,8 @@ const MedalForm = (valMedals: any, goBack: VoidFunction) => {
                         <label>Premium?</label>
                         <br></br>
                         <input
-                            value={premium}
-                            onChange={(e) => setPremium(e.target.value)}
+                            value={premium ? 'on' : 'off'}
+                            onChange={(e) => setPremium(e.target.checked)}
                             type="checkbox"
                             id="premium"
                             name="premium"
@@ -373,16 +513,39 @@ const MedalForm = (valMedals: any, goBack: VoidFunction) => {
 
                 </div>
 
-                <div className="grid">
-                    <button
-                        id="submitEvent"
+                <div className="grid mt-16">
+                    {edit ? 
+                    <div className="w-full flex gap-4 justify-around">
+                         <button
+                        id="deleteMedal"
+                        type="button"
+                        disabled={isLoading}
+                        className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#db1e1e] hover:bg-[#912a2a] drop-shadow-lg border border-white hover:border-white"
+                    >
+                        {isLoading ? "" : "DELETE MEDAL"}
+                        <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
+                    </button>
+                        <button
+                        id="submitMedal"
                         type="submit"
                         disabled={isLoading}
                         className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
                     >
-                        {isLoading ? "" : "CREATE EVENT"}
+                        {isLoading ? "" : "SUBMIT EDITS"}
                         <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
                     </button>
+                    </div>
+                    :
+                    <button
+                        id="submitMedal"
+                        type="submit"
+                        disabled={isLoading}
+                        className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
+                    >
+                        {isLoading ? "" : "CREATE MEDAL"}
+                        <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
+                    </button>
+                    }
                 </div>
             </form >
 

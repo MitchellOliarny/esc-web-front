@@ -56,9 +56,20 @@ export default async function AdminForm() {
   );
   medals = await response2.json();
 
+  let medal_details = null;
+  const response3 = await fetch(
+    api + `/val/data/medals/details`,
+    {
+      method: "GET",
+      headers,
+      cache: "no-store",
+    }
+  );
+  medal_details = await response3.json();
+
   return (
     <>
-      <Forms medals={medals}/>
+      <Forms medals={medals} medal_details={medal_details}/>
     </>
   );
 }

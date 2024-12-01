@@ -10,7 +10,7 @@ export default async function doSignUpAction(formData: FormData) {
   const result = await response.json();
 
   if (response.ok) {
-    return { success: true };
+    return { success: true, message: 'Account Created! Games within 30 days will be loaded. Check your dashboard!' };
   } else {
     console.error(result.errors);
     console.warn("Token:", result.token);

@@ -52,6 +52,8 @@ const SignUp = () => {
     const response = await doSignUpAction(formData);
     if (response?.success == true) {
       console.log("success");
+      //@ts-ignore
+      toast.success(response?.message)
       const emailElement = document.getElementById(
         "Email"
       ) as HTMLInputElement;

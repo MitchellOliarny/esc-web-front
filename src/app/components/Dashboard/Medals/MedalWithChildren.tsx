@@ -242,12 +242,12 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                 <div className="h-14 flex back-darkslate rounded-b-lg game-row-border-top w-full justify-between px-4 text-sm">
                     <div className="px-4 my-auto inline-flex gap-2">
                         {/* Earners */}
-                        <div className="my-auto text-left">
+                        {/* <div className="my-auto text-left">
                             <p className="text-ash font-bold">Tier 5 First Earner</p>
-                            <p className="text-frost font-bold text-base">{firstEarner || 'Not Claimed'}</p>
+                            <p className="text-frost font-bold text-base">{firstEarner || 'Not Claimed'}</p> */}
                             {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
-                        </div>
-                        <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr>
+                        {/* </div>
+                        <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr> */}
                         <p className="text-frost font-bold my-auto text-base">{Number(medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned).toFixed(1)}% <span className="text-ash text-sm">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">

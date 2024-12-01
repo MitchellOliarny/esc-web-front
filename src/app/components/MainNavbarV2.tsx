@@ -110,7 +110,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                       <li className="">Discord</li>
                     </Link>
                     {isAdmin == 1 ?
-                      <Link href="/admin/form" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
+                      <Link href="/admin/forms" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
                       >
                         <FaCode />
@@ -191,7 +191,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                       <FaDiscord />
                     </Link>
                     {isAdmin == 1 ?
-                      <Link href="/admin/form" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
+                      <Link href="/admin/forms" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
                       >
                         <FaCode />
@@ -315,7 +315,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                         <li className="">Discord</li>
                       </Link>
                       {isAdmin == 1 ?
-                      <Link href="/admin/form" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
+                      <Link href="/admin/forms" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
                       >
                         <FaCode />

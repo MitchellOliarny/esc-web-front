@@ -15,7 +15,7 @@ import { convertTimeToUTC } from "@/app/utils/helpers";
 //   adjustFontFallback: false,
 // });
 
-const Forms = (medals: any) => {
+const Forms = (medals: any, medal_details: any) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [selectedForm, setSelectedForm] = useState('');
@@ -39,7 +39,7 @@ const Forms = (medals: any) => {
                 )
             case 'medal_form':
                 //@ts-ignore
-                return(<MedalForm valMedals={medals.medals.data} goBack={goBack}/>)
+                return(<MedalForm valMedals={medals.medals.data} details={medals.medal_details.data} goBack={goBack}/>)
             default:
                 //@ts-ignore
                 setSelectedForm(null)
