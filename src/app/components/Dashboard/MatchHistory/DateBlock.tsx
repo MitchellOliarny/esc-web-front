@@ -18,7 +18,7 @@ interface DateBlockHistoryUIProps {
   days_since: string;
 }
 
-const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress, rr_sum}: DateBlockHistoryUIProps) => {
+const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headshot, acs, kad, mechScore, medalsProgress, rr_sum }: DateBlockHistoryUIProps) => {
 
   const [completedMedals, setCompletedMedals] = useState([]);
   const bucket = 'https://files.esportsclubs.gg/'
@@ -26,9 +26,9 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
   const FindCompletedMedals = () => {
     let temp = [];
     for (const x in medalsProgress) {
-      for(const i in medalsProgress[x].tiers) {
-        if(medalsProgress[x].tiers[i].isComplete == true) {
-          temp.push({tier: (Number(i)+1), medal: x+"_"+(Number(i)+1)})
+      for (const i in medalsProgress[x].tiers) {
+        if (medalsProgress[x].tiers[i].isComplete == true) {
+          temp.push({ tier: (Number(i) + 1), medal: x + "_" + (Number(i) + 1) })
         }
       }
     }
@@ -39,10 +39,10 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
     //console.log(temp)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     FindCompletedMedals();
-  },[])
- 
+  }, [])
+
 
   return (
     <>
@@ -55,7 +55,7 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
               &nbsp;<span className="text-ash">•</span>&nbsp;
               <p className="text-frost">{losses} <span className="text-loss">Losses</span></p>
               {
-                rr_sum ? <div className="flex"> <span className="text-ash">&nbsp;•&nbsp;</span> <p className={`${rr_sum >= 0 ? 'text-win' : 'text-loss'}`}>{rr_sum >= 0 ? '+'+rr_sum : rr_sum} RR</p></div>: ''
+                rr_sum ? <div className="flex"> <span className="text-ash">&nbsp;•&nbsp;</span> <p className={`${rr_sum >= 0 ? 'text-win' : 'text-loss'}`}>{rr_sum >= 0 ? '+' + rr_sum : rr_sum} RR</p></div> : ''
               }
             </div>
           </div>
@@ -63,18 +63,24 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
           <div className="col-span-6 grid grid-cols-7 content-center flex-wrap px-4 pr-2 w-full h-full">
             {
               completedMedals.length > 0 ?
-              completedMedals.slice(0, 7).map((value) => {
-                return (
-                  //@ts-ignore
-                  <div className="tooltip" data-tip={CreateMedalToolTip(value.medal)} key={value.medal} >
-                    {//@ts-ignore
-                    <img src={bucket + value.medal + '.png'} alt={value.medal} className="p-4"></img>
-                    }
-                  </div>
-                )
-              })
-              :
-              <p className="text-ash font-bold">No Medals Earned</p>
+                completedMedals.slice(0, 7).map((value) => {
+                  return (
+                    //@ts-ignore
+                    <div className="tooltip" data-tip={CreateMedalToolTip(value.medal)} key={value.medal} >
+                      {//@ts-ignore
+                        <img src={bucket + value.medal} alt={value.medal} className="p-4"
+
+                          onError={({ currentTarget }) => {
+                            currentTarget.onerror = null; // prevents looping
+                            currentTarget.src = "/dashboard/transparent-esc-score_square.png";
+                          }}
+                        ></img>
+                      }
+                    </div>
+                  )
+                })
+                :
+                <p className="text-ash font-bold">No Medals Earned</p>
             }
           </div>
 
