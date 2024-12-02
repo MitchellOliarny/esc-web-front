@@ -5,16 +5,16 @@ import Link from "next/link";
 // import { Orbitron } from "next/font/google";
 import { Spinner } from "@nextui-org/react";
 import { toast } from "react-hot-toast";
-import doSubmitMedalEvent from "./actions/doSubmitMedalEvent";
+import doSubmitMedal from "./actions/doSubmitMedal";
 import { convertTimeToUTC } from "@/app/utils/helpers";
 
-const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
+const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:any, goBack: VoidFunction) => {
     const [isLoading, setIsLoading] = useState(false);
     const [medals, setMedals] = useState({})
     const [medalTiers, setMedalTiers] = useState({})
 
     useEffect(() => {
-        console.log(valMedals)
+        //console.log(valMedals)
         //@ts-ignore
         let temp = {};
         let temp2 = {};
@@ -37,13 +37,62 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
 
         let formData = new FormData(event.target);
 
-        const response = await doSubmitMedalEvent(formData);
+        const tier_conditions = document.getElementsByClassName('tier-condition');
+        const tier_files = document.getElementsByClassName('tier-file');
+
+        let conditions = [];
+        let files = [];
+        const terms = {subject: formData.get('subject') || null}
+        //@ts-ignore
+        const stat_conditions = formData.get('stat_condition').split(',');
+        //@ts-ignore
+        const stat_names = formData.get('stat_name').split(',');
+
+        formData.set(
+            'stat_condition',
+            //@ts-ignore
+            JSON.stringify(stat_conditions)
+        )
+        formData.set(
+            'stat_name',
+            //@ts-ignore
+            JSON.stringify(stat_names)
+        )
+
+        formData.set(
+            'terms',
+            //@ts-ignore
+            JSON.stringify(terms)
+        )
+
+        formData.set(
+            'premium',
+            //@ts-ignore
+            premium
+        )
+
+        for (const x in tier_conditions) {
+            //@ts-ignore
+            if(tier_conditions[x].value) {
+                //@ts-ignore
+                conditions.push(tier_conditions[x].value)
+            }
+        }
+
+        formData.set(
+            'medal_conditions',
+            //@ts-ignore
+            JSON.stringify(conditions)
+        )
+
+
+        const response = await doSubmitMedal(formData, edit);
 
         console.log(response)
 
         if (response?.success == true) {
             console.log("success");
-            toast.success('Event Created!')
+            toast.success(response?.message)
         } else {
             //@ts-ignore
             toast(response.message)
@@ -75,6 +124,7 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
     const [parent, setParent] = useState('');
     const [statAdd, setStatAdd] = useState(1)
     const [tierCount, setTierCount] = useState(1);
+    const [subject, setSubject] = useState('')
 
     const [medalConditions, setMedalConditions] = useState([]);
 
@@ -107,6 +157,8 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
         setMedalConditions(medals[value].medal_conditions)
         //@ts-ignore
         setTierCount(medals[value].medal_conditions.length)
+        //@ts-ignore
+        setSubject(medals[value].terms ? medals[value].terms.subject : '')
     }
 
     const CreateMedal = () => {
@@ -136,6 +188,7 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
         setMedalConditions('')
         //@ts-ignore
         setTierCount(1)
+        setSubject('');
     }
 
     return (
@@ -288,17 +341,24 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
 
                     <div>
                         <label>Eligible Queues (This is found on the spreadsheet, copy exactly from there)</label>
-                        <input
-                            value={queues}
-                            onChange={(e) => setQueues(e.target.value)}
-                            type="textarea"
-                            name="queues"
-                            id="queues"
-                            placeholder="Queues.."
-                            className="input w-full bg-transparent border border-white"
+                        <select
+                            id="gamemodes"
+                            name="gamemodes"
+                            autoComplete="off"
+                            className="input w-full h-auto bg-transparent border border-white transparent font-bold"
                             required
-
-                        />
+                            multiple
+                            defaultValue={queues}
+                            onChange={(e) => setQueues(e.target.value)}
+                        >
+                            <option disabled>Gamemodes Allowed:</option>
+                            <option value="Unrated">Unrated</option>
+                            <option value="Competitive">Competitive</option>
+                            <option value="Premier">Premier</option>
+                            <option value="Swiftplay">Swiftplay</option>
+                            <option value="Deathmatch">Deathmatch</option>
+                            <option value="Team Deathmatch">Team Deathmatch</option>
+                        </select>
                         <div
                             id="queues-error"
                             className="italic float-left text-red-500 error-message !-mb-3"
@@ -364,7 +424,7 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
                                         id={"tier" + (key + 1) + '_image'}
                                         placeholder="Tier Image"
                                         className="input w-full bg-transparent border border-white tier-file"
-                                        required
+
 
                                     />
                                     <label>Existing Image</label>
@@ -403,7 +463,6 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
                                         id={"tier" + (key + 1) + '_image'}
                                         placeholder="Tier Image"
                                         className="input w-full bg-transparent border border-white tier-file"
-                                        required
 
                                     />
                                     <label>Existing Image</label>
@@ -412,6 +471,52 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
                             )
                         })
                     }
+
+                </div>
+
+                <div
+                    className="px-10 mb-4 gap-2 grid grid-cols-4">
+
+                    <div>
+                        <label>Subject</label>
+                        <input
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
+                            name="subject"
+                            id="subject"
+                            className="input w-full bg-transparent border border-white"
+                            list={'subjects'}
+                        >
+                        </input>
+                        <datalist id="subjects">
+                            {
+                                valMedals.agents.map((agent: any, index: number)=> {
+                                    return (
+                                        <option value={agent.name}></option>
+                                    )
+                                })
+                            }
+                            {
+                                valMedals.maps.map((map: any, index: number)=> {
+                                    return (
+                                        <option value={map.name}></option>
+                                    )
+                                })
+                            }
+                            {
+                                Object.keys(valMedals.weapons).map((weapon: any, index: number)=> {
+                                    return (
+                                        <option value={valMedals.weapons[weapon].name}></option>
+                                    )
+                                })
+                            }
+                        </datalist>
+                        <div
+                            id="queues-error"
+                            className="italic float-left text-red-500 error-message !-mb-3"
+                        ></div>
+                    </div>
+
 
                 </div>
 
@@ -502,7 +607,6 @@ const MedalForm = (valMedals: any, details: any, goBack: VoidFunction) => {
                             name="premium"
                             autoComplete="off"
                             className="h-12 rounded-lg w-12 bg-transparent border border-white"
-                            required
 
                         />
                         <div

@@ -20,7 +20,7 @@ const Forms = (medals: any, medal_details: any) => {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedForm, setSelectedForm] = useState('');
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(medals)
     }, [selectedForm])
 
@@ -31,15 +31,15 @@ const Forms = (medals: any, medal_details: any) => {
 
 
     const HandleChangeForm = () => {
-        switch(selectedForm) {
+        switch (selectedForm) {
             case 'medal_event':
-                return(
-                //@ts-ignore
-                <MedalEventForm valMedals={medals.medals.data} goBack={goBack}/>
+                return (
+                    //@ts-ignore
+                    <MedalEventForm valMedals={medals.medals.data} goBack={goBack} />
                 )
             case 'medal_form':
                 //@ts-ignore
-                return(<MedalForm valMedals={medals.medals.data} details={medals.medal_details.data} goBack={goBack}/>)
+                return (<MedalForm valMedals={medals.medals.data} details={medals.medal_details.data} weapons={medals.weapons.data} agents={medals.agents.data} maps={medals.maps.data} goBack={goBack} />)
             default:
                 //@ts-ignore
                 setSelectedForm(null)
@@ -53,12 +53,12 @@ const Forms = (medals: any, medal_details: any) => {
         <>
             {
                 !selectedForm ?
-           <div className="flex flex-wrap h-screen gap-8">
-                <div className="back-darkslate rounded-lg h-48 w-72 flex cursor-pointer" onClick={()=>setSelectedForm('medal_event')}><p className="m-auto font-bold text-xl">Medal Event Form</p></div>
-                <div className="back-darkslate rounded-lg h-48 w-72 flex cursor-pointer" onClick={()=>setSelectedForm('medal_form')}><p className="m-auto font-bold text-xl">Medal Form</p></div>
-           </div>
-           :
-            HandleChangeForm()
+                    <div className="flex flex-wrap h-screen gap-8">
+                        <div className="back-darkslate rounded-lg h-48 w-72 flex cursor-pointer" onClick={() => setSelectedForm('medal_event')}><p className="m-auto font-bold text-xl">Medal Event Form</p></div>
+                        <div className="back-darkslate rounded-lg h-48 w-72 flex cursor-pointer" onClick={() => setSelectedForm('medal_form')}><p className="m-auto font-bold text-xl">Medal Form</p></div>
+                    </div>
+                    :
+                    HandleChangeForm()
             }
         </>
     );

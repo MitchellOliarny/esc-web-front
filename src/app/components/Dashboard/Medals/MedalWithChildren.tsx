@@ -31,6 +31,12 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
 
     useEffect(() => {
         if (progress) {
+           
+            if (progress.tiers && progress.tiers[progress.tiers.length -1].isComplete == true) {
+                setDisplayMedal(progress.tiers.length);
+            }
+            else {
+
             for (const x in progress.tiers) {
 
                 if (progress.tiers[x].isComplete == true) {
@@ -41,11 +47,8 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                     setDisplayMedal(Number(x));
                     break;
                 }
-
-                if (progress.tiers.length == x) {
-                    setDisplayMedal(5);
-                }
             }
+        }
         }
         setFirstEarner(medalInfo?.medal_tiers[Object.keys(medalInfo?.medal_tiers)[Object.keys(medalInfo?.medal_tiers).length - 1]]?.first_earner?.earner)
         if(children_medals) {
@@ -76,8 +79,8 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
             <div className="w-full h-auto mt-8 back-graphite game-row-border rounded-lg">
                 <div className="h-60 medal-row rounded-t-lg">
                     <img src={displayMedal != 0 ?
-                        bucket + medalInfo?.name + '_' + displayMedal + '.png'
-                        : bucket + medalInfo?.name + '_1' + '.png'
+                        bucket + medalInfo?.name + '_' + displayMedal
+                        : bucket + medalInfo?.name + '_1'
                     }
                         alt={medalInfo?.name + '_' + displayMedal}
                         onError={({ currentTarget }) => {
@@ -116,7 +119,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                         <div className="py-4">
                             <div className="w-full cut-corner-45-special">
                                 <progress
-                                    className={`${displayMedal == 5 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                    className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
                                     value={
                                         progress.progress 
@@ -135,7 +138,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                     } 
                                     
                                     %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 5 ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.progress)}</span> <span className="text-ash text-base">/ {(childTierCount)}</span></h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.progress)}</span> <span className="text-ash text-base">/ {(childTierCount)}</span></h2>
                             </div>
                         </div>
                     </div>
@@ -175,7 +178,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                     <div className="relative mr-16">
                                         <hr className="medal-tier-line-up"></hr>
                                         <img src={
-                                            bucket + child?.name + '_' + (tier == 0 ? 1 : tier) + '.png'
+                                            bucket + child?.name + '_' + (tier == 0 ? 1 : tier)
 
                                         }
                                             alt={child?.name + '_' + tier}
@@ -222,7 +225,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                         <div>
                                             <div className="w-full cut-corner-45-special">
                                                 <progress
-                                                    className={`${tier >= 4 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                                    className={`${tier >= Object.keys(child?.medal_tiers).length ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                                     color="secondary"
                                                     value={children_tiers ? c_progress.progress : tier}
                                                     max={children_tiers ? children_tiers : Object.keys(child?.medal_tiers).length}
@@ -230,7 +233,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                             </div>
                                             <div className="w-full inline-flex justify-between px-4">
                                                 <h2 className="font-bold text-frost text-base">{ children_tiers ? ((c_progress.progress / children_tiers)*100).toFixed(1) :  ((tier / Object.keys(child?.medal_tiers).length) * 100).toFixed(1)} %</h2>
-                                                <h2 className="font-bold text-base"><span className={`${tier >= 4 ? 'text-voltage' : 'text-gold'} text-xl`}>{children_tiers ? c_progress.progress : tier}</span> <span className="text-ash text-base">/ {children_tiers ? children_tiers : (Object.keys(child?.medal_tiers).length)}</span></h2>
+                                                <h2 className="font-bold text-base"><span className={`${tier >= Object.keys(child?.medal_tiers).length ? 'text-voltage' : 'text-gold'} text-xl`}>{children_tiers ? c_progress.progress : tier}</span> <span className="text-ash text-base">/ {children_tiers ? children_tiers : (Object.keys(child?.medal_tiers).length)}</span></h2>
                                             </div>
                                         </div>
                                     </div>

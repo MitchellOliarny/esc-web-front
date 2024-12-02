@@ -128,7 +128,7 @@ const MatchHistoryUI = ({
       <div className="mt-4">
         <div className="col-span-9">
           {Object.keys(GamesByDate).map(index => {
-            console.log(count);
+            //console.log(count);
             if (count < displayedGames) {
               count += GamesByDate[index]?.games.length;
               return (

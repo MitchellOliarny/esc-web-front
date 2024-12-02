@@ -5,9 +5,10 @@ interface ValorantMedalsProps {
     medals: any;
     medalsProgress: any;
     change_display_medal: any;
+    isAdmin: boolean
 }
 
-const ValorantMedals = ({ medals, medalsProgress, change_display_medal }: ValorantMedalsProps) => {
+const ValorantMedals = ({ medals, medalsProgress, change_display_medal, isAdmin }: ValorantMedalsProps) => {
 
     const [medalCategory, setMedalCategory] = useState("all");
     const [medalList, setMedalList] = useState({});
@@ -17,6 +18,9 @@ const ValorantMedals = ({ medals, medalsProgress, change_display_medal }: Valora
         if (category == 'all') {
             ResetToAllMedals();
         }
+        else if(category == 'admin_medals') {
+            setMedalList(medals.admin)
+        }
         else {
             setMedalList(medals.data[category]);
         }
@@ -25,6 +29,7 @@ const ValorantMedals = ({ medals, medalsProgress, change_display_medal }: Valora
 
     useEffect(()=>{
         ClickCategoryCard(medalCategory);
+        console.log(medals)
     },[medals])
 
 
@@ -68,6 +73,13 @@ const ValorantMedals = ({ medals, medalsProgress, change_display_medal }: Valora
                 <div onClick={() => ClickCategoryCard('game_event_medals')} className={`medal-nav-button ${medalCategory == 'game_event_medals' ? 'medal-nav-active' : ''}`}>
                     <h2 className="text-left">Game Events</h2>
                 </div>
+                {
+                    isAdmin ? 
+                    <div onClick={() => ClickCategoryCard('admin_medals')} className={`medal-nav-button ${medalCategory == 'admin_medals' ? 'medal-nav-active' : ''}`}>
+                    <h2 className="text-left">Admin Medals</h2>
+                        </div>
+                    : ''
+                }
             </div>
 
             <div className={`flex gap-4 h-full w-[80%]`}>

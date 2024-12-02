@@ -135,7 +135,7 @@ export default function Header({
         );
       case "medals":
         return (
-          <ValorantMedals medalsProgress={userMedals} medals={medals} change_display_medal={ChangeDisplayMedal} />
+          <ValorantMedals medalsProgress={userMedals} medals={medals} change_display_medal={ChangeDisplayMedal} isAdmin={isAdmin}/>
         )
       default:
         return (

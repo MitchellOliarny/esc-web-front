@@ -67,9 +67,42 @@ export default async function AdminForm() {
   );
   medal_details = await response3.json();
 
+  let maps_details = null;
+  const maps = await fetch(
+    api + `/val/data/maps`,
+    {
+      method: "GET",
+      headers,
+      cache: "no-store",
+    }
+  );
+  maps_details = await maps.json();
+
+  let agent_details = null;
+  const agents = await fetch(
+    api + `/val/data/agents`,
+    {
+      method: "GET",
+      headers,
+      cache: "no-store",
+    }
+  );
+  agent_details = await agents.json();
+
+  let weapon_details = null;
+  const weapon = await fetch(
+    api + `/val/data/weapons`,
+    {
+      method: "GET",
+      headers,
+      cache: "no-store",
+    }
+  );
+  weapon_details = await weapon.json();
+
   return (
     <>
-      <Forms medals={medals} medal_details={medal_details}/>
+      <Forms medals={medals} medal_details={medal_details} maps={maps_details} agents={agent_details} weapons={weapon_details}/>
     </>
   );
 }

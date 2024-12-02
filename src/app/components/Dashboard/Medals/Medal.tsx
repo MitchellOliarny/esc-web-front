@@ -26,6 +26,12 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
 
     useEffect(() => {
         if (progress) {
+
+            if (progress.tiers && progress.tiers[progress.tiers.length -1].isComplete == true) {
+                setDisplayMedal(progress.tiers.length);
+            }
+            else {
+
             for (const x in progress.tiers) {
 
                 if (progress.tiers[x].isComplete == true) {
@@ -36,11 +42,8 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                     setDisplayMedal(Number(x));
                     break;
                 }
-
-                if (progress.tiers.length == x) {
-                    setDisplayMedal(5);
-                }
             }
+        }
 
         }
         //Testing on lower tier
@@ -65,11 +68,11 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
 
             <div className="w-full h-auto mt-8 back-graphite game-row-border rounded-lg">
                 <div className="h-60 medal-row rounded-t-lg">
-                    <img src={displayMedal != 0 ?
-                        bucket + medalInfo?.name + '_' + displayMedal + '.png'
-                        : bucket + medalInfo?.name + '_1' + '.png'
+                    <img src={displayMedal !== 0 ?
+                        bucket + medalInfo?.name + '_' + displayMedal
+                        : bucket + medalInfo?.name + '_1'
                     }
-                        alt={medalInfo?.name + '_' + displayMedal}
+                        alt={medalInfo?.name + '_' + (displayMedal ? displayMedal : 1)}
                         onError={({ currentTarget }) => {
                             currentTarget.onerror = null; // prevents looping
                             currentTarget.src = "/dashboard/transparent-esc-score_square.png";
@@ -103,7 +106,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                         <div className="py-8">
                             <div className="w-full cut-corner-45-special">
                                 <progress
-                                    className={`${displayMedal == 5 ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                    className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
                                     value={displayMedal}
                                     max={Object.keys(medalInfo.medal_tiers).length}
@@ -111,7 +114,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                             </div>
                             <div className="w-full inline-flex justify-between px-2">
                                 <h2 className="font-bold text-frost text-lg">{((displayMedal / Object.keys(medalInfo.medal_tiers).length) * 100).toFixed(1)} %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == 5 ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
                             </div>
                         </div>
                     </div>
@@ -124,7 +127,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                                     <div className="relative mr-16">
                                         <hr className="medal-tier-line-up"></hr>
                                         <img src={
-                                            bucket + medalInfo?.name + '_' + value + '.png'
+                                            bucket + medalInfo?.name + '_' + value
 
                                         }
                                             alt={medalInfo?.name + '_' + value}
@@ -151,7 +154,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                                         <div className="grid grid-cols-4 grid-rows-1">
                                             <div className="col-span-3 w-full font-bold">
                                                 <div className="flex gap-4">
-                                                    <h2 className="text-lg text-frost">{medalInfo?.medal_name + " " + value}</h2>
+                                                    <h2 className="text-lg text-frost">{medalInfo?.medal_name + " Tier " + value}</h2>
                                                 </div>
                                                 <p className="text-ash text-sm py-2 pr-10">{medalInfo?.medal_description.replace('XXX', medalInfo?.medal_tiers[value].condition)}</p>
                                             </div>
