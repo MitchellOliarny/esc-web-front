@@ -14,7 +14,7 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
     const [medalTiers, setMedalTiers] = useState({})
 
     useEffect(() => {
-        //console.log(valMedals)
+        console.log(valMedals)
         //@ts-ignore
         let temp = {};
         let temp2 = {};
@@ -191,9 +191,10 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
         setSubject('');
     }
 
+
     return (
         <>
-            <button onClick={() => goBack} className="w-40 h-16 back-graphite rounded-lg mx-8">Back</button>
+            <button onClick={()=>valMedals.goBack()} className="w-40 h-16 back-graphite rounded-lg mx-8">Back</button>
             <h1 className="p-8 font-bold text-3xl">Medal Form</h1>
 
             <div className="m-8 flex gap-8">
