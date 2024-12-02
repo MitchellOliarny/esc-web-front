@@ -341,7 +341,7 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
                     className="px-10 mb-4 gap-2 grid grid-cols-2">
 
                     <div>
-                        <label>Eligible Queues (This is found on the spreadsheet, copy exactly from there)</label>
+                        <label>Eligible Queues</label>
                         <select
                             id="gamemodes"
                             name="gamemodes"
@@ -552,7 +552,7 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
 
 
                     <div>
-                        <label>Amount of Progress to Add every completion (1 by default)</label>
+                        <label>Amount of Progress to Add every completion (1 by default) (0 if it should only go up by 1 per game if condition is met)</label>
                         <input
                             value={statAdd}
                             onChange={
