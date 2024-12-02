@@ -493,21 +493,21 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
                             {
                                 valMedals.agents.map((agent: any, index: number)=> {
                                     return (
-                                        <option value={agent.name}></option>
+                                        <option value={agent.name} key={agent.name}></option>
                                     )
                                 })
                             }
                             {
                                 valMedals.maps.map((map: any, index: number)=> {
                                     return (
-                                        <option value={map.name}></option>
+                                        <option value={map.name} key={map.name}></option>
                                     )
                                 })
                             }
                             {
                                 Object.keys(valMedals.weapons).map((weapon: any, index: number)=> {
                                     return (
-                                        <option value={valMedals.weapons[weapon].name}></option>
+                                        <option value={valMedals.weapons[weapon].name} key={valMedals.weapons[weapon].name}></option>
                                     )
                                 })
                             }
