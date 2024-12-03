@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 import doSubmitMedal from "./actions/doSubmitMedal";
 import { convertTimeToUTC } from "@/app/utils/helpers";
 
-const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:any, goBack: VoidFunction) => {
+const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps: any, goBack: VoidFunction) => {
     const [isLoading, setIsLoading] = useState(false);
     const [medals, setMedals] = useState({})
     const [medalTiers, setMedalTiers] = useState({})
@@ -19,12 +19,12 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
         let temp = {};
         let temp2 = {};
         Object.keys(valMedals.details).map((cat: any, index: number) => {
-                Object.keys(valMedals.details[cat]).map((medal: any, index: number) => {
-                    //@ts-ignore
-                    temp[valMedals.details[cat][medal].id] = valMedals.details[cat][medal]
-                    //@ts-ignore
-                    temp2[valMedals.valMedals[cat][medal].name] = valMedals.valMedals[cat][medal]
-                })
+            Object.keys(valMedals.details[cat]).map((medal: any, index: number) => {
+                //@ts-ignore
+                temp[valMedals.details[cat][medal].id] = valMedals.details[cat][medal]
+                //@ts-ignore
+                temp2[valMedals.valMedals[cat][medal].name] = valMedals.valMedals[cat][medal]
+            })
         })
         //@ts-ignore
         setMedals(temp)
@@ -42,7 +42,7 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
 
         let conditions = [];
         let files = [];
-        const terms = {subject: formData.get('subject') || null}
+        const terms = { subject: formData.get('subject') || null }
         //@ts-ignore
         const stat_conditions = formData.get('stat_condition').split(',');
         //@ts-ignore
@@ -73,7 +73,7 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
 
         for (const x in tier_conditions) {
             //@ts-ignore
-            if(tier_conditions[x].value) {
+            if (tier_conditions[x].value) {
                 //@ts-ignore
                 conditions.push(tier_conditions[x].value)
             }
@@ -84,6 +84,14 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
             //@ts-ignore
             JSON.stringify(conditions)
         )
+
+        if(edit) {
+            formData.set(
+                'medal_id',
+                //@ts-ignore
+                editMedal
+            )
+        }
 
 
         const response = await doSubmitMedal(formData, edit);
@@ -120,19 +128,47 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
     const [statCondition, setStatCondition] = useState('');
     const [premium, setPremium] = useState(false);
     const [date, setDate] = useState('');
-    const [queues, setQueues] = useState('')
+    const [queues, setQueues] = useState([])
     const [parent, setParent] = useState('');
     const [statAdd, setStatAdd] = useState(1)
     const [tierCount, setTierCount] = useState(1);
     const [subject, setSubject] = useState('')
 
     const [medalConditions, setMedalConditions] = useState([]);
+    const [editTiers, setEditTiers] = useState({})
 
     const [edit, setEdit] = useState(false);
     const [editMedal, setEditMedal] = useState('');
 
+    const ChangeQueues = (value: string) => {
+
+        let temp = queues;
+
+        //@ts-ignore
+        if (!temp.includes(value)) {
+            //@ts-ignore
+            temp.push(value)
+        }
+        else {
+            //@ts-ignore
+            let temp2 = [];
+            for (const x in temp) {
+                if (value != temp[x]) {
+                    temp2.push(temp[x]);
+                }
+            }
+            //@ts-ignore
+            temp = temp2;
+        }
+        setQueues(temp);
+
+        console.log(temp)
+    }
+
     const ChangeEditMedal = (value: string) => {
         setEditMedal(value);
+        //@ts-ignore
+        setEditTiers(medalTiers[value].medal_tiers)
         //@ts-ignore
         setName(medals[value].name);
         //@ts-ignore
@@ -181,7 +217,7 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
         //@ts-ignore
         setDate('')
         //@ts-ignore
-        setQueues('')
+        setQueues([])
         //@ts-ignore
         setParent('')
         //@ts-ignore
@@ -194,7 +230,7 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
 
     return (
         <>
-            <button onClick={()=>valMedals.goBack()} className="w-40 h-16 back-graphite rounded-lg mx-8">Back</button>
+            <button onClick={() => valMedals.goBack()} className="w-40 h-16 back-graphite rounded-lg mx-8">Back</button>
             <h1 className="p-8 font-bold text-3xl">Medal Form</h1>
 
             <div className="m-8 flex gap-8">
@@ -346,11 +382,12 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
                             id="gamemodes"
                             name="gamemodes"
                             autoComplete="off"
-                            className="input w-full h-auto bg-transparent border border-white transparent font-bold"
-                            required
+                            className="input w-full h-24 bg-transparent border border-white transparent font-bold"
+                            
                             multiple
-                            defaultValue={queues}
-                            onChange={(e) => setQueues(e.target.value)}
+                            value={queues}
+                            //@ts-ignore
+                            onChange={(e) => { ChangeQueues(e.target.value) }}
                         >
                             <option disabled>Gamemodes Allowed:</option>
                             <option value="Unrated">Unrated</option>
@@ -396,81 +433,82 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
                     {
 
                         editMedal ?
-                        //@ts-ignore
-                        Object.keys(medalTiers[editMedal].medal_tiers).map((index, key) => {
-                            return (
-                                <div key={key}>
-                                    <label className="font-bold text-lg">Tier {key + 1}</label>
-                                    <br></br>
-                                    <label>Condition</label>
-                                    <input
-                                    //@ts-ignore
-                                        value={medalTiers[editMedal].medal_tiers[index].condition}
-                                        type="number"
-                                        name={"tier" + (key + 1) + '_condition'}
-                                        id={"tier" + (key + 1) + '_condition'}
-                                        placeholder="Amount needed.."
-                                        className="input w-full bg-transparent border border-white tier-condition"
-                                        required
+                            //@ts-ignore
+                            Array.from({ length: tierCount }).map((index, key) => {
+                                    return (
+                                        <div key={key}>
+                                            <label className="font-bold text-lg">Tier {key + 1}</label>
+                                            <br></br>
+                                            <label>Condition</label>
+                                            <input
+                                                //@ts-ignore
+                                                defaultValue={medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]] ? medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]].condition : null}
+                                                type="number"
+                                                name={"tier" + (key + 1) + '_condition'}
+                                                id={"tier" + (key + 1) + '_condition'}
+                                                placeholder="Amount needed.."
+                                                className="input w-full bg-transparent border border-white tier-condition"
+                                                required
 
-                                    />
-                                    <div
-                                        id="queues-error"
-                                        className="italic float-left text-red-500 error-message !-mb-3"
-                                    ></div>
-                                    <label>Image</label>
-                                    <input
-                                        type='file'
-                                        name={"tier" + (key + 1) + '_image'}
-                                        id={"tier" + (key + 1) + '_image'}
-                                        placeholder="Tier Image"
-                                        className="input w-full bg-transparent border border-white tier-file"
+                                            />
+                                            <div
+                                                id="queues-error"
+                                                className="italic float-left text-red-500 error-message !-mb-3"
+                                            ></div>
+                                            <label>Image</label>
+                                            <input
+                                                type='file'
+                                                name={"tier" + (key + 1) + '_image'}
+                                                id={"tier" + (key + 1) + '_image'}
+                                                placeholder="Tier Image"
+                                                className="input w-full bg-transparent border border-white tier-file"
 
 
-                                    />
-                                    <label>Existing Image</label>
-                                    <img id={"tier" + (key + 1) + '_curr_image'} alt='none' src={
-                                        //@ts-ignore
-                                        "https://files.esportsclubs.gg/"+medalTiers[editMedal].medal_tiers[index].medal_id} className="h-12 w-auto"></img>
-                                </div>
-                            )
-                        })
+                                            />
+                                            <label>Existing Image</label>
+                                            <img id={"tier" + (key + 1) + '_curr_image'} alt='none' src={
+                                                //@ts-ignore
+                                                "https://files.esportsclubs.gg/" + (medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]] ? medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]].medal_id : '')} className="h-12 w-auto"></img>
+                                        </div>
+                                    )
+                                
+                                 })
 
-                        :
+                            :
 
-                        Array.from({ length: tierCount }).map((index, key) => {
-                            return (
-                                <div key={key}>
-                                    <label className="font-bold text-lg">Tier {key + 1}</label>
-                                    <br></br>
-                                    <label>Condition</label>
-                                    <input
-                                        type="number"
-                                        name={"tier" + (key + 1) + '_condition'}
-                                        id={"tier" + (key + 1) + '_condition'}
-                                        placeholder="Amount needed.."
-                                        className="input w-full bg-transparent border border-white tier-condition"
-                                        required
+                            Array.from({ length: tierCount }).map((index, key) => {
+                                return (
+                                    <div key={key}>
+                                        <label className="font-bold text-lg">Tier {key + 1}</label>
+                                        <br></br>
+                                        <label>Condition</label>
+                                        <input
+                                            type="number"
+                                            name={"tier" + (key + 1) + '_condition'}
+                                            id={"tier" + (key + 1) + '_condition'}
+                                            placeholder="Amount needed.."
+                                            className="input w-full bg-transparent border border-white tier-condition"
+                                            required
 
-                                    />
-                                    <div
-                                        id="queues-error"
-                                        className="italic float-left text-red-500 error-message !-mb-3"
-                                    ></div>
-                                    <label>Image</label>
-                                    <input
-                                        type='file'
-                                        name={"tier" + (key + 1) + '_image'}
-                                        id={"tier" + (key + 1) + '_image'}
-                                        placeholder="Tier Image"
-                                        className="input w-full bg-transparent border border-white tier-file"
+                                        />
+                                        <div
+                                            id="queues-error"
+                                            className="italic float-left text-red-500 error-message !-mb-3"
+                                        ></div>
+                                        <label>Image</label>
+                                        <input
+                                            type='file'
+                                            name={"tier" + (key + 1) + '_image'}
+                                            id={"tier" + (key + 1) + '_image'}
+                                            placeholder="Tier Image"
+                                            className="input w-full bg-transparent border border-white tier-file"
 
-                                    />
-                                    <label>Existing Image</label>
-                                    <img id={"tier" + (key + 1) + '_curr_image'} alt='none' src={""} className="h-12 w-auto"></img>
-                                </div>
-                            )
-                        })
+                                        />
+                                        <label>Existing Image</label>
+                                        <img id={"tier" + (key + 1) + '_curr_image'} alt='none' src={""} className="h-12 w-auto"></img>
+                                    </div>
+                                )
+                            })
                     }
 
                 </div>
@@ -491,23 +529,23 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
                         </input>
                         <datalist id="subjects">
                             {
-                                valMedals.agents.map((agent: any, index: number)=> {
+                                valMedals.agents.map((agent: any, index: number) => {
                                     return (
-                                        <option value={agent.name} key={agent.name}></option>
+                                        <option value={agent.name} key={agent.name + index}></option>
                                     )
                                 })
                             }
                             {
-                                valMedals.maps.map((map: any, index: number)=> {
+                                valMedals.maps.map((map: any, index: number) => {
                                     return (
-                                        <option value={map.name} key={map.name}></option>
+                                        <option value={map.name} key={map.name + index}></option>
                                     )
                                 })
                             }
                             {
-                                Object.keys(valMedals.weapons).map((weapon: any, index: number)=> {
+                                Object.keys(valMedals.weapons).map((weapon: any, index: number) => {
                                     return (
-                                        <option value={valMedals.weapons[weapon].name} key={valMedals.weapons[weapon].name}></option>
+                                        <option value={valMedals.weapons[weapon].name} key={valMedals.weapons[weapon].name + index}></option>
                                     )
                                 })
                             }
@@ -619,37 +657,37 @@ const MedalForm = (valMedals: any, details: any, agents:any, weapons:any, maps:a
                 </div>
 
                 <div className="grid mt-16">
-                    {edit ? 
-                    <div className="w-full flex gap-4 justify-around">
-                         <button
-                        id="deleteMedal"
-                        type="button"
-                        disabled={isLoading}
-                        className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#db1e1e] hover:bg-[#912a2a] drop-shadow-lg border border-white hover:border-white"
-                    >
-                        {isLoading ? "" : "DELETE MEDAL"}
-                        <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
-                    </button>
+                    {edit ?
+                        <div className="w-full flex gap-4 justify-around">
+                            <button
+                                id="deleteMedal"
+                                type="button"
+                                disabled={isLoading}
+                                className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#db1e1e] hover:bg-[#912a2a] drop-shadow-lg border border-white hover:border-white"
+                            >
+                                {isLoading ? "" : "DELETE MEDAL"}
+                                <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
+                            </button>
+                            <button
+                                id="submitMedal"
+                                type="submit"
+                                disabled={isLoading}
+                                className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
+                            >
+                                {isLoading ? "" : "SUBMIT EDITS"}
+                                <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
+                            </button>
+                        </div>
+                        :
                         <button
-                        id="submitMedal"
-                        type="submit"
-                        disabled={isLoading}
-                        className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
-                    >
-                        {isLoading ? "" : "SUBMIT EDITS"}
-                        <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
-                    </button>
-                    </div>
-                    :
-                    <button
-                        id="submitMedal"
-                        type="submit"
-                        disabled={isLoading}
-                        className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
-                    >
-                        {isLoading ? "" : "CREATE MEDAL"}
-                        <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
-                    </button>
+                            id="submitMedal"
+                            type="submit"
+                            disabled={isLoading}
+                            className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
+                        >
+                            {isLoading ? "" : "CREATE MEDAL"}
+                            <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
+                        </button>
                     }
                 </div>
             </form >

@@ -109,7 +109,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                       <FaDiscord />
                       <li className="">Discord</li>
                     </Link>
-                    {isAdmin == 1 ?
+                    {user && isAdmin == 1 ?
                       <Link href="/admin/forms" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
                       >
@@ -190,7 +190,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                     <Link href="https://discord.gg/6ufMVF8n6u" target="_blank" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold`}>
                       <FaDiscord />
                     </Link>
-                    {isAdmin == 1 ?
+                    {user && isAdmin == 1 ?
                       <Link href="/admin/forms" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
                       >
@@ -314,7 +314,7 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
                         <FaDiscord />
                         <li className="">Discord</li>
                       </Link>
-                      {isAdmin == 1 ?
+                      {user && isAdmin == 1 ?
                       <Link href="/admin/forms" className={`nav-hover w-full h-12 flex items-center gap-2 p-2 rounded-lg font-bold ${pathname.split('/')[1] == 'admin' ? 'nav-active' : ''}`}
                       // ?view=My Teams"
                       >
