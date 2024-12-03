@@ -35,11 +35,11 @@ const Forms = (medals: any, medal_details: any) => {
             case 'medal_event':
                 return(
                 //@ts-ignore
-                <MedalEventForm valMedals={medals.medals.data} goBack={goBack}/>
+                <MedalEventForm valMedals={medals.medals} goBack={goBack}/>
                 )
             case 'medal_form':
                 //@ts-ignore
-                return(<MedalForm valMedals={medals.medals.data} details={medals.medal_details.data} weapons={medals.weapons.data} agents={medals.agents.data} maps={medals.maps.data} goBack={goBack}/>)
+                return(<MedalForm valMedals={medals.medals} details={medals.medal_details} weapons={medals.weapons.data} agents={medals.agents.data} maps={medals.maps.data} goBack={goBack}/>)
             default:
                 //@ts-ignore
                 setSelectedForm(null)

@@ -33,7 +33,14 @@ const MedalEventForm = (valMedals: any, goBack: VoidFunction) => {
                 }
             }
         }
-        cycleObject(valMedals.valMedals, '');
+        cycleObject(valMedals.valMedals.data, '');
+        for(const x in valMedals.valMedals.admin) {
+
+                temp.push(
+                    <option key={valMedals.valMedals.admin[x].category+':'+x} value={valMedals.valMedals.admin[x].category+':'+x}>{valMedals.valMedals.admin[x].category+':'+x}</option>
+                )
+        
+        }
         //@ts-ignore
         setMedals(temp);
     }, valMedals)

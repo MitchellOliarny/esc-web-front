@@ -85,6 +85,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                             <div className="col-span-2 flex gap-4">
                                 <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
                                 <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
+                                <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{progress.progress} Total</div>
                             </div>
                             <div className="flex content-center justify-end flex-wrap relative">
                                 <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover cursor-pointer" onClick={()=>{
@@ -192,7 +193,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                             {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         {/* </div>
                         <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr> */}
-                        <p className="text-frost font-bold my-auto text-base">{Number(medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned).toFixed(1)}% <span className="text-ash text-sm">players own this medal</span></p>
+                        <p className="text-frost font-bold my-auto text-base">{Number(medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'] ? medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned : 0.0).toFixed(1)}% <span className="text-ash text-sm">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>

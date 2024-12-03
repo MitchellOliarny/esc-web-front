@@ -7,6 +7,7 @@ import { Spinner } from "@nextui-org/react";
 import { toast } from "react-hot-toast";
 import doSubmitMedal from "./actions/doSubmitMedal";
 import { convertTimeToUTC } from "@/app/utils/helpers";
+import doDeleteMedal from "./actions/doDeleteMedal";
 
 const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps: any, goBack: VoidFunction) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -18,14 +19,21 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
         //@ts-ignore
         let temp = {};
         let temp2 = {};
-        Object.keys(valMedals.details).map((cat: any, index: number) => {
-            Object.keys(valMedals.details[cat]).map((medal: any, index: number) => {
+        Object.keys(valMedals.details.data).map((cat: any, index: number) => {
+            Object.keys(valMedals.details.data[cat]).map((medal: any, index: number) => {
                 //@ts-ignore
-                temp[valMedals.details[cat][medal].id] = valMedals.details[cat][medal]
+                temp[valMedals.details.data[cat][medal].id] = valMedals.details.data[cat][medal]
                 //@ts-ignore
-                temp2[valMedals.valMedals[cat][medal].name] = valMedals.valMedals[cat][medal]
+                temp2[valMedals.valMedals.data[cat][medal].name] = valMedals.valMedals.data[cat][medal]
             })
         })
+
+            Object.keys(valMedals.details.admin).map((medal: any, index: number) => {
+                //@ts-ignore
+                temp[valMedals.details.admin[medal].id] = valMedals.details.admin[medal]
+                //@ts-ignore
+                temp2[valMedals.valMedals.admin[medal].name] = valMedals.valMedals.admin[medal]
+            })
         //@ts-ignore
         setMedals(temp)
         setMedalTiers(temp2)
@@ -33,7 +41,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        //setIsLoading(true);
+        setIsLoading(true);
 
         let formData = new FormData(event.target);
 
@@ -48,6 +56,12 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
         //@ts-ignore
         const stat_names = formData.get('stat_name').split(',');
 
+        formData.set(
+            'parent_medal',
+            //@ts-ignore
+            parent
+        )
+        
         formData.set(
             'stat_condition',
             //@ts-ignore
@@ -75,7 +89,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
             //@ts-ignore
             if (tier_conditions[x].value) {
                 //@ts-ignore
-                conditions.push(tier_conditions[x].value)
+                conditions.push(Number(tier_conditions[x].value))
             }
         }
 
@@ -120,6 +134,25 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
         }
         setIsLoading(false);
     };
+
+    const handleDelete = async () =>{
+        setIsLoading(true);
+        
+        const response = await doDeleteMedal(editMedal);
+
+        console.log(response)
+
+        if (response?.success == true) {
+            console.log("success");
+            toast.success(response?.message)
+        } else {
+            //@ts-ignore
+            toast(response.message)
+            console.log(response.errors);
+        }
+        setIsLoading(false);
+        CreateMedal();
+    }
 
     const [name, setName] = useState('');
     const [desc, setDesc] = useState('');
@@ -342,7 +375,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                             id="stat_condition"
                             placeholder="Stat Condition.."
                             className="input w-full bg-transparent border border-white"
-                            required
+                        
 
                         />
                         <div
@@ -362,7 +395,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                             id="stat_name"
                             placeholder="Stat Name.."
                             className="input w-full bg-transparent border border-white"
-                            required
+                       
 
                         />
                         <div
@@ -448,7 +481,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                                                 id={"tier" + (key + 1) + '_condition'}
                                                 placeholder="Amount needed.."
                                                 className="input w-full bg-transparent border border-white tier-condition"
-                                                required
+                                          
 
                                             />
                                             <div
@@ -567,8 +600,8 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                         <select
                             value={parent}
                             onChange={(e) => setParent(e.target.value)}
-                            name="parent"
-                            id="parent"
+                            name="parent_medal"
+                            id="parent_medal"
                             className="input w-full bg-transparent border border-white"
 
                         >
@@ -583,7 +616,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                             }
                         </select>
                         <div
-                            id="queues-error"
+                            id="parent_medal-error"
                             className="italic float-left text-red-500 error-message !-mb-3"
                         ></div>
                     </div>
@@ -660,8 +693,9 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                     {edit ?
                         <div className="w-full flex gap-4 justify-around">
                             <button
+                                onClick={()=>{handleDelete(); console.log('bruh')}}
                                 id="deleteMedal"
-                                type="button"
+                                type="submit"
                                 disabled={isLoading}
                                 className="justify-self-center w-[40%] btn text-white h-14 text-2xl bg-[#db1e1e] hover:bg-[#912a2a] drop-shadow-lg border border-white hover:border-white"
                             >

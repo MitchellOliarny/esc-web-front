@@ -37,7 +37,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
 
         if (tier > 0) {
             for (const x in medalsProgress) {
-                if (medals[x] && medalsProgress[x].tiers[tier - 1] && medalsProgress[x].tiers[tier - 1].isComplete && !medalsProgress[x].tiers[tier].isComplete) {
+                if (medals[x] && medalsProgress[x].tiers[tier - 1] && medalsProgress[x].tiers[tier - 1].isComplete && (!medalsProgress[x].tiers[tier] || !medalsProgress[x].tiers[tier].isComplete)) {
                     //@ts-ignore
                     temp[x] = medals[x];
                 }
