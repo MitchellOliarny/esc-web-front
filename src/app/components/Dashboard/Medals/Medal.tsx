@@ -85,7 +85,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                             <div className="col-span-2 flex gap-4">
                                 <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
                                 <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
-                                <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center"><span className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-rust'}`}>{progress.progress}</span> Total</div>
+                                <div className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-rust'} back-slate self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center`}>{progress.progress} Total</div>
                             </div>
                             <div className="flex content-center justify-end flex-wrap relative">
                                 <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover cursor-pointer" onClick={()=>{
