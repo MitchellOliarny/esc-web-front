@@ -26,7 +26,8 @@ const SignUp = () => {
   let previousPath = '/';
 
   try {
-    previousPath = document ? document.referrer : '/';
+    const prevPath =(document.referrer.split('/')[document.referrer.split('/').length - 1])
+    previousPath = prevPath !== 'signup' && prevPath !== 'login' ? document.referrer : '/';
   }
   catch {
 
@@ -67,11 +68,13 @@ const SignUp = () => {
       // Perform sign-in action after successful sign-up
       const signInResponse = await doSignInAction(formData);
       if (signInResponse?.success === true) {
+        //@ts-ignore
+        setTimeout(()=>{
         {
           previousPath
             ? (window.location.href = previousPath)
             : (window.location.href = "/");
-        }
+        }},1000)
       } else {
         // Handle sign-in failure
         setIsLoading(false);

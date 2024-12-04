@@ -18,7 +18,8 @@ const Login = () => {
   let previousPath = '/';
 
   try {
-    previousPath = document ? document.referrer : '/';
+    const prevPath =(document.referrer.split('/')[document.referrer.split('/').length - 1])
+    previousPath = prevPath !== 'signup' && prevPath !== 'login' ? document.referrer : '/';
   }
   catch{
     
