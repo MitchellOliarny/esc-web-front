@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import RecNavbar from "./RecNavbar";
 import NavbarUser from "./User";
-import FormMenu from "../login/page";
+import Login from "../login/page";
+import SignUp from "../signup/page";
 import LogInBtn from "./Buttons/LogInBtn";
 import SignUpBtn from "./Buttons/SignUpBtn";
 import { FaCalendar, FaCode, FaDiscord, FaHome, FaQuestion, FaToolbox, FaUser, FaUsers } from "react-icons/fa";
@@ -44,9 +45,13 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
           {children}
         </RecNavbar>
       ) : pathname.includes("login") ? (
-        <FormMenu />
-        //@ts-ignore
-      ) : pathname.includes("forgot-password" && "reset-password") ? (
+        <Login />
+      ) : 
+      pathname.includes("signup") ? (
+      <SignUp />)
+      :
+              //@ts-ignore
+      pathname.includes("forgot-password" && "reset-password") ? (
         <>{children}</>
       ) : (
         <nav className="flex my-8 lg:ml-[17.5%] overflow-x-hidden">

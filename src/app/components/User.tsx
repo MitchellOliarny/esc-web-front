@@ -25,12 +25,12 @@ export default function NavbarUser({
 
   const handleLoginClick = () => {
     localStorage.setItem("previousPath", pathname);
-    window.location.href = "/login?form=Log-In";
+    window.location.href = "/login";
   };
 
   const handleSignUpClick = () => {
     localStorage.setItem("previousPath", pathname);
-    window.location.href = "/login?form=Sign-Up";
+    window.location.href = "/signup";
   };
 
   return (
@@ -50,10 +50,13 @@ export default function NavbarUser({
             onClick={() => setToggleDrawer(!toggleDrawer)}
           >
             <div className="flex content-center gap-2">
-              {pfp ? 
-              <img src={pfp} alt='user pfp' className="w-6 h-6 rounded-full"></img>
-              :
-              ''
+              { 
+              <img src={pfp} alt='user pfp' className="w-6 h-6 rounded-full object-cover"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = "/avatar.png";
+            }}
+              ></img>
               }
               <h2 className="self-center text-sm text-frost">{user}</h2>
             </div>

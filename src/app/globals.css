@@ -17,6 +17,8 @@
   --obsidian: #0e1115;
   --graphite: #14181e;
   --graphitergba: rgb(20, 24, 30);
+
+  --riotRed: #D42B2B;
 }
 
 html {
@@ -55,7 +57,7 @@ html {
 }
 
 .loginForm {
-  background: linear-gradient(144deg, #2d4764 0%, #0c131d 100%);
+  background: var(--graphite)
 }
 
 .loginButton {
@@ -67,6 +69,7 @@ html {
   background: linear-gradient(95deg, #f5603c 0%, #5b2a20 100%);
   border-radius: 0px 10px 0px 0px;
 }
+
 
 .registerButton {
   background: linear-gradient(95deg, #f5603c 0%, #5b2a20 100%);
@@ -246,6 +249,10 @@ select.transparent > option {
   color: var(--slate) !important;
 }
 
+.back-riot {
+  background-color: var(--riotRed) !important;
+}
+
 .back-slate {
   background-color: var(--slate) !important;
 }
@@ -341,6 +348,10 @@ select.transparent > option {
   }
 }
 
+.home-image {
+  border-radius: 1em 0;
+}
+
 .cut-corner-45 {
   transform: skewX(-40deg);
 }
@@ -371,6 +382,23 @@ select.transparent > option {
   justify-self: end;
   right: 25px;
   position: absolute;
+}
+
+.coming-soon-new-line {
+  opacity: 0.5;
+}
+
+.coming-soon-new-line::after {
+  content: "Coming Soon";
+  font-size: 0.65em;
+  align-self: center;
+  justify-self: end;
+  bottom: 4px;
+  position: absolute;
+}
+
+.checkbox-signup{
+  accent-color: var(--obsidian);
 }
 
 .nav-hover:hover {

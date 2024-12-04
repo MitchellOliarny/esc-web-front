@@ -4,10 +4,10 @@ import Link from "next/link";
 // import { Orbitron } from "next/font/google";
 import PrivacyPolicy from "../components/Legal/PrivacyPolicy";
 import Terms from "../components/Legal/Terms";
+import doSignInAction from "./userActions/doSignIn";
 import doSignUpAction from "./userActions/doSignUp";
 import { Spinner } from "@nextui-org/react";
 import { toast } from "react-hot-toast";
-import doSignInAction from "./userActions/doSignIn";
 
 // const orbitron = Orbitron({
 //   subsets: ["latin"],
@@ -28,8 +28,8 @@ const SignUp = () => {
   try {
     previousPath = document ? document.referrer : '/';
   }
-  catch{
-    
+  catch {
+
   }
 
   const handleSubmit = async (event: any) => {
@@ -157,8 +157,21 @@ const SignUp = () => {
 
   return (
     <>
-      <form id="registerForm" className="py-10" onSubmit={handleSubmit}>
-        <div id="emailLine" className="px-10 mb-4 gap-2 grid grid-cols-1">
+      <form id="registerForm" className="py-10 px-16 font-bold" onSubmit={handleSubmit}>
+        <div className="my-4 relative">
+          <button type="button" className="back-riot btn w-full h-14 text-xl font-bold text-white coming-soon-new-line">
+            <img
+              alt="riot games logo"
+              width={1000}
+              height={1000}
+              src="/logos/riot-games.png"
+              className="w-auto h-full cursor-pointer"
+            />
+            <p>Log In with Riot Account</p>
+          </button>
+        </div>
+        <p className="text-ash">— or —</p>
+        <div id="emailLine" className="my-4 gap-2 grid grid-cols-1">
           <div>
             <input
               type="email"
@@ -166,7 +179,7 @@ const SignUp = () => {
               name="newEmail"
               placeholder="Email"
               autoComplete="email"
-              className="input w-full bg-transparent border border-white"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               required
               onChange={handleEmailChange}
             />
@@ -179,7 +192,7 @@ const SignUp = () => {
 
         <div
           id="confirmEmailLine"
-          className="px-10 mb-4 gap-2 grid grid-cols-1"
+          className="mb-4 gap-2 grid grid-cols-1"
         >
           <div>
             <input
@@ -187,7 +200,7 @@ const SignUp = () => {
               name="confirmNewEmail"
               id="confirmNewEmail"
               placeholder="Confirm Email"
-              className="input w-full bg-transparent border border-white"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               required
               onChange={handleEmailChange}
             />
@@ -251,14 +264,14 @@ const SignUp = () => {
           <div></div>
         </div> */}
 
-        <div id="passwordLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
+        <div id="passwordLine" className="mb-4 grid gap-2">
           <div>
             <input
               type="password"
               id="newPassword"
               name="newPassword"
               placeholder="Password"
-              className="input w-full bg-transparent border border-white"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               required
               autoComplete="new-password"
               onChange={handlePasswordChange}
@@ -268,13 +281,16 @@ const SignUp = () => {
               className="italic float-left text-red-500 error-message !-mb-3"
             ></div>
           </div>
+        </div>
+
+        <div id="confirmPasswordLine" className="mb-4 grid gap-2">
           <div>
             <input
               type="password"
               id="confirmNewPassword"
               name="confirmNewPassword"
               placeholder="Confirm Password"
-              className="input w-full bg-transparent border border-white"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               required
               autoComplete="new-password"
               onChange={handleConfirmPasswordChange}
@@ -286,7 +302,7 @@ const SignUp = () => {
           </div>
         </div>
 
-        <div id="riotLine" className="px-10 mb-4 grid grid-cols-2 gap-2">
+        <div id="riotLine" className="mb-4 grid grid-cols-2 gap-2">
           <div>
             <input
               type="text"
@@ -294,7 +310,7 @@ const SignUp = () => {
               name="riotName"
               placeholder="Riot Username"
               autoComplete="off"
-              className="input w-full bg-transparent border border-white"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               required
               onChange={handleRiotChange}
             />
@@ -310,7 +326,7 @@ const SignUp = () => {
               name="riotTag"
               placeholder="Riot Tag (no #)"
               autoComplete="off"
-              className="input w-full bg-transparent border border-white"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               required
               onChange={handleTagChange}
             />
@@ -320,14 +336,14 @@ const SignUp = () => {
             ></div>
           </div>
         </div>
-        <div className="form-control mx-24 my-8">
+        <div className="form-control my-6 w-full gap-2">
           <div className="form-control items-start mb-4">
             <div className="flex items-start">
               <input
                 type="checkbox"
                 name="TOS"
                 id="TOS"
-                className="checkbox mr-4 bg-transparent border-slate-400"
+                className="checkbox mr-4 game-row-border back-obsidian rounded-md"
                 required
               />
               <span className="text-white text-sm font-medium">
@@ -338,7 +354,7 @@ const SignUp = () => {
                       document?.getElementById("tos") as HTMLDialogElement
                     )?.showModal()
                   }
-                  className="text-blue-500 cursor-pointer"
+                  className="text-voltage font-bold cursor-pointer"
                 >
                   Terms of Services
                 </span>{" "}
@@ -349,7 +365,7 @@ const SignUp = () => {
                       document.getElementById("privacy") as HTMLDialogElement
                     )?.showModal()
                   }
-                  className="text-blue-500 cursor-pointer"
+                  className="text-voltage cursor-pointer font-bold"
                 >
                   {" "}
                   Privacy Policy
@@ -363,7 +379,7 @@ const SignUp = () => {
           </div>
 
           <div
-            className="form-control items-center"
+            className="form-control items-left"
             style={{ width: "100%" }}
           >
             <div className="flex items-center">
@@ -371,11 +387,10 @@ const SignUp = () => {
                 type="checkbox"
                 name="News"
                 id="News"
-                className="checkbox mr-4 bg-transparent border-slate-400"
+                className="checkbox mr-4 game-row-border back-obsidian rounded-md"
               />
               <span className="text-white text-sm font-medium text-left">
-                I agree to receive newsletters, marketing promotions and other
-                information
+                I agree to receive emails from Esports Clubs including marketing
               </span>
               <div
                 id="News-error"
@@ -391,11 +406,19 @@ const SignUp = () => {
             id="submitSignUp"
             type="submit"
             disabled={isLoading}
-            className="btn text-white w-56 h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
+            className="btn text-white w-full h-16 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border hover:border-white"
           >
-            {isLoading ? "": "SIGN-UP"}
-            <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} /> 
+            {isLoading ? "" : "Sign Up"}
+            <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
           </button>
+        </div>
+        <div className="mt-6">
+          <Link
+            href="/login"
+            className="hover:text-blue-500 w-auto transition-all text-voltage"
+          >
+            <span className="text-frost font-[400]">Already have an account?</span> <span className="font-bold">Log In</span>
+          </Link>
         </div>
       </form>
       <dialog id="privacy" className="modal text-left">

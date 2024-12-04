@@ -36,8 +36,8 @@ export default async function RootLayout({
             user={info?.first_name || info?.email as string}
             rank={info?.val_rank || 0 as number}
             riot={info?.riot_name || ''}
-            pfp={//'https://files.esportsclubs.gg/' + info?.profile_picture || 
-              `https://cdn.discordapp.com/avatars/${info?.discord_id}/${info?.discord_avatar}.png`}
+            pfp={info?.profile_picture ? 'https://files.esportsclubs.gg/' + info?.profile_picture : info?.discord_id ?
+              `https://cdn.discordapp.com/avatars/${info?.discord_id}/${info?.discord_avatar}.png` : '/avatar.png'}
             isAdmin={data?.isAdmin && user ?  1 : 0}
           >
             <div className="mt-24 lg:mt-0">{children}</div>

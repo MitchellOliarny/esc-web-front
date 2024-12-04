@@ -118,7 +118,7 @@ const OurRoadmap = () => {
           <div className="flex justify-end h-fit">
             <Image
             style={{width: '100%', height: 'auto', border: '2px white solid'}}
-            className="stat-box-border"
+            className="stat-box-border home-image"
               src="/homepage/medals.png"
               alt=""
               width={1000}
@@ -143,7 +143,7 @@ const OurRoadmap = () => {
             <div className="flex justify-end">
               <Image
               style={{width: '100%', height: 'auto', border: '2px white solid'}}
-            className="stat-box-border"
+            className="stat-box-border home-image"
                 src="/homepage/medals.png"
                 alt=""
                 width={1000}
@@ -296,7 +296,7 @@ const OurRoadmap = () => {
           <div className="flex justify-start">
             <Image
             style={{width: '100%', height: 'auto', border: '2px white solid'}}
-            className="stat-box-border"
+            className="stat-box-border home-image"
               src="/homepage/gameplay.jpg"
               alt=""
               width={1000}
@@ -332,7 +332,7 @@ const OurRoadmap = () => {
             <div className="flex justify-start">
               <Image
               style={{width: '100%', height: 'auto', border: '2px white solid'}}
-            className="stat-box-border"
+            className="stat-box-border home-image"
                 src="/homepage/gameplay.jpg"
                 alt=""
                 width={1000}
@@ -343,7 +343,7 @@ const OurRoadmap = () => {
             An online gaming community focused on making every game a good game. Go beyond matchmaking and play against teams within your division and celebrate valorant together through the live stream! Earn prizes and form a team and meet new players!
             </p>
             <button className="btn btn-disabled !text-white/40 font-semibold py-4 px-8 rounded-full bg-[#F5603C] hover:bg-[#AC442A] w-full">
-              Coming Q3 of 2024
+              Coming Soon
             </button>
           </div>
         </div>

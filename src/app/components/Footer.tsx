@@ -18,6 +18,7 @@ const Footer = () => {
   const pathname = usePathname();
   const excludePaths =
     !pathname.includes("login") &&
+    !pathname.includes("signup")
     !pathname.includes("settings") &&
     !pathname.includes("forgot-password") &&
     !pathname.includes("reset-password");

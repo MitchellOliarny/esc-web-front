@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Link from "next/link";
 import doSignInAction from "./userActions/doSignIn";
@@ -54,12 +55,21 @@ const Login = () => {
   return (
     <>
       <form id="loginForm" onSubmit={handleSubmit}>
-        <div className={"p-10"}>
-          <div className="mb-14 hiddden">
-            <h1 className="text-5xl font-bold mt-4">ESPORTS CLUBS</h1>
-            <p className="text-lg mt-2">Where every game is a good game!</p>
+        <div className={"px-20 py-8 font-bold"}>
+          <div className="my-4 relative">
+            <button type="button" className="back-riot btn w-full h-14 text-xl font-bold text-white coming-soon-new-line">
+            <img
+                alt="riot games logo"
+                width={1000}
+                height={1000}
+                src="/logos/riot-games.png"
+                className="w-auto h-full cursor-pointer"
+              />
+              <p>Log In with Riot Account</p>
+            </button>
           </div>
-          <div className="mb-6 grid">
+          <p className="text-ash">— or —</p>
+          <div className="mb-6 grid gap-6">
             <div
               id="email-error"
               className="italic float-left text-red-500 error-message"
@@ -68,8 +78,8 @@ const Login = () => {
               type="email"
               name="email"
               id="email"
-              placeholder="enter your email..."
-              className="input w-full bg-transparent border border-white mb-4"
+              placeholder="Email"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -82,8 +92,8 @@ const Login = () => {
               type="password"
               name="password"
               id="password"
-              placeholder="enter your password..."
-              className="input w-full bg-transparent border border-white"
+              placeholder="Password"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
               autoComplete="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -93,22 +103,30 @@ const Login = () => {
                             <p className="italic float-left text-red-500">Enter a valid password</p>
                         </div> */}
           </div>
-          <div className="mb-14">
+          <div>
+          <div className="-mt-4 mb-4 text-center w-full">
             <Link
               href="/forgot-password"
-              className="hover:text-blue-500 w-auto transition-all"
+              className="hover:text-blue-500 w-auto transition-all text-voltage"
             >
-              Having trouble signing in?
+              Forgot Password?
             </Link>
           </div>
-          <div>
             <button
               type="submit"
               disabled={isLoading}
-              className="btn w-56 h-14 text-2xl text-white bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border border-white hover:border-white"
+              className="btn w-full h-16 text-2xl text-white bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border hover:border-white"
             >
-              {isLoading ? <Spinner color="default" /> : " SIGN-IN"}
+              {isLoading ? <Spinner color="default" /> : "Log In"}
             </button>
+          </div>
+          <div className="mt-6 mb-4">
+            <Link
+              href="/signup"
+              className="hover:text-blue-500 w-auto transition-all text-voltage"
+            >
+              <span className="text-frost font-[400]">Need an account?</span> <span className="font-bold">Sign Up</span>
+            </Link>
           </div>
         </div>
       </form>
