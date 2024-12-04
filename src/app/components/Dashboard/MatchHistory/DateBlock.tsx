@@ -68,7 +68,7 @@ const DateBlock = ({ date, days_since, wins, losses, roundWin, adr, kast, headsh
                     //@ts-ignore
                     <div className="tooltip" data-tip={CreateMedalToolTip(value.medal)} key={value.medal} >
                       {//@ts-ignore
-                        <img src={bucket + value.medal} alt={value.medal} className="p-4"
+                        <img src={bucket + value.medal} alt={value.medal} className="p-4 w-[-webkit-fill-available]"
 
                           onError={({ currentTarget }) => {
                             currentTarget.onerror = null; // prevents looping

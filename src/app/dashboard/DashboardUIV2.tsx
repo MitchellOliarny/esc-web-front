@@ -72,7 +72,7 @@ export default function Header({
         // @ts-ignore
         if(userMedals.data.display_medals[x]) {
         // @ts-ignore
-          temp.push(bucket + (userMedals.data.display_medals[x]) + '.png')
+          temp.push(bucket + (userMedals.data.display_medals[x]))
         }
         else {
           temp.push('');
