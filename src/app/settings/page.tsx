@@ -45,12 +45,15 @@ export default async function Page() {
     return redirect("/login");
   }
 
+  //console.log(userInfo)
+
   return (
     <>
       <SettingsUI
         userInfo={userInfo.info}
         userInvites={userInfo.invites}
         userTeams={userInfo.teams}
+        subscriptions={userInfo.subscriptions}
       />
     </>
   );

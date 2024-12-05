@@ -10,8 +10,9 @@ import manageSubscriptions from "@/app/settings/settingsActions/manageSubscripti
 
 interface SubscriptionsProps {
     sub_status: boolean;
+    sub_1_cost: number;
 }
-const Subscriptions = ({ sub_status }: SubscriptionsProps) => {
+const Subscriptions = ({ sub_status, sub_1_cost }: SubscriptionsProps) => {
 
 
     const HandleSubscriptionClick = async (name: String) => {
@@ -44,14 +45,14 @@ const Subscriptions = ({ sub_status }: SubscriptionsProps) => {
 
     return (
         <>
-            <div className="mt-5 rounded-md ml-10 h-full">
-                <div className="grid grid-cols-3 items-center p-4 h-auto">
+            <div className="rounded-lg h-full back-graphite">
+                <div className="grid grid-cols-3 items-center p-4">
 
-                    <div className="grid grid-rows-4 mt-5 rounded-md border-3 h-auto m-2 py-4">
+                    <div className={`grid grid-rows-4 mt-5 rounded-md border-3 h-[34em] m-2 py-4 ${sub_status ? 'back-sub' : ''}`}>
                         <div className="grid row-span-2 m-auto content-center">
                         <p className="m-4 justify-self-center text-3xl font-bold">ESC+ Member</p>
-                        <FaCrown size={'5em'} className="justify-self-center" />
-                        <p className="m-4 justify-self-center text-2xl font-bold border-b">$2.99 / Month</p>
+                        <FaCrown size={'5em'} className={`justify-self-center ${sub_status ? 'text-voltage': 'text-frost'}`} />
+                        <p className="m-4 justify-self-center text-2xl font-bold border-b">${(sub_1_cost/100).toFixed(2)} / Month</p>
                         </div>
                         <div className="row-span-1 ml-6 justify-self-center self-center text-lg font-bold h-auto">
                             <ul className="h-full list-disc m-4">
@@ -59,7 +60,7 @@ const Subscriptions = ({ sub_status }: SubscriptionsProps) => {
                                 <li>FREE entry to all Weekly Events</li>
                             </ul>
                         </div>
-                        <div className="mx-4 h-auto content-center">
+                        <div className="mx-4 h-full content-center">
                             {
                                 //@ts-ignore
                                 sub_status ?
@@ -77,6 +78,12 @@ const Subscriptions = ({ sub_status }: SubscriptionsProps) => {
                                     </button>
                             }
                         </div>
+                    </div>
+                    <div className="flex mt-5 rounded-md border-3 h-[34em] m-2 py-4 justify-center align-middle">
+                        <p className="my-auto font-bold text-xl">Coming Soon</p>
+                    </div>
+                    <div className="flex mt-5 rounded-md border-3 h-[34em] m-2 py-4 justify-center align-middle">
+                        <p className="my-auto font-bold text-xl">Coming Soon</p>
                     </div>
 
                 </div>

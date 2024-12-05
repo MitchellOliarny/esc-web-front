@@ -96,10 +96,10 @@ export default function ConnectionsSettingsUI({
 
   return (
     <>
-      <div className="grid p-8 mt-5 gap-5 w-full back-graphite rounded-lg">
+      <div className="grid py-8 px-4 gap-5 w-full back-graphite rounded-lg">
         <div
           id="discordConnection"
-          className="grid grid-cols-2 p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-24"
+          className="grid grid-cols-2 p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-32"
         >
           <div className="w-full h-full">
             <h2 className="font-bold text-frost text-lg">Discord</h2>
@@ -159,7 +159,7 @@ export default function ConnectionsSettingsUI({
 
         <div
           id="riotConnection"
-          className="flex items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer"
+          className="flex items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-32"
           onClick={onOpen}
         >
           <div className="w-full h-full">

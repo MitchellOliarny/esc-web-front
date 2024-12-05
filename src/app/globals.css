@@ -836,3 +836,22 @@ select.transparent > option {
   image-rendering: optimize-contrast; /* CSS3 Proposed  */
   -ms-interpolation-mode: nearest-neighbor;
 }
+
+
+.back-sub {
+  border-image: linear-gradient(to right, #5ba5fd 0%, #d662fc 50%, #fa955d 100%) 1;
+  /* border-image: linear-gradient(to right,
+    #5ba5fd 10%,
+    #d662fc 20%,
+    #fa955d 30%,
+    #5ba5fd 40%,
+    #d662fc 50%,
+    #fa955d 100%,
+  ); */
+  border-width: 4px;
+  border-style: solid;
+}
+
+.back-sub::after {
+  filter: blur(3px);
+}

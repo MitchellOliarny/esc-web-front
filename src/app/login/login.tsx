@@ -58,7 +58,7 @@ const Login = () => {
       <form id="loginForm" onSubmit={handleSubmit}>
         <div className={"md:px-20 px-10 py-8 font-bold"}>
           <div className="my-4 relative">
-          <button type="button" className="flex back-riot btn w-full h-16 md:text-xl sm:text-base text-sm font-bold text-white coming-soon-new-line px-4">
+          <button type="button" className="flex back-riot btn w-full h-16 md:text-xl sm:text-base text-sm font-bold text-white border-0 coming-soon-new-line px-4">
             <img
               alt="riot games logo"
               width={1000}
@@ -116,7 +116,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="btn w-full md:h-16 sm:h-12 md:text-2xl text-lg text-white bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border hover:border-white"
+              className="btn w-full md:h-16 sm:h-12 md:text-2xl text-lg text-white bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border-0  hover:border-white"
             >
               {isLoading ? <Spinner color="default" /> : "Log In"}
             </button>

@@ -162,7 +162,7 @@ const SignUp = () => {
     <>
       <form id="registerForm" className="py-10 md:px-16 px-8 font-bold" onSubmit={handleSubmit}>
         <div className="my-4 relative">
-          <button type="button" className="flex back-riot btn w-full h-16 md:text-xl sm:text-base text-sm font-bold text-white coming-soon-new-line px-4">
+          <button type="button" className="flex back-riot btn w-full h-16 md:text-xl sm:text-base text-sm font-bold text-white border-0 coming-soon-new-line px-4">
             <img
               alt="riot games logo"
               width={1000}
@@ -409,7 +409,7 @@ const SignUp = () => {
             id="submitSignUp"
             type="submit"
             disabled={isLoading}
-            className="btn text-white w-full h-16 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border hover:border-white"
+            className="btn text-white w-full h-16 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border-0 hover:border-white"
           >
             {isLoading ? "" : "Sign Up"}
             <Spinner color="default" size={'sm'} className={`${isLoading ? '' : 'hidden'}`} />
