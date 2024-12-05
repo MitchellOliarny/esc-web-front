@@ -56,18 +56,18 @@ const Login = () => {
   return (
     <>
       <form id="loginForm" onSubmit={handleSubmit}>
-        <div className={"px-20 py-8 font-bold"}>
+        <div className={"md:px-20 px-10 py-8 font-bold"}>
           <div className="my-4 relative">
-            <button type="button" className="back-riot btn w-full h-14 text-xl font-bold text-white coming-soon-new-line">
+          <button type="button" className="flex back-riot btn w-full h-16 md:text-xl sm:text-base text-sm font-bold text-white coming-soon-new-line px-4">
             <img
-                alt="riot games logo"
-                width={1000}
-                height={1000}
-                src="/logos/riot-games.png"
-                className="w-auto h-full cursor-pointer"
-              />
-              <p>Log In with Riot Account</p>
-            </button>
+              alt="riot games logo"
+              width={1000}
+              height={1000}
+              src="/logos/riot-games.png"
+              className="w-auto h-full cursor-pointer"
+            />
+            <p>Log In with Riot Account</p>
+          </button>
           </div>
           <p className="text-ash">— or —</p>
           <div className="mb-6 grid gap-6">
@@ -80,7 +80,7 @@ const Login = () => {
               name="email"
               id="email"
               placeholder="Email"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -94,7 +94,7 @@ const Login = () => {
               name="password"
               id="password"
               placeholder="Password"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               autoComplete="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -116,7 +116,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="btn w-full h-16 text-2xl text-white bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border hover:border-white"
+              className="btn w-full md:h-16 sm:h-12 md:text-2xl text-lg text-white bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border hover:border-white"
             >
               {isLoading ? <Spinner color="default" /> : "Log In"}
             </button>

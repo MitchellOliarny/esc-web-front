@@ -26,6 +26,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
 
     const [childTierCount, setChildTierCount] = useState(0);
 
+    const new_medal = (new Date(medalInfo.date).getTime() + (7*24*60*60*1000) ) > Date.now();
 
     const bucket = "https://files.esportsclubs.gg/";
 
@@ -77,7 +78,20 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
         <>
 
             <div className="w-full h-auto mt-8 back-graphite game-row-border rounded-lg">
-                <div className="h-60 medal-row rounded-t-lg">
+                <div className="h-60 medal-row rounded-t-lg relative">
+                <div className={`z-20 flex gap-2 absolute font-bold text-base justify-self-start self-start -top-3 left-[7rem]`}>
+                    {new_medal ?
+                    <div className="rounded-lg px-2"
+                        style={{
+                            backgroundColor: '#41B9FD',
+                            boxShadow: '0px 0px 0px 3px #41B9FD40'
+                        }}>
+                        <p>
+                            {'NEW'}
+                        </p>
+                    </div>
+                    :''}
+                </div>
                     <img src={displayMedal != 0 ?
                         bucket + medalInfo?.name + '_' + displayMedal
                         : bucket + medalInfo?.name + '_1'
@@ -119,7 +133,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                         <div className="py-4">
                             <div className="w-full cut-corner-45-special">
                                 <progress
-                                    className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                    className={`${displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
                                     value={
                                         progress.progress 
@@ -138,7 +152,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                                     } 
                                     
                                     %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.progress)}</span> <span className="text-ash text-base">/ {(childTierCount)}</span></h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.progress)}</span> <span className="text-ash text-base">/ {(childTierCount)}</span></h2>
                             </div>
                         </div>
                     </div>
@@ -251,7 +265,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                             {/* <img src="/dashboard/transparent-esc-score_square.png" className="h-full"></img> */}
                         {/* </div>
                         <hr className="w-[0.05em] h-[2em] border-none back-slate my-auto mx-2 "></hr> */}
-                        <p className="text-frost font-bold my-auto text-base">{Number(medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned).toFixed(1)}% <span className="text-ash text-sm">players own this medal</span></p>
+                        <p className="text-frost font-bold my-auto text-base">{Number(medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'] ? medalInfo.medal_tiers[displayMedal ? displayMedal+'': '1'].population_earned : 0.0).toFixed(1)}% <span className="text-ash text-sm">players own this medal</span></p>
                     </div>
                     <div className="px-4 my-auto text-right">
                         <p className="text-ash font-bold">Earned</p>

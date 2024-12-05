@@ -393,7 +393,7 @@ select.transparent > option {
   font-size: 0.65em;
   align-self: center;
   justify-self: end;
-  bottom: 4px;
+  bottom: 3px;
   position: absolute;
 }
 

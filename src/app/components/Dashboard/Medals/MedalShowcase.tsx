@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Medal from "./Medal";
 import MedalWithChildren from "./MedalWithChildren";
+import { any } from "zod";
 
 interface MedalShowcaseProps {
     medals: any;
@@ -14,43 +15,106 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
 
 
     const [selectedTier, setSelectedTier] = useState(-1);
-    const [medalsList, setMedals] = useState({});
+    const [selectedTerm, setSelectedTerm] = useState('')
+    const [medalsList, setMedals] = useState([]);
     const [totalEarned, setTotalEarned] = useState(0);
 
-    const tierOptions = [1, 2, 3, 4, 5]
+    const tierOptions = [1, 2, 3, 4, 5];
+    const [subjects, setSubjects] = useState([]);
 
     let temp = 0;
 
 
     useEffect(() => {
-        FilterSelected(selectedTier);
+        FilterSelected(selectedTier, selectedTerm);
     }, [medals])
-    
+
     const ResetPage = () => {
-        setMedals(medals);
+        let temp = [];
+        let subjectTemp = [String];
+        for (const x in medals) {
+            medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
+            temp.push(medals[x]);
+            try {
+                if (!subjectTemp.includes(medals[x].terms.subject)) {
+                    if (medals[x].terms.subject) {
+                        subjectTemp.push(medals[x].terms.subject)
+                    }
+                }
+            }
+            catch {
+
+            }
+        }
+        //@ts-ignore
+        setSubjects(subjectTemp);
+        SortNewFirstThenProgress(temp)
+        //@ts-ignore
+        setMedals(temp);
         FindTotalEarned(medals);
     }
 
-    const FilterSelected = (tier: number) => {
+    const isWithinAWeek = (date: any) => {
+        return (new Date(date).getTime() + (7 * 24 * 60 * 60 * 1000)) > Date.now();
+    };
+
+    const SortNewFirstThenProgress = (data: any) => {
+        data.sort((a: any, b: any) => {
+            const aIsWithinAWeek = isWithinAWeek(a.date);
+            const bIsWithinAWeek = isWithinAWeek(b.date);
+
+            if (aIsWithinAWeek && !bIsWithinAWeek) return -1;
+            if (!aIsWithinAWeek && bIsWithinAWeek) return 1;
+
+            // If both are within a week or neither, sort by progress (descending)
+            return b.progress - a.progress;
+        });
+    }
+
+    const FilterSelected = (tier: number, subject: string) => {
         console.log(tier)
-        let temp = {};
+        console.log(subject)
+        let temp = [];
 
         if (tier > 0) {
             for (const x in medalsProgress) {
+                console.log(medals[x])
                 if (medals[x] && medalsProgress[x].tiers[tier - 1] && medalsProgress[x].tiers[tier - 1].isComplete && (!medalsProgress[x].tiers[tier] || !medalsProgress[x].tiers[tier].isComplete)) {
-                    //@ts-ignore
-                    temp[x] = medals[x];
+                    if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
+                        medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
+                        //@ts-ignore
+                        temp.push(medals[x]);
+                    }
                 }
             }
+            SortNewFirstThenProgress(temp)
+            //@ts-ignore
             setMedals(temp);
         }
         else if (tier == 0) {
             for (const x in medalsProgress) {
                 if (medals[x] && medalsProgress[x].tiers[0] && !medalsProgress[x].tiers[0].isComplete) {
-                    //@ts-ignore
-                    temp[x] = medals[x];
+                    if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
+                        medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
+                        //@ts-ignore
+                        temp.push(medals[x]);
+                    }
                 }
             }
+            SortNewFirstThenProgress(temp)
+            //@ts-ignore
+            setMedals(temp);
+        }
+        else if (subject) {
+            for (const x in medals) {
+                if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
+                    medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
+                    //@ts-ignore
+                    temp.push(medals[x]);
+                }
+            }
+            SortNewFirstThenProgress(temp)
+            //@ts-ignore
             setMedals(temp);
         }
         else {
@@ -85,11 +149,11 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         <>
             <div className="w-full h-auto">
                 {/* Filters */}
-                <div className="grid grid-cols-3 h-12">
+                <div className="flex gap-4 h-12">
                     <select
                         className="select select-bordered filter-item-select w-full max-w-xs"
                         value={selectedTier}
-                        onChange={(e) => {setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value)); }}
+                        onChange={(e) => { setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value), selectedTerm); }}
                     >
                         <option key={'All'} value={-1}>
                             {'All Tiers'}
@@ -104,10 +168,28 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                         ))}
                     </select>
 
+                    <select
+                        className="select select-bordered filter-item-select w-full max-w-xs"
+                        value={selectedTerm}
+                        onChange={(e) => { setSelectedTerm(e.target.value); FilterSelected(selectedTier, e.target.value) }}
+                    >
+                        <option key={'AllTerms'} value={''}>
+                            {'All'}
+                        </option>
+                        {subjects.map((term: any) => {
+                            if (typeof term == 'string') {
+                                return (
+                                    <option key={term} value={term}>
+                                        {term}
+                                    </option>)
+                            }
+                        })}
+                    </select>
+
                     <div></div>
 
                     {/* Total */}
-                    <div className="self-end justify-self-end">
+                    <div className="self-end justify-self-end ml-auto">
                         <h2 className="text-voltage text-4xl font-bold">
                             {totalEarned}
                             <span className="text-ash text-2xl">/{Object.keys(medalsList).length}  Medals Earned</span>
@@ -119,17 +201,18 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                 <div>
                     {
                         // @ts-ignore
-                        Object.keys(medalsList).map((medal, value) => {
-                            if(parentList[medal]){
+                        medalsList.map((medal, value) => {
+                            // @ts-ignore
+                            if (parentList[medal.name]) {
                                 return (
                                     // @ts-ignore
-                                    <MedalWithChildren medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} children_medals={parentList[medal]} all_children={parentList} child_progress={medalsProgress} change_display_medal={change_display_medal}/>
+                                    <MedalWithChildren medalInfo={medal} progress={medalsProgress[medal.name] || { progress: 0 }} key={medal.name} children_medals={parentList[medal.name]} all_children={parentList} child_progress={medalsProgress} change_display_medal={change_display_medal} />
                                 )
                             }
-                        
+
                             return (
                                 // @ts-ignore
-                                <Medal medalInfo={medalsList[medal]} progress={medalsProgress[medal] || { progress: 0 }} key={medal} change_display_medal={change_display_medal} />
+                                <Medal medalInfo={medal} progress={medalsProgress[medal.name] || { progress: 0 }} key={medal.name} change_display_medal={change_display_medal} />
                             )
                         })
 

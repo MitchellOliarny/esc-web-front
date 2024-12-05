@@ -160,9 +160,9 @@ const SignUp = () => {
 
   return (
     <>
-      <form id="registerForm" className="py-10 px-16 font-bold" onSubmit={handleSubmit}>
+      <form id="registerForm" className="py-10 md:px-16 px-8 font-bold" onSubmit={handleSubmit}>
         <div className="my-4 relative">
-          <button type="button" className="back-riot btn w-full h-14 text-xl font-bold text-white coming-soon-new-line">
+          <button type="button" className="flex back-riot btn w-full h-16 md:text-xl sm:text-base text-sm font-bold text-white coming-soon-new-line px-4">
             <img
               alt="riot games logo"
               width={1000}
@@ -170,7 +170,7 @@ const SignUp = () => {
               src="/logos/riot-games.png"
               className="w-auto h-full cursor-pointer"
             />
-            <p>Log In with Riot Account</p>
+            <p>Sign Up with Riot Account</p>
           </button>
         </div>
         <p className="text-ash">— or —</p>
@@ -182,7 +182,7 @@ const SignUp = () => {
               name="newEmail"
               placeholder="Email"
               autoComplete="email"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               required
               onChange={handleEmailChange}
             />
@@ -203,7 +203,7 @@ const SignUp = () => {
               name="confirmNewEmail"
               id="confirmNewEmail"
               placeholder="Confirm Email"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               required
               onChange={handleEmailChange}
             />
@@ -274,7 +274,7 @@ const SignUp = () => {
               id="newPassword"
               name="newPassword"
               placeholder="Password"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               required
               autoComplete="new-password"
               onChange={handlePasswordChange}
@@ -293,7 +293,7 @@ const SignUp = () => {
               id="confirmNewPassword"
               name="confirmNewPassword"
               placeholder="Confirm Password"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               required
               autoComplete="new-password"
               onChange={handleConfirmPasswordChange}
@@ -313,7 +313,7 @@ const SignUp = () => {
               name="riotName"
               placeholder="Riot Username"
               autoComplete="off"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               required
               onChange={handleRiotChange}
             />
@@ -329,7 +329,7 @@ const SignUp = () => {
               name="riotTag"
               placeholder="Riot Tag (no #)"
               autoComplete="off"
-              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost text-lg my-auto px-8"
+              className="text input input-bordered w-full border h-16 game-row-border back-obsidian text-frost md:text-lg text-sm my-auto px-8"
               required
               onChange={handleTagChange}
             />
@@ -349,7 +349,7 @@ const SignUp = () => {
                 className="checkbox mr-4 game-row-border back-obsidian rounded-md"
                 required
               />
-              <span className="text-white text-sm font-medium">
+              <span className="text-white md:text-sm text-xs text-left font-medium my-auto">
                 I agree to the{" "}
                 <span
                   onClick={() =>
@@ -392,7 +392,7 @@ const SignUp = () => {
                 id="News"
                 className="checkbox mr-4 game-row-border back-obsidian rounded-md"
               />
-              <span className="text-white text-sm font-medium text-left">
+              <span className="text-white md:text-sm text-xs font-medium text-left">
                 I agree to receive emails from Esports Clubs including marketing
               </span>
               <div

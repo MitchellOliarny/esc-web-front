@@ -21,6 +21,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
     const [displayMedal, setDisplayMedal] = useState(0);
     const [firstEarner, setFirstEarner] = useState('N/A');
 
+    const new_medal = (new Date(medalInfo.date).getTime() + (7*24*60*60*1000) ) > Date.now();
 
     const bucket = "https://files.esportsclubs.gg/";
 
@@ -67,7 +68,20 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
         <>
 
             <div className="w-full h-auto mt-8 back-graphite game-row-border rounded-lg">
-                <div className="h-60 medal-row rounded-t-lg">
+                <div className="h-60 medal-row rounded-t-lg relative">
+                <div className={`z-20 flex gap-2 absolute font-bold text-base justify-self-start self-start -top-3 left-[7rem]`}>
+                    {new_medal ?
+                    <div className="rounded-lg px-2"
+                        style={{
+                            backgroundColor: '#41B9FD',
+                            boxShadow: '0px 0px 0px 3px #41B9FD40'
+                        }}>
+                        <p>
+                            {'NEW'}
+                        </p>
+                    </div>
+                    :''}
+                </div>
                     <img src={displayMedal !== 0 ?
                         bucket + medalInfo?.name + '_' + displayMedal
                         : bucket + medalInfo?.name + '_1'
@@ -85,7 +99,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                             <div className="col-span-2 flex gap-4">
                                 <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
                                 <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
-                                <div className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-rust'} back-slate self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center`}>{progress.progress} Total</div>
+                                <div className={`${displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-rust'} back-slate self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center`}>{progress.progress} Total</div>
                             </div>
                             <div className="flex content-center justify-end flex-wrap relative">
                                 <FaEllipsisH className="text-ash h-6 w-auto my-auto ellipsis-hover cursor-pointer" onClick={()=>{
@@ -107,15 +121,15 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                         <div className="py-8">
                             <div className="w-full cut-corner-45-special">
                                 <progress
-                                    className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
+                                    className={`${displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? 'progress-voltage' : 'progress-rust'} w-full h-3`}
                                     color="secondary"
                                     value={displayMedal}
                                     max={Object.keys(medalInfo.medal_tiers).length}
                                 ></progress>
                             </div>
                             <div className="w-full inline-flex justify-between px-2">
-                                <h2 className="font-bold text-frost text-lg">{((displayMedal / Object.keys(medalInfo.medal_tiers).length) * 100).toFixed(1)} %</h2>
-                                <h2 className="font-bold text-lg"><span className={`${displayMedal == Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
+                                <h2 className="font-bold text-frost text-lg">{(((displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? Object.keys(medalInfo?.medal_tiers).length : displayMedal) / Object.keys(medalInfo.medal_tiers).length) * 100).toFixed(1)} %</h2>
+                                <h2 className="font-bold text-lg"><span className={`${displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-gold'} text-xl`}>{(displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? Object.keys(medalInfo?.medal_tiers).length : displayMedal)}</span> <span className="text-ash text-base">/ {(Object.keys(medalInfo.medal_tiers).length)}</span></h2>
                             </div>
                         </div>
                     </div>
@@ -175,7 +189,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal }: Meda
                                             </div>
                                             <div className="w-full inline-flex justify-between px-4">
                                                 <h2 className="font-bold text-frost text-base">{(((progress.tiers && progress.tiers[key].isComplete ? medalInfo?.medal_tiers[value].condition : progress.progress) / (medalInfo?.medal_tiers[value].condition)) * 100).toFixed(1)} %</h2>
-                                                <h2 className="font-bold text-base"><span className={`${progress.tiers && progress.tiers[key].isComplete ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.tiers && progress.tiers[key].isComplete ? medalInfo?.medal_tiers[value].condition : progress.progress)}</span> <span className="text-ash text-base">/ {(medalInfo?.medal_tiers[value].condition)}</span></h2>
+                                                <h2 className="font-bold text-base"><span className={`${progress.tiers && progress.tiers[key].isComplete ? 'text-voltage' : 'text-gold'} text-xl`}>{(progress.tiers && medalInfo?.medal_tiers[value].condition < progress.progress ? medalInfo?.medal_tiers[value].condition : progress.progress)}</span> <span className="text-ash text-base">/ {(medalInfo?.medal_tiers[value].condition)}</span></h2>
                                             </div>
                                         </div>
                                     </div>
