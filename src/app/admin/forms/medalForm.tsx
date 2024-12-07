@@ -373,7 +373,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                             type="textarea"
                             name="stat_condition"
                             id="stat_condition"
-                            placeholder="Stat Condition.."
+                            placeholder="Stat Condition.. (Leave none if a parent medal)"
                             className="input w-full bg-transparent border border-white"
                         
 
@@ -393,7 +393,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                             type="textarea"
                             name="stat_name"
                             id="stat_name"
-                            placeholder="Stat Name.."
+                            placeholder="Stat Name.. (Leave none if a parent medal)"
                             className="input w-full bg-transparent border border-white"
                        
 
