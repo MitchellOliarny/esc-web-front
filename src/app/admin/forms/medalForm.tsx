@@ -280,7 +280,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                             Object.keys(medals).map((medal: any, index: number) => {
                                 return (
                                     //@ts-ignore
-                                    <option value={medals[medal].id} key={medals[medal].id}>{medals[medal].id}</option>
+                                    <option value={medals[medal].id} key={medals[medal].id}>{medals[medal].id + ' --- ' + medals[medal].name}</option>
                                 )
                             })
                         }
