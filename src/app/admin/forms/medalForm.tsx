@@ -195,11 +195,12 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
         }
         setQueues(temp);
 
-        console.log(temp)
+        //console.log(temp)
     }
 
     const ChangeEditMedal = (value: string) => {
         setEditMedal(value);
+        //@ts-ignore
         //@ts-ignore
         setEditTiers(medalTiers[value].medal_tiers)
         //@ts-ignore
@@ -270,21 +271,24 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                 <button className={`btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border ${!edit ? 'border-white' : 'border-0'} hover:border-white`} onClick={() => CreateMedal()}>Create Medal</button>
                 <div className="inline-flex">
                     <button className={`btn text-white h-14 text-2xl bg-[#F5603C] hover:bg-[#AC442A] drop-shadow-lg border ${edit ? 'border-white' : 'border-0'} hover:border-white`} onClick={() => setEdit(true)}>Edit Medal</button>
-                    <select
+                    <input
                         value={editMedal}
-                        onChange={(e) => ChangeEditMedal(e.target.value)}
+                        list="medals_list"
+                        onChange={(e) =>{setTierCount(0); ChangeEditMedal(e.target.value)}}
                         className={`${edit ? '' : 'hidden'} input w-full bg-transparent border border-white`}
                     >
+                    </input>
+                    <datalist id="medals_list">
                         <option>Select a Medal</option>
                         {
                             Object.keys(medals).map((medal: any, index: number) => {
                                 return (
                                     //@ts-ignore
-                                    <option value={medals[medal].id} key={medals[medal].id}>{medals[medal].id + ' --- ' + medals[medal].name}</option>
+                                    <option value={medals[medal].id} key={medals[medal].id}>{medals[medal].name}</option>
                                 )
                             })
                         }
-                    </select>
+                        </datalist>
                 </div>
             </div>
 
@@ -461,8 +465,8 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                 </div>
 
                 <div
-                    className="px-10 mb-4 gap-2 grid grid-cols-5">
-
+                    className="px-10 mb-4 gap-2 grid grid-cols-5" id="children_tiers">
+                        
                     {
 
                         editMedal ?
@@ -475,7 +479,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                                             <label>Condition</label>
                                             <input
                                                 //@ts-ignore
-                                                defaultValue={medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]] ? medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]].condition : null}
+                                                defaultValue={medalTiers[editMedal]?.medal_tiers[Object.keys(editTiers)[key]] ? medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]].condition : 0}
                                                 type="number"
                                                 name={"tier" + (key + 1) + '_condition'}
                                                 id={"tier" + (key + 1) + '_condition'}
@@ -501,7 +505,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                                             <label>Existing Image</label>
                                             <img id={"tier" + (key + 1) + '_curr_image'} alt='none' src={
                                                 //@ts-ignore
-                                                "https://files.esportsclubs.gg/" + (medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]] ? medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]].medal_id : '')} className="h-12 w-auto"></img>
+                                                "https://files.esportsclubs.gg/" + (medalTiers[editMedal]?.medal_tiers[Object.keys(editTiers)[key]] ? medalTiers[editMedal].medal_tiers[Object.keys(editTiers)[key]].medal_id : '')} className="h-12 w-auto"></img>
                                         </div>
                                     )
                                 
