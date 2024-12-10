@@ -3,7 +3,7 @@ import Overview from "@/app/components/MatchOverview/Leaderboard/Overview";
 import Timeline from "@/app/components/MatchOverview/Timeline/Timeline";
 import React, { useEffect, useState } from "react";
 import 'ldrs/bouncy'
-import { formatDate, formatTime } from "@/app/utils/helpers";
+import { formatDate, formatDateYear, formatTime } from "@/app/utils/helpers";
 
 export default function Header({
 
@@ -16,7 +16,7 @@ export default function Header({
   const [players, setPlayers] = useState({ blue: [], red: [] })
   const [isLoadingLeaderboard, setisLoadingLeaderboard] = useState(true)
   const [isLoadingRounds, setisLoadingRounds] = useState(true)
-  const [matchInfo, setMatchInfo] = useState({ map_name: '', id: '', date: formatDate('1/1/1999'), blue: 0, red: 0 })
+  const [matchInfo, setMatchInfo] = useState({ map_name: '', id: '', date: '1/1/1999', blue: 0, red: 0 })
   const [roundInfo, setRoundInfo] = useState({});
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Header({
         //removes loading text
         setisLoadingLeaderboard(false);
 
-        setMatchInfo({ id: data.data[0].map_id, blue: data.data[0].blue, red: data.data[0].red, date: formatDate(data.data[0].date), map_name: data.data[0].map })
+        setMatchInfo({ id: data.data[0].map_id, blue: data.data[0].blue, red: data.data[0].red, date: data.data[0].date, map_name: data.data[0].map })
 
         let temp = { blue: [], red: [], topScores: { red: {}, blue: {} } };
 
@@ -192,13 +192,30 @@ export default function Header({
   };
 
   const handleSideBarClick = (menu: string) => {
+    moveBarToElement(menu);
     setSelectedMenu(menu);
   };
+
+  const handleSideBarHover = (menu: string) => {
+    moveBarToElement(menu);
+  };
+
+  const handleSideBarBack = () => {
+    moveBarToElement(selectedMenu);
+  }
+
+  const moveBarToElement = (menu: string) => {
+    let nav = document.querySelector('ul.dashnav')
+    let item = document.getElementById(menu);
+    //@ts-ignore
+    if (item) { nav?.style.setProperty('--move-bar', (item.offsetLeft + (item.offsetWidth / 2)) - (document.getElementById('nav-bar')?.offsetWidth / 2) + 'px') }
+  }
+
   return (
     <>
-      <div className="px-4 2xl:px-40 w-full max-w-[1800px] mx-auto">
+      <div className="px-4 w-full pr-8 max-w-[1800px] mx-auto">
         <div
-          className="w-full rounded-lg"
+          className="w-full rounded-lg h-72"
           style={{
             backgroundImage:
               "url(https://media.valorant-api.com/maps/" + matchInfo.id + "/splash.png)",
@@ -206,51 +223,64 @@ export default function Header({
             backgroundPosition: "center",
           }}
         >
-          <div className="flex flex-col items-center justify-center py-4 px-6 bg-black/40">
-            <div className="mb-2">
-              <h2 className="text-white text-5xl font-black tracking-[.2em]">
-                {matchInfo.map_name.toUpperCase()}
-              </h2>
-              <p className="text-white text-lg font-bold text-center tracking-wider">
-                {matchInfo.date}
-              </p>
-              <div className="flex items-center justify-center text-5xl font-black">
-                <p className="text-[#5ECCBA]">
-                  {matchInfo.blue} <span className="text-white">:&nbsp;</span>
+          <div className="w-full match-grid h-full px-6 bg-black/50 rounded-lg">
+            <div className="w-full grid self-end px-4 gap-2 mb-4">
+              <div className="flex gap-8">
+                <h2 className="text-white text-5xl font-black tracking-[.2em]">
+                  {matchInfo.map_name.toUpperCase()}
+                </h2>
+                <div className="flex items-center  text-5xl font-black">
+                  <p className="text-[#5ECCBA]">
+                    {matchInfo.blue} <span className="text-white">:&nbsp;</span>
+                  </p>
+                  <p className="text-[#F5603C]">{matchInfo.red}</p>
+                </div>
+                </div>
+                <p className="text-ash text-lg font-bold tracking-wider">
+                  {//@ts-ignore
+                  formatDateYear(matchInfo.date)}
                 </p>
-                <p className="text-[#F5603C]">{matchInfo.red}</p>
-              </div>
+                
             </div>
-            <div className="flex items-center">
-              <ul className="flex gap-4 font-bold text-lg">
+            <div className="flex items-end">
+              <ul className="dashnav flex gap-4 font-bold text-lg w-full pb-2">
                 <li
-                  onClick={() => handleSideBarClick("Overview")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${selectedMenu === "Overview" ? "bg-[#F5603C]" : ""
+                  id="overview"
+                  onClick={(e) => handleSideBarClick("overview")}
+                  onMouseOver={() => handleSideBarHover("overview")}
+                  onMouseOut={() => handleSideBarBack()}
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "Overview" ? "active" : ""
                     }`}
                 >
                   Overview
                 </li>
-                <li
-                  onClick={() => handleSideBarClick("Timeline")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${selectedMenu === "Timeline" ? "bg-[#F5603C]" : ""
+                {/* <li
+                  id="Timeline"
+                  onClick={(e) => handleSideBarClick("Timeline")}
+                  onMouseOver={() => handleSideBarHover("Timeline")}
+                  onMouseOut={() => handleSideBarBack()}
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "Timeline" ? "active" : ""
                     }`}
                 >
                   Timeline
                 </li>
                 <li
-                  onClick={() => handleSideBarClick("Heatmap")}
-                  className={`cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out ${selectedMenu === "Heatmap" ? "bg-[#F5603C]" : ""
+                  id="Heatmap"
+                  onClick={(e) => handleSideBarClick("Heatmap")}
+                  onMouseOver={() => handleSideBarHover("Heatmap")}
+                  onMouseOut={() => handleSideBarBack()}
+                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "Heatmap" ? "active" : ""
                     }`}
                 >
                   Heatmap
-                </li>
+                </li> */}
+                <hr id='nav-bar' className="back-rust w-[50px] h-[3px] nav-move-bar"></hr>
               </ul>
             </div>
           </div>
         </div>
-      </div>
-      <div className="px-4 py-4 2xl:px-40 w-full max-w-[1800px] mx-auto min-h-screen">
-        <h1 className="text-4xl py-4 font-bold">{selectedMenu}</h1>
+      </div >
+      <div className="px-4 py-4 pr-8 w-full max-w-[1800px] mx-auto min-h-screen">
         {renderContent()}
       </div>
     </>
