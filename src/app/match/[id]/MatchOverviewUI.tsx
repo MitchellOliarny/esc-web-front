@@ -236,7 +236,7 @@ export default function Header({
                   <p className="text-[#F5603C]">{matchInfo.red}</p>
                 </div>
                 </div>
-                <p className="text-ash text-lg font-bold tracking-wider">
+                <p className="text-ash text-xl font-bold tracking-wider">
                   {//@ts-ignore
                   formatDateYear(matchInfo.date)}
                 </p>

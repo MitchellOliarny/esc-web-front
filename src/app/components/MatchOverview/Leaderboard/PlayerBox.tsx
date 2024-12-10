@@ -42,7 +42,7 @@ const PlayerBox = ({
 
   const [popup, setPopUp] = useState(isPopped)
   return (
-    <div className={`h-auto rounded-lg cursor-pointer ${team_color == 'blue' ? 'matchRowLeftBorderBlue' : 'matchRowLeftBorderRed'} my-2 `} onClick={()=>{setPopUp(popup ? false : true)}}>
+    <div className={`h-auto rounded-lg cursor-pointer my-2 `} onClick={()=>{setPopUp(popup ? false : true)}}>
       <div className={`h-24 grid grid-cols-9 items-center text-lg back-graphite ${popup ? 'rounded-t-lg' : 'rounded-lg'} game-row-border overflow-hidden`}>
         <div className="grid grid-cols-5 items-center game-row-border-right" style={{ gridColumn: '4 span' }}>
           <div className="col-span-4 flex justify-center h-full">
