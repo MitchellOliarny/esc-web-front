@@ -903,3 +903,7 @@ select.transparent > option {
   border-left: 5px solid var(--rust);
   padding: 0 0.8em 0 0;
 }
+
+.user-back-match {
+  background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 20%);
+}

@@ -20,6 +20,7 @@ interface GameProps {
   f_kills: any,
 
   isPopped: boolean
+  isUser: boolean
 }
 
 const PlayerBox = ({
@@ -37,13 +38,13 @@ const PlayerBox = ({
 
   topScores,
   isPopped,
-
+  isUser
 }: GameProps) => {
 
   const [popup, setPopUp] = useState(isPopped)
   return (
     <div className={`h-auto rounded-lg cursor-pointer my-2 min-w-[1000px] w-auto `} onClick={()=>{setPopUp(popup ? false : true)}}>
-      <div className={`h-24 grid grid-cols-9 items-center text-lg back-graphite ${popup ? 'rounded-t-lg' : 'rounded-lg'} game-row-border overflow-hidden xl:text-[1em] text-[0.8em]`}>
+      <div className={`h-24 grid grid-cols-9 items-center text-lg ${isUser ? 'user-back-match': 'back-graphite'} ${popup ? 'rounded-t-lg' : 'rounded-lg'} game-row-border overflow-hidden xl:text-[1em] text-[0.8em]`}>
         <div className="grid grid-cols-5 items-center game-row-border-right" style={{ gridColumn: '4 span' }}>
           <div className="col-span-4 flex justify-center h-full">
             <div className="flex flex-row gap-4 text-center h-full" style={{ width: '-webkit-fill-available', whiteSpace: 'nowrap' }}>

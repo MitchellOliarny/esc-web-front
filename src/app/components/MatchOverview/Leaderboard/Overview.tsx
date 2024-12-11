@@ -5,9 +5,11 @@ import { leapfrog } from "ldrs";
 export default function Overview({
   isLoading,
   players,
+  user
 }: {
   isLoading: boolean;
   players: { 'red': any[], 'blue': any[] };
+  user: any;
 }) {
   leapfrog.register();
   return (
@@ -67,7 +69,7 @@ export default function Overview({
                     players[team.toLowerCase()].map((value, index) => {
                       return (
                         //@ts-ignore
-                        <PlayerBox key={value.puuid} agent={value.agent_id} rank={value.match_rank} puuid={value.puuid} name={value.name} tag={value.tag} agent_name={value.agent} kast={value.kast} stats={value.stats} f_kills={value.f_kills_deaths} topScores={players.topScores[value.team]} team_color={team} highlight_color={'#FFE57B'} isPopped={index==0 && team=='blue' ? true: false} />
+                        <PlayerBox key={value.puuid} agent={value.agent_id} rank={value.match_rank} puuid={value.puuid} name={value.name} tag={value.tag} agent_name={value.agent} kast={value.kast} stats={value.stats} f_kills={value.f_kills_deaths} topScores={players.topScores[value.team]} team_color={team} highlight_color={'#FFE57B'} isPopped={ user?.puuid  ? user?.puuid == value.puuid ? true : false : index==0 && team=='blue' ? true: false} isUser={user?.puuid == value.puuid ? true : false} />
                       )
                     })}
                     </div>

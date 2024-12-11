@@ -43,7 +43,7 @@ export default function Header({
 
         data.data.map((value: any) => {
 
-          if(value.puuid == user.puuid) {
+          if(value.puuid == user?.puuid) {
             console.log(value)
             setUserMatchData(value)
           }
@@ -188,7 +188,7 @@ export default function Header({
     switch (selectedMenu) {
       case "Overview":
         return (
-          <Overview isLoading={isLoadingLeaderboard} players={players} />
+          <Overview isLoading={isLoadingLeaderboard} players={players} user={user} />
         );
       case "Timeline":
         return <Timeline isLoading={isLoadingRounds} roundInfo={roundInfo} players={players} />;
