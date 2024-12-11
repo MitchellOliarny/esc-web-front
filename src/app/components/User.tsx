@@ -58,7 +58,7 @@ export default function NavbarUser({
             }}
               ></img>
               }
-              <h2 className="self-center text-sm text-frost">{user}</h2>
+              <h2 className="self-center text-sm text-frost">{user.slice(0, 16)}</h2>
             </div>
             <div className="flex content-center gap-2 lg:mt-0 mt-2">
               <Image
