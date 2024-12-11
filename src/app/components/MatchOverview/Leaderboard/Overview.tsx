@@ -22,7 +22,7 @@ export default function Overview({
             color="#F5603C"
           ></l-leapfrog>
         </div>
-        <div className="overflow-scroll" style={!isLoading ? { display: '' } : { display: 'none' }}>
+        <div className="lg:overflow-visible overflow-scroll" style={!isLoading ? { display: '' } : { display: 'none' }}>
           {Object.keys(players).map((team) => {
             const color = team == 'blue' ? '#5ECCBA' : '#F5603C';
             if (team == 'blue' || team == 'red') {

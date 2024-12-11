@@ -317,7 +317,7 @@ export default function Header({
           </div>
         </div>
       </div >
-      <div className="px-4 py-4 pr-8 w-full max-w-[1800px] mx-auto min-h-screen">
+      <div className="px-4 py-4 md:pr-8 w-full max-w-[1800px] mx-auto min-h-screen">
         {renderContent()}
       </div>
     </>
