@@ -276,7 +276,7 @@ const AgentBox = ({
 
           <div className="grid grid-cols-10 items-center m-2 w-full">
             <div className="inline col-span-3 h-16">
-              <h2 className="font-bold text-ash text-sm mb-2">
+              <h2 className="font-bold text-ash lg:text-sm text-xs mb-2">
                 Points Utilized
               </h2>
               <div className="inline-flex">
@@ -285,10 +285,10 @@ const AgentBox = ({
                   height={1000}
                   alt="Utility Report"
                   src={`https://media.valorant-api.com/agents/${agentId}/abilities/ultimate/displayicon.png`}
-                  className="w-auto h-12 m-auto"
+                  className="w-auto h-8 m-auto"
                 />
 
-                <p className="text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-4">
+                <p className="text-frost text-center justify-self-start font-bold lg:text-3xl text-xl leading-none my-auto ml-4">
                   {ultimate_points}%
                 </p>
 
@@ -296,7 +296,7 @@ const AgentBox = ({
             </div>
 
             <div className="inline col-span-7 px-2 mr-2 h-16">
-              <h2 className="font-bold text-ash text-sm mb-2">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
+              <h2 className="font-bold text-ash lg:text-sm text-xs whitespace-nowrap">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
               <div className="flex justify-between h-12">
                 <div className="flex items-center gap-2">
                   <Image
@@ -304,9 +304,9 @@ const AgentBox = ({
                     height={1000}
                     alt="Ability Icon 1"
                     src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability1/displayicon.png`}
-                    className="w-auto h-8 text-ash brightness-[.55]"
+                    className="w-auto h-6 text-ash brightness-[.55]"
                   />
-                  <p className="text-xl font-bold">{ability1_points}</p>
+                  <p className="lg:text-xl text-base font-bold">{ability1_points}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -315,9 +315,9 @@ const AgentBox = ({
                     height={1000}
                     alt="Ability Icon 2"
                     src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability2/displayicon.png`}
-                    className="w-auto h-8 text-ash brightness-[.55]"
+                    className="w-auto h-6 text-ash brightness-[.55]"
                   />
-                  <p className="text-xl font-bold">{ability2_points}</p>
+                  <p className="lg:text-xl text-base font-bold">{ability2_points}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -326,9 +326,9 @@ const AgentBox = ({
                     height={1000}
                     alt="Grenade Icon"
                     src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
-                    className="w-auto h-8 text-ash brightness-[.55]"
+                    className="w-auto h-6 text-ash brightness-[.55]"
                   />
-                  <p className="text-xl font-bold">{grenade_points}</p>
+                  <p className="lg:text-xl text-base font-bold">{grenade_points}</p>
                 </div>
               </div>
             </div>
@@ -338,21 +338,21 @@ const AgentBox = ({
         <div className="px-4 rounded-b-lg w-full justify-between">
           <div className="flex gap-4 mt-2">
             <div>
-              <p className="font-bold text-sm text-ash">FK &rarr; Round Win %</p>
+              <p className="font-bold lg:text-sm text-xs text-ash">FK &rarr; Round Win %</p>
               <p className="font-bold text-xl text-frost]">
                 {fk_round_win}%
               </p>
             </div>
 
             <div>
-              <p className="font-bold text-sm text-ash">FD &rarr; Round Loss %</p>
+              <p className="font-bold lg:text-sm text-xs text-ash">FD &rarr; Round Loss %</p>
               <p className="font-bold text-xl text-frost">
                 {fd_round_loss}%
               </p>
             </div>
 
             <div>  
-              <p className="font-bold text-sm text-ash">HS%</p>
+              <p className="font-bold lg:text-sm text-xs text-ash">HS%</p>
               <p className="font-bold text-xl  text-frost">
                 {hs_percent}%
               </p>
@@ -362,11 +362,11 @@ const AgentBox = ({
             <div>
               <div className="flex flex-col">
                 <p className="font-bold text-sm text-ash">Multi-Kills</p>
-                <p className="font-bold text-4xl text-frost">
+                <p className="font-bold lg:text-4xl text-3xl text-frost">
                   {total_multikills}
                 </p>
               </div>
-              <div className="flex gap-4 mt-2">
+              <div className="flex gap-4 mt-2 lg:text-base text-sm">
                 <div className="text-center">
                   <p className="font-medium text-ash">2k</p>
                   <p className="font-bold">{two_kills}</p>
@@ -397,11 +397,11 @@ const AgentBox = ({
             <div>
               <div className="flex flex-col">
                 <p className="font-bold text-sm text-ash">Clutches</p>
-                <p className="font-bold text-4xl text-frost">
+                <p className="font-bold lg:text-4xl text-3xl text-frost">
                   {total_clutches}
                 </p>
               </div>
-              <div className="flex gap-4 mt-2">
+              <div className="flex gap-4 mt-2 lg:text-base text-sm">
                 <div className="text-center">
                   <p className="font-medium text-ash">1v1</p>
                   <p className="font-bold">{one_on_one}</p>

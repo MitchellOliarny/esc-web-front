@@ -9,9 +9,10 @@ interface MedalShowcaseProps {
     category: String
     parentList: any;
     change_display_medal: any;
+    isPremiumUser: boolean
 }
 
-const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_display_medal }: MedalShowcaseProps) => {
+const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_display_medal, isPremiumUser }: MedalShowcaseProps) => {
 
 
     const [selectedTier, setSelectedTier] = useState(-1);
@@ -24,9 +25,18 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
 
     let temp = 0;
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         FilterSelected(selectedTier, selectedTerm);
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+          };
+      
+          window.addEventListener('resize', handleResize);
+      
+          // Cleanup the event listener on component unmount
+          return () => window.removeEventListener('resize', handleResize);
     }, [medals])
 
     const ResetPage = () => {
@@ -149,9 +159,9 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         <>
             <div className="w-full h-auto">
                 {/* Filters */}
-                <div className="flex gap-4 h-12">
+                <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 lg:h-12 h-36 lg:mt-0 mt-8">
                     <select
-                        className="select select-bordered filter-item-select w-full max-w-xs"
+                        className="select select-bordered filter-item-select w-full lg:max-w-xs"
                         value={selectedTier}
                         onChange={(e) => { setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value), selectedTerm); }}
                     >
@@ -169,7 +179,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                     </select>
 
                     <select
-                        className="select select-bordered filter-item-select w-full max-w-xs"
+                        className="select select-bordered filter-item-select w-full lg:max-w-xs"
                         value={selectedTerm}
                         onChange={(e) => { setSelectedTerm(e.target.value); FilterSelected(selectedTier, e.target.value) }}
                     >
@@ -190,15 +200,15 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
 
                     {/* Total */}
                     <div className="self-end justify-self-end ml-auto">
-                        <h2 className="text-voltage text-4xl font-bold">
+                        <h2 className="text-voltage lg:text-4xl text-2xl font-bold">
                             {totalEarned}
-                            <span className="text-ash text-2xl">/{Object.keys(medalsList).length}  Medals Earned</span>
+                            <span className="text-ash lg:text-2xl text-lg">/{Object.keys(medalsList).length}  Medals Earned</span>
                         </h2>
                     </div>
                 </div>
 
                 {/* Medal Area */}
-                <div>
+                <div className="mt-4">
                     {
                         // @ts-ignore
                         medalsList.map((medal, value) => {
@@ -206,13 +216,13 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                             if (parentList[medal.name]) {
                                 return (
                                     // @ts-ignore
-                                    <MedalWithChildren medalInfo={medal} progress={medalsProgress[medal.name] || { progress: 0 }} key={medal.name} children_medals={parentList[medal.name]} all_children={parentList} child_progress={medalsProgress} change_display_medal={change_display_medal} />
+                                    <MedalWithChildren medalInfo={medal} progress={medalsProgress[medal.name] || { progress: 0 }} key={medal.name} children_medals={parentList[medal.name]} all_children={parentList} child_progress={medalsProgress} change_display_medal={change_display_medal} isPremiumUser={isPremiumUser} isMobile={windowWidth < 1000 ? true : false}/>
                                 )
                             }
 
                             return (
                                 // @ts-ignore
-                                <Medal medalInfo={medal} progress={medalsProgress[medal.name] || { progress: 0 }} key={medal.name} change_display_medal={change_display_medal} />
+                                <Medal medalInfo={medal} progress={medalsProgress[medal.name] || { progress: 0 }} key={medal.name} change_display_medal={change_display_medal} isPremiumUser={isPremiumUser} isMobile={windowWidth < 1000 ? true : false}/>
                             )
                         })
 

@@ -6,9 +6,10 @@ interface ValorantMedalsProps {
     medalsProgress: any;
     change_display_medal: any;
     isAdmin: boolean
+    isPremiumUser: boolean;
 }
 
-const ValorantMedals = ({ medals, medalsProgress, change_display_medal, isAdmin }: ValorantMedalsProps) => {
+const ValorantMedals = ({ medals, medalsProgress, change_display_medal, isAdmin, isPremiumUser }: ValorantMedalsProps) => {
 
     const [medalCategory, setMedalCategory] = useState("all");
     const [medalList, setMedalList] = useState({});
@@ -59,8 +60,8 @@ const ValorantMedals = ({ medals, medalsProgress, change_display_medal, isAdmin 
 
 
     return (
-        <div className="flex mt-10 gap-x-20">
-            <div className={`grid gap-8 h-full w-[20%]`}>
+        <div className="flex lg:flex-row flex-col mt-10 gap-x-20">
+            <div className={`flex lg:flex-col flex:row lg:gap-6 gap-4 h-full w-[15%] lg:text-base text-xs`}>
                 <div onClick={() => ClickCategoryCard('all')} className={`medal-nav-button ${medalCategory == 'all' ? 'medal-nav-active' : ''}`}>
                     <h2 className="text-left">All Medals</h2>
                 </div>
@@ -82,8 +83,8 @@ const ValorantMedals = ({ medals, medalsProgress, change_display_medal, isAdmin 
                 }
             </div>
 
-            <div className={`flex gap-4 h-full w-[80%]`}>
-                <MedalShowcase medals={medalList} medalsProgress={medalsProgress.data.progress} category={medalCategory} parentList={parentList} change_display_medal={change_display_medal}/>
+            <div className={`flex gap-4 h-full lg:w-[80%] w-full`}>
+                <MedalShowcase medals={medalList} medalsProgress={medalsProgress.data.progress} category={medalCategory} parentList={parentList} change_display_medal={change_display_medal} isPremiumUser={isPremiumUser}/>
             </div>
         </div>
     );

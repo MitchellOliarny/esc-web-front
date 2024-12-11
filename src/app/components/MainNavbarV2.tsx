@@ -54,8 +54,8 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
       pathname.includes("forgot-password" && "reset-password") ? (
         <>{children}</>
       ) : (
-        <nav className="flex my-8 lg:ml-[17.5%] overflow-x-hidden">
-          <div className="w-full lg:w-[15vw] h-auto left-5 mr-16 rounded-lg fixed" style={{zIndex: 100}}>
+        <nav className="flex lg:my-8 lg:ml-[17.5%] overflow-x-hidden">
+          <div className="w-full lg:w-[15vw] h-auto lg:left-5 mr-16 rounded-lg fixed" style={{zIndex: 100}}>
 
             {/* full nav */}
             <div className="back-graphite w-full h-full max-w-[1800px] mx-auto hidden 2xl:block bg-none rounded-lg">
@@ -226,8 +226,8 @@ const MainNavbar: React.FC<MainNavbarProps> = ({ user, riot, pfp, children, rank
             </div>
 
             {/* Mobile Navigation */}
-            <div className="back-graphite mr-8 z-100 lg:hidden bg-none rounded-lg">
-              <div className="flex items-center w-full mx-auto my-0 py-4 px-6">
+            <div className="back-graphite w-full h-24 z-100 lg:hidden bg-none">
+              <div className="flex items-center w-full h-full m-auto py-4 px-6">
                 <Link href="/">
                   <Image
                     height={1000}

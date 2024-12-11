@@ -125,7 +125,7 @@ const MatchHistoryUI = ({
 
   return (
     <>
-      <div className="mt-4">
+      <div className="mt-4 min-w-[1200px]">
         <div className="col-span-9">
           {Object.keys(GamesByDate).map(index => {
             //console.log(count);

@@ -84,7 +84,7 @@ const StatsPanel = ({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-2 gap-4">
         {/* <StatsDistribution
           tooltip="Percentage of games won out of all games played"
           unit="percent"

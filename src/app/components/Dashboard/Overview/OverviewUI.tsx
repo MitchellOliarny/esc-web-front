@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MatchHistoryUI from "../MatchHistory/MatchHistoryUI";
 import AgentBoxV2 from "../Agents/AgentBoxV2";
 import StatsScore from "../Statistics/StatsScore";
@@ -47,6 +47,19 @@ const OverviewUI = ({
 }: StatsUIProps) => {
   const [canClick, setCanClick] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleFindGames = async () => {
     try {
@@ -136,11 +149,11 @@ const OverviewUI = ({
           <h2 className="text-4xl font-bold py-4 col-span-4">Stats</h2>
           <div className="grid 2xl:grid-cols-2 grid-cols-1 gap-4 mb-4">
             {/* @ts-ignore */}
-            <StatsScore userGames={userGames} valAverage={valAverage ? valAverage[ranks[current_rank]]?.all : null} />
+            <StatsScore userGames={userGames} valAverage={valAverage ? valAverage[ranks[current_rank]]?.all : null} isAgentBox={windowWidth < 1000 ? true : false}/>
             <div>
               {recentGames?.length > 0 && (
                 // @ts-ignore
-                <AgentBoxV2 agentGames={topAgentGames} agentAverages={valAverage && valAverage[ranks[current_rank]] ? valAverage[ranks[current_rank]][topAgentName] : {}} agentId={topAgentId} agentInfo={agent_array[topAgentName]} maps={maps_array}/>
+                <AgentBoxV2 agentGames={topAgentGames} agentAverages={valAverage && valAverage[ranks[current_rank]] ? valAverage[ranks[current_rank]][topAgentName] : {}} agentId={topAgentId} agentInfo={agent_array[topAgentName]} maps={maps_array} isMobile={windowWidth < 1000 ? true : false}/>
               )}
             </div>
           </div>
@@ -187,7 +200,7 @@ const OverviewUI = ({
 
             </div>
 
-            <div className="grid grid-cols-12 gap-4">
+            <div className="grid grid-cols-12 gap-4 overflow-x-scroll">
               <div className="col-span-12">
                 {recentGames?.length > 0 ? (
                   <MatchHistoryUI

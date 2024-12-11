@@ -8,9 +8,10 @@ interface AgentBoxProps {
   agentId: string;
   agentInfo: any;
   maps: any;
+  isMobile: boolean
 }
 
-const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: AgentBoxProps) => {
+const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps, isMobile }: AgentBoxProps) => {
   const isWin = (game: UserGames) => {
     const playerTeam = game.team.toLowerCase();
     const otherTeam = playerTeam === "blue" ? "red" : "blue";
@@ -261,209 +262,414 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps }: Age
 
   return (
     <>
-      <div
-        id="main-container"
-        className="w-full h-full stat-box rounded-lg overflow-hidden"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.5fr 1fr 2fr",
-        }}
-      >
+      {!isMobile ?
         <div
-          className="h-full relative border-white overflow-hidden"
+          id="main-container"
+          className="w-full h-full stat-box rounded-lg overflow-hidden"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.5fr 1fr 2fr",
+          }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r opacity-50"></div>
           <div
-            className="relative h-full flex items-center justify-center"
-            style={{
-              backgroundImage: `url(https://media.valorant-api.com/maps/${mapId}/splash.png)`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
+            className="h-full relative border-white overflow-hidden"
           >
-            <div className="absolute w-full h-full agent-box-gradient">
+            <div className="absolute inset-0 bg-gradient-to-r opacity-50"></div>
+            <div
+              className="relative h-full flex items-center justify-center"
+              style={{
+                backgroundImage: `url(https://media.valorant-api.com/maps/${mapId}/splash.png)`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div className="absolute w-full h-full agent-box-gradient">
 
-            </div>
-            <div className="h-full">
-              <Image
-                src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
-                className="scale-[1.75] object-cover object-top translate-y-24"
-                width={1000}
-                height={1000}
-                alt="Top Agent"
-              />
+              </div>
+              <div className="h-full">
+                <Image
+                  src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
+                  className="scale-[1.75] object-cover object-top translate-y-24"
+                  width={1000}
+                  height={1000}
+                  alt="Top Agent"
+                />
 
+              </div>
+              <div className="best-map-box m-2 px-2 absolute h-8 text-nowrap top-0 left-0">
+                <span className="text-ash font-bold text-sm">Best Map:
+                  <span className="text-frost font-bold text-sm"> {bestMap}</span>
+                </span>
+              </div>
             </div>
-            <div className="best-map-box m-2 px-2 absolute h-8 text-nowrap top-0 left-0">
-              <span className="text-ash font-bold text-sm">Best Map:
-                <span className="text-frost font-bold text-sm"> {bestMap}</span>
-              </span>
+          </div>
+
+          <div className="w-full col-span-2 row-spa back-graphite rounded-b-lg h-auto z-10 relative">
+            <div className="px-2 py-4">
+
+              <div className="grid grid-cols-10 items-center m-2 w-full">
+                <div className="inline col-span-3 h-16">
+                  <h2 className="font-bold text-ash text-sm mb-2">
+                    Points Utilized
+                  </h2>
+                  <div className="inline-flex">
+                    <Image
+                      width={1000}
+                      height={1000}
+                      alt="Utility Report"
+                      src={`https://media.valorant-api.com/agents/${agentId}/abilities/ultimate/displayicon.png`}
+                      className="w-auto h-12 m-auto"
+                    />
+
+                    <p className={`text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-4 ${'text-' + ult_percentile.color}`}>
+                      {ultimate_points}%
+                    </p>
+
+                  </div>
+                </div>
+
+                <div className="inline col-span-7 px-2 mr-4 h-16">
+                  <h2 className="font-bold text-ash text-sm mb-2">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
+                  <div className="flex justify-between h-12 text-frost">
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        alt="Ability Icon 1"
+                        src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability1/displayicon.png`}
+                        className="w-auto h-8 text-ash brightness-[.55]"
+                      />
+                      <p className={`text-xl font-bold ${'text-' + ability_1_percentile.color}`}>{ability1_points}</p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        alt="Ability Icon 2"
+                        src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability2/displayicon.png`}
+                        className="w-auto h-8 text-ash brightness-[.55]"
+                      />
+                      <p className={`text-xl font-bold ${'text-' + ability_2_percentile.color}`}>{ability2_points}</p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        alt="Grenade Icon"
+                        src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
+                        className="w-auto h-8 text-ash brightness-[.55]"
+                      />
+                      <p className={`text-xl font-bold ${'text-' + grenade_percentile.color}`}>{grenade_points}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="px-4 rounded-b-lg w-full">
+              <div className="flex mt-2 gap-16 text-frost">
+                <div>
+                  <p className="font-bold text-sm text-ash">FK &rarr; Round Win %</p>
+                  <p className="font-bold text-xl text-voltage">
+                    {fk_round_win}%
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-bold text-sm text-ash">FD &rarr; Round Loss %</p>
+                  <p className="font-bold text-xl text-rust">
+                    {fd_round_loss}%
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-bold text-sm text-ash">HS%</p>
+                  <p className={`font-bold text-xl ${'text-' + hs_percentile.color}`}>
+                    {hs_percent.toFixed(2)}%
+                  </p>
+                </div>
+              </div>
+              <div className="grid py-6 grid-cols-2">
+                <div>
+                  <div className="flex flex-col">
+                    <p className="font-bold text-sm text-ash">Multi-Kills</p>
+                    <p className="font-bold text-4xl text-frost">
+                      {total_multikills}
+                    </p>
+                  </div>
+                  <div className="flex gap-4 mt-2">
+                    <div className="text-center">
+                      <p className="font-medium text-ash">2k</p>
+                      <p className="font-bold">{two_kills}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">3k</p>
+                      <p className="font-bold">{three_kills}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">4k</p>
+                      <p className="font-bold">{four_kills}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">5k</p>
+                      <p className="font-bold">{five_kills}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">6k</p>
+                      <p className="font-bold">{six_kills}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex flex-col">
+                    <p className="font-bold text-sm text-ash">Clutches</p>
+                    <p className="font-bold text-4xl text-frost">
+                      {total_clutches}
+                    </p>
+                  </div>
+                  <div className="flex gap-4 mt-2">
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v1</p>
+                      <p className="font-bold">{one_on_one}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v2</p>
+                      <p className="font-bold">{one_on_two}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v3</p>
+                      <p className="font-bold">{one_on_three}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v4</p>
+                      <p className="font-bold">{one_on_four}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v5</p>
+                      <p className="font-bold">{one_on_five}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        :
+        <div
+          id="main-container"
+          className="w-full h-[32rem] stat-box rounded-lg overflow-hidden"
+          style={{
+            display: "grid",
+            gridTemplateRows: "1.5fr 1fr 2fr",
+            gridTemplateColumns: "1fr",
+          }}
+        >
+          <div
+            className="h-40 w-full relative border-white overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r opacity-50"></div>
+            <div
+              className="relative h-full flex items-center justify-center"
+              style={{
+                backgroundImage: `url(https://media.valorant-api.com/maps/${mapId}/splash.png)`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div className="absolute w-full h-full agent-box-gradient">
 
-        <div className="w-full col-span-2 row-spa back-graphite rounded-b-lg h-auto z-10 relative">
-          <div className="px-2 py-4">
-
-            <div className="grid grid-cols-10 items-center m-2 w-full">
-              <div className="inline col-span-3 h-16">
-                <h2 className="font-bold text-ash text-sm mb-2">
-                  Points Utilized
-                </h2>
-                <div className="inline-flex">
-                  <Image
-                    width={1000}
-                    height={1000}
-                    alt="Utility Report"
-                    src={`https://media.valorant-api.com/agents/${agentId}/abilities/ultimate/displayicon.png`}
-                    className="w-auto h-12 m-auto"
-                  />
-
-                  <p className={`text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-4 ${'text-'+ult_percentile.color}`}>
-                    {ultimate_points}%
-                  </p>
-
-                </div>
               </div>
+              <div className="h-full">
+                <Image
+                  src={`https://media.valorant-api.com/agents/${agentId}/fullportrait.png`}
+                  className="scale-[1] object-cover object-top"
+                  width={1000}
+                  height={1000}
+                  alt="Top Agent"
+                />
 
-              <div className="inline col-span-7 px-2 mr-4 h-16">
-                <h2 className="font-bold text-ash text-sm mb-2">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
-                <div className="flex justify-between h-12 text-frost">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      width={1000}
-                      height={1000}
-                      alt="Ability Icon 1"
-                      src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability1/displayicon.png`}
-                      className="w-auto h-8 text-ash brightness-[.55]"
-                    />
-                    <p className={`text-xl font-bold ${'text-'+ability_1_percentile.color}`}>{ability1_points}</p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Image
-                      width={1000}
-                      height={1000}
-                      alt="Ability Icon 2"
-                      src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability2/displayicon.png`}
-                      className="w-auto h-8 text-ash brightness-[.55]"
-                    />
-                    <p className={`text-xl font-bold ${'text-'+ability_2_percentile.color}`}>{ability2_points}</p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Image
-                      width={1000}
-                      height={1000}
-                      alt="Grenade Icon"
-                      src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
-                      className="w-auto h-8 text-ash brightness-[.55]"
-                    />
-                    <p className={`text-xl font-bold ${'text-'+grenade_percentile.color}`}>{grenade_points}</p>
-                  </div>
-                </div>
+              </div>
+              <div className="best-map-box m-2 px-2 absolute h-8 text-nowrap top-0 left-0">
+                <span className="text-ash font-bold text-sm">Best Map:
+                  <span className="text-frost font-bold text-sm"> {bestMap}</span>
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="px-4 rounded-b-lg w-full">
-            <div className="flex mt-2 gap-16 text-frost">
-              <div>
-                <p className="font-bold text-sm text-ash">FK &rarr; Round Win %</p>
-                <p className="font-bold text-xl text-voltage">
-                  {fk_round_win}%
-                </p>
-              </div>
+          <div className="w-full back-graphite rounded-b-lg h-auto z-10 relative">
+            <div className="px-2 py-4">
 
-              <div>
-                <p className="font-bold text-sm text-ash">FD &rarr; Round Loss %</p>
-                <p className="font-bold text-xl text-rust">
-                  {fd_round_loss}%
-                </p>
-              </div>
+              <div className="grid grid-cols-10 items-center m-2 w-full">
+                <div className="inline col-span-3 h-16">
+                  <h2 className="font-bold text-ash text-sm mb-4">
+                    Points Utilized
+                  </h2>
+                  <div className="inline-flex">
+                    <Image
+                      width={1000}
+                      height={1000}
+                      alt="Utility Report"
+                      src={`https://media.valorant-api.com/agents/${agentId}/abilities/ultimate/displayicon.png`}
+                      className="w-auto h-8 m-auto"
+                    />
 
-              <div>
-                <p className="font-bold text-sm text-ash">HS%</p>
-                <p className={`font-bold text-xl ${'text-'+hs_percentile.color}`}>
-                  {hs_percent.toFixed(2)}%
-                </p>
+                    <p className={`text-frost text-center justify-self-start font-bold text-xl leading-none my-auto ml-1 ${'text-' + ult_percentile.color}`}>
+                      {ultimate_points}%
+                    </p>
+
+                  </div>
+                </div>
+
+                <div className="inline col-span-7 px-2 mr-4 h-16">
+                  <h2 className="font-bold text-ash text-sm mb-2 whitespace-nowrap">Ability Usage / Game ({(totalRounds / totalGames).toFixed(1)} Rounds)</h2>
+                  <div className="flex justify-between h-12 text-frost">
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        alt="Ability Icon 1"
+                        src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability1/displayicon.png`}
+                        className="w-auto h-6 text-ash brightness-[.55]"
+                      />
+                      <p className={`text-base font-bold ${'text-' + ability_1_percentile.color}`}>{ability1_points}</p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        alt="Ability Icon 2"
+                        src={`https://media.valorant-api.com/agents/${agentId}/abilities/ability2/displayicon.png`}
+                        className="w-auto h-6 text-ash brightness-[.55]"
+                      />
+                      <p className={`text-base font-bold ${'text-' + ability_2_percentile.color}`}>{ability2_points}</p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        alt="Grenade Icon"
+                        src={`https://media.valorant-api.com/agents/${agentId}/abilities/grenade/displayicon.png`}
+                        className="w-auto h-6 text-ash brightness-[.55]"
+                      />
+                      <p className={`text-base font-bold ${'text-' + grenade_percentile.color}`}>{grenade_points}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="grid py-6 grid-cols-2">
-              <div>
-                <div className="flex flex-col">
-                  <p className="font-bold text-sm text-ash">Multi-Kills</p>
-                  <p className="font-bold text-4xl text-frost">
-                    {total_multikills}
+
+            <div className="px-4 rounded-b-lg w-full">
+              <div className="flex mt-2 gap-16 text-frost">
+                <div>
+                  <p className="font-bold text-xs text-ash">FK &rarr; Round Win %</p>
+                  <p className="font-bold text-xl text-voltage">
+                    {fk_round_win}%
                   </p>
                 </div>
-                <div className="flex gap-4 mt-2">
-                  <div className="text-center">
-                    <p className="font-medium text-ash">2k</p>
-                    <p className="font-bold">{two_kills}</p>
-                  </div>
 
-                  <div className="text-center">
-                    <p className="font-medium text-ash">3k</p>
-                    <p className="font-bold">{three_kills}</p>
-                  </div>
+                <div>
+                  <p className="font-bold text-xs text-ash">FD &rarr; Round Loss %</p>
+                  <p className="font-bold text-xl text-rust">
+                    {fd_round_loss}%
+                  </p>
+                </div>
 
-                  <div className="text-center">
-                    <p className="font-medium text-ash">4k</p>
-                    <p className="font-bold">{four_kills}</p>
-                  </div>
-
-                  <div className="text-center">
-                    <p className="font-medium text-ash">5k</p>
-                    <p className="font-bold">{five_kills}</p>
-                  </div>
-
-                  <div className="text-center">
-                    <p className="font-medium text-ash">6k</p>
-                    <p className="font-bold">{six_kills}</p>
-                  </div>
+                <div>
+                  <p className="font-bold text-xs text-ash">HS%</p>
+                  <p className={`font-bold text-xl mt-4 ${'text-' + hs_percentile.color}`}>
+                    {hs_percent.toFixed(2)}%
+                  </p>
                 </div>
               </div>
+              <div className="grid py-6 grid-cols-2">
+                <div>
+                  <div className="flex flex-col">
+                    <p className="font-bold text-sm text-ash">Multi-Kills</p>
+                    <p className="font-bold text-3xl text-frost">
+                      {total_multikills}
+                    </p>
+                  </div>
+                  <div className="flex gap-4 mt-2 text-sm">
+                    <div className="text-center">
+                      <p className="font-medium text-ash">2k</p>
+                      <p className="font-bold">{two_kills}</p>
+                    </div>
 
-              <div>
-                <div className="flex flex-col">
-                  <p className="font-bold text-sm text-ash">Clutches</p>
-                  <p className="font-bold text-4xl text-frost">
-                    {total_clutches}
-                  </p>
+                    <div className="text-center">
+                      <p className="font-medium text-ash">3k</p>
+                      <p className="font-bold">{three_kills}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">4k</p>
+                      <p className="font-bold">{four_kills}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">5k</p>
+                      <p className="font-bold">{five_kills}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">6k</p>
+                      <p className="font-bold">{six_kills}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex gap-4 mt-2">
-                  <div className="text-center">
-                    <p className="font-medium text-ash">1v1</p>
-                    <p className="font-bold">{one_on_one}</p>
-                  </div>
 
-                  <div className="text-center">
-                    <p className="font-medium text-ash">1v2</p>
-                    <p className="font-bold">{one_on_two}</p>
+                <div>
+                  <div className="flex flex-col">
+                    <p className="font-bold text-sm text-ash">Clutches</p>
+                    <p className="font-bold text-3xl text-frost">
+                      {total_clutches}
+                    </p>
                   </div>
+                  <div className="flex gap-4 mt-2 text-sm">
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v1</p>
+                      <p className="font-bold">{one_on_one}</p>
+                    </div>
 
-                  <div className="text-center">
-                    <p className="font-medium text-ash">1v3</p>
-                    <p className="font-bold">{one_on_three}</p>
-                  </div>
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v2</p>
+                      <p className="font-bold">{one_on_two}</p>
+                    </div>
 
-                  <div className="text-center">
-                    <p className="font-medium text-ash">1v4</p>
-                    <p className="font-bold">{one_on_four}</p>
-                  </div>
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v3</p>
+                      <p className="font-bold">{one_on_three}</p>
+                    </div>
 
-                  <div className="text-center">
-                    <p className="font-medium text-ash">1v5</p>
-                    <p className="font-bold">{one_on_five}</p>
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v4</p>
+                      <p className="font-bold">{one_on_four}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="font-medium text-ash">1v5</p>
+                      <p className="font-bold">{one_on_five}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
+      }
 
       {/* <div className="bg-[#102B3D] p-2 border-b-2 border-white">
           <div className="flex items-center gap-2 justify-between">

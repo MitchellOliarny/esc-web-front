@@ -27,6 +27,7 @@ interface DashboardUIProps {
   medalProgress: Object;
   medals: Object;
   isAdmin: boolean;
+  isPremiumUser: boolean;
   students: [];
 }
 
@@ -41,6 +42,7 @@ export default function Header({
   medalProgress,
   medals,
   isAdmin,
+  isPremiumUser,
   students
 }: DashboardUIProps) {
 
@@ -62,6 +64,9 @@ export default function Header({
   useEffect(() => {
     if (view) {
       handleSideBarClick(view);
+    }
+    else {
+      handleSideBarClick('overview');
     }
     console.log(userMedals)
     // @ts-ignore
@@ -135,7 +140,7 @@ export default function Header({
         );
       case "medals":
         return (
-          <ValorantMedals medalsProgress={userMedals} medals={medals} change_display_medal={ChangeDisplayMedal} isAdmin={isAdmin}/>
+          <ValorantMedals medalsProgress={userMedals} medals={medals} change_display_medal={ChangeDisplayMedal} isAdmin={isAdmin} isPremiumUser={isPremiumUser}/>
         )
       default:
         return (
@@ -202,9 +207,9 @@ export default function Header({
 
   return (
     <>
-      <div className="px-4 w-full max-w-[1800px] mx-auto h-auto">
+      <div className="lg:px-4 px-0 w-full max-w-[1800px] mx-auto h-auto">
         <div
-          className="w-full rounded-lg h-[25rem]"
+          className="w-full lg:rounded-lg h-[25rem]"
           style={{
             backgroundImage:
               valGames
@@ -214,10 +219,10 @@ export default function Header({
             backgroundPosition: "center",
           }}
         >
-          <div className="flex flex-col justify-end pt-40 pb-0 px-6 h-full rounded-lg"
+          <div className="flex flex-col justify-end pt-40 pb-0 px-6 h-full lg:rounded-lg"
             style={{ backgroundImage: 'linear-gradient(0deg, #14181E, 80%, transparent)' }}
           >
-            <div className="w-full h-24 flex gap-4 mb-2">
+            <div className="w-full lg:h-24 h-16 flex gap-4 mb-2">
               {
                 displayMedals.map((medal, index) => {
                   if (medal) {
@@ -243,17 +248,17 @@ export default function Header({
               }
 
             </div>
-            <div className="w-full grid grid-cols-2 pb-8">
-              <h1 className="grid font-[800] text-5xl text-frost px-4">
+            <div className="w-full grid lg:grid-cols-2 lg:grid-rows-1 grid-rows-2 pb-8">
+              <h1 className="grid font-[800] lg:text-5xl text-5xl text-frost lg:px-4 px-2">
                 {/* @ts-ignore */}
                 {valGames ? valGames[0]?.username : ''}
                 <br className="gap-0"></br>
-                <span className="text-ash text-2xl font-bold">
+                <span className="text-ash lg:text-2xl text-xl font-bold">
                   {/* @ts-ignore */}#{valGames ? valGames[0]?.tag : ''}
                 </span>
               </h1>
               {valGames?.length > 0 && (
-                <div className="flex gap-4 w-[60%] justify-self-end self-end text-frost">
+                <div className="flex gap-4 lg:w-[60%] w-full justify-self-end self-end text-frost">
                   <Image
                     src={`https://api.esportsclubs.gg/images/ranks/${valGames[0]?.mmr_change?.rank
                       ? valGames[0]?.mmr_change?.rank
@@ -289,13 +294,13 @@ export default function Header({
               )}
             </div>
             <div className="flex items-end">
-              <ul className="dashnav flex gap-4 font-bold text-lg w-full pb-2">
+              <ul className="dashnav flex gap-4 font-bold lg:text-lg text-[.7em] w-full pb-2">
                 <li
                   id="overview"
                   onClick={(e) => handleSideBarClick("overview")}
                   onMouseOver={() => handleSideBarHover("overview")}
                   onMouseOut={() => handleSideBarBack()}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "active" : ""
+                  className={`grid cursor-pointer py-2 lg:px-4 px-1 transition-all ease-in-out text-ash ${selectedMenu === "overview" ? "active" : ""
                     }`}
                 >
                   Overview
@@ -305,7 +310,7 @@ export default function Header({
                   onClick={(e) => handleSideBarClick("statistics")}
                   onMouseOver={() => handleSideBarHover("statistics")}
                   onMouseOut={() => handleSideBarBack()}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "active" : ""
+                  className={`grid cursor-pointer py-2 lg:px-4 px-1 transition-all ease-in-out text-ash ${selectedMenu === "statistics" ? "active" : ""
                     }`}
                 >
                   Statistics
@@ -315,7 +320,7 @@ export default function Header({
                   onClick={(e) => handleSideBarClick("match-history")}
                   onMouseOver={() => handleSideBarHover("match-history")}
                   onMouseOut={() => handleSideBarBack()}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "active" : ""
+                  className={`grid cursor-pointer py-2 lg:px-4 px-1 transition-all ease-in-out text-ash ${selectedMenu === "match-history" ? "active" : ""
                     }`}
                 >
                   Match History
@@ -325,7 +330,7 @@ export default function Header({
                   onClick={(e) => handleSideBarClick("agents")}
                   onMouseOver={() => handleSideBarHover("agents")}
                   onMouseOut={() => handleSideBarBack()}
-                  className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "active" : ""
+                  className={`grid cursor-pointer py-2 lg:px-4 px-1 transition-all ease-in-out text-ash ${selectedMenu === "agents" ? "active" : ""
                     }`}
                 >
                   Agents
@@ -335,7 +340,7 @@ export default function Header({
                   onClick={(e) => handleSideBarClick("medals")}
                   onMouseOver={() => handleSideBarHover("medals")}
                   onMouseOut={() => handleSideBarBack()}
-                  className={`grid cursor-pointer py-2 px-4 rounded-full transition-all ease-in-out text-ash ${selectedMenu === "medals" ? "active" : ""
+                  className={`grid cursor-pointer py-2 lg:px-4 px-1 rounded-full transition-all ease-in-out text-ash ${selectedMenu === "medals" ? "active" : ""
                     }`}
                 >
                   Medals
@@ -370,7 +375,9 @@ export default function Header({
             /> : ''
         }
         {/* <h1 className="inline-flex text-4xl py-4 font-bold w-full">{selectedMenu.toLocaleUpperCase().replace('-', ' ')} <p className="inline-flex mx-4 text-sm"> <FaExclamationCircle color="#FF6F4D" className="mx-4" /> Website is still Work-In-Progress - Report any issues in the ESC Discord</p> </h1> */}
+        <div className={`${selectedMenu == "match-history" ? "overflow-x-scroll" : ""}`}>
         {renderContent()}
+        </div>
       </div>
     </>
   );

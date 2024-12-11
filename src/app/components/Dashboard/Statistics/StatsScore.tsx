@@ -16,6 +16,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
   const displayType = isAgentBox ? 'grid' : 'flex';
   const fontSize = isAgentBox ? '' : '';
 
+
   let totalWins = 0;
   let totalLosses = 0;
 
@@ -166,7 +167,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
           <div className="stat-box pt-4 px-4 h-full rounded-lg">
             <div className="flex items-center gap-2 justify-between">
               <div className="flex items-center gap-2">
-                <h1 className="font-bold text-2xl">EsportsClubs.gg Score</h1>
+                <h1 className="font-bold text-2xl">ESC Score</h1>
                 {/* <Image
                   width={1000}
                   height={1000}
@@ -361,7 +362,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
         </div>
         :
         <div>
-          <div className="">
+          <div className="back-graphite rounded-lg py-2">
             <div className={`grid`}>
               <div className="inline-flex w-full pl-2 pr-10 justify-start">
                 <Image
@@ -391,7 +392,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
               </div>
 
 
-              <div className="px-4 py-6">
+              <div className="px-4 py-6 whitespace-nowrap">
                 <div className="grid grid-cols-3 gap-8 pb-6">
                   <div>
                     <div
@@ -400,10 +401,10 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     >
                       <h3 className="font-bold text-sm text-ash">Match Win %</h3>
                     </div>
-                    <p className="font-bold text-4xl text-frost">
+                    <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {((totalWins / (totalWins + totalLosses)) * 100).toFixed(1)}%
                     </p>
-                    <p className="font-bold text-sm stat-percent-box h-6">
+                    <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${win_percent.color}`}>Top{" "}
                         {(
                           win_percent.percentile
@@ -418,10 +419,10 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     >
                       <h3 className="font-bold text-sm text-ash">Round Win %</h3>
                     </div>
-                    <p className="font-bold text-4xl text-frost">
+                    <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {((roundsWin / totalRounds) * 100).toFixed(1)}%
                     </p>
-                    <p className="font-bold text-sm stat-percent-box h-6">
+                    <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${round_percent.color}`}>Top{" "}
                         {(
                           round_percent.percentile
@@ -436,10 +437,10 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     >
                       <h3 className="font-bold text-sm text-ash">AD/R</h3>
                     </div>
-                    <p className="font-bold text-4xl text-frost">
+                    <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(adrPercentage / recentGames?.length).toFixed(0)}
                     </p>
-                    <p className="font-bold text-sm stat-percent-box h-6">
+                    <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${adr_percent.color}`}>Top{" "}
                         {(
                           adr_percent.percentile
@@ -458,10 +459,10 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     >
                       <h3 className="font-bold text-sm text-ash">KAST%</h3>
                     </div>
-                    <p className="font-bold text-4xl text-frost">
+                    <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(kastPercentage / recentGames?.length).toFixed(1)}%
                     </p>
-                    <p className="font-bold text-sm stat-percent-box h-6">
+                    <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${kast_percent.color}`}>Top{" "}
                         {(
                           kast_percent.percentile
@@ -476,10 +477,10 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     >
                       <h3 className="font-bold text-sm text-ash">KA/D</h3>
                     </div>
-                    <p className="font-bold text-4xl text-frost">
+                    <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(KAD / recentGames?.length).toFixed(2)}
                     </p>
-                    <p className="font-bold text-sm stat-percent-box h-6">
+                    <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${kad_percent.color}`}>Top{" "}
                         {(
                           kad_percent.percentile
@@ -494,10 +495,10 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     >
                       <h3 className="font-bold text-sm text-ash">DMG Delta</h3>
                     </div>
-                    <p className="font-bold text-4xl text-frost">
+                    <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(ddPercentage / recentGames?.length).toFixed(2)}
                     </p>
-                    <p className="font-bold text-sm stat-percent-box h-6">
+                    <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${dmg_delta_percent.color}`}>Top{" "}
                         {(
                           dmg_delta_percent.percentile

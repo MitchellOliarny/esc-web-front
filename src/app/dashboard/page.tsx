@@ -158,6 +158,7 @@ export default async function Dashboard(queryParams: any) {
         medalProgress={valMedalsProgress}
         medals={valMedals}
         isAdmin={auth.data.isAdmin == 1 ? true : false}
+        isPremiumUser={userData?.esc_member == 1 ? true : false}
         students={students.accounts ? students.accounts : []}
       />
     </>

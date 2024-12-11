@@ -119,11 +119,11 @@ const DashboardFilter = ({
   return (
     <>
       <div className="bg-none py-2 rounded-lg">
-        <div className={`h-full dashfilter flex gap-4 font-bold text-frost`}>
+        <div className={`h-full dashfilter flex lg:flex-nowrap flex-wrap gap-4 font-bold text-frost`}>
 
           {isAdmin ? (
             <input
-              className="select select-bordered w-full max-w-xs"
+              className="select select-bordered w-full"
               value={selectedUser}
               onChange={(e) => { 
                 //@ts-ignore
@@ -162,7 +162,7 @@ const DashboardFilter = ({
           )}
 
           <select
-            className="select select-bordered w-full max-w-xs"
+            className="select select-bordered w-full"
             value={selectedMap}
             onChange={(e) => setSelectedMap(e.target.value)}
           >
@@ -190,7 +190,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered w-full max-w-xs"
+            className="select select-bordered w-full"
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
           >
@@ -202,7 +202,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered w-full max-w-xs"
+            className="select select-bordered w-full"
             value={selectedAgent}
             onChange={(e) => setSelectedAgent(e.target.value)}
           >
@@ -215,7 +215,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered w-full max-w-xs"
+            className="select select-bordered w-full"
             value={selectedMode}
             onChange={(e) => setSelectedMode(e.target.value)}
           >
@@ -227,7 +227,7 @@ const DashboardFilter = ({
           </select>
 
           <select
-            className="select select-bordered w-full max-w-xs"
+            className="select select-bordered w-full"
             value={selectedSeason}
             onChange={(e) => setSelectedSeason(e.target.value)}
           >
