@@ -20,13 +20,13 @@ export default function Overview({
             color="#F5603C"
           ></l-leapfrog>
         </div>
-        <div style={!isLoading ? { display: '' } : { display: 'none' }}>
+        <div className="overflow-scroll" style={!isLoading ? { display: '' } : { display: 'none' }}>
           {Object.keys(players).map((team) => {
             const color = team == 'blue' ? '#5ECCBA' : '#F5603C';
             if (team == 'blue' || team == 'red') {
               return (
-                <div key={team} className="mt-6">
-                  <div className="grid grid-cols-9 items-center" style={{ margin: '.5% 0%' }}>
+                <div key={team} className="mt-6 min-w-[1000px] w-auto">
+                  <div className="grid grid-cols-9 items-center w-full" style={{ margin: '.5% 0%' }}>
                     <div className="grid grid-cols-5 items-center" style={{ gridColumn: '4 span', height: '90%', margin: '1%', cursor: 'default' }}>
                       <p className={`col-span-4 text-xl text-[${color}] font-black`}>
                         {team.toUpperCase()} TEAM

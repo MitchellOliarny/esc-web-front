@@ -1,15 +1,15 @@
 "use client";
 import Overview from "@/app/components/MatchOverview/Leaderboard/Overview";
 import Timeline from "@/app/components/MatchOverview/Timeline/Timeline";
-import React, { useEffect, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import 'ldrs/bouncy'
 import { formatDate, formatDateYear, formatTime } from "@/app/utils/helpers";
 
 export default function Header({
-
+  user
 }: {
-
-  }) {
+  user: any
+}) {
   const [selectedMenu, setSelectedMenu] = useState<string>("Overview");
 
 
@@ -18,9 +18,12 @@ export default function Header({
   const [isLoadingRounds, setisLoadingRounds] = useState(true)
   const [matchInfo, setMatchInfo] = useState({ map_name: '', id: '', date: '1/1/1999', blue: 0, red: 0 })
   const [roundInfo, setRoundInfo] = useState({});
+  const [userMatchData, setUserMatchData] = useState(null);
 
   useEffect(() => {
     const matchID = window.location.href.split('/')[window.location.href.split('/').length - 1];
+
+    console.log(user)
 
     fetch((process.env.NEXT_PUBLIC_API_URL + '/val/data/match/' + matchID + '/leaderboard'), {
       method: 'GET',
@@ -39,6 +42,11 @@ export default function Header({
         let temp = { blue: [], red: [], topScores: { red: {}, blue: {} } };
 
         data.data.map((value: any) => {
+
+          if(value.puuid == user.puuid) {
+            console.log(value)
+            setUserMatchData(value)
+          }
 
           let multikills = 0;
           for (const x in value.multikills) {
@@ -213,9 +221,9 @@ export default function Header({
 
   return (
     <>
-      <div className="px-4 w-full pr-8 max-w-[1800px] mx-auto">
+      <div className="px-4 w-full lg:pr-8 pr-2 max-w-[1800px] mx-auto">
         <div
-          className="w-full rounded-lg h-72"
+          className="w-full rounded-lg h-72 relative"
           style={{
             backgroundImage:
               "url(https://media.valorant-api.com/maps/" + matchInfo.id + "/splash.png)",
@@ -225,11 +233,11 @@ export default function Header({
         >
           <div className="w-full match-grid h-full px-6 bg-black/50 rounded-lg">
             <div className="w-full grid self-end px-4 gap-2 mb-4">
-              <div className="flex gap-8">
-                <h2 className="text-white text-5xl font-black tracking-[.2em]">
+              <div className="flex lg:gap-8 gap-2 lg:flex-row flex-col">
+                <h2 className="text-white lg:text-5xl text-3xl font-black tracking-[.2em]">
                   {matchInfo.map_name.toUpperCase()}
                 </h2>
-                <div className="flex items-center  text-5xl font-black">
+                <div className="flex items-center  lg:text-5xl text-3xl font-black">
                   <p className="text-[#5ECCBA]">
                     {matchInfo.blue} <span className="text-white">:&nbsp;</span>
                   </p>
@@ -241,6 +249,35 @@ export default function Header({
                   formatDateYear(matchInfo.date)}
                 </p>
                 
+            </div>
+            <div className="absolute lg:self-end self-start lg:justify-self-end justify-self-start lg:justify-end justify-start lg:content-end content-start flex-wrap flex-row lg:w-[50%] w-full h-full flex overflow-hidden gap-4 m-2">
+              {
+                userMatchData ?
+                //@ts-ignore
+                Object.keys(userMatchData.medal_progress).map((medal, index) => {
+                  return (
+                    //@ts-ignore
+                    userMatchData.medal_progress[medal].tiers.map((value, index) => {
+                    
+                      if (value.isComplete) {
+                        return (
+                          <div className="tooltip lg:h-24 h-16" data-tip={medal.replace('_', " ")+" Tier " + value.tier} key={medal+value.tier}>
+                          <img src={"https://files.esportsclubs.gg/"+medal+"_"+value.tier}
+                            className="h-full"
+                            alt={medal}
+                            onError={({ currentTarget }) => {
+                              currentTarget.onerror = null; // prevents looping
+                              currentTarget.src = "/dashboard/transparent-esc-score_square.png";
+                            }}
+                          ></img>
+                          </div>
+                        )
+                      }
+                    }
+                  ))
+                }) : ''
+              }
+
             </div>
             <div className="flex items-end">
               <ul className="dashnav flex gap-4 font-bold text-lg w-full pb-2">

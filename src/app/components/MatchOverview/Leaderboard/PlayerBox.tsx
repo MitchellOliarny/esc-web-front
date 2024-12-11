@@ -42,8 +42,8 @@ const PlayerBox = ({
 
   const [popup, setPopUp] = useState(isPopped)
   return (
-    <div className={`h-auto rounded-lg cursor-pointer my-2 `} onClick={()=>{setPopUp(popup ? false : true)}}>
-      <div className={`h-24 grid grid-cols-9 items-center text-lg back-graphite ${popup ? 'rounded-t-lg' : 'rounded-lg'} game-row-border overflow-hidden`}>
+    <div className={`h-auto rounded-lg cursor-pointer my-2 min-w-[1000px] w-auto `} onClick={()=>{setPopUp(popup ? false : true)}}>
+      <div className={`h-24 grid grid-cols-9 items-center text-lg back-graphite ${popup ? 'rounded-t-lg' : 'rounded-lg'} game-row-border overflow-hidden xl:text-[1em] text-[0.8em]`}>
         <div className="grid grid-cols-5 items-center game-row-border-right" style={{ gridColumn: '4 span' }}>
           <div className="col-span-4 flex justify-center h-full">
             <div className="flex flex-row gap-4 text-center h-full" style={{ width: '-webkit-fill-available', whiteSpace: 'nowrap' }}>
@@ -105,42 +105,42 @@ const PlayerBox = ({
        
         </div>
 
-        <div className={` ${popup ? 'block' : 'hidden'} h-8 rounded-b-lg game-row-border-special2 grid grid-cols-12 back-darkslate`}>
+        <div className={` ${popup ? 'block' : 'hidden'} h-8 rounded-b-lg game-row-border-special2 grid grid-cols-12 back-darkslate 2xl:text-[1em] text-[0.6em] min-w-[1000px]`}>
           <div className="col-span-5 w-full flex flex-row items-center gap-4 px-2">
                   <FaGem
                   color="#41B9FD"
                   height="1em"
                   width="auto"
                   />
-                  <p className="font-bold text-sm">ESC Personal Performance Reports Coming Soon...</p>
+                  <p className="font-bold xl:text-sm text-xs">ESC Personal Performance Reports Coming Soon...</p>
                 </div>
           <div className="flex h-full justify-center gap-2 content-center flex-wrap game-row-border-right">
             <p className="text-ash self-center">FK</p>
-            <p className="flex justify-center font-bold tooltip text-frost text-lg" data-tip={"FK to Round Win / Total FKs"}>{f_kills.fKillRWin} / {f_kills.fKills}</p>
+            <p className="flex justify-center font-bold tooltip text-frost xl:text-lg text-sm" data-tip={"FK to Round Win / Total FKs"}>{f_kills.fKillRWin} / {f_kills.fKills}</p>
           </div>
           <div className="flex h-full justify-center gap-2 content-center flex-wrap game-row-border-right">
             <p className="text-ash self-center">FD</p>
-            <p className="flex justify-center font-bold tooltip text-frost text-lg" data-tip={"FD to Round Win / Total FDs"}>{f_kills.fDeaths - f_kills.fDeathRLoss} / {f_kills.fDeaths}</p>
+            <p className="flex justify-center font-bold tooltip text-frost xl:text-lg text-sm" data-tip={"FD to Round Win / Total FDs"}>{f_kills.fDeaths - f_kills.fDeathRLoss} / {f_kills.fDeaths}</p>
           </div>
           <div className="flex h-full justify-center gap-2 content-center flex-wrap game-row-border-right">
             <p className="text-ash self-center">MK</p>
-            <p className="flex justify-center font-bold tooltip text-frost text-lg" data-tip={"Rounds were a 2k+ was achieved"}>{stats.multikills}</p>
+            <p className="flex justify-center font-bold tooltip text-frost xl:text-lg text-sm" data-tip={"Rounds were a 2k+ was achieved"}>{stats.multikills}</p>
           </div>
           <div className="flex h-full justify-center gap-2 content-center flex-wrap game-row-border-right">
             <p className="text-ash self-center">Ability 1</p>
-            <p className="flex justify-center font-bold tooltip text-frost text-lg" data-tip={"Far Left Ability"}>{stats.ability_casts.grenade}</p>
+            <p className="flex justify-center font-bold tooltip text-frost xl:text-lg text-sm" data-tip={"Far Left Ability"}>{stats.ability_casts.grenade}</p>
           </div>
           <div className="flex h-full justify-center gap-2 content-center flex-wrap game-row-border-right">
             <p className="text-ash self-center">Ability 2</p>
-            <p className="flex justify-center font-bold tooltip text-frost text-lg" data-tip={"Middle Left Ability"}>{stats.ability_casts.ability1}</p>
+            <p className="flex justify-center font-bold tooltip text-frost xl:text-lg text-sm" data-tip={"Middle Left Ability"}>{stats.ability_casts.ability1}</p>
           </div>
           <div className="flex h-full justify-center gap-2 content-center flex-wrap game-row-border-right">
             <p className="text-ash self-center">Signature</p>
-            <p className="flex justify-center font-bold tooltip text-frost text-lg" data-tip={"Middle Right Ability"}>{stats.ability_casts.ability2}</p>
+            <p className="flex justify-center font-bold tooltip text-frost xl:text-lg text-sm" data-tip={"Middle Right Ability"}>{stats.ability_casts.ability2}</p>
           </div>
           <div className="flex h-full justify-center gap-2 content-center flex-wrap">
             <p className="text-ash self-center">Ultimate</p>
-            <p className="flex justify-center font-bold tooltip text-frost text-lg" data-tip={"Far Right Ability"}>{stats.ability_casts.ultimate}</p>
+            <p className="flex justify-center font-bold tooltip text-frost xl:text-lg text-sm" data-tip={"Far Right Ability"}>{stats.ability_casts.ultimate}</p>
           </div>
         </div>
 

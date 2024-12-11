@@ -3,6 +3,7 @@ import React, { } from "react";
 //import { metadata } from "../layout";
 import type { Metadata } from "next";
 import Header from "./MatchOverviewUI";
+import { userSession } from "@/app/utils/authHelpers";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -19,9 +20,11 @@ export default async function Dashboard({
   
 }) {
 
+  const user = await userSession();
+
   return (
     <>
-      <Header />
+      <Header user={user}/>
     </>
   );
 }
