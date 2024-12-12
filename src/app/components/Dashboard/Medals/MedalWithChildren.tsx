@@ -344,7 +344,7 @@ const MedalWithChildren = ({ medalInfo, progress, children_medals, all_children,
                         <div className="col-span-4 p-8 h-full">
                             <div className="flex content-center text-center justify-center flex-wrap w-full font-bold relative mx-auto">
                                 <div className="flex flex-col content-center gap-4">
-                                    <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
+                                    <h2 className="text-3xl text-frost text-center">{medalInfo?.medal_name}</h2>
                                     <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{children_medals ? children_medals.length : 'N/A'} Medals</div>
                                 </div>
                             </div>

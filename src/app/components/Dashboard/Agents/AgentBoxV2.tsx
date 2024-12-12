@@ -321,7 +321,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps, isMob
                       className="w-auto h-12 m-auto"
                     />
 
-                    <p className={`text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-4 ${'text-' + ult_percentile.color}`}>
+                    <p className={`text-frost text-center justify-self-start font-bold text-3xl leading-none my-auto ml-2 ${'text-' + ult_percentile.color}`}>
                       {ultimate_points}%
                     </p>
 

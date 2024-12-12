@@ -281,7 +281,7 @@ const Medal = ({ medalInfo, progress, user_earners, change_display_medal, isPrem
                         <div className="col-span-4 px-4 h-auto">
                             <div className="flex content-center justify-center flex-wrap w-full font-bold relative mx-auto">
                                 <div className="flex flex-col content-center gap-4">
-                                    <h2 className="text-3xl text-frost">{medalInfo?.medal_name}</h2>
+                                    <h2 className="text-3xl text-frost text-center">{medalInfo?.medal_name}</h2>
                                     <div className="flex flex-row gap-4 justify-center">
                                     <div className="back-slate text-frost self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center">{medalInfo?.medal_tiers ? Object.keys(medalInfo?.medal_tiers).length : 1} Tiers</div>
                                     <div className={`${displayMedal >= Object.keys(medalInfo?.medal_tiers).length ? 'text-voltage' : 'text-rust'} back-slate self-center justify-self-start h-6 w-auto px-2 rounded-lg content-center justify-center`}>{progress.progress} Total</div>

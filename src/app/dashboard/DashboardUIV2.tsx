@@ -376,7 +376,7 @@ export default function Header({
             /> : ''
         }
         {/* <h1 className="inline-flex text-4xl py-4 font-bold w-full">{selectedMenu.toLocaleUpperCase().replace('-', ' ')} <p className="inline-flex mx-4 text-sm"> <FaExclamationCircle color="#FF6F4D" className="mx-4" /> Website is still Work-In-Progress - Report any issues in the ESC Discord</p> </h1> */}
-        <div className={`${selectedMenu == "match-history" ? "overflow-x-scroll" : ""} overflow-y-visible`}>
+        <div className={`${selectedMenu == "match-history" ? "overflow-x-scroll" : "overflow-visible"}`}>
         {renderContent()}
         </div>
       </div>
