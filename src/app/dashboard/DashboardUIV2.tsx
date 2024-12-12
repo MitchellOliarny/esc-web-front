@@ -61,6 +61,8 @@ export default function Header({
 
   const [displayMedals, setDisplayMedals] = useState([])
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     if (view) {
       handleSideBarClick(view);
@@ -68,8 +70,10 @@ export default function Header({
     else {
       handleSideBarClick('overview');
     }
-    console.log(userMedals)
-    console.log(valGames)
+
+    
+    //console.log(userMedals)
+    //console.log(valGames)
     // @ts-ignore
     if (typeof userMedals.data.display_medals == 'object') {
       let temp = [];
@@ -86,7 +90,16 @@ export default function Header({
       }
       // @ts-ignore
       setDisplayMedals(temp);
-      console.log(temp)
+      //console.log(temp)
+
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      // Cleanup the event listener on component unmount
+      return () => window.removeEventListener('resize', handleResize);
     }
   }, [view, userMedals])
   // console.log(topAgents);
@@ -376,8 +389,8 @@ export default function Header({
             /> : ''
         }
         {/* <h1 className="inline-flex text-4xl py-4 font-bold w-full">{selectedMenu.toLocaleUpperCase().replace('-', ' ')} <p className="inline-flex mx-4 text-sm"> <FaExclamationCircle color="#FF6F4D" className="mx-4" /> Website is still Work-In-Progress - Report any issues in the ESC Discord</p> </h1> */}
-        <div className={`${selectedMenu == "match-history" ? "overflow-x-scroll" : "overflow-visible"}`}>
-        {renderContent()}
+        <div className={`${selectedMenu == "match-history" && windowWidth < 1001 ? "overflow-x-scroll" : "overflow-visible"}`}>
+          {renderContent()}
         </div>
       </div>
     </>

@@ -200,7 +200,7 @@ const OverviewUI = ({
 
             </div>
 
-            <div className="grid grid-cols-12 gap-4 lf:overflow-visible overflow-x-scroll">
+            <div className="grid grid-cols-12 gap-4 lg:overflow-x-visible overflow-x-scroll">
               <div className="col-span-12">
                 {recentGames?.length > 0 ? (
                   <MatchHistoryUI
