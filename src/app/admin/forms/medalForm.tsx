@@ -216,7 +216,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
         //@ts-ignore
         setStatAdd(medals[value].stat_addition)
         //@ts-ignore
-        setPremium(medals[value].isPremium ? true : false)
+        setPremium(medals[value].isPremium == 1 ? true : false)
         //@ts-ignore
         setDate(new Date(medals[value].creation_date).toISOString().slice(0, 16))
         //@ts-ignore
@@ -676,7 +676,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                         <label>Premium?</label>
                         <br></br>
                         <input
-                            value={premium ? 'on' : 'off'}
+                            checked={premium}
                             onChange={(e) => setPremium(e.target.checked)}
                             type="checkbox"
                             id="premium"
