@@ -8,6 +8,7 @@ import { Providers } from "./providers";
 import { cookies } from "next/headers";
 import { userSession } from "./utils/authHelpers";
 import { userInfo } from "./utils/authHelpers";
+import GoogleAnalytics from "./googleanalytics";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +27,11 @@ export default async function RootLayout({
   const data = await userSession();
   const user = await userInfo();
   const info = user.data?.info;
-   //console.log(data);
+  //console.log(data);
 
   return (
     <html lang="en">
+      <GoogleAnalytics />
       <body className="">
         <Providers>
           <MainNavbar
@@ -38,7 +40,7 @@ export default async function RootLayout({
             riot={info?.riot_name || ''}
             pfp={info?.profile_picture ? 'https://files.esportsclubs.gg/' + info?.profile_picture : info?.discord_id ?
               `https://cdn.discordapp.com/avatars/${info?.discord_id}/${info?.discord_avatar}.png` : '/avatar.png'}
-            isAdmin={data?.isAdmin && user ?  1 : 0}
+            isAdmin={data?.isAdmin && user ? 1 : 0}
           >
             <div className="mt-24 lg:mt-0">{children}</div>
             <Toaster position="bottom-right" reverseOrder={false} />
