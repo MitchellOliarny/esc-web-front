@@ -609,7 +609,7 @@ const MedalForm = (valMedals: any, details: any, agents: any, weapons: any, maps
                             className="input w-full bg-transparent border border-white"
 
                         >
-                            <option disabled value="">Select a Parent (Leave if none)</option>
+                            <option value="">Select a Parent (Leave if none)</option>
                             {
                                 Object.keys(medals).map((medal: any, index: number) => {
                                     return (
