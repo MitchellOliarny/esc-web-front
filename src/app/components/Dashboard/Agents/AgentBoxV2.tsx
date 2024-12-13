@@ -283,7 +283,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps, isMob
                 backgroundPosition: "center",
               }}
             >
-              <div className="absolute w-full h-full agent-box-gradient">
+              <div className={`absolute w-full h-full agent-box-gradient`}>
 
               </div>
               <div className="h-full">
@@ -466,6 +466,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps, isMob
           </div>
         </div>
         :
+        // Mobile
         <div
           id="main-container"
           className="w-full h-[32rem] stat-box rounded-lg overflow-hidden"
@@ -478,7 +479,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps, isMob
           <div
             className="h-40 w-full relative border-white overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r opacity-50"></div>
+            {/* <div className="absolute inset-0 bg-gradient-to-r opacity-50"></div> */}
             <div
               className="relative h-full flex items-center justify-center"
               style={{
@@ -487,7 +488,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps, isMob
                 backgroundPosition: "center",
               }}
             >
-              <div className="absolute w-full h-full agent-box-gradient">
+              <div className="absolute w-full h-full map-gradient">
 
               </div>
               <div className="h-full">
