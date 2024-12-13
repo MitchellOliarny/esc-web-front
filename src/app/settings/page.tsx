@@ -54,6 +54,7 @@ export default async function Page() {
         userInvites={userInfo.invites}
         userTeams={userInfo.teams}
         subscriptions={userInfo.subscriptions}
+        countries={userInfo.countries}
       />
     </>
   );

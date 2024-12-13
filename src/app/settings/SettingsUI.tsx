@@ -26,6 +26,7 @@ interface ProfileSettingsUIProps {
   userInvites: UserInvites[];
   userTeams: Teams[];
   subscriptions: any;
+  countries: any;
 }
 
 export default function Sidebar({
@@ -33,6 +34,7 @@ export default function Sidebar({
   userInvites,
   userTeams,
   subscriptions,
+  countries,
 }: ProfileSettingsUIProps) {
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
@@ -62,6 +64,31 @@ export default function Sidebar({
     );
   };
 
+
+  const isInViewport = (elem: any) => {
+    var bounding = elem.getBoundingClientRect();
+    return (
+      bounding.top >= -500 &&
+      bounding.left >= 0 &&
+      bounding.bottom <= (window.innerHeight + 0 || document.documentElement.clientHeight) &&
+      bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+  document.addEventListener('scroll', () => {
+    if (isInViewport(document.getElementById('Profile'))) {
+      setSelectedMenu('Profile')
+    }
+
+    if (isInViewport(document.getElementById('Connections'))) {
+      setSelectedMenu('Connections')
+    }
+
+    if (isInViewport(document.getElementById('Subscriptions'))) {
+      setSelectedMenu('Subscriptions')
+    }
+  })
+
   useEffect(() => {
     if (view) {
       console.log(view)
@@ -77,35 +104,36 @@ export default function Sidebar({
         );
       }, 500)
     }
+
   }, [view, searchParams]);
 
   return (
     <Suspense>
-      <div className="ml-4 px-4 py-4 w-full max-w-[1800px]">
-        <div className="flex mx-auto list-none py-8">
-          <h1 className="fixed font-bold text-frost text-4xl translate-y-[-1.25em]">Settings</h1>
+      <div className="md:ml-4 px-4 py-4 w-full max-w-[1800px]">
+        <div className="flex xl:flex-row flex-col mx-auto list-none py-8">
+          <h1 className="xl:fixed font-bold text-frost text-4xl xl:translate-y-[-1.25em]">Settings</h1>
           <div className="w-64"></div>
           <div
             id="settingsLeftNav"
-            className="inline-flex flex-col gap-10 mt-6 fixed"
+            className="inline-flex xl:flex-col flex-row md:gap-10 md:text-[1em] text-[.7em] mt-6 xl:fixed xl:max-h-min max-h-16"
           >
             <li
               onClick={() => handleSideBarClick("Profile")}
-              className={`menu-item md:text-2xl font-bold text-left mr-10 cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${selectedMenu === "Profile" ? "text-frost back-graphite" : ""
+              className={`menu-item lg:text-2xl font-bold text-left md:mr-10 mr-4 cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${selectedMenu === "Profile" ? "text-frost back-graphite" : ""
                 }`}
             >
               Profile
             </li>
             <li
               onClick={() => handleSideBarClick("Connections")}
-              className={`menu-item md:text-2xl font-bold text-left mr-10 cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${selectedMenu === "Connections" ? "text-frost back-graphite" : ""
+              className={`menu-item lg:text-2xl font-bold text-left md:mr-10 mr-4  cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${selectedMenu === "Connections" ? "text-frost back-graphite" : ""
                 }`}
             >
               Connections
             </li>
             <li
               onClick={() => handleSideBarClick("Subscriptions")}
-              className={`menu-item text-2xl font-bold text-left mr-10 cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${selectedMenu === "Subscriptions" ? "text-frost back-graphite" : ""
+              className={`menu-item lg:text-2xl font-bold text-left md:mr-10 mr-4  cursor-pointer text-ash py-2 px-4 rounded-lg settings-nav-button ${selectedMenu === "Subscriptions" ? "text-frost back-graphite" : ""
                 }`}
             >
               Subscriptions
@@ -145,14 +173,14 @@ export default function Sidebar({
             <li
               onClick={handleLogout}
               id="logout"
-              className="md:text-2xl font-bold text-left mr-10 cursor-pointer text-[#d32d2d] py-2 px-4 rounded-lg"
+              className="lg:text-2xl font-bold text-left md:mr-10 mr-4  cursor-pointer text-[#d32d2d] py-2 px-4 rounded-lg"
             >
               Logout
             </li>
           </div>
-          <div className="col-span-5 mt-6 mr-8 ml-auto w-auto">
+          <div className="col-span-5 mt-6 md:mr-8 ml-auto w-auto">
             <div id='Profile'>
-              <ProfileSettingsUI userInfo={userInfo} />
+              <ProfileSettingsUI userInfo={userInfo} countries={countries} />
             </div>
             <div id='Connections' className="mt-5 h-auto">
               <ConnectionsSettings userInfo={userInfo} />
@@ -162,17 +190,17 @@ export default function Sidebar({
             </div>
             <div id='Logout' className="mt-5 h-auto">
               <div className="h-full w-full back-graphite p-8 rounded-lg">
-                <div className="flex h-auto gap-8 min-h-16 w-full">
-                  <div className="w-[50%] h-full">
+                <div className="flex md:flex-row flex-col h-auto gap-8 min-h-16 w-full">
+                  <div className="md:w-[50%] w-full h-full">
                     <h2 className="font-bold text-frost text-lg">Log Out</h2>
                     <p className="text-ash">Log out of your Esports Clubs account.</p>
                   </div>
-                  <div className="h-full w-[50%] my-auto flex">
+                  <div className="h-full md:w-[50%] w-full my-auto flex">
 
                     <button
                       onClick={() => handleLogout()}
                       type="button"
-                      className={`ml-auto self-end justify-self-end submit btn border-0 bg-[#f5603c] hover:bg-[#ac442a] text-white w-64 right-8 top-12`}
+                      className={`ml-auto self-end justify-self-end submit btn border-0 bg-[#f5603c] hover:bg-[#ac442a] text-white md:w-64 w-full right-8 top-12`}
                     >
                       {"Log Out"}
                     </button>

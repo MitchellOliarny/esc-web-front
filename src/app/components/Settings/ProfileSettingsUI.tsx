@@ -9,10 +9,12 @@ import { Spinner } from "@nextui-org/react";
 
 interface ProfileSettingsUIProps {
   userInfo: UserInfo;
+  countries: any;
 }
 
 export default function ProfileSettingsUI({
   userInfo,
+  countries,
 }: ProfileSettingsUIProps) {
   const roleOptions = [
     { value: "", text: "Select your preferred role" },
@@ -22,12 +24,6 @@ export default function ProfileSettingsUI({
     { value: "Sentinel", text: "Sentinel" },
   ];
 
-  const countryOptions = [
-    { value: "", text: "Select your Country" },
-    { value: "US", text: "United States" },
-    { value: "CA", text: "Canada" },
-    { value: "MX", text: "Mexico" },
-  ];
 
   const [preferredRole, setPreferredRole] = useState<string>(
     roleOptions[0].value
@@ -42,6 +38,7 @@ export default function ProfileSettingsUI({
   };
 
   useEffect(() => {
+
     const fetchAgentOptions = async () => {
       try {
         const response = await fetch(
@@ -147,12 +144,14 @@ export default function ProfileSettingsUI({
   return (
     <div className="back-graphite rounded-lg w-full h-full grid gap-8 p-8">
 
-      <div className="flex h-auto gap-8 min-h-16 w-full">
-        <div className="w-[50%] h-full">
+      <div className="xl:hidden h-12"></div>
+
+      <div className="flex h-auto md:flex-row flex-col gap-8 min-h-16 w-full">
+        <div className="md:w-[50%] w-full h-full">
           <h2 className="font-bold text-frost text-lg">Avatar</h2>
           <p className="text-ash">How you&apos;ll be seen on Esports Clubs. File must be .png, .jpg, or .jpeg</p>
         </div>
-        <div className="h-full w-[50%]">
+        <div className="h-full md:w-[50%] w-full">
           {/* FIELD */}
           <div className="flex items-center justify-center h-full">
             <Avatar profile_picture={userInfo?.profile_picture} />
@@ -163,7 +162,7 @@ export default function ProfileSettingsUI({
       <form
         id="user-profile-edit"
         action={handleUpdateProfile}
-        className="w-full h-full grid gap-8 py-8"
+        className="w-full h-full grid gap-8 py-8 xl:static relative"
       >
 
         <button
@@ -171,17 +170,17 @@ export default function ProfileSettingsUI({
           type="submit"
           id="applyChanges"
           className={`absolute self-start justify-self-end submit btn ${isLoading ? "btn-disabled !bg-[#ac442a]/50" : "btn-ghost"
-            } submit bg-[#f5603c] hover:bg-[#ac442a] text-white w-64 right-8 top-12`}
+            } submit bg-[#f5603c] hover:bg-[#ac442a] text-white w-64 xl:right-8 md:left-auto left-4 xl:top-12 md:-top-[14em] -top-[20em] z-20`}
         >
           {isLoading ? <Spinner color="default" /> : "Save Changes"}
         </button>
 
-        <div className="flex h-auto gap-8 min-h-16 w-full">
-          <div className="w-[50%] h-full">
+        <div className="flex md:flex-row flex-col h-auto gap-8 min-h-16 w-full">
+          <div className="md:w-[50%] w-full h-full">
             <h2 className="font-bold text-frost text-lg">Email</h2>
             <p className="text-ash">You can use your email address to log in. Esports Clubs will also send you important information like password reset links to this email.</p>
           </div>
-          <div className="h-full w-[50%] my-auto flex">
+          <div className="h-full min-h-16 md:w-[50%] w-full my-auto flex">
             {/* FIELD */}
             <div className="flex items-center justify-center h-full w-full my-auto relative">
               <input
@@ -200,12 +199,12 @@ export default function ProfileSettingsUI({
           </div>
         </div>
 
-        <div className="flex h-auto gap-8 min-h-16 w-full">
-          <div className="w-[50%] h-full">
+        <div className="flex md:flex-row flex-col h-auto gap-8 min-h-16 w-full">
+          <div className="md:w-[50%] w-full h-full">
             <h2 className="font-bold text-frost text-lg">First & Last Name</h2>
             <p className="text-ash">Your name is not shown anywhere publicly. We require your name for payment processing purposes.</p>
           </div>
-          <div className="h-full w-[50%] my-auto flex">
+          <div className="h-full min-h-16 md:w-[50%] w-full my-auto flex">
             {/* FIELD */}
             <div className="flex items-center justify-center h-full w-full my-auto relative">
               <input
@@ -241,12 +240,12 @@ export default function ProfileSettingsUI({
           </div>
         </div>
 
-        <div className="flex h-auto gap-8 min-h-16 w-full">
-          <div className="w-[50%] h-full">
+        <div className="flex md:flex-row flex-col h-auto gap-8 min-h-16 w-full">
+          <div className="md:w-[50%] w-full h-full">
             <h2 className="font-bold text-frost text-lg">Zipcode</h2>
             <p className="text-ash">Your zip code is not shown anywhere publicly. We use your location to enhance your Esports Clubs experience and for event registration.</p>
           </div>
-          <div className="h-full w-[50%] my-auto flex">
+          <div className="h-full min-h-16 md:w-[50%] w-full my-auto flex">
             {/* FIELD */}
             <div className="flex items-center justify-center h-full w-full my-auto relative">
               <input
@@ -265,12 +264,12 @@ export default function ProfileSettingsUI({
           </div>
         </div>
 
-        <div className="flex h-auto gap-8 min-h-16 w-full">
-          <div className="w-[50%] h-full">
+        <div className="flex md:flex-row flex-col h-auto gap-8 min-h-16 w-full">
+          <div className="md:w-[50%] w-full h-full">
             <h2 className="font-bold text-frost text-lg">Country</h2>
             <p className="text-ash">Select a Country for which you want to represent in social areas like Clubs and Events.</p>
           </div>
-          <div className="h-full w-[50%] my-auto flex">
+          <div className="h-full min-h-16 md:w-[50%] w-full my-auto flex">
             {/* FIELD */}
             <div className="flex items-center justify-center h-full w-full my-auto relative">
               <select
@@ -283,9 +282,10 @@ export default function ProfileSettingsUI({
                 name="country"
                 className="text input input-bordered w-full border h-full game-row-border back-obsidian text-frost text-lg my-auto"
               >
-                {countryOptions.map((country) => (
-                  <option key={country.value} value={country.value} disabled={country.value === ""}>
-                    {country.text}
+                <option value="">Select your Country</option>
+                {countries.map((country: any) => (
+                  <option key={country.code} value={country.code}>
+                    {country.name}
                   </option>
                 ))}
               </select>
@@ -299,12 +299,12 @@ export default function ProfileSettingsUI({
           </div>
         </div>
 
-        <div className="flex h-auto gap-8 min-h-16 w-full">
-          <div className="w-[50%] h-full">
+        <div className="flex md:flex-row flex-col h-auto gap-8 min-h-16 w-full">
+          <div className="md:w-[50%] w-full h-full">
             <h2 className="font-bold text-frost text-lg">Preferred Role</h2>
             <p className="text-ash">Select which Role you like to play most. This will display in certain areas of your Profile and to Clubs.</p>
           </div>
-          <div className="h-full w-[50%] my-auto flex">
+          <div className="h-full min-h-16 md:w-[50%] w-full my-auto flex">
             {/* FIELD */}
             <div className="flex items-center justify-center h-full w-full my-auto relative">
               <select
@@ -334,12 +334,12 @@ export default function ProfileSettingsUI({
           </div>
         </div>
 
-        <div className="flex h-auto gap-8 min-h-16 w-full">
-          <div className="w-[50%] h-full">
+        <div className="flex md:flex-row flex-col h-auto gap-8 min-h-16 w-full">
+          <div className="md:w-[50%] w-full h-full">
             <h2 className="font-bold text-frost text-lg">Preferred Agent</h2>
             <p className="text-ash">Select which Agent you like to play most. This will display in certain areas of your Profile and to Clubs.</p>
           </div>
-          <div className="h-full w-[50%] my-auto flex">
+          <div className="h-full min-h-16 md:w-[50%] w-full my-auto flex">
             {/* FIELD */}
             <div className="flex items-center justify-center h-full w-full my-auto relative">
               <select

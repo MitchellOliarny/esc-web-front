@@ -27,11 +27,8 @@ const StatsPanel = ({
     const playerTeam = game.team.toLowerCase();
     const otherTeam = playerTeam === "blue" ? "red" : "blue";
     // @ts-ignore
-    if (game[playerTeam] - game[otherTeam] > 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return (game[playerTeam] - game[otherTeam])
+
   };
 
   let roundsWin = 0;
@@ -53,7 +50,7 @@ const StatsPanel = ({
     // const enemyTeam = playerTeam === "blue" ? "red" : "blue";
     // const careerHealth =
 
-    isWin(recentGames[x]) ? totalWins++ : totalLosses++;
+    isWin(recentGames[x]) > 0 ? totalWins++ : isWin(recentGames[x]) < 0 ? totalLosses++ : null;
     // @ts-ignore
     roundsWin += recentGames[x][playerTeam];
     totalRounds += recentGames[x].rounds_played;

@@ -46,7 +46,7 @@ export default function Avatar({ profile_picture }: AvatarProps) {
   };
   return (
     <div>
-      <div className="flex gap-12">
+      <div className="flex md:gap-12 gap-6">
         <Image
           alt="Profile Picture"
           width={1000}
@@ -62,8 +62,8 @@ export default function Avatar({ profile_picture }: AvatarProps) {
         // }}
           className="rounded-full w-16 h-16 border-2 cursor-pointer object-cover"
         />
-        <button onClick={onOpen} className="action-button">Change Avatar</button>
-        <button className="action-button-nobg">Remove Avatar</button>
+        <button onClick={onOpen} className="action-button md:text-base text-sm leading-3">Change Avatar</button>
+        <button className="action-button-nobg md:text-base text-sm leading-3">Remove Avatar</button>
       </div>
       <Modal
         isOpen={isOpen}

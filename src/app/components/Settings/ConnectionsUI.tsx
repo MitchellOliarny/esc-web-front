@@ -99,13 +99,13 @@ export default function ConnectionsSettingsUI({
       <div className="grid py-8 px-4 gap-5 w-full back-graphite rounded-lg">
         <div
           id="discordConnection"
-          className="grid grid-cols-2 p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-32"
+          className="flex md:flex-row flex-col items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-32"
         >
           <div className="w-full h-full">
             <h2 className="font-bold text-frost text-lg">Discord</h2>
             <p className="text-ash">{userInfo?.discord_id ? 'Connected! Click the tile to Disconnect.' : 'Connect your Discord with Esports Clubs. '}</p>
           </div>
-          <div className="h-full">
+          <div className="h-full min-h-16 w-full">
             {userInfo?.discord_id ? (
               <div
                 onClick={() =>
@@ -159,7 +159,7 @@ export default function ConnectionsSettingsUI({
 
         <div
           id="riotConnection"
-          className="flex items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-32"
+          className="flex md:flex-row flex-col items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-32"
           onClick={onOpen}
         >
           <div className="w-full h-full">

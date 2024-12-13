@@ -46,7 +46,7 @@ const Subscriptions = ({ sub_status, sub_1_cost }: SubscriptionsProps) => {
     return (
         <>
             <div className="rounded-lg h-full back-graphite">
-                <div className="grid grid-cols-3 items-center p-4">
+                <div className="grid md:grid-cols-3 grid-cols-1 items-center p-4">
 
                     <div className={`grid grid-rows-4 mt-5 rounded-md border-3 h-[34em] m-2 py-4 ${sub_status ? 'back-sub' : ''}`}>
                         <div className="grid row-span-2 m-auto content-center">
