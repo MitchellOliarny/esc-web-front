@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaX, FaExplosion, FaScrewdriverWrench, FaClock } from "react-icons/fa6";
+import { FaRecycle } from "react-icons/fa";
+import { FaX, FaExplosion, FaScrewdriverWrench, FaClock, FaArrowsRotate } from "react-icons/fa6";
 
 export default function Rounds({
     roundInfo,
@@ -20,11 +21,25 @@ export default function Rounds({
 
     return (
         <>
-            <div style={{ display: '-webkit-inline-box', overflowX: 'scroll', overflowY: 'hidden', width: '100%' }}>
+            <div className="flex flex-row w-full min-w-fit">
                 {
                     roundInfo.round_data.map((value: any, index: number) => {
+                        if(index == 12) {
+                            return (
+                                <>
+                                <FaArrowsRotate className="my-auto h-8 w-8"/>
+                                <div key={index} className={`round-tab w-20 h-28 ${index == currentRound ? 'round-tab-active' : ''}`} style={{ border: `2px solid ${value.winning_team == 'Blue' ? '#5ECCBA' : '#F5603C'}`}} onClick={()=>{setRound(index)}}>
+                                    <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>{index + 1}</p>
+                                    {
+                                        //@ts-ignore
+                                        round_end_icons[(value.end_type)]
+                                    }
+                                </div>
+                                </>
+                            ) 
+                        }
                         return (
-                            <div key={index} className={`round-tab ${index == currentRound ? 'round-tab-active' : ''}`} style={{ border: `2px solid ${value.winning_team == 'Blue' ? '#5ECCBA' : '#F5603C'}`}} onClick={()=>{setRound(index)}}>
+                            <div key={index} className={`round-tab w-20 h-28 ${index == currentRound ? 'round-tab-active' : ''}`} style={{ border: `2px solid ${value.winning_team == 'Blue' ? '#5ECCBA' : '#F5603C'}`}} onClick={()=>{setRound(index)}}>
                                 <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>{index + 1}</p>
                                 {
                                     //@ts-ignore

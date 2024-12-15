@@ -66,7 +66,7 @@ const StatsDistribution = ({
   }
   const current_rank = currRank - (currRank % 3);
 
-  const curr_rank_percentile = calculatePercentile(
+  const curr_rank_percentile = valAverage ? calculatePercentile(
     (percentage / (dontAVG ? 1 : gamesLength)),
     // @ts-ignore
     valAverage[ranks[current_rank]]?.all.median[stat_code_name],
@@ -74,9 +74,9 @@ const StatsDistribution = ({
     valAverage[ranks[current_rank]]?.all.min[stat_code_name],
     // @ts-ignore
     valAverage[ranks[current_rank]]?.all.max[stat_code_name]
-  );
+  ) : null;
 
-  const next_rank_percentile = calculatePercentile(
+  const next_rank_percentile = valAverage ? calculatePercentile(
     (percentage / (dontAVG ? 1 : gamesLength)),
     // @ts-ignore
     valAverage[ranks[nextRank]]?.all.median[stat_code_name],
@@ -84,7 +84,7 @@ const StatsDistribution = ({
     valAverage[ranks[nextRank]]?.all.min[stat_code_name],
     // @ts-ignore
     valAverage[ranks[nextRank]]?.all.max[stat_code_name]
-  );
+  ) : null;
 
   return (
     <>
@@ -124,9 +124,9 @@ const StatsDistribution = ({
           aria-label="Waiting..."
           value={dontAVG ? Number((percentage).toFixed(1)) : Number((percentage / gamesLength).toFixed(1))}
           //@ts-ignore
-          maxValue={valAverage ? valAverage[ranks[current_rank]]?.all.max[stat_code_name] : 100}
+          maxValue={valAverage ? valAverage[ranks[current_rank]]?.all.max[stat_code_name] : dontAVG ? 100 : Number((percentage / gamesLength)*1.2)}
           //@ts-ignore
-          minValue={valAverage ? valAverage[ranks[current_rank]]?.all.min[stat_code_name] : 0}
+          minValue={valAverage ? valAverage[ranks[current_rank]]?.all.min[stat_code_name] : dontAVG ? 0 : Number((percentage / gamesLength)/1.2)}
           // @ts-ignore
           formatOptions={{ style: unit }}
           color="warning"
@@ -166,13 +166,16 @@ const StatsDistribution = ({
                 <div className="cut-corner-45-special">
                   <progress
                     className="progress-rust w-full h-2"
+                    //@ts-ignore
                     value={curr_rank_percentile.barPercent}
                     max="100"
                   ></progress>
                 </div>
-                <p className={`text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2 text-${curr_rank_percentile.color}`}>
+                <p className={`text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2 text-${curr_rank_percentile?.color}`}>
                   Top {
+                    //@ts-ignore
                     (curr_rank_percentile.percentile
+                      //@ts-ignore
                     ) < 100 ? (curr_rank_percentile.percentile
                     ).toFixed(2) : '100'}%
                 </p>
@@ -214,20 +217,25 @@ const StatsDistribution = ({
                 <div className="cut-corner-45-special">
                   <progress
                     className="progress-rust w-full h-2"
+                    //@ts-ignore
                     value={next_rank_percentile.barPercent}
                     color="black"
                     max="100"
                   ></progress>
                 </div>
-                <p className={`text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2 text-${next_rank_percentile.color}`}>
-                  Top {(next_rank_percentile.percentile
+                <p className={`text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2 text-${next_rank_percentile?.color}`}>
+                  Top {//@ts-ignore
+                  (next_rank_percentile.percentile
+                    //@ts-ignore
                   ) < 100 ? (next_rank_percentile.percentile
                   ).toFixed(2) : '100'}%
                 </p>
               </div>
             </div>
           ) : (
-            ''
+            <div className="mt-16"> 
+              No ranked data to show averages
+            </div>
             // <div className="border border-slate-400 rounded-lg relative mt-4">
             //   <div
             //     className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 cursor-pointer"

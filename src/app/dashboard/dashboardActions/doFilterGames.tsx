@@ -3,7 +3,7 @@ import { api } from "../../utils/helpers";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
-export default async function doFilterGames(queryParams: any, mode: string) {
+export default async function doFilterGames(queryParams: any, mode: string, new_user: boolean) {
   let success = false;
   const cookieStore = cookies();
   const token = cookieStore.get("esc-auth");
@@ -13,7 +13,7 @@ export default async function doFilterGames(queryParams: any, mode: string) {
     token: `Bearer ${token?.value}`,
   };
 
-  // console.log(queryParams)
+   //console.log(queryParams)
 
   let valMedalsProgress = null;
 
@@ -52,9 +52,9 @@ export default async function doFilterGames(queryParams: any, mode: string) {
 
   // console.log(newUserGames)
 
-  if((!mode || mode == 'Competitive') && !newUserGames.message) {
-  const valorantAveragesEndpoint = newUserGames.data[0].match_rank ?
-    api + `/val/data/averages/` + newUserGames.data[0]?.season + `?rank=${newUserGames.data[0].match_rank}`
+  if((!mode || mode == 'Competitive') && !newUserGames?.message) {
+  const valorantAveragesEndpoint = newUserGames.data[0]?.match_rank ?
+    api + `/val/data/averages/` + newUserGames.data[0]?.season + `?rank=${newUserGames.data[0]?.match_rank}`
     :
     api + `/val/data/averages/` + newUserGames.data[0]?.season + ``;
 
@@ -75,5 +75,5 @@ export default async function doFilterGames(queryParams: any, mode: string) {
     success = false;
     // console.log("ERROR: Please try again later");
   }
-  return { games: newUserGames.data, agents: Agents, averages: valAverages?.data, gamemode: mode, medals: valMedalsProgress, success: success };
+  return { games: newUserGames.data, agents: Agents, averages: valAverages?.data, gamemode: mode, medals: valMedalsProgress, success: success, change_banner: new_user};
 }

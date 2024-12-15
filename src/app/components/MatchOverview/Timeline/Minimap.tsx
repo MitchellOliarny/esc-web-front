@@ -51,8 +51,8 @@ export default function Minimap({
 
     return (
         <>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', width: '100%', height: 'fill-available' }}>
-                <div style={{borderLeft: '5px solid #5ECCBA'}}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr'}} className="w-full h-auto m-2">
+                <div className="flex flex-col gap-4 matchRowLeftBorderBlue">
                     {
                         //@ts-ignore
                         players['blue'].map((value) => {
@@ -62,10 +62,10 @@ export default function Minimap({
                             )
                         })}
                 </div>
-                <div style={{width: '100%', height: '100%', display: 'flex'}}>
-                    <img src={`https://media.valorant-api.com/maps/${map_id}/displayicon.png`} alt={map_id} className="minimap-filter"/>
+                <div className="flex w-full h-full">
+                    <img src={`https://media.valorant-api.com/maps/${map_id}/displayicon.png`} alt={map_id} className="m-auto"/>
                 </div>
-                <div style={{borderRight: '5px solid #F5603C'}}>
+                <div className="flex flex-col gap-4 matchRowLeftBorderRed">
                     {
                         //@ts-ignore
                         players['red'].map((value) => {

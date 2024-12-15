@@ -48,6 +48,7 @@ const DashboardFilter = ({
 
   const modeOptions = [
     { value: "Competitive", text: "Competitive" },
+    { value: "Premier", text: "Premier" },
     { value: "Unrated", text: "Unrated" },
     { value: "Swiftplay", text: "Swiftplay" },
     // { value: "Team Deathmatch", text: "TDM" },
@@ -103,13 +104,13 @@ const DashboardFilter = ({
 
     // return router.push(`/dashboard?${queryParams}`);
     // Dashboard(`${queryParams}`);
-    const newGames = await doFilterGames(`${queryParams}`, selectedMode);
+    const newGames = await doFilterGames(`${queryParams}`, selectedMode, selectedUser ? true : false);
     onSearch(newGames);
   };
 
 
   const hideList = (input: string) => {
-    if (input.length > 3) {
+    if (input.length > 1) {
       document.getElementById('find-user')?.setAttribute('list', "users")
     } else {
       document.getElementById('find-user')?.removeAttribute('list')

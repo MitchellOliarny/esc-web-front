@@ -22,19 +22,19 @@ export default function Minimap({
 
     return (
         <>
-            <div style={{ display: 'grid', width: '100%', height: 'auto', gridTemplateColumns: '2fr 1fr 1fr', gridTemplateRows: '1fr 2fr 2fr', backgroundColor: '#1E2835', borderRadius: '.5em', margin: '2% 0%', padding: '2%' }}>
-                <p className="col-span-3 stat-content">{name + '#' + tag}</p>
-                <div className="flex items-center">
+            <div className="grid pb-2 w-[75%] h-32 text-sm round-tab">
+                <p className="col-span-3 h-6 stat-content">{name + '#' + tag}</p>
+                <div className="flex gap-2 items-center">
                     <Image
                         alt="agent"
                         className="w-auto h-8"
-                        src={`https://media.valorant-api.com/agents/${agent}/killfeedportrait.png`}
+                        src={`https://media.valorant-api.com/agents/${agent}/displayicon.png`}
                         height={100}
                         width={100}
                     />
                     <Image
                         alt="rank"
-                        className="w-auto h-14"
+                        className="w-auto h-8"
                         src={`https://api.esportsclubs.gg/images/ranks/${rank}`}
                         height={100}
                         width={100}
@@ -52,7 +52,7 @@ export default function Minimap({
                     {roundStats?.economy.armor.assets.display_icon ? 
                     <img
                         alt="armor"
-                        className="w-auto h-10"
+                        className="w-auto h-6"
                         src={roundStats?.economy.armor.assets.display_icon}
                     />
                     :
@@ -60,7 +60,7 @@ export default function Minimap({
                     }
                     <img
                         alt="weapon"
-                        className="w-auto h-8"
+                        className="w-auto h-6"
                         src={roundStats?.economy.weapon.assets.display_icon}
                         style={{marginLeft: '10px'}}
                     />

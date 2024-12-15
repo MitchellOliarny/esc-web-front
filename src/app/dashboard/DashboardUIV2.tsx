@@ -43,7 +43,7 @@ export default function Header({
   medals,
   isAdmin,
   isPremiumUser,
-  students
+  students,
 }: DashboardUIProps) {
 
   const bucket = "https://files.esportsclubs.gg/";
@@ -59,6 +59,13 @@ export default function Header({
   const [gamemode, setGamemode] = useState('Competitive');
   const [medalNotif, setMedalNotif] = useState(0);
 
+  const [banner, setBanner] = useState(userGames[0].val_banner || "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
+  const [user, setUser] = useState(userGames[0].username || 'Unknown');
+  const [tag, setTag] = useState(userGames[0].tag || 'Unknown');
+  const [rank, setRank] = useState(userGames[0].mmr_change || {new_mmr: 0, rank: 0})
+  const [original_games, setOriginalGames] = useState<UserGames[]>(userGames);
+
+
   const [displayMedals, setDisplayMedals] = useState([])
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -71,9 +78,10 @@ export default function Header({
       handleSideBarClick('overview');
     }
 
-    
+    //console.log(gamemode)
     //console.log(userMedals)
-    //console.log(valGames)
+    console.log(valGames)
+    console.log(valAverages)
     // @ts-ignore
     if (typeof userMedals.data.display_medals == 'object') {
       let temp = [];
@@ -225,10 +233,7 @@ export default function Header({
         <div
           className="w-full lg:rounded-lg h-[25rem]"
           style={{
-            backgroundImage:
-              valGames
-                ? `url(${valGames[0]?.val_banner})`
-                : "url(https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png)",
+            backgroundImage: `url(${banner})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -265,17 +270,17 @@ export default function Header({
             <div className="w-full grid lg:grid-cols-2 lg:grid-rows-1 grid-rows-2 pb-8">
               <h1 className="grid font-[800] lg:text-5xl text-5xl text-frost lg:px-4 px-2">
                 {/* @ts-ignore */}
-                {valGames ? valGames[0]?.username : ''}
+                {user}
                 <br className="gap-0"></br>
                 <span className="text-ash lg:text-2xl text-xl font-bold">
-                  {/* @ts-ignore */}#{valGames ? valGames[0]?.tag : ''}
+                  {/* @ts-ignore */}#{tag}
                 </span>
               </h1>
-              {valGames?.length > 0 && (
+              {(
                 <div className="flex gap-4 lg:w-[60%] w-full justify-self-end self-end text-frost">
                   <Image
-                    src={`https://api.esportsclubs.gg/images/ranks/${valGames[0]?.mmr_change?.rank
-                      ? valGames[0]?.mmr_change?.rank
+                    src={`https://api.esportsclubs.gg/images/ranks/${rank.rank
+                      ? rank.rank
                       : "0"
                       }`}
                     className="w-auto h-14 drop-shadow-lg"
@@ -286,20 +291,20 @@ export default function Header({
                   <div className="flex flex-col w-full">
                     <div className="grid grid-cols-2 w-full">
                       <p className="pl-2 text-lg text-left font-[700]">
-                        {valGames[0]?.mmr_change?.new_mmr ? valGames[0]?.mmr_change?.new_mmr : 0}
+                        {rank.new_mmr ? rank.new_mmr : 0}
                         <span className="text-lg text-ash">
-                          {valGames[0]?.match_rank >= 24 ? "RR" : "/100 RR"}
+                          {rank.rank >= 24 ? "RR" : "/100 RR"}
                         </span>
                       </p>
                       <p className="pl-2 text-sm text-ash text-right font-bold self-center justify-self-end">
-                        {valGames[0]?.mmr_change?.new_mmr && valGames[0]?.match_rank < 24 ? 100 - valGames[0]?.mmr_change?.new_mmr + ' RR to rank up' : ''}
+                        {rank.new_mmr && rank.rank < 24 ? 100 - rank.new_mmr + ' RR to rank up' : ''}
                       </p>
                     </div>
                     <div className="w-full cut-corner-45">
                       <progress
                         className="progress-voltage w-full h-3"
                         color="secondary"
-                        value={valGames[0]?.mmr_change?.new_mmr}
+                        value={rank.new_mmr}
                         max={100}
                       ></progress>
                     </div>
@@ -376,7 +381,7 @@ export default function Header({
             <DashboardFilter
               valMaps={valMaps}
               valAgents={valAgents}
-              userGames={valGames}
+              userGames={original_games}
               isAdmin={isAdmin}
               users={students}
               onSearch={(newGames: any) => {
@@ -385,6 +390,13 @@ export default function Header({
                 setValAverages(newGames.averages);
                 setGamemode(newGames.gamemode || 'Competitive')
                 setUserMedals(newGames.medals);
+                if((newGames.change_banner && newGames.games.length > 0) || user !== newGames?.games[0]?.username) {
+                  setBanner(newGames.games[0].val_banner || "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
+                  setUser(newGames.games[0].username || 'Unknown');
+                  setTag(newGames.games[0].tag || 'Unknown');
+                  setRank(newGames.games[0].mmr_change || {new_mmr: 0, rank: 0})
+                  setOriginalGames(newGames.games)
+                }
               }}
             /> : ''
         }

@@ -23,7 +23,7 @@ const AgentBoxV2 = ({ agentGames, agentAverages, agentId, agentInfo, maps, isMob
     }
   };
 
-  console.log(agentAverages)
+  //console.log(agentAverages)
 
   const totalGames = agentGames.length;
   let totalWins = 0;

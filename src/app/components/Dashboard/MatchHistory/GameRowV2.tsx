@@ -94,8 +94,8 @@ const GameRowV2 = ({
             />
 
             <div className="w-1/2"></div>
-
-            <div className={`flex flex-col items-center -ml-4 ${showRank ? '' : 'hidden'}`}>
+          {showRank ?
+            <div className={`flex flex-col items-center -ml-4`}>
               <Image
                 width={1000}
                 height={1000}
@@ -116,7 +116,8 @@ const GameRowV2 = ({
                   : "≠"}
               </p>
             </div>
-
+            : <div></div>
+        }
             <div className="col-span-2">
               <p className="font-black text-frost uppercase text-lg leading-none">
                 {mapName}

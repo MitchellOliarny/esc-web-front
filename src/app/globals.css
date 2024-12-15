@@ -177,8 +177,6 @@ select.transparent > option {
 .round-tab {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  height: 100px;
-  width: 75px;
   background: linear-gradient(55deg, #1e2835 50%, #1d242f 50%);
   margin: 1% 10px;
   border-radius: 0.25em;
@@ -886,6 +884,7 @@ select.transparent > option {
   top: 0%;
   border-left: 5px solid var(--voltage);
   padding: 0 0.8em 0 0;
+  border-radius: 0.5em;
 }
 
 .matchRowLeftBorderRed {
@@ -902,8 +901,14 @@ select.transparent > option {
   top: 0%;
   border-left: 5px solid var(--rust);
   padding: 0 0.8em 0 0;
+  border-radius: 0.5em;
 }
 
 .user-back-match {
   background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 20%);
+}
+
+
+.thin-scrollbar {
+  scrollbar-width: thin !important;
 }

@@ -291,7 +291,7 @@ export default function Header({
                 >
                   Overview
                 </li>
-                {/* <li
+                <li
                   id="Timeline"
                   onClick={(e) => handleSideBarClick("Timeline")}
                   onMouseOver={() => handleSideBarHover("Timeline")}
@@ -301,7 +301,7 @@ export default function Header({
                 >
                   Timeline
                 </li>
-                <li
+                {/* <li
                   id="Heatmap"
                   onClick={(e) => handleSideBarClick("Heatmap")}
                   onMouseOver={() => handleSideBarHover("Heatmap")}

@@ -242,6 +242,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-4xl text-frost">
                         {((totalWins / (totalWins + totalLosses)) * 100).toFixed(1)}%
                       </p>
+                      {valAverage ?
                       <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         <span className={`text-${win_percent.color}`}>Top{" "}
                         {(
@@ -249,6 +250,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                       </p>
+                      :''
+                      }
                     </div>
                     <div>
                       <div
@@ -260,6 +263,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-4xl text-frost">
                         {((roundsWin / totalRounds) * 100).toFixed(1)}%
                       </p>
+                      {valAverage ?
                       <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         <span className={`text-${round_percent.color}`}>Top{" "}
                         {(
@@ -267,6 +271,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                       </p>
+                      :''
+                    }
                     </div>
                     <div>
                       <div
@@ -278,6 +284,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-4xl text-frost">
                         {(adrPercentage / recentGames?.length).toFixed(0)}
                       </p>
+                      {valAverage ?
                       <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         <span className={`text-${adr_percent.color}`}>Top{" "}
                         {(
@@ -285,6 +292,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                       </p>
+                      :''
+                    }
                     </div>
 
 
@@ -298,6 +307,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-4xl text-frost">
                         {(kastPercentage / recentGames?.length).toFixed(1)}%
                       </p>
+                      {valAverage ?
                       <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         <span className={`text-${kast_percent.color}`}>Top{" "}
                         {(
@@ -305,6 +315,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                       </p>
+                      :''
+                    }
                     </div>
                     <div>
                       <div
@@ -316,6 +328,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-4xl text-frost">
                         {(KAD / recentGames?.length).toFixed(2)}
                       </p>
+                      {valAverage ?
                       <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         <span className={`text-${kad_percent.color}`}>Top{" "}
                         {(
@@ -323,6 +336,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                       </p>
+                      :''
+                    }
                     </div>
                     <div>
                       <div
@@ -334,6 +349,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                       <p className="font-bold text-4xl text-frost"> 
                         {(ddPercentage / recentGames?.length).toFixed(2)}
                       </p>
+                      {valAverage ?
                       <p className="text-xs text-left font-bold text-frost back-darkslate rounded-md p-1 pl-2">
                         <span className={`text-${dmg_delta_percent.color}`}>Top{" "}
                         {(
@@ -341,6 +357,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                       </p>
+                      :''
+                    }
                     </div>
                     {/* { <div className="col-span-2">
                     <div
@@ -404,6 +422,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {((totalWins / (totalWins + totalLosses)) * 100).toFixed(1)}%
                     </p>
+                    {valAverage ?
                     <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${win_percent.color}`}>Top{" "}
                         {(
@@ -411,6 +430,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                     </p>
+                    :''
+                    }
                   </div>
                   <div>
                     <div
@@ -422,6 +443,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {((roundsWin / totalRounds) * 100).toFixed(1)}%
                     </p>
+                    {valAverage ?
                     <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${round_percent.color}`}>Top{" "}
                         {(
@@ -429,6 +451,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                     </p>
+                    :''
+                    }
                   </div>
                   <div>
                     <div
@@ -440,6 +464,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(adrPercentage / recentGames?.length).toFixed(0)}
                     </p>
+                    {valAverage ?
                     <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${adr_percent.color}`}>Top{" "}
                         {(
@@ -447,6 +472,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                     </p>
+                    :''
+                    }
                   </div>
 
                 </div>
@@ -462,6 +489,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(kastPercentage / recentGames?.length).toFixed(1)}%
                     </p>
+                    {valAverage ?
                     <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${kast_percent.color}`}>Top{" "}
                         {(
@@ -469,6 +497,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                     </p>
+                    :''
+                    }
                   </div>
                   <div>
                     <div
@@ -480,6 +510,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(KAD / recentGames?.length).toFixed(2)}
                     </p>
+                    {valAverage ?
                     <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${kad_percent.color}`}>Top{" "}
                         {(
@@ -487,6 +518,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                     </p>
+                    :''
+                    }
                   </div>
                   <div>
                     <div
@@ -498,6 +531,7 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                     <p className="font-bold lg:text-4xl text-3xl text-frost">
                       {(ddPercentage / recentGames?.length).toFixed(2)}
                     </p>
+                    {valAverage ?
                     <p className="font-bold lg:text-sm text-xs stat-percent-box lg:w-auto w-full h-6">
                       <span className={`m-auto text-${dmg_delta_percent.color}`}>Top{" "}
                         {(
@@ -505,6 +539,8 @@ const StatsScore = ({ userGames, valAverage, isAgentBox }: StatsScoreProps) => {
                         ).toFixed(2)}
                         %</span>
                     </p>
+                    :''
+                    }
                   </div>
                   {/* { <div className="col-span-2">
                     <div

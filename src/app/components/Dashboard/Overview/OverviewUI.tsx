@@ -67,7 +67,7 @@ const OverviewUI = ({
       const response = await doFindGames();
       //@ts-ignore
       if (response.success == true) {
-        const games = await doSearchGames('', 'Competitive');
+        const games = await doSearchGames('', 'Competitive', false);
         setIsLoading(false);
         toast.success("Games are now up to date.");
         onSearch(games)
@@ -163,7 +163,10 @@ const OverviewUI = ({
               <StatsPanel
                 userInfo={userInfo}
                 userGames={userGames}
-                valAverage={valAverage}
+                
+                valAverage={
+                  //@ts-ignore
+                  valAverage}
                 userData={userData}
 
               />
