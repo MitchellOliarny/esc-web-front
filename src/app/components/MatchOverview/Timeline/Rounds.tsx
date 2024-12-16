@@ -51,7 +51,7 @@ export default function Rounds({
                                                 {
                                                     Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.kills : 0 }).map((index, key) => {
                                                         return (
-                                                            <img alt="kill" src="/icons/kill.png"></img>
+                                                            <img key={selected_stats+index+"kill"} alt="kill" src="/icons/kill.png"></img>
                                                         )
                                                     })
                                                 }
@@ -60,7 +60,7 @@ export default function Rounds({
                                                 {
                                                     Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.deaths : 0 }).map((index, key) => {
                                                         return (
-                                                            <img alt="kill" src="/icons/death.png"></img>
+                                                            <img key={selected_stats+index+"death"} alt="kill" src="/icons/death.png"></img>
                                                         )
                                                     })
                                                 }
@@ -84,7 +84,7 @@ export default function Rounds({
                                         {
                                             Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.kills : 0 }).map((index, key) => {
                                                 return (
-                                                    <img alt="kill" src="/icons/kill.png"></img>
+                                                    <img key={selected_stats+index+"kill"} alt="kill" src="/icons/kill.png"></img>
                                                 )
                                             })
                                         }
@@ -93,7 +93,7 @@ export default function Rounds({
                                         {
                                             Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.deaths : 0 }).map((index, key) => {
                                                 return (
-                                                    <img alt="kill" src="/icons/death.png"></img>
+                                                    <img key={selected_stats+index+"death"} alt="kill" src="/icons/death.png"></img>
                                                 )
                                             })
                                         }
