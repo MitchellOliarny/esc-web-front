@@ -102,9 +102,9 @@ export default function RoundEvents({
                         }
 
                         return (
-                            <div key={index} className={`round-tab w-[10.5em] h-20 ${index == currentEvent ? 'round-tab-active' : ''}`} style={{ border: `2px solid ${value.killer_team == 'Blue' ? '#5ECCBA' : '#F5603C'}` }} onClick={()=>SelectEvent(index)}>
+                            <div key={index} className={`relative round-tab w-[10.5em] h-16 ${index == currentEvent ? 'round-tab-active' : ''}`} style={{ boxShadow: `inset 0px -83px 40px -75px  ${value.killer_team == 'Blue' ? '#5ECCBAb8' : '#F5603Cb8'}` }} onClick={()=>SelectEvent(index)}>
                                 {/* Event Icons */}
-                                <div className="flex flex-row gap-2 justify-self-center p-1">
+                                <div className="flex flex-row gap-2 justify-self-center p-1 relative">
                                     <Image
                                         alt="agent"
                                         className="w-auto h-8"
@@ -113,8 +113,8 @@ export default function RoundEvents({
                                         width={100}
                                     />
                                     {
-                                        value.event == 'defuse' ? <img alt="spike" src={`https://imgsvc.trackercdn.com/url/max-width(36),quality(66)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fvalorant%2Ficons%2Fdiffusewin1.png/image.png`} height={100} width={100} className="h-auto w-8 my-auto brightness-[3]"/> : value.event == 'plant' ? <img alt="spike" src={"https://trackercdn.com/cdn/tracker.gg/valorant/icons/modes/normal.png"} height={100} width={100} className="h-auto w-8 my-auto"/> :
-                                        value.damage_weapon_assets ?
+                                        value.event == 'defuse' ? <img alt="defuse" src={`https://imgsvc.trackercdn.com/url/max-width(36),quality(66)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fvalorant%2Ficons%2Fdiffusewin1.png/image.png`} height={100} width={100} className="h-auto w-8 my-auto brightness-[3]"/> : value.event == 'plant' ? <img alt="spike" src={"https://trackercdn.com/cdn/tracker.gg/valorant/icons/modes/normal.png"} height={100} width={100} className="h-auto w-8 my-auto"/> :
+                                        value.damage_weapon_id ?
                                             <img src={value.damage_weapon_assets.killfeed_icon} className="-scale-x-100 h-auto w-[50%] my-auto"></img>
                                             :
                                             <FaSkullCrossbones className="h-auto w-[1.75em] my-auto" />
@@ -130,7 +130,7 @@ export default function RoundEvents({
                                     /> : ''
                                     }
                                 </div>
-                                <div>
+                                <div className="absolute -bottom-2">
                                     <p className="font-bold font-frost w-20 !mr-0 stat-percent-box">{
 
                                         convertMillisecondsToMinSec(value.kill_time_in_round)

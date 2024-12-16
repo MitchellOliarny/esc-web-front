@@ -177,20 +177,22 @@ select.transparent > option {
 .round-tab {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  background: linear-gradient(55deg, #1e2835 50%, #1d242f 50%);
+  background: var(--graphite);
   border-radius: 0.25em;
   justify-items: center;
   align-items: center;
   cursor: pointer;
+  border: var(--slate) 1px solid;
 }
 
 .round-tab:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .round-tab-active {
-  border-width: 5px !important;
-  background: linear-gradient(55deg, #1c2c3f 50%, #253247 50%);
+  border-top: 3px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #fff;
 }
 
 .minimap-filter {
@@ -900,7 +902,38 @@ select.transparent > option {
   left: -1%;
   top: 0%;
   border-left: 5px solid var(--voltage);
-  padding: 0 0.8em 0 0;
+  border-radius: 0.5em;
+}
+
+.matchRowBottomBorderBlue {
+  position: relative;
+}
+
+.matchRowBottomBorderBlue::after {
+  content: "";
+  display: inline;
+  position: absolute;
+  vertical-align: middle;
+  width: 100%;
+  bottom: -5%;
+  left: 0%;
+  border-bottom: 5px solid var(--voltage);
+  border-radius: 0.5em;
+}
+
+.matchRowTopBorderRed {
+  position: relative;
+}
+
+.matchRowTopBorderRed::after {
+  content: "";
+  display: inline;
+  position: absolute;
+  vertical-align: middle;
+  width: 100%;
+  top: -5%;
+  left: 0%;
+  border-top: 5px solid var(--rust);
   border-radius: 0.5em;
 }
 
@@ -917,7 +950,22 @@ select.transparent > option {
   left: -1%;
   top: 0%;
   border-left: 5px solid var(--rust);
-  padding: 0 0.8em 0 0;
+  border-radius: 0.5em;
+}
+
+.matchRowRightBorderRed {
+  position: relative;
+}
+
+.matchRowRightBorderRed::after {
+  content: "";
+  display: inline;
+  position: absolute;
+  vertical-align: middle;
+  height: 100%;
+  right: 5%;
+  top: 0%;
+  border-right: 5px solid var(--rust);
   border-radius: 0.5em;
 }
 

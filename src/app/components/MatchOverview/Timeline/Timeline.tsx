@@ -22,12 +22,21 @@ export default function Timeline({
   const [currentEventInfo, setCurrentEventInfo] = useState({});
 
 
-  const round_end_icons = {
-    Eliminated: <FaX size={'1.5em'} />,
-    Bomb_defused: <FaScrewdriverWrench size={'1.5em'} />,
-    Bomb_detonated: <FaExplosion size={'1.5em'} />,
-    Time_expired: <FaClock size={'1.5em'} />
-  }
+    const round_end_icons = {
+        'Eliminated_Red': <img className={`w-auto h-fit`} src={'/icons/elim_red.png'}></img>,
+        'Eliminated_Blue': <img className={`w-auto h-fit`} src={'/icons/elim_blue.png'}></img>,
+        'Bomb defused_Red': <img className={`w-auto h-fit`} src={'/icons/defuse_red.png'}></img>,
+        'Bomb defused_Blue': <img className={`w-auto h-fit`} src={'/icons/defuse_blue.png'}></img>,
+        'Bomb detonated_Red': <FaExplosion size={'1em'} />,
+        'Bomb detonated_Blue': <FaExplosion size={'1em'} />,
+        'Round timer expired_Red': <FaClock size={'1em'} />,
+        'Round timer expired_Blue': <FaClock size={'1em'} />,
+    }
+
+    const GetRoundIcon = (endType: string, team: string)=>{
+        //@ts-ignore
+        return round_end_icons[endType+'_'+team];
+    }
 
   console.log(roundInfo.round_data[currentRound])
 
@@ -42,15 +51,19 @@ export default function Timeline({
           ></l-leapfrog>
         </div>
         <div className="flex-col" style={!isLoading ? { display: 'flex' } : { display: 'none' }}>
-          <p className="text-2xl text-white font-bold mt-4">Rounds</p>
-          <div className="overflow-x-scroll thin-scrollbar">
+          <div className="overflow-x-scroll thin-scrollbar pt-4 pb-4 px-1">
             <Rounds roundInfo={roundInfo} setRound={setCurrentRound} currentRound={currentRound} />
           </div>
-          <div className="flex flex-col w-full h-auto">
+          <div className="flex flex-col w-full h-auto mb-2">
             <p className="text-2xl text-center text-ash font-bold mt-4">Round {currentRound + 1}</p>
+            <div className="flex flex-row gap-2 mx-auto items-baseline">
             <p className="text-2xl text-center text-frost font-bold mt-2">{roundInfo.round_data[currentRound].winning_team} Team Wins by {roundInfo.round_data[currentRound].end_type == 'Eliminated' ? 'Elimination' : roundInfo.round_data[currentRound].end_type == 'Bomb defused' ? 'Defusal' : roundInfo.round_data[currentRound].end_type == 'Bomb detonated' ? 'Detonation' :  roundInfo.round_data[currentRound].end_type}</p>
-          </div>
-          <div className="overflow-x-scroll thin-scrollbar">
+          {
+            GetRoundIcon(roundInfo.round_data[currentRound].end_type, roundInfo.round_data[currentRound].winning_team)
+          }
+            </div>
+              </div>
+          <div className="overflow-x-scroll thin-scrollbar pt-4 pb-4 px-1">
             <RoundEvents roundInfo={roundInfo.round_data[currentRound]} currentRound={currentRound} currentEvent={currentEvent} setEvent={setCurrentEvent} setEventInfo={setCurrentEventInfo} players={players} />
           </div>
           <p className="text-2xl text-white font-bold mt-4">Minimap Recreation</p>
