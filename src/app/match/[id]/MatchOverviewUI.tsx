@@ -224,7 +224,7 @@ export default function Header({
           <Overview isLoading={isLoadingLeaderboard} players={players} user={user} />
         );
       case "Timeline":
-        return <Timeline isLoading={isLoadingRounds} roundInfo={roundInfo} players={players} mapInfo={mapInfo} />;
+        return <Timeline isLoading={isLoadingRounds} roundInfo={roundInfo} players={players} mapInfo={mapInfo} user={user} />;
       case "Heatmap":
         return <></>;
       default:

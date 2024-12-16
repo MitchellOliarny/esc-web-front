@@ -11,6 +11,8 @@ export default function Minimap({
     team_color,
     roundStats,
     isMobile,
+    isSelected,
+    selectHighlightUser
 }: {
     agent: string;
     rank: number;
@@ -20,13 +22,15 @@ export default function Minimap({
     team_color: string;
     roundStats: any;
     isMobile: boolean;
+    isSelected: boolean;
+    selectHighlightUser: any;
 }) {
 
     return (
         <>
             {!isMobile ?
-                <div className="w-[24em] ml-2 h-auto max-h-32 text-sm rounded-lg contain-content game-row-border flex flex-col">
-                    <div className="w-full h-[50%] flex flex-row back-graphite content-center flex-nowrap">
+                <div className={`w-[24em] ml-2 h-auto max-h-32 text-sm rounded-lg contain-content game-row-border flex flex-col cursor-pointer `} onClick={() => { selectHighlightUser(puuid)}}>
+                    <div className={`w-full h-[50%] flex flex-row ${isSelected ? 'user-back-timeline': 'back-graphite'} content-center flex-nowrap`}>
                         <Image
                             alt="agent"
                             className="w-auto h-full"
@@ -86,7 +90,7 @@ export default function Minimap({
 
                 </div>
                 :
-                <div className="w-[10em] flex-shrink-0 h-auto text-sm rounded-lg contain-content game-row-border flex flex-col">
+                <div className="w-[10em] flex-shrink-0 h-auto text-sm rounded-lg contain-content game-row-border flex flex-col cursor-pointer">
                     <div className="w-full h-auto flex flex-col back-graphite content-center flex-nowrap">
                         <div className="flex flex-row gap-2 h-12">
                             <Image

@@ -973,6 +973,10 @@ select.transparent > option {
   background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 20%);
 }
 
+.user-back-timeline {
+  background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 40%);
+}
+
 
 .thin-scrollbar {
   scrollbar-width: thin !important;
