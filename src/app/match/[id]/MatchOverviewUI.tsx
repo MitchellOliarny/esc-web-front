@@ -1,6 +1,7 @@
 "use client";
 import Overview from "@/app/components/MatchOverview/Leaderboard/Overview";
 import Timeline from "@/app/components/MatchOverview/Timeline/Timeline";
+import { useSearchParams } from "next/navigation";
 import React, { useActionState, useEffect, useState } from "react";
 import 'ldrs/bouncy'
 import { formatDate, formatDateYear, formatTime } from "@/app/utils/helpers";
@@ -10,8 +11,11 @@ export default function Header({
 }: {
   user: any
 }) {
-  const [selectedMenu, setSelectedMenu] = useState<string>("Overview");
 
+  let searchParams = useSearchParams();
+  const view = searchParams.get("view");
+
+  const [selectedMenu, setSelectedMenu] = useState<string>("Overview");
 
   const [players, setPlayers] = useState({ blue: [], red: [] })
   const [isLoadingLeaderboard, setisLoadingLeaderboard] = useState(true)
@@ -19,9 +23,10 @@ export default function Header({
   const [matchInfo, setMatchInfo] = useState({ map_name: '', id: '', date: '1/1/1999', blue: 0, red: 0 })
   const [roundInfo, setRoundInfo] = useState({});
   const [userMatchData, setUserMatchData] = useState(null);
+  const [mapInfo, setMapInfo] = useState({});
 
+  const matchID = window.location.href.split('/')[window.location.href.split('/').length - 1];
   useEffect(() => {
-    const matchID = window.location.href.split('/')[window.location.href.split('/').length - 1];
 
     console.log(user)
 
@@ -39,11 +44,11 @@ export default function Header({
 
         setMatchInfo({ id: data.data[0].map_id, blue: data.data[0].blue, red: data.data[0].red, date: data.data[0].date, map_name: data.data[0].map })
 
-        let temp = { blue: [], red: [], topScores: { red: {}, blue: {} } };
+        let temp = { all: {}, blue: [], red: [], topScores: { red: {}, blue: {} } };
 
         data.data.map((value: any) => {
 
-          if(value.puuid == user?.puuid) {
+          if (value.puuid == user?.puuid) {
             console.log(value)
             setUserMatchData(value)
           }
@@ -59,7 +64,8 @@ export default function Header({
 
           //@ts-ignore
           temp[value.team].push(value);
-
+          //@ts-ignore
+          temp.all[value.puuid] = value
 
           //@ts-ignore
           if (!temp.topScores[value.team].multikills || temp.topScores[value.team].multikills.score < multikills) {
@@ -168,6 +174,28 @@ export default function Header({
         //@ts-ignore
         temp.blue.sort((a, b) => b.stats.combat_score - a.stats.combat_score);
         setPlayers(temp);
+
+        fetch("https://valorant-api.com/v1/maps/" + data.data[0].map_id, { method: "GET", headers: {} })
+        .then((response) => {
+          return new Promise((resolve) => response.json()
+            .then((json) => resolve({
+              status: response.status,
+              json,
+            })
+            ));
+        })
+        //Logic to display errors on form 
+        //@ts-ignore
+        .then(({ status, json }) => {
+          const map = json.data;
+          setMapInfo(map);
+          console.log(map)
+          // map_x_multiplier = maps[x].xMultiplier;
+          // map_y_multiplier = maps[x].yMultiplier;
+          // map_x_scalar = maps[x].xScalarToAdd;
+          // map_y_scalar = maps[x].yScalarToAdd;
+  
+        })
       });
 
     fetch((process.env.NEXT_PUBLIC_API_URL + '/val/data/match/' + matchID + '/rounds'), {
@@ -182,7 +210,12 @@ export default function Header({
         console.log(data.match[0]);
         setRoundInfo(data.match[0]);
       })
-  }, [])
+
+    if(view) {
+      handleSideBarClick(view);
+    }
+  
+  },[])
 
   const renderContent = () => {
     switch (selectedMenu) {
@@ -191,11 +224,13 @@ export default function Header({
           <Overview isLoading={isLoadingLeaderboard} players={players} user={user} />
         );
       case "Timeline":
-        return <Timeline isLoading={isLoadingRounds} roundInfo={roundInfo} players={players} />;
+        return <Timeline isLoading={isLoadingRounds} roundInfo={roundInfo} players={players} mapInfo={mapInfo} />;
       case "Heatmap":
         return <></>;
       default:
-        return "";
+        return (
+          <Overview isLoading={isLoadingLeaderboard} players={players} user={user} />
+        );
     }
   };
 
@@ -243,48 +278,48 @@ export default function Header({
                   </p>
                   <p className="text-[#F5603C]">{matchInfo.red}</p>
                 </div>
-                </div>
-                <p className="text-ash text-xl font-bold tracking-wider">
-                  {//@ts-ignore
+              </div>
+              <p className="text-ash text-xl font-bold tracking-wider">
+                {//@ts-ignore
                   formatDateYear(matchInfo.date)}
-                </p>
-                
+              </p>
+
             </div>
             <div className="absolute lg:self-end self-start lg:justify-self-end justify-self-start lg:justify-end justify-start lg:content-end content-start flex-wrap flex-row lg:w-[50%] w-full h-full flex overflow-hidden gap-4 m-2">
               {
                 userMatchData ?
-                //@ts-ignore
-                Object.keys(userMatchData.medal_progress).map((medal, index) => {
-                  return (
-                    //@ts-ignore
-                    userMatchData.medal_progress[medal].tiers.map((value, index) => {
-                    
-                      if (value.isComplete) {
-                        return (
-                          <div className="tooltip lg:h-24 h-16" data-tip={medal.replace('_', " ")+" Tier " + value.tier} key={medal+value.tier}>
-                          <img src={"https://files.esportsclubs.gg/"+medal+"_"+value.tier}
-                            className="h-full"
-                            alt={medal}
-                            onError={({ currentTarget }) => {
-                              currentTarget.onerror = null; // prevents looping
-                              currentTarget.src = "/dashboard/transparent-esc-score_square.png";
-                            }}
-                          ></img>
-                          </div>
-                        )
+                  //@ts-ignore
+                  Object.keys(userMatchData.medal_progress).map((medal, index) => {
+                    return (
+                      //@ts-ignore
+                      userMatchData.medal_progress[medal].tiers.map((value, index) => {
+
+                        if (value.isComplete) {
+                          return (
+                            <div className="tooltip lg:h-24 h-16" data-tip={medal.replace('_', " ") + " Tier " + value.tier} key={medal + value.tier}>
+                              <img src={"https://files.esportsclubs.gg/" + medal + "_" + value.tier}
+                                className="h-full"
+                                alt={medal}
+                                onError={({ currentTarget }) => {
+                                  currentTarget.onerror = null; // prevents looping
+                                  currentTarget.src = "/dashboard/transparent-esc-score_square.png";
+                                }}
+                              ></img>
+                            </div>
+                          )
+                        }
                       }
-                    }
-                  ))
-                }) : ''
+                      ))
+                  }) : ''
               }
 
             </div>
             <div className="flex items-end">
               <ul className="dashnav flex gap-4 font-bold text-lg w-full pb-2">
                 <li
-                  id="overview"
-                  onClick={(e) => handleSideBarClick("overview")}
-                  onMouseOver={() => handleSideBarHover("overview")}
+                  id="Overview"
+                  onClick={(e) => handleSideBarClick("Overview")}
+                  onMouseOver={() => handleSideBarHover("Overview")}
                   onMouseOut={() => handleSideBarBack()}
                   className={`grid cursor-pointer py-2 px-4 transition-all ease-in-out text-ash ${selectedMenu === "Overview" ? "active" : ""
                     }`}

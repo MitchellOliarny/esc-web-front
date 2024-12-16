@@ -215,6 +215,20 @@ select.transparent > option {
   color: white;
 }
 
+.border-red {
+  border: var(--rust) 2px solid;
+}
+
+.border-blue {
+  border: var(--voltage) 2px solid;
+}
+
+.border-gold {
+  border: #FFE57B 2px solid;
+}
+
+/* GENERAL STUFF */
+
 .text-ash {
   color: var(--ash) !important;
 }
@@ -229,6 +243,10 @@ select.transparent > option {
 
 .text-voltage {
   color: var(--voltage) !important;
+}
+
+.text-gold {
+  color: #FFE57B !important;
 }
 
 .text-win {

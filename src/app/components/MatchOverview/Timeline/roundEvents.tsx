@@ -6,18 +6,24 @@ import { FaScrewdriverWrench } from "react-icons/fa6";
 export default function RoundEvents({
     roundInfo,
     currentRound,
+    currentEvent,
+    setEvent,
+    setEventInfo,
     players
 }: {
     roundInfo: any;
     currentRound: number;
+    currentEvent: number;
+    setEvent: any;
+    setEventInfo: any;
     players: any;
 }) {
 
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        console.log(roundInfo)
-        console.log(players)
+       // console.log(roundInfo)
+       // console.log(players)
 
         let temp = [];
         for (const x in roundInfo.player_stats) {
@@ -41,12 +47,18 @@ export default function RoundEvents({
         )
         //@ts-ignore
         setEvents(temp)
+        setEventInfo(temp[0]);
     }, [roundInfo])
 
     const convertMillisecondsToMinSec = (milliseconds: number) => {
         const minutes = Math.floor(milliseconds / 60000); // Convert to minutes
         const seconds = Math.floor((milliseconds % 60000) / 1000); // Get remaining seconds
         return `${minutes}:${seconds.toString().padStart(2, '0')}`; // Format as min:sec
+    }
+
+    const SelectEvent = (index: number) => {
+        setEvent(index);
+        setEventInfo(events[index]);
     }
 
     return (
@@ -90,7 +102,7 @@ export default function RoundEvents({
                         }
 
                         return (
-                            <div key={index} className={`round-tab w-48 h-20 justify-center`} style={{ border: `2px solid ${value.killer_team == 'Blue' ? '#5ECCBA' : '#F5603C'}` }}>
+                            <div key={index} className={`round-tab w-48 h-20 justify-center ${index == currentEvent ? 'round-tab-active' : ''}`} style={{ border: `2px solid ${value.killer_team == 'Blue' ? '#5ECCBA' : '#F5603C'}` }} onClick={()=>SelectEvent(index)}>
                                 {/* Event Icons */}
                                 <div className="flex flex-row gap-2 justify-self-center m-[inherit]">
                                     <Image
