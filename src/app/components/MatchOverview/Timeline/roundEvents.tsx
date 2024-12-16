@@ -63,7 +63,7 @@ export default function RoundEvents({
 
     return (
         <>
-            <div className="flex flex-row w-full min-w-fit">
+            <div className="flex flex-row gap-1 w-full min-w-fit">
                 {
                     events.map((value: any, index: number) => {
 
@@ -102,9 +102,9 @@ export default function RoundEvents({
                         }
 
                         return (
-                            <div key={index} className={`round-tab w-48 h-20 justify-center ${index == currentEvent ? 'round-tab-active' : ''}`} style={{ border: `2px solid ${value.killer_team == 'Blue' ? '#5ECCBA' : '#F5603C'}` }} onClick={()=>SelectEvent(index)}>
+                            <div key={index} className={`round-tab w-[10.5em] h-20 ${index == currentEvent ? 'round-tab-active' : ''}`} style={{ border: `2px solid ${value.killer_team == 'Blue' ? '#5ECCBA' : '#F5603C'}` }} onClick={()=>SelectEvent(index)}>
                                 {/* Event Icons */}
-                                <div className="flex flex-row gap-2 justify-self-center m-[inherit]">
+                                <div className="flex flex-row gap-2 justify-self-center p-1">
                                     <Image
                                         alt="agent"
                                         className="w-auto h-8"
@@ -117,7 +117,7 @@ export default function RoundEvents({
                                         value.damage_weapon_assets ?
                                             <img src={value.damage_weapon_assets.killfeed_icon} className="-scale-x-100 h-auto w-[50%] my-auto"></img>
                                             :
-                                            <FaSkullCrossbones className="h-auto w-8 my-auto" />
+                                            <FaSkullCrossbones className="h-auto w-[1.75em] my-auto" />
                                     }
                                     {
                                     victim ?

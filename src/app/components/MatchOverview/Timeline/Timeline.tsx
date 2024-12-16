@@ -29,6 +29,7 @@ export default function Timeline({
     Time_expired: <FaClock size={'1.5em'} />
   }
 
+  console.log(roundInfo.round_data[currentRound])
 
   return (
     <>
@@ -40,17 +41,20 @@ export default function Timeline({
             color="#F5603C"
           ></l-leapfrog>
         </div>
-        <div style={!isLoading ? { display: '' } : { display: 'none' }}>
+        <div className="flex-col" style={!isLoading ? { display: 'flex' } : { display: 'none' }}>
+          <p className="text-2xl text-white font-bold mt-4">Rounds</p>
           <div className="overflow-x-scroll thin-scrollbar">
-            <p className="text-2xl text-white font-bold mt-4">Rounds</p>
             <Rounds roundInfo={roundInfo} setRound={setCurrentRound} currentRound={currentRound} />
           </div>
+          <div className="flex flex-col w-full h-auto">
+            <p className="text-2xl text-center text-ash font-bold mt-4">Round {currentRound + 1}</p>
+            <p className="text-2xl text-center text-frost font-bold mt-2">{roundInfo.round_data[currentRound].winning_team} Team Wins by {roundInfo.round_data[currentRound].end_type == 'Eliminated' ? 'Elimination' : roundInfo.round_data[currentRound].end_type == 'Bomb defused' ? 'Defusal' : roundInfo.round_data[currentRound].end_type == 'Bomb detonated' ? 'Detonation' :  roundInfo.round_data[currentRound].end_type}</p>
+          </div>
           <div className="overflow-x-scroll thin-scrollbar">
-            <p className="text-2xl text-white font-bold mt-4">Round Events</p>
             <RoundEvents roundInfo={roundInfo.round_data[currentRound]} currentRound={currentRound} currentEvent={currentEvent} setEvent={setCurrentEvent} setEventInfo={setCurrentEventInfo} players={players} />
           </div>
+          <p className="text-2xl text-white font-bold mt-4">Minimap Recreation</p>
           <div className="overflow-hidden h-auto">
-            <p className="text-2xl text-white font-bold mt-4">Minimap Recreation</p>
             <Minimap roundInfo={roundInfo.round_data[currentRound]} players={players} map_id={roundInfo.map_id} eventInfo={currentEventInfo} mapInfo={mapInfo}/>
           </div>
         </div>

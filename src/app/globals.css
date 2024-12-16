@@ -178,7 +178,6 @@ select.transparent > option {
   display: grid;
   grid-template-rows: 1fr 1fr;
   background: linear-gradient(55deg, #1e2835 50%, #1d242f 50%);
-  margin: 1% 10px;
   border-radius: 0.25em;
   justify-items: center;
   align-items: center;

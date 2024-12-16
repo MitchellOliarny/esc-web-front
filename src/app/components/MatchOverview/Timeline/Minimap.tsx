@@ -72,13 +72,13 @@ export default function Minimap({
         return () => window.removeEventListener('resize', handleResize);
     }, [roundInfo])
 
-    console.log(eventInfo)
-    console.log(players)
+    //console.log(eventInfo)
+    //console.log(players)
 
     return (
         <>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2.5fr 1fr' }} className="w-full h-full m-2">
-                <div className="flex flex-col matchRowLeftBorderBlue">
+                <div className="flex flex-col gap-2 matchRowLeftBorderBlue">
                     {
                         //@ts-ignore
                         players['blue'].map((value) => {
@@ -89,7 +89,7 @@ export default function Minimap({
                         })}
                 </div>
                 <div id='coordGrid' className="flex w-[36em] h-[36em] m-auto relative">
-                    <div className="absolute w-auto h-8 z-20 right-[-5em] top-[-5em] flex flex-row content-center gap-4">
+                    <div className="absolute w-auto h-8 z-20 right-[-5em] top-[0em] flex flex-row content-center gap-4">
                         <Switch type="checkbox" checked={showAllPlayers} onChange={setShowAllPlayers} className="w-auto h-8" onColor={"#5eccba"}/>
                         <p className="font-bold font-frost whitespace-nowrap my-auto">Show All Players</p>
                     </div>
@@ -137,7 +137,7 @@ export default function Minimap({
                     </div>
                     <img src={`https://media.valorant-api.com/maps/${map_id}/displayicon.png`} alt={map_id} className="h-full w-full" />
                 </div>
-                <div className="flex flex-col matchRowLeftBorderRed">
+                <div className="flex flex-col gap-2 matchRowLeftBorderRed">
                     {
                         //@ts-ignore
                         players['red'].map((value) => {

@@ -22,7 +22,7 @@ export default function Minimap({
 
     return (
         <>
-            <div className="grid pb-2 w-[75%] h-32 text-sm round-tab">
+            <div className="grid pb-2 w-[75%] ml-2 h-32 text-sm round-tab">
                 <p className="col-span-3 h-6 stat-content">{name + '#' + tag}</p>
                 <div className="flex gap-2 items-center">
                     <Image
