@@ -32,8 +32,6 @@ export default function Rounds({
         return round_end_icons[endType + '_' + team];
     }
 
-    console.log(selected_stats)
-    console.log(player_round_stats);
 
     return (
         <>

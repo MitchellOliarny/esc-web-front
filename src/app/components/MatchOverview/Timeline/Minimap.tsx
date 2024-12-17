@@ -100,7 +100,7 @@ export default function Minimap({
         return () => window.removeEventListener('resize', handleResize);
     }, [roundInfo])
 
-   // console.log(eventInfo)
+     console.log(eventInfo)
     //console.log(players)
 
     return (
@@ -148,6 +148,35 @@ export default function Minimap({
                         }
                         {
                             eventInfo.event == 'plant' ?
+                                eventInfo.player_locations_on_plant.map((value: any) => {
+                                    if (value.player_puuid == eventInfo.planted_by.puuid) {
+                                        return (
+                                            <div key={value.player_puuid} className={`w-10 h-10 absolute z-20 translate-x-[-1.25em] translate-y-[-1.25em]`} style={{ left: `${(value.location.y * (mapInfo.xMultiplier) + mapInfo.xScalarToAdd) * (100)}%`, top: `${(value.location.x * (mapInfo.yMultiplier) + mapInfo.yScalarToAdd) * (100)}%` }}>
+                                                <div className={`absolute flex items-center justify-center w-full h-full`} style={{ transform: `rotate(${value.view_radians}rad)` }}>
+                                                    <FaCaretUp className={`absolute top-[-15px] text-gold`} />
+                                                </div>
+                                                <img src={`https://media.valorant-api.com/agents/${players.all[value.player_puuid].agent_id}/displayicon.png`} className={`rounded-full contain-content border-gold`}></img>
+                                            </div>
+                                        )
+                                    }
+                                })
+                                : eventInfo.event == 'defuse' ?
+                                eventInfo.player_locations_on_defuse.map((value: any) => {
+                                    if (value.player_puuid == eventInfo.defused_by.puuid) {
+                                        return (
+                                            <div key={value.player_puuid} className={`w-10 h-10 absolute z-20 translate-x-[-1.25em] translate-y-[-1.25em]`} style={{ left: `${(value.location.y * (mapInfo.xMultiplier) + mapInfo.xScalarToAdd) * (100)}%`, top: `${(value.location.x * (mapInfo.yMultiplier) + mapInfo.yScalarToAdd) * (100)}%` }}>
+                                                <div className={`absolute flex items-center justify-center w-full h-full`} style={{ transform: `rotate(${value.view_radians}rad)` }}>
+                                                    <FaCaretUp className={`absolute top-[-15px] text-gold`} />
+                                                </div>
+                                                <img src={`https://media.valorant-api.com/agents/${players.all[value.player_puuid].agent_id}/displayicon.png`} className={`rounded-full contain-content border-gold`}></img>
+                                            </div>
+                                        )
+                                    }
+                                })
+                            : ""
+                        }
+                        {
+                            eventInfo.event == 'plant' ?
                                 <div key={'plant'} className={`w-6 h-6 absolute translate-x-[-.75em] translate-y-[-.75em] z-30`}
                                     style={{ left: `${(eventInfo.plant_location.y * (mapInfo.xMultiplier) + mapInfo.xScalarToAdd) * (100)}%`, top: `${(eventInfo.plant_location.x * (mapInfo.yMultiplier) + mapInfo.yScalarToAdd) * (100)}%` }}>
                                     <img alt="spike" src={"https://trackercdn.com/cdn/tracker.gg/valorant/icons/modes/normal.png"} className={`rounded-full contain-content`}></img>
@@ -173,19 +202,9 @@ export default function Minimap({
                                         )
                                     }
                                 })
-                                : eventInfo.event == 'plant' ?
+                                : eventInfo.event == 'plant' && showAllPlayers ?
                                     eventInfo.player_locations_on_plant.map((value: any) => {
-                                        return (
-                                            <div key={value.player_puuid} className={`w-8 h-8 absolute translate-x-[-1em] translate-y-[-1em]`} style={{ left: `${(value.location.y * (mapInfo.xMultiplier) + mapInfo.xScalarToAdd) * (100)}%`, top: `${(value.location.x * (mapInfo.yMultiplier) + mapInfo.yScalarToAdd) * (100)}%` }}>
-                                                <div className={`absolute flex items-center justify-center w-full h-full`} style={{ transform: `rotate(${value.view_radians}rad)` }}>
-                                                    <FaCaretUp className={`absolute top-[-15px] ${value.player_team == 'Blue' ? 'text-voltage' : 'text-rust'}`} />
-                                                </div>
-                                                <img src={`https://media.valorant-api.com/agents/${players.all[value.player_puuid].agent_id}/displayicon.png`} className={`rounded-full contain-content ${value.player_team == 'Blue' ? 'border-blue' : 'border-red'}`}></img>
-                                            </div>
-                                        )
-                                    })
-                                    : eventInfo.event == 'defuse' ?
-                                        eventInfo.player_locations_on_defuse.map((value: any) => {
+                                        if (value.player_puuid !== eventInfo.planted_by.puuid) {
                                             return (
                                                 <div key={value.player_puuid} className={`w-8 h-8 absolute translate-x-[-1em] translate-y-[-1em]`} style={{ left: `${(value.location.y * (mapInfo.xMultiplier) + mapInfo.xScalarToAdd) * (100)}%`, top: `${(value.location.x * (mapInfo.yMultiplier) + mapInfo.yScalarToAdd) * (100)}%` }}>
                                                     <div className={`absolute flex items-center justify-center w-full h-full`} style={{ transform: `rotate(${value.view_radians}rad)` }}>
@@ -194,6 +213,20 @@ export default function Minimap({
                                                     <img src={`https://media.valorant-api.com/agents/${players.all[value.player_puuid].agent_id}/displayicon.png`} className={`rounded-full contain-content ${value.player_team == 'Blue' ? 'border-blue' : 'border-red'}`}></img>
                                                 </div>
                                             )
+                                        }
+                                    })
+                                    : eventInfo.event == 'defuse' && showAllPlayers ?
+                                        eventInfo.player_locations_on_defuse.map((value: any) => {
+                                            if (value.player_puuid !== eventInfo.defused_by.puuid) {
+                                                return (
+                                                    <div key={value.player_puuid} className={`w-8 h-8 absolute translate-x-[-1em] translate-y-[-1em]`} style={{ left: `${(value.location.y * (mapInfo.xMultiplier) + mapInfo.xScalarToAdd) * (100)}%`, top: `${(value.location.x * (mapInfo.yMultiplier) + mapInfo.yScalarToAdd) * (100)}%` }}>
+                                                        <div className={`absolute flex items-center justify-center w-full h-full`} style={{ transform: `rotate(${value.view_radians}rad)` }}>
+                                                            <FaCaretUp className={`absolute top-[-15px] ${value.player_team == 'Blue' ? 'text-voltage' : 'text-rust'}`} />
+                                                        </div>
+                                                        <img src={`https://media.valorant-api.com/agents/${players.all[value.player_puuid].agent_id}/displayicon.png`} className={`rounded-full contain-content ${value.player_team == 'Blue' ? 'border-blue' : 'border-red'}`}></img>
+                                                    </div>
+                                                )
+                                            }
                                         })
                                         : ""
                         }
@@ -206,7 +239,7 @@ export default function Minimap({
                         players['red'].map((value) => {
                             return (
                                 //@ts-ignore
-                                <PlayerBox key={value.puuid} agent={value.agent_id} rank={value.match_rank} puuid={value.puuid} name={value.name} tag={value.tag} team_color={'#F5603C'} roundStats={playerRoundStats[value.puuid]} isMobile={windowWidth < 1350 ? true : false} isSelected={selectedPlayer == value.puuid}  selectHighlightUser={SelectHighlight} />
+                                <PlayerBox key={value.puuid} agent={value.agent_id} rank={value.match_rank} puuid={value.puuid} name={value.name} tag={value.tag} team_color={'#F5603C'} roundStats={playerRoundStats[value.puuid]} isMobile={windowWidth < 1350 ? true : false} isSelected={selectedPlayer == value.puuid} selectHighlightUser={SelectHighlight} />
                             )
                         })}
                 </div>

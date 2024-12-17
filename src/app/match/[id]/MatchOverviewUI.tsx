@@ -28,8 +28,6 @@ export default function Header({
   const matchID = window.location.href.split('/')[window.location.href.split('/').length - 1];
   useEffect(() => {
 
-    console.log(user)
-
     fetch((process.env.NEXT_PUBLIC_API_URL + '/val/data/match/' + matchID + '/leaderboard'), {
       method: 'GET',
       headers: { 'content-type': 'application/json' },
@@ -49,7 +47,6 @@ export default function Header({
         data.data.map((value: any) => {
 
           if (value.puuid == user?.puuid) {
-            console.log(value)
             setUserMatchData(value)
           }
 
@@ -287,7 +284,8 @@ export default function Header({
             </div>
             <div className="absolute lg:self-end self-start lg:justify-self-end justify-self-start lg:justify-end justify-start lg:content-end content-start flex-wrap flex-row lg:w-[50%] w-full h-full flex overflow-hidden gap-4 m-2">
               {
-                userMatchData ?
+                //@ts-ignore
+                userMatchData?.medal_progress ?
                   //@ts-ignore
                   Object.keys(userMatchData.medal_progress).map((medal, index) => {
                     return (

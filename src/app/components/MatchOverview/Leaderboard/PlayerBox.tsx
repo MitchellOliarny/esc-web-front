@@ -42,6 +42,7 @@ const PlayerBox = ({
 }: GameProps) => {
 
   const [popup, setPopUp] = useState(isPopped)
+
   return (
     <div className={`h-auto rounded-lg cursor-pointer my-2 min-w-[1000px] w-auto `} onClick={()=>{setPopUp(popup ? false : true)}}>
       <div className={`h-24 grid grid-cols-9 items-center text-lg ${isUser ? 'user-back-match': 'back-graphite'} ${popup ? 'rounded-t-lg' : 'rounded-lg'} game-row-border overflow-hidden xl:text-[1em] text-[0.8em]`}>
@@ -83,24 +84,24 @@ const PlayerBox = ({
         </div>
         <div className="grid items-center mb-2 game-row-border-right h-full" style={{ gridColumn: '1 span', margin: '1%' }}>
 
-          <p className="flex  font-bold mx-4" style={topScores.hs_percent.puuid.includes(puuid) ? { color: highlight_color } : {}}>{stats.hs_percent.toFixed(2)}%</p>
+          <p className="flex  font-bold mx-4" style={topScores.hs_percent.puuid.includes(puuid) ? { color: highlight_color } : {}}>{(stats?.hs_percent || 0).toFixed(2)}%</p>
 
 
         </div>
         <div className="grid items-center mb-2 game-row-border-right h-full" style={{ gridColumn: '1 span', margin: '1%' }}>
 
-          <p className="flex  font-bold mx-4" style={topScores.dmgdelta.puuid.includes(puuid) ? { color: highlight_color } : {}}>{stats.dmgdelta > 0 ? '+' : ''}{stats.dmgdelta.toFixed(2)}</p>
+          <p className="flex  font-bold mx-4" style={topScores.dmgdelta.puuid.includes(puuid) ? { color: highlight_color } : {}}>{stats.dmgdelta > 0 ? '+' : ''}{stats?.dmgdelta?.toFixed(2) || 0.00}</p>
 
 
         </div>
         <div className="grid items-center mb-2 game-row-border-right h-full" style={{ gridColumn: '1 span', margin: '1%' }}>
 
-          <p className="flex  font-bold mx-4" style={topScores.adr.puuid.includes(puuid) ? { color: highlight_color } : {}}>{stats.adr.toFixed(2)}</p>
+          <p className="flex  font-bold mx-4" style={topScores.adr.puuid.includes(puuid) ? { color: highlight_color } : {}}>{stats?.adr?.toFixed(2) || 0.00}</p>
 
 
         </div>
         <div className="grid items-center mb-2 h-full" style={{ gridColumn: '1 span', margin: '1%' }}>
-          <p className="flex  font-bold mx-4" style={topScores.kast.puuid.includes(puuid) ? { color: highlight_color } : {}}>{kast.toFixed(2)}%</p>
+          <p className="flex  font-bold mx-4" style={topScores.kast.puuid.includes(puuid) ? { color: highlight_color } : {}}>{kast?.toFixed(2) || 0.00}%</p>
         </div>
 
        

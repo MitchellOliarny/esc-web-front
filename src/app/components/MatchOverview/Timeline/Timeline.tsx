@@ -80,7 +80,11 @@ export default function Timeline({
     setPlayerRoundStats(temp);
   }, [roundInfo])
 
-
+  if(!roundInfo.round_data) {
+    return (
+      <div>Could not find any Round Information for this match...</div>
+    )
+  }
 
   return (
     <>
@@ -99,7 +103,7 @@ export default function Timeline({
           <div className="flex flex-col w-full h-auto mb-2">
             <p className="text-2xl text-center text-ash font-bold mt-4">Round {currentRound + 1}</p>
             <div className="flex flex-row gap-2 mx-auto items-baseline">
-              <p className="text-2xl text-center text-frost font-bold mt-2">{roundInfo.round_data[currentRound].winning_team} Team Wins by {roundInfo.round_data[currentRound].end_type == 'Eliminated' ? 'Elimination' : roundInfo.round_data[currentRound].end_type == 'Bomb defused' ? 'Defusal' : roundInfo.round_data[currentRound].end_type == 'Bomb detonated' ? 'Detonation' : roundInfo.round_data[currentRound].end_type}</p>
+              <p className="text-2xl text-center text-frost font-bold mt-2">{roundInfo.round_data[currentRound].winning_team} Team Wins by {roundInfo.round_data[currentRound].end_type == 'Eliminated' ? 'Elimination' : roundInfo.round_data[currentRound].end_type == 'Bomb defused' ? 'Defusal' : roundInfo.round_data[currentRound].end_type == 'Bomb detonated' ? 'Detonation' : roundInfo.round_data[currentRound].end_type == 'Round timer expired' ? 'Time Expiring' : roundInfo.round_data[currentRound].end_type}</p>
               {
                 GetRoundIcon(roundInfo.round_data[currentRound].end_type, roundInfo.round_data[currentRound].winning_team)
               }
