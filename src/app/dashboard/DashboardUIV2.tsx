@@ -59,10 +59,10 @@ export default function Header({
   const [gamemode, setGamemode] = useState('Competitive');
   const [medalNotif, setMedalNotif] = useState(0);
 
-  const [banner, setBanner] = useState(userGames[0].val_banner || "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
-  const [user, setUser] = useState(userGames[0].username || 'Unknown');
-  const [tag, setTag] = useState(userGames[0].tag || 'Unknown');
-  const [rank, setRank] = useState(userGames[0].mmr_change || {new_mmr: 0, rank: 0})
+  const [banner, setBanner] = useState(userGames ? userGames[0]?.val_banner : "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
+  const [user, setUser] = useState(userGames ? userGames[0].username : 'Unknown');
+  const [tag, setTag] = useState(userGames ? userGames[0].tag : 'Unknown');
+  const [rank, setRank] = useState(userGames ? userGames[0].mmr_change : {new_mmr: 0, rank: 0})
   const [original_games, setOriginalGames] = useState<UserGames[]>(userGames);
 
 

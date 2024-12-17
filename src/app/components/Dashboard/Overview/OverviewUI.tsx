@@ -232,7 +232,7 @@ const OverviewUI = ({
           </div>
           :
           <div>
-            <h2 className="text-2xl font-medium">No Game Information Found. Make sure your Riot information is correct <Link className="font-bolder" style={{color:'#F5603C'}} href='/settings?view=Connections'>HERE</Link></h2>
+            <h2 className="text-2xl font-medium">No Game Information Found. Make sure you have played a game within 30 days and check that your Riot information is correct <Link className="font-bolder" style={{color:'#F5603C'}} href='/settings?view=Connections'>HERE</Link></h2>
           </div>
         }
     </>

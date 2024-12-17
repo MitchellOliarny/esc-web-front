@@ -68,10 +68,7 @@ export default async function Dashboard(queryParams: any) {
   //console.log(userGameresp)
 
   userGames = await userGameresp.json();
-  
 
-  // console.log("TEST", query);
-  // console.log(userGames.data);
 
   const userMedalsProgress = await fetch(api + "/val/data/medals/progress", {
     method: "GET",
