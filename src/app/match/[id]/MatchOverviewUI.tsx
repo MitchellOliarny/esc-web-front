@@ -218,7 +218,7 @@ export default function Header({
     switch (selectedMenu) {
       case "Overview":
         return (
-          <Overview isLoading={isLoadingLeaderboard} players={players} user={user} />
+          <Overview isLoading={isLoadingLeaderboard} players={players} user={user} userInGame={userMatchData ? true : false}/>
         );
       case "Timeline":
         return <Timeline isLoading={isLoadingRounds} roundInfo={roundInfo} players={players} mapInfo={mapInfo} user={user} />;
@@ -226,7 +226,7 @@ export default function Header({
         return <></>;
       default:
         return (
-          <Overview isLoading={isLoadingLeaderboard} players={players} user={user} />
+          <Overview isLoading={isLoadingLeaderboard} players={players} user={user} userInGame={userMatchData ? true : false}/>
         );
     }
   };

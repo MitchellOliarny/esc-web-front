@@ -12,6 +12,7 @@ export default function Minimap({
     eventInfo,
     mapInfo,
     selectHighlightUser,
+    selected,
     user
 }: {
     roundInfo: any;
@@ -20,6 +21,7 @@ export default function Minimap({
     eventInfo: any;
     mapInfo: any;
     selectHighlightUser: any;
+    selected: any;
     user: any;
 }) {
 
@@ -27,17 +29,16 @@ export default function Minimap({
     const [mapXY, setMapXY] = useState({ x: 0, y: 0 });
     const [showAllPlayers, setShowAllPlayers] = useState(true)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [selectedPlayer, setSelectedPlayer] = useState('');
+    const [selectedPlayer, setSelectedPlayer] = useState(selected);
 
     const SelectHighlight = (puuid: string) => {
-
-        setSelectedPlayer(puuid);
+        setSelectedPlayer(puuid)
         //@ts-ignore
         selectHighlightUser(puuid)
     }
 
     useEffect(() => {
-
+        setSelectedPlayer(selected)
 
         let temp = {}
         //set up a player slot
@@ -69,18 +70,6 @@ export default function Minimap({
         //@ts-ignore
         setPlayerRoundStats(temp);
 
-        if (user) {
-            //@ts-ignore
-            selectHighlightUser(user.puuid)
-            setSelectedPlayer(user.puuid);
-        }
-        else {
-            //@ts-ignore
-            selectHighlightUser(Object.keys(temp)[0])
-            //@ts-ignore
-            setSelectedPlayer(Object.keys(temp)[0])
-        }
-
         const handleResize = () => {
             //@ts-ignore
             // const x = document.getElementById('coordGrid').getBoundingClientRect().height;
@@ -98,7 +87,7 @@ export default function Minimap({
         handleResize();
         // Cleanup the event listener on component unmount
         return () => window.removeEventListener('resize', handleResize);
-    }, [roundInfo])
+    }, [roundInfo, selected])
 
      console.log(eventInfo)
     //console.log(players)

@@ -45,11 +45,11 @@ export default function Rounds({
                                     <div key={index} className={`relative round-tab w-16 h-28 ${index == currentRound ? 'round-tab-active' : ''}`} style={{ boxShadow: `inset 0px -83px 40px -75px  ${value.winning_team == 'Blue' ? '#5ECCBAb8' : '#F5603Cb8'}` }} onClick={() => { setRound(index) }}>
                                         <p className="font-bold text-center"><span className="text-ash text-sm">Round</span><br></br>{index + 1}</p>
                                         <div className="flex flex-col h-8 gap-1">
-                                            <div className="flex flex-row justify-center">
+                                            <div className="flex flex-row justify-center flex-wrap">
                                                 {
                                                     Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.kills : 0 }).map((index, key) => {
                                                         return (
-                                                            <img key={selected_stats+index+"kill"} alt="kill" src="/icons/kill.png"></img>
+                                                            <img key={selected_stats+key+"kill"} alt="kill" src="/icons/kill.png"></img>
                                                         )
                                                     })
                                                 }
@@ -58,7 +58,7 @@ export default function Rounds({
                                                 {
                                                     Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.deaths : 0 }).map((index, key) => {
                                                         return (
-                                                            <img key={selected_stats+index+"death"} alt="kill" src="/icons/death.png"></img>
+                                                            <img key={selected_stats+key+"death"} alt="kill" src="/icons/death.png"></img>
                                                         )
                                                     })
                                                 }
@@ -78,11 +78,11 @@ export default function Rounds({
                             <div key={index} className={`relative round-tab w-16 h-28 ${index == currentRound ? 'round-tab-active' : ''}`} style={{ boxShadow: `inset 0px -83px 40px -75px  ${value.winning_team == 'Blue' ? '#5ECCBAb8' : '#F5603Cb8'}` }} onClick={() => { setRound(index) }}>
                                 <p className="font-bold text-center"><span className="text-ash text-sm">Round</span><br></br>{index + 1}</p>
                                 <div className="flex flex-col h-8 gap-1">
-                                    <div className="flex flex-row justify-center">
+                                    <div className="flex flex-row justify-center flex-wrap">
                                         {
                                             Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.kills : 0 }).map((index, key) => {
                                                 return (
-                                                    <img key={selected_stats+index+"kill"} alt="kill" src="/icons/kill.png"></img>
+                                                    <img key={selected_stats+key+"kill"} alt="kill" src="/icons/kill.png"></img>
                                                 )
                                             })
                                         }
@@ -91,7 +91,7 @@ export default function Rounds({
                                         {
                                             Array.from({ length: player_round_stats[index] ? player_round_stats[index][selected_stats]?.deaths : 0 }).map((index, key) => {
                                                 return (
-                                                    <img key={selected_stats+index+"death"} alt="kill" src="/icons/death.png"></img>
+                                                    <img key={selected_stats+key+"death"} alt="kill" src="/icons/death.png"></img>
                                                 )
                                             })
                                         }

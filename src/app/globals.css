@@ -970,11 +970,11 @@ select.transparent > option {
 }
 
 .user-back-match {
-  background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 20%);
+  background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 30%);
 }
 
 .user-back-timeline {
-  background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 40%);
+  background-image: linear-gradient(to right, #2B3442 0%, var(--graphite) 90%);
 }
 
 

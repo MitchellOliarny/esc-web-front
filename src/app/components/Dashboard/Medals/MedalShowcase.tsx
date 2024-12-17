@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Medal from "./Medal";
 import MedalWithChildren from "./MedalWithChildren";
-import { any } from "zod";
+import Switch from "react-switch";
 
 interface MedalShowcaseProps {
     medals: any;
@@ -16,7 +16,8 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
 
 
     const [selectedTier, setSelectedTier] = useState(-1);
-    const [selectedTerm, setSelectedTerm] = useState('')
+    const [selectedTerm, setSelectedTerm] = useState('');
+    const [showPremium, setShowPremium] = useState(true);
     const [medalsList, setMedals] = useState([]);
     const [totalEarned, setTotalEarned] = useState(0);
 
@@ -28,7 +29,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
-        FilterSelected(selectedTier, selectedTerm);
+        FilterSelected(selectedTier, selectedTerm, showPremium);
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
           };
@@ -58,7 +59,8 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         }
         //@ts-ignore
         setSubjects(subjectTemp);
-        SortNewFirstThenProgress(temp)
+        SortNewFirstThenProgress(temp);
+        setShowPremium(true);
         //@ts-ignore
         setMedals(temp);
         FindTotalEarned(medals);
@@ -81,9 +83,8 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         });
     }
 
-    const FilterSelected = (tier: number, subject: string) => {
-        console.log(tier)
-        console.log(subject)
+    const FilterSelected = (tier: number, subject: string, premium: boolean) => {
+
         let temp = [];
 
         if (tier > 0) {
@@ -91,6 +92,9 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                 console.log(medals[x])
                 if (medals[x] && medalsProgress[x].tiers[tier - 1] && medalsProgress[x].tiers[tier - 1].isComplete && (!medalsProgress[x].tiers[tier] || !medalsProgress[x].tiers[tier].isComplete)) {
                     if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
+                        if(!premium && medals[x].isPremium == 1) {
+                            continue;
+                        }
                         medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
                         //@ts-ignore
                         temp.push(medals[x]);
@@ -105,6 +109,9 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
             for (const x in medalsProgress) {
                 if (medals[x] && medalsProgress[x].tiers[0] && !medalsProgress[x].tiers[0].isComplete) {
                     if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
+                        if(!premium && medals[x].isPremium == 1) {
+                            continue;
+                        }
                         medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
                         //@ts-ignore
                         temp.push(medals[x]);
@@ -118,10 +125,27 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         else if (subject) {
             for (const x in medals) {
                 if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
+                    if(!premium && medals[x].isPremium == 1) {
+                        continue;
+                    }
                     medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
                     //@ts-ignore
                     temp.push(medals[x]);
                 }
+            }
+            SortNewFirstThenProgress(temp)
+            //@ts-ignore
+            setMedals(temp);
+        }
+        else if(!premium) {
+            for (const x in medals) {
+                    if(!premium && medals[x].isPremium == 1) {
+                        continue;
+                    }
+                    medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
+                    //@ts-ignore
+                    temp.push(medals[x]);
+                
             }
             SortNewFirstThenProgress(temp)
             //@ts-ignore
@@ -132,7 +156,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
             return;
         }
 
-        console.log(temp)
+
 
         FindTotalEarned(temp);
 
@@ -157,13 +181,13 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
 
     return (
         <>
-            <div className="w-full h-auto">
+            <div className="flex flex-col gap-4 w-full h-auto">
                 {/* Filters */}
-                <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 lg:h-12 h-36 lg:mt-0 mt-8">
+                <div className="flex flex-wrap lg:flex-row flex-col lg:gap-4 gap-2 lg:h-12 h-auto lg:mt-0 mt-8">
                     <select
                         className="select select-bordered filter-item-select w-full lg:max-w-xs"
                         value={selectedTier}
-                        onChange={(e) => { setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value), selectedTerm); }}
+                        onChange={(e) => { setSelectedTier(Number(e.target.value)); FilterSelected(Number(e.target.value), selectedTerm, showPremium); }}
                     >
                         <option key={'All'} value={-1}>
                             {'All Tiers'}
@@ -181,7 +205,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                     <select
                         className="select select-bordered filter-item-select w-full lg:max-w-xs"
                         value={selectedTerm}
-                        onChange={(e) => { setSelectedTerm(e.target.value); FilterSelected(selectedTier, e.target.value) }}
+                        onChange={(e) => { setSelectedTerm(e.target.value); FilterSelected(selectedTier, e.target.value, showPremium) }}
                     >
                         <option key={'AllTerms'} value={''}>
                             {'All'}
@@ -196,7 +220,10 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                         })}
                     </select>
 
-                    <div></div>
+                    <div className="flex flex-row content-center gap-2">
+                        <Switch type="checkbox" checked={showPremium} onChange={(e)=>{setShowPremium(e); FilterSelected(selectedTier, selectedTerm, e);}} className="w-auto md:h-8 h-4 ml-auto my-auto" onColor={"#5eccba"} />
+                        <p className="font-bold my-auto">Show Premium Medals</p>
+                    </div>
 
                     {/* Total */}
                     <div className="self-end justify-self-end ml-auto">
@@ -208,7 +235,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
                 </div>
 
                 {/* Medal Area */}
-                <div className="mt-4">
+                <div className="lg:mt-4">
                     {
                         // @ts-ignore
                         medalsList.map((medal, value) => {

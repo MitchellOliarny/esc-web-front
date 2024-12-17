@@ -48,7 +48,6 @@ export default function Timeline({
     for (const x in roundInfo.round_data) {
       //@ts-ignore
       temp[x] = {};
-      console.log(roundInfo.round_data[x])
       //set up a player slot
       roundInfo.round_data[x].player_stats.map((value: any, index: number) => {
         //@ts-ignore
@@ -77,8 +76,10 @@ export default function Timeline({
       })
     }
     //@ts-ignore
+    setSelectedUser(temp[0][user.puuid] ? user.puuid : (Object.keys(temp[0])[0]))
+    //@ts-ignore
     setPlayerRoundStats(temp);
-  }, [roundInfo])
+  }, [roundInfo, user])
 
   if(!roundInfo.round_data) {
     return (
@@ -114,7 +115,7 @@ export default function Timeline({
           </div>
           <p className="text-2xl text-white font-bold mt-4">Minimap Recreation</p>
           <div className="overflow-hidden h-auto">
-            <Minimap roundInfo={roundInfo.round_data[currentRound]} players={players} map_id={roundInfo.map_id} eventInfo={currentEventInfo} mapInfo={mapInfo} selectHighlightUser={setSelectedUser} user={user} />
+            <Minimap roundInfo={roundInfo.round_data[currentRound]} players={players} map_id={roundInfo.map_id} eventInfo={currentEventInfo} mapInfo={mapInfo} selected={selectedUser} selectHighlightUser={setSelectedUser} user={user} />
           </div>
         </div>
       </div>
