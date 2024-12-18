@@ -279,8 +279,9 @@ export default function Header({
               {(
                 <div className="flex gap-4 lg:w-[60%] w-full justify-self-end self-end text-frost">
                   <Image
-                    src={`https://api.esportsclubs.gg/images/ranks/${rank.rank
-                      ? rank.rank
+                    src={
+                      `https://api.esportsclubs.gg/images/ranks/${rank?.rank
+                      ? rank?.rank
                       : "0"
                       }`}
                     className="w-auto h-14 drop-shadow-lg"
@@ -291,20 +292,20 @@ export default function Header({
                   <div className="flex flex-col w-full">
                     <div className="grid grid-cols-2 w-full">
                       <p className="pl-2 text-lg text-left font-[700]">
-                        {rank.new_mmr ? rank.new_mmr : 0}
+                        {rank?.new_mmr ? rank?.new_mmr : 0}
                         <span className="text-lg text-ash">
-                          {rank.rank >= 24 ? "RR" : "/100 RR"}
+                          {rank?.rank >= 24 ? "RR" : "/100 RR"}
                         </span>
                       </p>
                       <p className="pl-2 text-sm text-ash text-right font-bold self-center justify-self-end">
-                        {rank.new_mmr && rank.rank < 24 ? 100 - rank.new_mmr + ' RR to rank up' : ''}
+                        {rank?.new_mmr && rank?.rank < 24 ? 100 - rank?.new_mmr + ' RR to rank up' : ''}
                       </p>
                     </div>
                     <div className="w-full cut-corner-45">
                       <progress
                         className="progress-voltage w-full h-3"
                         color="secondary"
-                        value={rank.new_mmr}
+                        value={rank?.new_mmr}
                         max={100}
                       ></progress>
                     </div>
