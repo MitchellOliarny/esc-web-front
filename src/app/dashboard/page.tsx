@@ -57,7 +57,7 @@ export default async function Dashboard(queryParams: any) {
   }
 
   const userGameresp = await fetch(
-    api + `/val/data/user/matches/competitive?${queryParams}`,
+    api + `/val/data/user/matches/any?${queryParams}`,
     {
       method: "GET",
       headers,

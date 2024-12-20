@@ -56,13 +56,13 @@ export default function Header({
   const [newTopAgents, setNewTopAgents] = useState<Agents[]>(topAgents);
   const [valAverages, setValAverages] = useState<ValAverage[]>(valAverage);
   const [userMedals, setUserMedals] = useState(medalProgress);
-  const [gamemode, setGamemode] = useState('Competitive');
+  const [gamemode, setGamemode] = useState(userGames.length > 0 ? userGames[0].type : 'Competitive');
   const [medalNotif, setMedalNotif] = useState(0);
 
-  const [banner, setBanner] = useState(userGames ? userGames[0]?.val_banner : "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
-  const [user, setUser] = useState(userGames ? userGames[0].username : 'Unknown');
-  const [tag, setTag] = useState(userGames ? userGames[0].tag : 'Unknown');
-  const [rank, setRank] = useState(userGames ? userGames[0].mmr_change : {new_mmr: 0, rank: 0})
+  const [banner, setBanner] = useState(userGames.length > 0 ? userGames[0]?.val_banner : userInfo.valorant_banner || "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
+  const [user, setUser] = useState(userInfo.riot_name || 'Unknown');
+  const [tag, setTag] = useState(userInfo.riot_tag || 'Unknown');
+  const [rank, setRank] = useState(userGames.length > 0 ? userGames[0].mmr_change : {new_mmr: 0, rank: 0})
   const [original_games, setOriginalGames] = useState<UserGames[]>(userGames);
 
 
@@ -391,11 +391,11 @@ export default function Header({
                 setValAverages(newGames.averages);
                 setGamemode(newGames.gamemode || 'Competitive')
                 setUserMedals(newGames.medals);
-                if((newGames.change_banner && newGames.games.length > 0) || user !== newGames?.games[0]?.username) {
-                  setBanner(newGames.games[0].val_banner || "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
-                  setUser(newGames.games[0].username || 'Unknown');
-                  setTag(newGames.games[0].tag || 'Unknown');
-                  setRank(newGames.games[0].mmr_change || {new_mmr: 0, rank: 0})
+                if((newGames.change_banner && newGames.games.length > 0) && user !== newGames?.games[0]?.username) {
+                  setBanner(newGames.games.length > 0 ? newGames.games[0].val_banner : "https://media.valorant-api.com/playercards/9fb348bc-41a0-91ad-8a3e-818035c4e561/wideart.png");
+                  setUser(newGames.games.length > 0 ? newGames.games[0].username : 'Unknown');
+                  setTag(newGames.games.length > 0 ? newGames.games[0].tag : 'Unknown');
+                  setRank(newGames.games.length > 0 ? newGames.games[0].mmr_change : {new_mmr: 0, rank: 0})
                   setOriginalGames(newGames.games)
                 }
               }}

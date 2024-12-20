@@ -31,6 +31,7 @@ type ScheduleList = {
   league: string;
 };
 type UserInfo = {
+  valorant_banner: string;
   val_rec_preferred_role?: string;
   val_display_agent: string;
   profile_picture: string;
@@ -98,6 +99,7 @@ type UserGames = {
     new_mmr: number;
     rank: number;
   }
+  type: string;
   index: number;
   rounds_played: number;
   blue: number;

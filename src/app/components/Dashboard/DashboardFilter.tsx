@@ -32,7 +32,8 @@ const DashboardFilter = ({
   const [selectedUser, setSelectedUser] = useState("");
   const [studentPUUID, setStudentPUUID] = useState("");
   const [selectedAgent, setSelectedAgent] = useState("");
-  const [selectedMode, setSelectedMode] = useState("Competitive");
+  //@ts-ignore
+  const [selectedMode, setSelectedMode] = useState(userGames.length > 0 ? userGames[0].type : 'Competitive');
   const [selectedSeason, setSelectedSeason] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
 

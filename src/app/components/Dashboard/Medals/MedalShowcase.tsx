@@ -45,6 +45,7 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
         let subjectTemp = [String];
         for (const x in medals) {
             medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
+            medals[x].tiers_complete = medalsProgress[x] ? medalsProgress[x].tiers : null;
             temp.push(medals[x]);
             try {
                 if (!subjectTemp.includes(medals[x].terms.subject)) {
@@ -75,8 +76,31 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
             const aIsWithinAWeek = isWithinAWeek(a.date);
             const bIsWithinAWeek = isWithinAWeek(b.date);
 
+            let a_tier = 0;
+            let b_tier = 0;
+
+            if(a.tiers_complete){
+                for(const x in a.tiers_complete){
+                    if(!a.tiers_complete[x].isComplete) {
+                        a_tier = Number(x)
+                        break;
+                    }
+                }
+            }
+            if(b.tiers_complete){
+                for(const x in b.tiers_complete){
+                    if(!b.tiers_complete[x].isComplete) {
+                        b_tier = Number(x)
+                        break;
+                    }
+                }
+            }
+
             if (aIsWithinAWeek && !bIsWithinAWeek) return -1;
             if (!aIsWithinAWeek && bIsWithinAWeek) return 1;
+
+            if(a_tier > b_tier) return -1;
+            if(a_tier < b_tier) return 1;
 
             // If both are within a week or neither, sort by progress (descending)
             return b.progress - a.progress;
@@ -85,81 +109,39 @@ const MedalShowcase = ({ medals, medalsProgress, category, parentList, change_di
 
     const FilterSelected = (tier: number, subject: string, premium: boolean) => {
 
-        let temp = [];
 
-        if (tier > 0) {
-            for (const x in medalsProgress) {
-                console.log(medals[x])
-                if (medals[x] && medalsProgress[x].tiers[tier - 1] && medalsProgress[x].tiers[tier - 1].isComplete && (!medalsProgress[x].tiers[tier] || !medalsProgress[x].tiers[tier].isComplete)) {
-                    if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
-                        if(!premium && medals[x].isPremium == 1) {
-                            continue;
-                        }
-                        medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
-                        //@ts-ignore
-                        temp.push(medals[x]);
-                    }
-                }
-            }
-            SortNewFirstThenProgress(temp)
-            //@ts-ignore
-            setMedals(temp);
-        }
-        else if (tier == 0) {
-            for (const x in medalsProgress) {
-                if (medals[x] && medalsProgress[x].tiers[0] && !medalsProgress[x].tiers[0].isComplete) {
-                    if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
-                        if(!premium && medals[x].isPremium == 1) {
-                            continue;
-                        }
-                        medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
-                        //@ts-ignore
-                        temp.push(medals[x]);
-                    }
-                }
-            }
-            SortNewFirstThenProgress(temp)
-            //@ts-ignore
-            setMedals(temp);
-        }
-        else if (subject) {
-            for (const x in medals) {
-                if (medals[x].terms.subject && (subject == '' || medals[x].terms.subject == subject)) {
-                    if(!premium && medals[x].isPremium == 1) {
-                        continue;
-                    }
-                    medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
-                    //@ts-ignore
-                    temp.push(medals[x]);
-                }
-            }
-            SortNewFirstThenProgress(temp)
-            //@ts-ignore
-            setMedals(temp);
-        }
-        else if(!premium) {
-            for (const x in medals) {
-                    if(!premium && medals[x].isPremium == 1) {
-                        continue;
-                    }
-                    medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
-                    //@ts-ignore
-                    temp.push(medals[x]);
-                
-            }
-            SortNewFirstThenProgress(temp)
-            //@ts-ignore
-            setMedals(temp);
-        }
-        else {
+        if(tier < 0 && subject == "" && premium) {
             ResetPage();
             return;
         }
 
+        let temp = [];
+        for (const x in medals) {
+        try{
+            if (tier > -1 && (!medalsProgress[x].tiers || !medalsProgress[x].tiers[tier - 1] || !medalsProgress[x].tiers[tier - 1].isComplete)) {
+                continue;
+            }
 
+            if(subject !== "" && subject !== medals[x].terms.subject) {
+                continue;
+            }
+
+            if(!premium && medals[x].isPremium == 1) {
+                continue;
+            }
+            medals[x].progress = medalsProgress[x] ? medalsProgress[x].progress : 0;
+            //@ts-ignore
+            temp.push(medals[x]);
+        }
+        catch(error){
+        
+        }
+        }
+        SortNewFirstThenProgress(temp)
+        //@ts-ignore
+        setMedals(temp);
 
         FindTotalEarned(temp);
-
 
     }
 
