@@ -62,12 +62,12 @@ export default function ConnectionsSettingsUI({
   async function connectToRiot(riot_code: string) {
     try {
       const response = await connectRiot(riot_code);
-      //const urlWithoutCode = window.location.href.split("&iss=")[0];
-      //history.replaceState({}, document.title, urlWithoutCode);
+      const urlWithoutCode = window.location.href.split("iss=")[0];
+      history.replaceState({}, document.title, urlWithoutCode);
       if (response && response.success) {
         toast.success(response?.message || "Successfully connected to Riot Games");
-        //const urlWithoutCode = window.location.href.split("&iss=")[0];
-        //history.replaceState({}, document.title, urlWithoutCode);
+        const urlWithoutCode = window.location.href.split("iss=")[0];
+        history.replaceState({}, document.title, urlWithoutCode);
       } else {
         toast.error(response?.errors || "Failed to connect to Riot Games");
       }
@@ -104,20 +104,7 @@ export default function ConnectionsSettingsUI({
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const handleRiotAccountUpdate = async (formData: FormData) => {
-    const response = await updateRiot(formData);
-    if (response?.success) {
-      setIsLoading(false);
-      toast.success("Riot account updated successfully");
-    } else {
-      setIsLoading(false);
-      //@ts-ignore
-      const error = response?.errors ? response?.errors[0]?.msg : null
-      toast.error(error || response?.message || "Something went wrong.");
-    }
-  };
-
-  console.log(userInfo)
+ 
 
   return (
     <>
@@ -185,7 +172,6 @@ export default function ConnectionsSettingsUI({
         <div
           id="riotConnection"
           className="flex md:flex-row flex-col items-center align-middle p-4 rounded-lg w-full h-full gap-4 connectContainer min-h-32"
-          onClick={onOpen}
         >
           <div className="w-full h-full">
             <h2 className="font-bold text-frost text-lg">Riot Games</h2>
@@ -234,93 +220,7 @@ export default function ConnectionsSettingsUI({
             }
           </div>
         </div>
-
-        <Modal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          className="back-graphite max-w-xl"
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">
-                  <h3 className={`text-2xl font-medium`}>
-                    Update Riot Account
-                  </h3>
-                </ModalHeader>
-                <ModalBody>
-                  <form action={handleRiotAccountUpdate}>
-                    <div className="flex justify-center items-center mb-2">
-                      <label className="form-control w-full">
-                        <input
-                          defaultValue={userInfo?.riot_name}
-                          type="text"
-                          name="riotName"
-                          className="text input input-bordered w-full border border-white bg-slate-800 text-slate-200 text-lg"
-                          id="riotName"
-                          autoComplete="off"
-                          placeholder="Riot Username..."
-                        />
-                        <div className="label hidden">
-                          <div
-                            id="riotName-error"
-                            className="error-message riotUserName"
-                          ></div>
-                        </div>
-                      </label>
-
-                      <span className="text-white text-2xl mx-2">#</span>
-
-                      <label className="form-control w-full">
-                        <input
-                          defaultValue={userInfo?.riot_tag}
-                          type="text"
-                          name="riotTag"
-                          className="text input input-bordered w-full border border-white bg-slate-800 text-slate-200 text-lg"
-                          id="riotTag"
-                          autoComplete="off"
-                          placeholder="Riot Tag..."
-                        />
-                        <div className="label hidden">
-                          <div
-                            id="riotTag-error"
-                            className="error-message riotTag"
-                          ></div>
-                        </div>
-                      </label>
-                    </div>
-                    <div className="flex justify-end gap-2 pt-4 pb-2">
-                      {!isLoading ? (
-                        <Button
-                          className="bg-transparent text-white border-1 border-slate-600 rounded-md"
-                          onPress={onClose}
-                        >
-                          Cancel
-                        </Button>
-                      ) : (
-                        ""
-                      )}
-                      <Button
-                        className={`bg-[#F5603C] ${isLoading ? "btn-disabled !bg-[#ac442a]/50" : ""
-                          } text-white rounded-md`}
-                        type="submit"
-                        onClick={(e) => {
-                          setIsLoading(true);
-                        }}
-                      >
-                        {isLoading ? (
-                          <Spinner color="default" size="sm" />
-                        ) : (
-                          "Continue"
-                        )}
-                      </Button>
-                    </div>
-                  </form>
-                </ModalBody>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
+  
 
         {/* <div
           id="omnicConnection"
