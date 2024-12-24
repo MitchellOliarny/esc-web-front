@@ -298,7 +298,7 @@ select.transparent > option {
   background-image: linear-gradient(to right, #c8965c, #ffcc90, #c8965c);
 }
 
-.back-3rd p {
+.back-3rd > p {
   color: var(--obsidian) !important;
 }
 
@@ -306,7 +306,7 @@ select.transparent > option {
   background-image: linear-gradient(to right, #a6b7d2, #d6e6ff, #a6b7d2);
 }
 
-.back-2nd p {
+.back-2nd > p {
   color: var(--obsidian) !important;
 }
 

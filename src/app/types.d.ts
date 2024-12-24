@@ -31,6 +31,7 @@ type ScheduleList = {
   league: string;
 };
 type UserInfo = {
+  puuid: string;
   valorant_banner: string;
   val_rec_preferred_role?: string;
   val_display_agent: string;

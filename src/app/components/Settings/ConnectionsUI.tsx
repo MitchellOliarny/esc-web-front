@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import disconnectDiscord from "@/app/settings/settingsActions/disconnectDiscord";
 import connectDiscord from "@/app/settings/settingsActions/connectDiscord";
+import connectRiot from "@/app/settings/settingsActions/connectRiot";
 import { toast } from "react-hot-toast";
 import updateRiot from "@/app/settings/settingsActions/updateRiot";
 import { Spinner } from "@nextui-org/react";
+import { api } from "@/app/utils/helpers";
 
 import {
   Modal,
@@ -37,7 +39,9 @@ export default function ConnectionsSettingsUI({
   userInfo,
 }: ConnectionsSettingsUIProps) {
   const urlParams = new URLSearchParams(location.search);
-  const discord_code = urlParams.get("code");
+  const code = urlParams.get("code");
+  const isRiot = urlParams.get("iss");
+  const session_state = urlParams.get("session_state");
 
   async function connectToDiscord(discord_code: string) {
     try {
@@ -55,13 +59,32 @@ export default function ConnectionsSettingsUI({
       console.error("Error connecting to Discord:", error);
     }
   }
+  async function connectToRiot(riot_code: string) {
+    try {
+      const response = await connectRiot(riot_code);
+      //const urlWithoutCode = window.location.href.split("&iss=")[0];
+      //history.replaceState({}, document.title, urlWithoutCode);
+      if (response && response.success) {
+        toast.success(response?.message || "Successfully connected to Riot Games");
+        //const urlWithoutCode = window.location.href.split("&iss=")[0];
+        //history.replaceState({}, document.title, urlWithoutCode);
+      } else {
+        toast.error(response?.errors || "Failed to connect to Riot Games");
+      }
+    } catch (error) {
+      console.error("Error connecting to Discord:", error);
+    }
+  }
 
-  if (discord_code) {
-    connectToDiscord(discord_code);
+  if(code && isRiot == "https://auth.riotgames.com") {
+    connectToRiot(code)
+  }
+  else if (code) {
+    connectToDiscord(code);
   }
 
   const connectDiscordClick = () => {
-    window.open("https://api.esportsclubs.gg/settings/connections/discord");
+    window.open(api+"/settings/connections/discord");
   };
 
   const handleDiscordDisconnect = async () => {
@@ -93,6 +116,8 @@ export default function ConnectionsSettingsUI({
       toast.error(error || response?.message || "Something went wrong.");
     }
   };
+
+  console.log(userInfo)
 
   return (
     <>
@@ -137,12 +162,12 @@ export default function ConnectionsSettingsUI({
 
                 </div>
                 <FaDiscord
-                      className="w-auto h-12 mr-4 cursor-pointer"
-                    />
+                  className="w-auto h-12 mr-4 cursor-pointer"
+                />
               </div>
             ) : (
               <div className="h-full w-full">
-                <Link href="https://api.esportsclubs.gg/settings/connections/discord">
+                <Link href={api+"/settings/connections/discord"}>
                   <div className="bg-[#5865F2] hover:!bg-[#637ddb] transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer">
                     <h2 id="discordConnect" className="font-bold text-white">
                       Connect your Discord
@@ -170,23 +195,43 @@ export default function ConnectionsSettingsUI({
             className="transition-all h-full w-full flex text-center justify-center items-center rounded-lg cursor-pointer"
             id="riotConnect"
           >
-            <div
-              className="bg-[#D42B2B] hover:!bg-[#9e2020] transition-all h-full w-full flex text-center justify-between px-6 items-center rounded-lg cursor-pointer"
-              id="updateRiotAccount"
-            >
-              <h2 className="font-bold text-white text-red-">
-                {
-                //@ts-ignore
-                userInfo?.riot_name + '#' + userInfo?.riot_tag}
-              </h2>
-              <Image
-                alt="riot games logo"
-                width={1000}
-                height={1000}
-                src="/logos/riot-games.png"
-                className="w-auto h-16 cursor-pointer"
-              />
-            </div>
+            {
+              userInfo?.puuid ?
+                <div
+                  className="bg-[#D42B2B] hover:!bg-[#9e2020] transition-all h-full w-full flex text-center justify-between px-6 items-center rounded-lg cursor-pointer"
+                  id="updateRiotAccount"
+                >
+                  <h2 className="font-bold text-white text-red-">
+                    {
+                      //@ts-ignore
+                      userInfo?.riot_name + '#' + userInfo?.riot_tag}
+                  </h2>
+                  <Image
+                    alt="riot games logo"
+                    width={1000}
+                    height={1000}
+                    src="/logos/riot-games.png"
+                    className="w-auto h-16 cursor-pointer"
+                  />
+                </div>
+                :
+                <div className="h-full w-full">
+                  <Link href={api+"/settings/connections/riot"}>
+                    <div className="bg-[#D42B2B] hover:!bg-[#9e2020]transition-all h-full w-full flex text-center justify-between px-4 items-center rounded-lg cursor-pointer">
+                      <h2 id="riotConnect" className="font-bold text-white">
+                        Connect your Riot Account
+                      </h2>
+                      <Image
+                        alt="riot games logo"
+                        width={1000}
+                        height={1000}
+                        src="/logos/riot-games.png"
+                        className="w-auto h-16 cursor-pointer"
+                      />
+                    </div>
+                  </Link>
+                </div>
+            }
           </div>
         </div>
 
